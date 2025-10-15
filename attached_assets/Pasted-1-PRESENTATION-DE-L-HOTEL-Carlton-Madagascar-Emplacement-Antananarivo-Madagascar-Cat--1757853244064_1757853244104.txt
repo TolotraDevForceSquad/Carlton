@@ -1,0 +1,103 @@
+1. PRESENTATION DE L'HOTEL 
+• Carlton Madagascar  
+• Emplacement : Antananarivo, Madagascar  
+• Catégorie : Hôtel 5 étoiles 
+• Caractéristiques principales : Luxe, élégance, service haut de gamme, équipements de qualité, 
+expérience client exceptionnelle. 
+2. OBJECTIFS DU SITE WEB 
+• Présenter l'hôtel de manière attractive et captivante pour attirer les clients potentiels. 
+• Offrir une expérience utilisateur fluide et intuitive d’une manière générale, et ce à travers toutes les 
+pages. 
+✓ Mettre en avant les services et les prestations exclusives de l'hôtel : hébergement, restauration, 
+conférences et évènements, loisirs (piscine, salle de sport, terrain de tennis).   
+✓ Mettre en avant les offres spéciales, faciliter les demandes d’information et/ou réservation.  
+✓ Inciter les réservations en ligne : mettre en place des « call to action » qui mène vers la page de 
+réservation (page de réservation déjà existante externe, à lier dans le site).  
+✓ Faciliter la prise de contact.  
+• Garantir la performance du site web : assurer une bonne visibilité du site à travers la mise en place 
+d’une base de référencement naturel de qualité.  
+• Renforcer l'image de marque de l'hôtel et augmenter sa notoriété en ligne. 
+3. CONTENU DU SITE 
+Le site doit présenter les pages et éléments suivants :  
+• Accueil :  
+✓ Mettre en place un large espace pour un contenu multimédia mettant en valeur l’hôtel ; 
+✓ Affichage des récompenses ou labels (Logos) ; 
+✓ Brève présentation et historique de l’hôtel ; 
+✓ Localisation ; 
+✓ Résumé des services et installations ; 
+✓ Aperçu des services et offres avec photos et liens menant vers les pages (Chambres & Suites, 
+Restaurants, …).  
+Page 1 sur 4 
+Rue Pierre Stibbe Anosy – Po Box 959 – 101 Antananarivo – Madagascar 
+T: +261 20 22 260 60 I contact@carlton.mg I www.carlton-madagascar.com  
+• Offres Spéciales :  
+✓ Un large espace pour un contenu multimédia mettant en valeur cette section ; 
+✓ Descriptions avec photos des offres spéciales ainsi que des événements spéciaux organisés par 
+l'hôtel  
+• Chambres & Suites :   
+✓ Un large espace pour un contenu multimédia mettant en valeur cette section ; 
+✓ Informations détaillées sur les chambres et suites comprenant des descriptions (dont 
+équipements) et photos, ainsi qu’un lien vers la page de réservation à chaque section.  
+• Réunions & Evènements :  
+✓ Un large espace pour un contenu multimédia mettant en valeur cette section ; 
+✓ Informations concernant les salles de réunion avec descriptions et photos.  
+• Restaurants & Bars :  
+✓ Un large espace pour un contenu multimédia mettant en valeur cette section ; 
+✓ Informations sur les restaurants avec descriptions et photos.  
+✓ Cartes & Menus accessibles via QR code.  
+• Loisirs :  
+✓ Un large espace pour un contenu multimédia mettant en valeur cette section ; 
+✓ Informations sur les activités de loisirs et de bien-être avec descriptions et photos. 
+• Galerie Marchande (boutiques) :  
+✓ Un large espace pour un contenu multimédia mettant en valeur cette section ; 
+✓ Informations sur les boutiques présentes à l’hôtel avec descriptions et photos. 
+• Contact :  formulaire de messagerie, coordonnées de l’hôtel et carte interactive (Google Map). 
+• Galerie : photos et vidéos pour mettre en valeur les infrastructures et services de l’hôtel. 
+• Découvrir Antananarivo :  guide pratique sur les endroits à visiter et/ou activités à faire dans la région 
+d’Antananarivo avec descriptions et photos. 
+Page 2 sur 4 
+Rue Pierre Stibbe Anosy – Po Box 959 – 101 Antananarivo – Madagascar 
+T: +261 20 22 260 60 I contact@carlton.mg I www.carlton-madagascar.com  
+4. DESIGN ET ERGONOMIE 
+Les éléments de design et d’ergonomie importants pour nous : 
+• Design élégant, simple et raffiné et surtout responsive pour s'adapter à tous les appareils (ordinateurs, 
+tablettes, smartphones). Tester le design sur différents appareils pour garantir une vraie expérience 
+responsive. 
+• Utilisation de couleurs harmonieuses et de typographie soignée en accord avec l'identité visuelle de 
+l'hôtel. Tester le choix des couleurs pour s'assurer qu'elles sont accessibles aux personnes avec des 
+déficiences visuelles.  
+• Navigation intuitive avec un menu clair et des appels à l'action bien placés pour encourager les 
+réservations et les demandes de renseignements. 
+• Expérience utilisateur fluide et agréable, avec des temps de chargement rapides et une accessibilité 
+optimale. 
+5. FONCTIONNALITES TECHNIQUES 
+Les fonctionnalités techniques essentielles à respecter : 
+• Optimisation SEO pour un bon référencement sur les moteurs de recherche et une visibilité maximale. 
+• Intégration de liens extérieurs pour encourager le partage et l'engagement :  vers les sites partenaires 
+et/ou de référence et les réseaux sociaux de l’hôtel.  
+• Certificat SSL pour assurer la sécurité des transactions en ligne et des données des utilisateurs sur 
+toutes les pages. 
+• Proposition pour l’intégration de plug-in pour affichage d’avis client sur toutes les pages de l’hôtel sauf 
+contact.  
+• Réalisation du site en 2 langues : Français, Anglais. La rédaction de textes spécifiques « glossy » en 
+hôtellerie, en Français et Anglais pour le contenu du site est à la charge du prestataire.  
+• Mesures de suivi et d'analyse : installation d’outil de données statistiques sur la performance du site 
+pour une amélioration continue et sur les visiteurs (origine, nombre de visites, pages visitées, …) avec 
+la possibilité de produire des rapports et de les exporter.  
+Outils complémentaires à mettre en place : 
+• « Livret d’accueil » en ligne : application/espace pour les informations utiles de l’hôtel accessible via 
+un QR code par les clients en chambre.  
+• Live Chat Box : outil pour permettre aux visiteurs du site de poser des questions et obtenir des 
+réponses en temps réel. A lier à un compte de messagerie de l’hôtel.  
+Page 3 sur 4 
+Rue Pierre Stibbe Anosy – Po Box 959 – 101 Antananarivo – Madagascar 
+T: +261 20 22 260 60 I contact@carlton.mg I www.carlton-madagascar.com  
+6. AUTRES INFORMATIONS 
+• Fournir la liste des mots clés pertinents à intégrer dans le contenu textuel du site Web, dans le cadre 
+du référencement.  
+• Les informations de base seront fournies par l’hôtel pour la rédaction des textes en Français et Anglais 
+à mettre dans le site.  
+• Les photos et/ou vidéos pour la réalisation du site seront fournis par l’hôtel.  
+• Détailler les mesures prises pour pallier les contraintes techniques telles que la lenteur de la 
+connexion internet : l'optimisation des images et l'utilisation de la mise en cache du navigateur. 
+• Une formation est à inclure dans le service pour la gestion du site après sa livraison. 

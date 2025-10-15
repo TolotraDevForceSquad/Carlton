@@ -1,0 +1,79 @@
+Tu es un expert React + TypeScript + Tailwind. Crée un composant <MainNav /> horizontal, accessible et responsive pour un site hôtel 5★ (dark UI). Contraintes et attentes:
+
+STACK & STYLE
+- React + TypeScript + Tailwind uniquement (pas de CSS externe, pas de lib de menu).
+- Thème sombre (#0f1115 approx). Bouton "Réserver" style or (#f2c451), arrondi lg, hover/active.
+- Icônes: utilise emoji natifs (🌐, ☰) ou lucide-react si dispo.
+- Header sticky en haut, largeur max xl, padding x 4, y 2, shadow subtle.
+
+COMPORTEMENT
+- Desktop (≥1024px): 
+  - Menu principal HORIZONTAL avec items alignés sur une seule ligne: Accueil, Séjour, Restauration, Bien-être, Événements, Découverte, Contact.
+  - Les sections ayant des sous-liens ouvrent un sous-menu HORIZONTAL en dropdown (panel aligné sous l’item, fond #151821, border, shadow).
+  - Navigation au clavier: Tab/Shift+Tab, Esc pour fermer, focus visible.
+  - Hover et focus ouvrent le sous-menu; en dehors, il se ferme.
+- Mobile (<1024px):
+  - Icône ☰ à droite ouvre un drawer/overlay vertical plein écran (position fixed).
+  - Dans le drawer, les sections avec sous-liens sont accordéons (chevron, ouverture/fermeture).
+- À droite du header: 
+  - Toggle langue (FR/EN) avec 🌐 + code langue.
+  - Bouton "Réserver" (CTA principal).
+  - Icône ☰ (mobile uniquement).
+
+ROUTING
+- Utilise <a href="..."> simples (pas besoin de router).
+- Mappe EXACTEMENT ces liens:
+  Accueil → "/"
+  Séjour → ("/chambres", "/offres", "/services-boutiques")
+  Restauration → ("/restaurants", "/restaurants#bars")
+  Bien-être → ("/bien-etre-loisirs", "/bien-etre-loisirs#fitness", "/bien-etre-loisirs#piscine")
+  Événements → ("/evenements", "/evenements#mariages", "/evenements#prives")
+  Découverte → ("/galerie", "/decouvrir-antananarivo")
+  Contact → "/contact"
+
+ARBORESCENCE DU MENU (à reproduire)
+- 🏠 Accueil
+- 🛏️ Séjour
+    • Chambres & Suites → /chambres
+    • Offres Spéciales → /offres
+    • Services & Boutiques → /services-boutiques
+- 🍽️ Restauration
+    • Restaurants → /restaurants
+    • Bars → /restaurants#bars
+- ✨ Bien-être
+    • Spa & Détente → /bien-etre-loisirs
+    • Fitness → /bien-etre-loisirs#fitness
+    • Piscine → /bien-etre-loisirs#piscine
+- 📅 Événements
+    • Réunions → /evenements
+    • Mariages → /evenements#mariages
+    • Événements Privés → /evenements#prives
+- 📸 Découverte
+    • Galerie → /galerie
+    • Découvrir Antananarivo → /decouvrir-antananarivo
+- 📞 Contact → /contact
+- 🌐 Langue: toggle FR/EN (bouton)
+- 🎯 Actions: bouton "Réserver" (CTA)
+
+ACCESSIBILITÉ
+- <nav aria-label="Navigation principale">.
+- Chaque item avec sous-menu est un bouton avec aria-expanded, aria-controls, gestion Escape et clic en dehors.
+- Focus ring Tailwind (focus:outline-none focus:ring-2 focus:ring-yellow-400).
+
+TAILWIND (exemples d’utilisations attendues)
+- Conteneur nav: "sticky top-0 z-50 bg-[#0f1115]/90 backdrop-blur"
+- Barre: "mx-auto max-w-7xl flex items-center justify-between px-4 py-2"
+- Liste horizontale: "hidden lg:flex items-center gap-6"
+- Items: "text-sm text-white/80 hover:text-white transition"
+- Dropdown panel: "absolute left-0 mt-2 min-w-[260px] rounded-xl border border-white/10 bg-[#151821] p-3 shadow-xl"
+- CTA Réserver: "inline-flex items-center rounded-lg bg-[#f2c451] px-4 py-2 font-semibold text-black hover:brightness-95 active:scale-[.98]"
+
+DELIVRABLES
+1) Un fichier unique MainNav.tsx export default, autoportant.
+2) État local pour: ouverture mobile, sous-menus ouverts, langue (FR/EN).
+3) Types sûrs pour les items (interface MenuItem).
+4) Pas d’erreurs TypeScript, aucun style inline obligatoire hors Tailwind.
+5) Inclure un petit exemple d’intégration: dans App.tsx, placer <MainNav /> au-dessus du contenu.
+
+BUT FINAL
+- Obtenir une navigation HORIZONTALE propre sur desktop, avec dropdowns accessibles, et un drawer mobile, incluant le toggle langue et le bouton "Réserver" conforme au style or/sombre de la capture.

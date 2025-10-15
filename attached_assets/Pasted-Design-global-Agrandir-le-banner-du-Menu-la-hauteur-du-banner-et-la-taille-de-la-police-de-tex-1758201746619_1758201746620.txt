@@ -1,0 +1,37 @@
+Design global  
+• Agrandir le banner du Menu : la hauteur du banner et la taille de la police de texte. 
+• Barre du Menu : aligner les Langues + Bouton Réserver à droite. 
+• Ajouter les pages manquantes (Galerie, Découvrir Antananarivo).  
+Accueil  
+• Utiliser la présentation et les éléments du Design 1 avec les modifications indiquées ci-dessus.  
+Offres Spéciales 
+• Modifier le titre Offres Exclusives en Offres Spéciales. 
+• Rajouter un cadre photo pour chaque offre.  
+• Enlever les boutons Réserver et Plus d’infos.  
+• Offres Saisonnières :  modifier le titre en Evènements Spéciaux ;  
+Modifier les sous-titres et contenus comme dans le Design 1 : Soirée Jazz, …   
+Restaurants & Bars  
+• Enlever les boutons Réserver une table et l’icône Téléphone. 
+• Enlever les parties : Nos Chefs, Cartes QR, Cave à vins, Service en Chambre.  
+Réunions & Evènements  
+• Enlever les boutons Demander un devis pour chaque section.  
+• Bas de page : remplacer le bouton Téléphone par Demander un devis et supprimer l’email.  
+• Enlever le bouton Télécharger Brochure.  
+Bien-être & Loisirs  
+• Enlever les boutons Réserver un créneau et Plus d’informations pour chaque section. 
+• Enlever les parties : Programme d’Activités, Excursions, Services complémentaires.  
+• Rajouter en bas de page :  
+Titre : Votre oasis de détente au cœur d'Antananarivo 
+Texte : Profitez de nos installations de loisirs et de bien-être ouvertes tous les jours. Nos équipes sont à 
+votre disposition pour personnaliser votre expérience. 
+Bouton : Nous contacter 
+Services & Boutiques  
+• Rajouter cette page avec zone de texte + cadre photo pour chaque section.  
+• Bas de page avec le bouton : Réserver votre chambre.    
+Découvrir Antananarivo  
+• Rajouter cette page avec zone de texte + cadre photo pour chaque section.  
+• Bas de page avec le bouton : Réserver votre chambre.    
+Contact  
+• Nos Services : remplacer Voiturier par Parking.  
+• Enlever la partie Urgence et Assistance. 
+• Rajouter la localisation de l’hôtel avec Google Map.  
