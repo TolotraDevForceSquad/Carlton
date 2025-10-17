@@ -28,10 +28,19 @@ export default defineConfig({
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
   },
+  
   server: {
     fs: {
       strict: true,
       deny: ["**/.*"],
     },
+    proxy: {
+    // Redirige toutes les requêtes /uploads vers ton backend localhost:5000
+    '/uploads': {
+      target: 'http://localhost:5000',
+      changeOrigin: true,
+      secure: false, // utile si backend dev HTTPS non signé
+    },
+  },
   },
 });

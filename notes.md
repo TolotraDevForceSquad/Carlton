@@ -1,286 +1,21 @@
-// src/components/Tooltip.tsx
-import { useState, useRef, useEffect } from 'react';
-import { createPortal } from 'react-dom';
-import { X } from 'lucide-react';
-
-interface TooltipProps {
-  children: React.ReactNode;
-  frLabel: string;
-  enLabel?: string;
-  onSave?: (newFr: string, newEn: string) => void;
-}
-
-const Tooltip = ({ children, frLabel, enLabel = '', onSave }: TooltipProps) => {
-  const token = localStorage.getItem('userToken');
-  if (!token) {
-    return <>{children}</>;
-  }
-
-  const [showTooltip, setShowTooltip] = useState(false);
-  const [position, setPosition] = useState<'top-right' | 'bottom-right' | 'top-left' | 'bottom-left'>('top-right');
-  const [showModal, setShowModal] = useState(false);
-  const [inputFr, setInputFr] = useState(frLabel);
-  const [inputEn, setInputEn] = useState(enLabel);
-  const triggerRef = useRef<HTMLDivElement>(null);
-  const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const HIDE_DELAY = 150; // ms
-
-  // calc position tooltip small (reste local au trigger)
-  const calculatePosition = () => {
-    if (triggerRef.current) {
-      const rect = triggerRef.current.getBoundingClientRect();
-      const spaceTop = rect.top;
-      const spaceBottom = window.innerHeight - rect.bottom;
-      const spaceRight = window.innerWidth - rect.right;
-
-      let newPos: typeof position = 'top-right';
-
-      if (spaceTop < 60) {
-        if (spaceBottom >= 60) {
-          newPos = spaceRight >= 120 ? 'bottom-right' : 'bottom-left';
-        } else {
-          newPos = spaceRight >= 120 ? 'top-right' : 'top-left';
-        }
-      } else {
-        newPos = spaceRight >= 120 ? 'top-right' : 'top-left';
-      }
-
-      if (newPos.startsWith('top') && spaceBottom >= 60 && spaceRight < 120) {
-        newPos = 'bottom-left';
-      }
-
-      setPosition(newPos);
-    }
-  };
-
-  const handleShow = () => {
-    if (hideTimeoutRef.current) {
-      clearTimeout(hideTimeoutRef.current);
-      hideTimeoutRef.current = null;
-    }
-    calculatePosition();
-    setShowTooltip(true);
-  };
-
-  const handleHide = () => {
-    hideTimeoutRef.current = setTimeout(() => {
-      setShowTooltip(false);
-    }, HIDE_DELAY);
-  };
-
-  const handleTooltipMouseEnter = () => {
-    if (hideTimeoutRef.current) {
-      clearTimeout(hideTimeoutRef.current);
-      hideTimeoutRef.current = null;
-    }
-  };
-
-  const handleTooltipMouseLeave = () => {
-    handleHide();
-  };
-
-  const handleSave = () => {
-    if (onSave) onSave(inputFr, inputEn);
-    setShowModal(false);
-  };
-
-  const handleCancel = () => {
-    setInputFr(frLabel);
-    setInputEn(enLabel);
-    setShowModal(false);
-  };
-
-  const handleTooltipClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setShowTooltip(false);
-    setShowModal(true);
-  };
-
-  // cleanup
-  useEffect(() => {
-    return () => {
-      if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
-    };
-  }, []);
-
-  const getPositionClasses = () => {
-    switch (position) {
-      case 'top-right':
-        return '-top-8 right-0';
-      case 'bottom-right':
-        return 'bottom-[-8px] right-0 translate-y-full';
-      case 'top-left':
-        return '-top-8 left-0';
-      case 'bottom-left':
-        return 'bottom-[-8px] left-0 translate-y-full';
-      default:
-        return '-top-8 right-0';
-    }
-  };
-
-  // Contenu du modal directement intégré (sans composant interne)
-  const modalContent = showModal ? createPortal(
-    <>
-      {/* Overlay */}
-      <div
-        className="fixed inset-0 bg-black/50 z-[9998]"
-        onClick={handleCancel}
-        aria-hidden="true"
-      />
-
-      {/* Modal box centered */}
-      <div
-        role="dialog"
-        aria-modal="true"
-        className="fixed top-1/2 left-1/2 z-[9999] w-full max-w-md -translate-x-1/2 -translate-y-1/2 p-4"
-      >
-        <div className="relative bg-[#151821] p-6 rounded-xl border border-white/10 max-h-[80vh] overflow-y-auto shadow-2xl">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-white">Modifier l'élément</h3>
-            <button
-              onClick={handleCancel}
-              className="p-1 text-white/70 hover:text-white transition-colors"
-              aria-label="Fermer"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm text-white/80 mb-1">Text FR</label>
-              <input
-                key="input-fr" // Clé stable pour éviter tout remontage
-                type="text"
-                value={inputFr}
-                onChange={(e) => setInputFr(e.target.value)}
-                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                placeholder="Text FR"
-                autoFocus // Focus auto sur le premier champ
-              />
-            </div>
-            <div>
-              <label className="block text-sm text-white/80 mb-1">Text EN</label>
-              <input
-                key="input-en" // Clé stable pour éviter tout remontage
-                type="text"
-                value={inputEn}
-                onChange={(e) => setInputEn(e.target.value)}
-                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                placeholder="Text EN"
-              />
-            </div>
-            <div className="flex gap-3 pt-4 border-t border-white/10">
-              <button
-                onClick={handleSave}
-                className="flex-1 px-4 py-2 bg-[#f2c451] text-black font-semibold rounded-lg hover:brightness-95 transition-all focus:outline-none focus:ring-2 focus:ring-yellow-400"
-              >
-                Enregistrer
-              </button>
-              <button
-                onClick={handleCancel}
-                className="flex-1 px-4 py-2 bg-white/10 text-white border border-white/10 rounded-lg hover:bg-white/20 transition-all focus:outline-none focus:ring-2 focus:ring-yellow-400"
-              >
-                Annuler
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>,
-    document.body
-  ) : null;
-
-  return (
-    <>
-      <div className="relative inline-block group">
-        <div
-          ref={triggerRef}
-          onMouseEnter={handleShow}
-          onMouseLeave={handleHide}
-        >
-          {children}
-        </div>
-
-        {showTooltip && (
-          <div
-            className={`absolute ${getPositionClasses()} px-2 py-1 bg-black/90 text-white text-xs rounded whitespace-nowrap z-50 shadow-lg cursor-pointer hover:bg-black transition-colors`}
-            onMouseEnter={handleTooltipMouseEnter}
-            onMouseLeave={handleTooltipMouseLeave}
-            onClick={handleTooltipClick}
-          >
-            Modifier
-          </div>
-        )}
-      </div>
-
-      {/* Portail directement dans le return (stable) */}
-      {modalContent}
-    </>
-  );
-};
-
-export default Tooltip;
-
-// src/data/mainNavData.ts
-export const mainNavData = {
-  menus: [
-    { id: 1, translations: { fr: "Accueil", en: "Home" }, link: "/", position: 1 },
-    { id: 2, translations: { fr: "Offres Spéciales", en: "Special Offers" }, link: "/offres", position: 2 },
-    { id: 3, translations: { fr: "Séjour", en: "Stay" }, link: "/chambres", position: 3 },
-    { id: 4, translations: { fr: "Restauration", en: "Dining" }, link: "/restaurants", position: 4 },
-    { id: 5, translations: { fr: "Bien-être", en: "Wellness" }, link: "/bien-etre-loisirs", position: 5 },
-    { id: 6, translations: { fr: "Événements", en: "Events" }, link: "/evenements", position: 6 },
-    { id: 7, translations: { fr: "Découverte", en: "Discover" }, link: "/galerie", position: 7 },
-    { id: 8, translations: { fr: "Contact", en: "Contact" }, link: "/contact", position: 8 }
-  ],
-  subMenus: {
-    '/chambres': [
-      { label: { fr: 'Chambres & Suites', en: 'Rooms & Suites' }, href: '/chambres' },
-      { label: { fr: 'Services & Boutiques', en: 'Services & Shops' }, href: '/services-boutiques' }
-    ],
-    '/restaurants': [
-      { label: { fr: 'Île Rouge & la Terrasse', en: 'Île Rouge & the Terrace' }, href: '/restaurants#ile-rouge' },
-      { label: { fr: 'Le Bistrot du Carlton', en: 'The Carlton Bistro' }, href: '/restaurants#bistrot' },
-      { label: { fr: 'L\'Oasis de Tana', en: 'Tana Oasis' }, href: '/restaurants#oasis' },
-      { label: { fr: 'L\'Éclair by Carlton', en: 'Carlton Éclair' }, href: '/restaurants#eclair' }
-    ],
-    '/bien-etre-loisirs': [
-      { label: { fr: 'Piscine', en: 'Pool' }, href: '/bien-etre-loisirs#piscine' },
-      { label: { fr: 'Salle de sport', en: 'Gym' }, href: '/bien-etre-loisirs#salle-sport' },
-      { label: { fr: 'Court de tennis', en: 'Tennis Court' }, href: '/bien-etre-loisirs#tennis' },
-      { label: { fr: 'Soins holistique', en: 'Holistic Care' }, href: '/bien-etre-loisirs#soins' }
-    ],
-    '/evenements': [
-      { label: { fr: 'Mariages', en: 'Weddings' }, href: '/evenements#mariages' },
-      { label: { fr: 'Corporate', en: 'Corporate' }, href: '/evenements#corporate' },
-      { label: { fr: 'Célébrations', en: 'Celebrations' }, href: '/evenements#celebrations' },
-      { label: { fr: 'Galas & Lancements', en: 'Galas & Launches' }, href: '/evenements#galas' },
-      { label: { fr: 'Nos espaces', en: 'Our Spaces' }, href: '/evenements#salles' }
-    ],
-    '/galerie': [
-      { label: { fr: 'Galerie', en: 'Gallery' }, href: '/galerie' },
-      { label: { fr: 'Découvrir Antananarivo', en: 'Discover Antananarivo' }, href: '/decouvrir-antananarivo' }
-    ]
-  },
-  languages: [
-    { code: 'FR', flag: '🇫🇷' },
-    { code: 'EN', flag: '🇬🇧' }
-  ],
-  reserveButton: { fr: "Réservez", en: "Reserve" },
-  mobileMenuTitle: { fr: "Menu", en: "Menu" }
-};
-
-// src/components/MainNav.tsx (updated)
-import { useState, useRef, useEffect } from 'react';
+// src/components/Home.tsx
+import HeroSection from '@/components/HeroSection';
+import ParallaxSection from '@/components/ParallaxSection';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Star, Clock, MapPin, Utensils, Camera, Calendar, Sparkles } from 'lucide-react';
+import Footer from '@/components/Footer';
 import { Link } from 'wouter';
-import { ChevronDown, X } from 'lucide-react';
-import { mainNavData } from '@/data/mainNavData';
-import { useLanguage } from './context/LanguageContext';
-import Tooltip from '@/components/Tooltip';
+import { formatAmpersand } from '@/lib/utils/formatAmpersand';
+import { homeData as initialHomeData } from '@/data/homeData';
+import wellnessImage from '@assets/generated_images/Hotel_infinity_pool_wellness_a9857557.png';
+import { useLanguage } from '@/components/context/LanguageContext';
+import { Tooltip, ImageTooltip } from '@/components/Tooltip';
+import { useState, useEffect } from 'react';
 
-const HOVER_CLOSE_DELAY = 200;
-const SECTION_KEY = 'main_nav';
+const SECTION_KEY = 'home';
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('userToken');
@@ -291,73 +26,110 @@ const getAuthHeaders = () => {
   return headers;
 };
 
-const MainNav = () => {
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const { currentLang, toggleLanguage } = useLanguage();
-  const [openMobileAccordion, setOpenMobileAccordion] = useState<string | null>(null);
-  const [navData, setNavData] = useState(mainNavData);
+const Home = () => {
+  const { currentLang } = useLanguage();
+  const lang = currentLang.code.toLowerCase();
+  
+  const [data, setData] = useState(initialHomeData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({});  
-  const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const langKey = currentLang.code.toLowerCase();
-  const { menus, subMenus, languages, reserveButton, mobileMenuTitle } = navData;
-
-  const menuItems = menus
-    .sort((a, b) => a.position - b.position)
-    .map(menu => ({
-      id: menu.id,
-      label: menu.translations[langKey] || menu.translations.fr,
-      href: menu.link,
-      subItems: (subMenus[menu.link as keyof typeof subMenus] || []).map(sub => ({
-        label: sub.label[langKey] || sub.label.fr,
-        href: sub.href
-      }))
-    }));
-
-  // Helper to split mainNavData into dataFr and dataEn structures
-  const splitNavData = (data: typeof mainNavData) => {
-    const dataFr: any = {
-      menus: data.menus.map(m => ({ ...m, translations: { fr: m.translations.fr } })),
-      subMenus: {},
-      reserveButton: { fr: data.reserveButton.fr },
-      mobileMenuTitle: { fr: data.mobileMenuTitle.fr },
+  
+  // Helper to split homeData into dataFr and dataEn structures
+  const splitHomeData = (mixedData: typeof initialHomeData) => {
+    const dataFr = {
+      title: mixedData.title.fr,
+      content: mixedData.content.fr,
+      highlights: mixedData.highlights.map((highlight) => ({
+        icon: highlight.icon,
+        title: highlight.title.fr,
+        description: highlight.description.fr,
+        link: highlight.link,
+        linkText: highlight.linkText.fr,
+        image: highlight.image,
+      })),
+      cta: {
+        title: mixedData.cta.title.fr,
+        description: mixedData.cta.description.fr,
+        primaryButton: mixedData.cta.primaryButton.fr,
+        secondaryButton: mixedData.cta.secondaryButton.fr,
+        primaryLink: mixedData.cta.primaryLink,
+        secondaryLink: mixedData.cta.secondaryLink,
+      },
+      parallaxImage: mixedData.parallaxImage,
     };
 
-    const dataEn: any = {
-      menus: data.menus.map(m => ({ ...m, translations: { en: m.translations.en } })),
-      subMenus: {},
-      reserveButton: { en: data.reserveButton.en },
-      mobileMenuTitle: { en: data.mobileMenuTitle.en },
+    const dataEn = {
+      title: mixedData.title.en,
+      content: mixedData.content.en,
+      highlights: mixedData.highlights.map((highlight) => ({
+        icon: highlight.icon,
+        title: highlight.title.en,
+        description: highlight.description.en,
+        link: highlight.link,
+        linkText: highlight.linkText.en,
+        image: highlight.image,
+      })),
+      cta: {
+        title: mixedData.cta.title.en,
+        description: mixedData.cta.description.en,
+        primaryButton: mixedData.cta.primaryButton.en,
+        secondaryButton: mixedData.cta.secondaryButton.en,
+        primaryLink: mixedData.cta.primaryLink,
+        secondaryLink: mixedData.cta.secondaryLink,
+      },
+      parallaxImage: mixedData.parallaxImage,
     };
-
-    Object.keys(data.subMenus).forEach((key) => {
-      dataFr.subMenus[key] = data.subMenus[key].map((sub: any) => ({ ...sub, label: { fr: sub.label.fr } }));
-      dataEn.subMenus[key] = data.subMenus[key].map((sub: any) => ({ ...sub, label: { en: sub.label.en } }));
-    });
 
     return { dataFr, dataEn };
   };
 
-  // Fetch nav data from backend
+  // Reconstruct mixed data from dataFr and dataEn
+  const reconstructMixed = (dataFr: any, dataEn: any | null) => {
+    if (!dataFr || typeof dataFr !== 'object') {
+      console.warn('Invalid dataFr structure, falling back to default');
+      return initialHomeData;
+    }
+    const enFallback = dataEn || dataFr;
+    const mixed = {
+      title: { fr: dataFr.title, en: enFallback.title || dataFr.title },
+      content: { fr: dataFr.content, en: enFallback.content || dataFr.content },
+      highlights: dataFr.highlights.map((highlightFr: any, i: number) => ({
+        icon: highlightFr.icon || initialHomeData.highlights[i].icon,
+        title: { fr: highlightFr.title, en: enFallback.highlights[i]?.title || highlightFr.title },
+        description: { fr: highlightFr.description, en: enFallback.highlights[i]?.description || highlightFr.description },
+        link: highlightFr.link || initialHomeData.highlights[i].link,
+        linkText: { fr: highlightFr.linkText, en: enFallback.highlights[i]?.linkText || highlightFr.linkText },
+        image: highlightFr.image || initialHomeData.highlights[i].image,
+      })),
+      cta: {
+        title: { fr: dataFr.cta?.title || initialHomeData.cta.title.fr, en: enFallback.cta?.title || dataFr.cta?.title || initialHomeData.cta.title.en },
+        description: { fr: dataFr.cta?.description || initialHomeData.cta.description.fr, en: enFallback.cta?.description || dataFr.cta?.description || initialHomeData.cta.description.en },
+        primaryButton: { fr: dataFr.cta?.primaryButton || initialHomeData.cta.primaryButton.fr, en: enFallback.cta?.primaryButton || dataFr.cta?.primaryButton || initialHomeData.cta.primaryButton.en },
+        secondaryButton: { fr: dataFr.cta?.secondaryButton || initialHomeData.cta.secondaryButton.fr, en: enFallback.cta?.secondaryButton || dataFr.cta?.secondaryButton || initialHomeData.cta.secondaryButton.en },
+        primaryLink: dataFr.cta?.primaryLink || initialHomeData.cta.primaryLink,
+        secondaryLink: dataFr.cta?.secondaryLink || initialHomeData.cta.secondaryLink,
+      },
+      parallaxImage: dataFr.parallaxImage || initialHomeData.parallaxImage,
+    };
+    return mixed;
+  };
+
+  // Fetch home data from backend
   useEffect(() => {
-    const fetchNavData = async () => {
+    const fetchHomeData = async () => {
       try {
         setLoading(true);
         setError(null);
         const headers = getAuthHeaders();
         let response = await fetch(`/api/globalSections?sectionKey=${SECTION_KEY}`, { headers });
-        let data = await response.json();
-
-        let section: any = null;
-
-        if (response.ok && data && data.length > 0) {
-          section = data[0];
-        } else {
+        let sections: any[] = [];
+        if (response.ok) {
+          sections = await response.json();
+        }
+        let section = sections.find((s: any) => s.sectionKey === SECTION_KEY);
+        if (!section) {
           // Table is empty for this sectionKey, create default
-          const { dataFr, dataEn } = splitNavData(mainNavData);
+          const { dataFr, dataEn } = splitHomeData(initialHomeData);
           const createResponse = await fetch('/api/globalSections', {
             method: 'POST',
             headers: { ...headers, 'Content-Type': 'application/json' },
@@ -370,85 +142,48 @@ const MainNav = () => {
           });
 
           if (!createResponse.ok) {
-            throw new Error('Failed to create nav data');
+            throw new Error('Failed to create home data');
           }
 
           const created = await createResponse.json();
           section = created; // Assume POST returns the created object
-          data = [created]; // To match the processing logic
         }
 
         if (section) {
-          const fetchedData = {
-            ...mainNavData,
-            menus: section.dataFr?.menus || mainNavData.menus,
-            subMenus: section.dataFr?.subMenus || mainNavData.subMenus,
-            reserveButton: { ...mainNavData.reserveButton, ...section.dataFr?.reserveButton },
-            mobileMenuTitle: { ...mainNavData.mobileMenuTitle, ...section.dataFr?.mobileMenuTitle },
-          };
-          // Merge English if available
-          if (section.dataEn) {
-            fetchedData.menus = fetchedData.menus.map(menu => ({
-              ...menu,
-              translations: { ...menu.translations, ...section.dataEn.menus?.find((m: any) => m.id === menu.id)?.translations }
-            }));
-            // Similar merge for subMenus, etc.
-            Object.keys(section.dataEn.subMenus || {}).forEach(key => {
-              if (fetchedData.subMenus[key]) {
-                fetchedData.subMenus[key] = fetchedData.subMenus[key].map((sub: any, index: number) => ({
-                  ...sub,
-                  label: { ...sub.label, ...section.dataEn.subMenus[key][index]?.label }
-                }));
-              }
-            });
-            fetchedData.reserveButton = { ...fetchedData.reserveButton, ...section.dataEn?.reserveButton };
-            fetchedData.mobileMenuTitle = { ...fetchedData.mobileMenuTitle, ...section.dataEn?.mobileMenuTitle };
-          }
-          setNavData(fetchedData);
+          const fetchedData = reconstructMixed(section.dataFr, section.dataEn);
+          setData(fetchedData);
+        } else {
+          setData(initialHomeData);
         }
       } catch (err) {
-        console.error('Error fetching nav data:', err);
-        setError('Failed to load navigation data');
+        console.error('Error fetching home data:', err);
+        setError('Failed to load home data');
         // Fallback to default
-        setNavData(mainNavData);
+        setData(initialHomeData);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchNavData();
+    fetchHomeData();
   }, []);
 
-  const updateMainMenu = async (id: number, newFr: string, newEn: string) => {
+  const updateHomeSection = async (updatedMixedData: typeof initialHomeData) => {
     try {
-      const token = localStorage.getItem('userToken');
-      if (!token) {
-        throw new Error('Not authenticated');
-      }
-
-      // First, update local state
-      setNavData(prev => ({
-        ...prev,
-        menus: prev.menus.map(m => 
-          m.id === id ? { ...m, translations: { ...m.translations, fr: newFr, en: newEn } } : m
-        )
-      }));
-
-      // Then, update backend
       const headers = getAuthHeaders();
       const currentSectionResponse = await fetch(`/api/globalSections?sectionKey=${SECTION_KEY}`, { headers });
-      if (!currentSectionResponse.ok) {
-        throw new Error('Failed to fetch current section');
+      let currentData: any[] = [];
+      if (currentSectionResponse.ok) {
+        currentData = await currentSectionResponse.json();
       }
-      const currentData = await currentSectionResponse.json();
-      let currentSection = currentData.length > 0 ? currentData[0] : null;
+      let currentSection = currentData.find((s: any) => s.sectionKey === SECTION_KEY);
 
       if (!currentSection) {
         // Should not happen after initial load, but create if missing
-        const { dataFr, dataEn } = splitNavData(mainNavData);
+        const { dataFr, dataEn } = splitHomeData(initialHomeData);
         const createResponse = await fetch('/api/globalSections', {
           method: 'POST',
-          headers,
+          headers: { ...headers, 'Content-Type': 'application/json' },
           body: JSON.stringify({
             sectionKey: SECTION_KEY,
             dataFr,
@@ -462,18 +197,11 @@ const MainNav = () => {
         currentSection = await createResponse.json();
       }
 
-      const updatedDataFr = {
-        ...currentSection.dataFr,
-        menus: currentSection.dataFr.menus?.map(m => m.id === id ? { ...m, translations: { ...m.translations, fr: newFr } } : m) || mainNavData.menus.map(m => ({ ...m, translations: { fr: m.translations.fr } }))
-      };
-      const updatedDataEn = {
-        ...currentSection.dataEn || {},
-        menus: (currentSection.dataEn?.menus || mainNavData.menus.map(m => ({ ...m, translations: { en: m.translations.en } }))).map(m => m.id === id ? { ...m, translations: { ...m.translations, en: newEn } } : m)
-      };
+      const { dataFr: updatedDataFr, dataEn: updatedDataEn } = splitHomeData(updatedMixedData);
 
       const putResponse = await fetch(`/api/globalSections/${currentSection.id}`, {
         method: 'PUT',
-        headers,
+        headers: { ...headers, 'Content-Type': 'application/json' },
         body: JSON.stringify({
           dataFr: updatedDataFr,
           dataEn: Object.keys(updatedDataEn).length > 0 ? updatedDataEn : null
@@ -481,199 +209,229 @@ const MainNav = () => {
       });
 
       if (!putResponse.ok) {
-        throw new Error('Failed to update main menu');
+        throw new Error('Failed to update home section');
       }
     } catch (err) {
-      console.error('Error updating main menu:', err);
+      console.error('Error updating home section:', err);
       // Revert local state on error if needed, but for simplicity, keep it
     }
   };
-
-  const updateSubMenu = async (mainHref: string, subHref: string, newFr: string, newEn: string) => {
-    try {
-      const token = localStorage.getItem('userToken');
-      if (!token) {
-        throw new Error('Not authenticated');
-      }
-
-      // First, update local state
-      setNavData(prev => {
-        const newSubMenus = { ...prev.subMenus };
-        const mainKey = mainHref as keyof typeof newSubMenus;
-        if (newSubMenus[mainKey]) {
-          newSubMenus[mainKey] = newSubMenus[mainKey].map(item =>
-            item.href === subHref ? { ...item, label: { fr: newFr, en: newEn } } : item
-          );
-        }
-        return { ...prev, subMenus: newSubMenus };
-      });
-
-      // Then, update backend
-      const headers = getAuthHeaders();
-      const currentSectionResponse = await fetch(`/api/globalSections?sectionKey=${SECTION_KEY}`, { headers });
-      if (!currentSectionResponse.ok) {
-        throw new Error('Failed to fetch current section');
-      }
-      const currentData = await currentSectionResponse.json();
-      let currentSection = currentData.length > 0 ? currentData[0] : null;
-
-      if (!currentSection) {
-        // Should not happen after initial load, but create if missing
-        const { dataFr, dataEn } = splitNavData(mainNavData);
-        const createResponse = await fetch('/api/globalSections', {
-          method: 'POST',
-          headers,
-          body: JSON.stringify({
-            sectionKey: SECTION_KEY,
-            dataFr,
-            dataEn,
-            isActive: true,
-          }),
-        });
-        if (!createResponse.ok) {
-          throw new Error('Failed to create section for update');
-        }
-        currentSection = await createResponse.json();
-      }
-
-      const subMenusFr = { ...currentSection.dataFr.subMenus || mainNavData.subMenus };
-      const targetSubFr = subMenusFr[mainHref]?.find((s: any) => s.href === subHref);
-      if (targetSubFr) {
-        targetSubFr.label.fr = newFr;
-      }
-      const updatedDataFr = { ...currentSection.dataFr, subMenus: subMenusFr };
-
-      const subMenusEn = { ...currentSection.dataEn?.subMenus || {} };
-      let targetSubEn = subMenusEn[mainHref]?.find((s: any) => s.href === subHref);
-      if (targetSubEn) {
-        targetSubEn.label.en = newEn;
-      } else {
-        if (!subMenusEn[mainHref]) subMenusEn[mainHref] = [];
-        subMenusEn[mainHref].push({ label: { en: newEn }, href: subHref });
-      }
-      const updatedDataEn = { ...currentSection.dataEn, subMenus: subMenusEn };
-
-      const putResponse = await fetch(`/api/globalSections/${currentSection.id}`, {
-        method: 'PUT',
-        headers,
-        body: JSON.stringify({
-          dataFr: updatedDataFr,
-          dataEn: Object.keys(updatedDataEn).length > 0 ? updatedDataEn : null
-        })
-      });
-
-      if (!putResponse.ok) {
-        throw new Error('Failed to update sub menu');
-      }
-    } catch (err) {
-      console.error('Error updating sub menu:', err);
-      // Revert local state on error if needed
+  
+  const { title: rawTitle, content: rawContent, highlights: rawHighlights, cta: rawCta, parallaxImage } = data;
+  
+  const title = rawTitle[lang];
+  const content = rawContent[lang];
+  
+  const highlights = rawHighlights.map(highlight => ({
+    ...highlight,
+    title: highlight.title[lang],
+    description: highlight.description[lang],
+    linkText: highlight.linkText[lang]
+  }));
+  
+  const processedHighlights = highlights.map((highlight, index) => ({
+    ...highlight,
+    image: highlight.image || wellnessImage // Fallback if needed
+  }));
+  
+  const cta = {
+    ...rawCta,
+    title: rawCta.title[lang],
+    description: rawCta.description[lang],
+    primaryButton: rawCta.primaryButton[lang],
+    secondaryButton: rawCta.secondaryButton[lang]
+  };
+  
+  const getHighlightIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'Sparkles': return <Sparkles className="w-8 h-8" />;
+      case 'Utensils': return <Utensils className="w-8 h-8" />;
+      case 'Calendar': return <Calendar className="w-8 h-8" />;
+      case 'Camera': return <Camera className="w-8 h-8" />;
+      default: return null;
     }
   };
 
-  const handleDropdownToggle = (itemLabel: string) => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current);
-      hoverTimeoutRef.current = null;
-    }
-    setOpenDropdown(openDropdown === itemLabel ? null : itemLabel);
-  };
-
-  const handleDropdownHover = (itemLabel: string, isEntering: boolean) => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current);
-      hoverTimeoutRef.current = null;
-    }
-
-    if (isEntering) {
-      setOpenDropdown(itemLabel);
-    } else {
-      hoverTimeoutRef.current = setTimeout(() => {
-        setOpenDropdown(null);
-      }, HOVER_CLOSE_DELAY);
-    }
-  };
-
-  const handleMobileAccordionToggle = (itemLabel: string) => {
-    setOpenMobileAccordion(openMobileAccordion === itemLabel ? null : itemLabel);
-  };
-
-  const closeMobileMenu = () => {
-    setIsMobileOpen(false);
-    setOpenMobileAccordion(null);
-  };
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as Element;
-      if (openDropdown && !target.closest(`[data-dropdown="${openDropdown}"]`)) {
-        setOpenDropdown(null);
-      }
+  const updateTitle = async (newFr: string, newEn: string) => {
+    // First, update local state
+    const updatedData = {
+      ...data,
+      title: { fr: newFr, en: newEn }
     };
+    setData(updatedData);
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [openDropdown]);
+    // Then, update backend
+    await updateHomeSection(updatedData);
+  };
 
-  // Handle escape key
-  useEffect(() => {
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setOpenDropdown(null);
-        if (isMobileOpen) {
-          closeMobileMenu();
-        }
-      }
+  const updateContent = async (newFr: string, newEn: string) => {
+    // First, update local state
+    const updatedData = {
+      ...data,
+      content: { fr: newFr, en: newEn }
     };
+    setData(updatedData);
 
-    document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
-  }, [isMobileOpen]);
+    // Then, update backend
+    await updateHomeSection(updatedData);
+  };
 
-  // Prevent body scroll when mobile menu is open
-  useEffect(() => {
-    if (isMobileOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
+  const updateHighlightTitle = (index: number) => async (newFr: string, newEn: string) => {
+    // First, update local state
+    const updatedData = {
+      ...data,
+      highlights: data.highlights.map((h, i) => 
+        i === index ? { ...h, title: { fr: newFr, en: newEn } } : h
+      )
     };
-  }, [isMobileOpen]);
+    setData(updatedData);
 
-  // Cleanup hover timeout on unmount
-  useEffect(() => {
-    return () => {
-      if (hoverTimeoutRef.current) {
-        clearTimeout(hoverTimeoutRef.current);
-      }
+    // Then, update backend
+    await updateHomeSection(updatedData);
+  };
+
+  const updateHighlightDescription = (index: number) => async (newFr: string, newEn: string) => {
+    // First, update local state
+    const updatedData = {
+      ...data,
+      highlights: data.highlights.map((h, i) => 
+        i === index ? { ...h, description: { fr: newFr, en: newEn } } : h
+      )
     };
-  }, []);
+    setData(updatedData);
 
-  const currentReserveButton = reserveButton[langKey] || reserveButton.fr;
-  const currentMobileMenuTitle = mobileMenuTitle[langKey] || mobileMenuTitle.fr;
+    // Then, update backend
+    await updateHomeSection(updatedData);
+  };
+
+  const updateHighlightLinkText = (index: number) => async (newFr: string, newEn: string) => {
+    // First, update local state
+    const updatedData = {
+      ...data,
+      highlights: data.highlights.map((h, i) => 
+        i === index ? { ...h, linkText: { fr: newFr, en: newEn } } : h
+      )
+    };
+    setData(updatedData);
+
+    // Then, update backend
+    await updateHomeSection(updatedData);
+  };
+
+  const updateCtaTitle = async (newFr: string, newEn: string) => {
+    // First, update local state
+    const updatedData = {
+      ...data,
+      cta: { ...data.cta, title: { fr: newFr, en: newEn } }
+    };
+    setData(updatedData);
+
+    // Then, update backend
+    await updateHomeSection(updatedData);
+  };
+
+  const updateCtaDescription = async (newFr: string, newEn: string) => {
+    // First, update local state
+    const updatedData = {
+      ...data,
+      cta: { ...data.cta, description: { fr: newFr, en: newEn } }
+    };
+    setData(updatedData);
+
+    // Then, update backend
+    await updateHomeSection(updatedData);
+  };
+
+  const updateCtaPrimaryButton = async (newFr: string, newEn: string) => {
+    // First, update local state
+    const updatedData = {
+      ...data,
+      cta: { ...data.cta, primaryButton: { fr: newFr, en: newEn } }
+    };
+    setData(updatedData);
+
+    // Then, update backend
+    await updateHomeSection(updatedData);
+  };
+
+  const updateCtaSecondaryButton = async (newFr: string, newEn: string) => {
+    // First, update local state
+    const updatedData = {
+      ...data,
+      cta: { ...data.cta, secondaryButton: { fr: newFr, en: newEn } }
+    };
+    setData(updatedData);
+
+    // Then, update backend
+    await updateHomeSection(updatedData);
+  };
+
+  const updateHighlightImage = (index: number) => async (newImageUrl: string) => {
+    // First, update local state
+    const updatedData = {
+      ...data,
+      highlights: data.highlights.map((h, i) => 
+        i === index ? { ...h, image: newImageUrl } : h
+      )
+    };
+    setData(updatedData);
+
+    // Then, update backend
+    await updateHomeSection(updatedData);
+  };
+
+  const updateParallaxImage = async (newImageUrl: string) => {
+    // First, update local state
+    const updatedData = {
+      ...data,
+      parallaxImage: newImageUrl
+    };
+    setData(updatedData);
+
+    // Then, update backend
+    await updateHomeSection(updatedData);
+  };
 
   if (loading) {
     return (
-      <nav className="sticky top-0 z-50 bg-[#0f1115]/90 backdrop-blur shadow-sm border-b border-white/5">
-        <div className="mx-auto max-w-7xl flex items-center justify-between px-4 py-2">
-          <div className="flex items-center">
-            <div className="animate-pulse bg-white/10 rounded w-32 h-5" />
-          </div>
-          <div className="hidden lg:flex items-center gap-4 flex-1 justify-center">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="animate-pulse bg-white/10 rounded w-16 h-4" />
-            ))}
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="animate-pulse bg-white/10 rounded w-20 h-8" />
-            <div className="animate-pulse bg-white/10 rounded w-20 h-8" />
-            <button className="lg:hidden p-2 animate-pulse bg-white/10 rounded w-8 h-8" />
-          </div>
-        </div>
-      </nav>
+      <div className="min-h-screen bg-background">
+        <main>
+          <HeroSection />
+          <section className="py-20 bg-card/30">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center mb-16">
+                <Skeleton className="h-12 w-64 mx-auto mb-6" />
+                <Skeleton className="h-1 w-24 mx-auto mb-6" />
+                <Skeleton className="h-8 w-full max-w-4xl mx-auto" />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="space-y-4">
+                    <Skeleton className="h-48 w-full" />
+                    <Skeleton className="h-6 w-3/4" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-10 w-full" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+          <section className="relative h-[70vh] bg-gray-900">
+            <Skeleton className="absolute inset-0" />
+          </section>
+          <section className="py-20 bg-gradient-to-r from-primary/10 to-accent/10">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+              <Skeleton className="h-12 w-80 mx-auto mb-6" />
+              <Skeleton className="h-6 w-full max-w-md mx-auto mb-8" />
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Skeleton className="h-12 w-40" />
+                <Skeleton className="h-12 w-48" />
+              </div>
+            </div>
+          </section>
+        </main>
+        <Footer />
+      </div>
     );
   }
 
@@ -682,274 +440,971 @@ const MainNav = () => {
   }
 
   return (
-    <nav 
-      className="sticky top-0 z-50 bg-[#0f1115]/90 backdrop-blur shadow-sm border-b border-white/5"
-      aria-label="Navigation principale"
-    >
-      <div className="mx-auto max-w-7xl flex items-center justify-between px-4 py-2">
+    <div className="min-h-screen bg-background">
+      <main>
+        <HeroSection />
         
-        {/* Logo/Brand */}
-        <div className="flex items-center">
-          <Link 
-            href="/" 
-            className="text-xl font-serif font-bold text-white hover:text-[#f2c451] transition-colors"
-          >
-            Carlton Madagascar
-          </Link>
-        </div>
-
-        {/* Desktop Navigation */}
-        <div className="hidden lg:flex items-center gap-4 flex-1 justify-center">
-          {menuItems.map((item) => {
-            const menuItem = navData.menus.find(m => m.id === item.id);
-            const frLabel = menuItem?.translations.fr || '';
-            const enLabel = menuItem?.translations.en || '';
-            return (
+        {/* Présentation de l'hôtel */}
+        <section className="py-20 bg-card/30">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-6">
+                <Tooltip 
+                  frLabel={data.title.fr} 
+                  enLabel={data.title.en} 
+                  onSave={updateTitle}
+                >
+                  {formatAmpersand(title)}
+                </Tooltip>
+              </h2>
+              <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
               <div 
-                key={item.id} 
-                className="relative"
-                data-dropdown={item.label}
+                className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed prose prose-lg dark:prose-invert mx-auto"
               >
-                {item.subItems.length > 0 ? (
-                  <Tooltip frLabel={frLabel} enLabel={enLabel} onSave={(fr, en) => updateMainMenu(item.id, fr, en)}>
-                    <button
-                      onClick={() => handleDropdownToggle(item.label)}
-                      onMouseEnter={() => handleDropdownHover(item.label, true)}
-                      onMouseLeave={() => handleDropdownHover(item.label, false)}
-                      className="flex items-center gap-1 text-sm text-white/80 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-[#0f1115] rounded px-2 py-1.5"
-                      aria-expanded={openDropdown === item.label}
-                      aria-controls={`dropdown-${item.label}`}
-                      aria-haspopup="true"
-                    >
-                      {item.label}
-                      <ChevronDown 
-                        className={`w-3 h-3 transition-transform ${
-                          openDropdown === item.label ? 'rotate-180' : ''
-                        }`} 
-                      />
-                    </button>
-                  </Tooltip>
-                ) : (
-                  <Tooltip frLabel={frLabel} enLabel={enLabel} onSave={(fr, en) => updateMainMenu(item.id, fr, en)}>
-                    <Link
-                      href={item.href}
-                      className="flex items-center gap-1 text-sm text-white/80 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-[#0f1115] rounded px-2 py-1.5"
-                    >
-                      {item.label}
-                    </Link>
-                  </Tooltip>
-                )}
-
-                {/* Desktop Dropdown */}
-                {item.subItems.length > 0 && openDropdown === item.label && (
-                  <div
-                    id={`dropdown-${item.label}`}
-                    ref={(el) => (dropdownRefs.current[item.label] = el)}
-                    className="absolute left-0 mt-2 min-w-[260px] rounded-xl border border-white/10 bg-[#151821] p-3 shadow-xl"
-                    onMouseEnter={() => handleDropdownHover(item.label, true)}
-                    onMouseLeave={() => handleDropdownHover(item.label, false)}
-                  >
-                    <div className="space-y-1">
-                      {item.subItems.map((subItem) => {
-                        const subMenuItem = navData.subMenus[item.href as keyof typeof navData.subMenus]?.find(s => s.href === subItem.href);
-                        const subFrLabel = subMenuItem?.label.fr || '';
-                        const subEnLabel = subMenuItem?.label.en || '';
-                        return (
-                          <Tooltip
-                            key={subItem.href}
-                            frLabel={subFrLabel}
-                            enLabel={subEnLabel}
-                            onSave={(fr, en) => updateSubMenu(item.href, subItem.href, fr, en)}
-                          >
-                            <Link
-                              href={subItem.href}
-                              className="block px-3 py-2 text-sm text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
-                              onClick={() => {
-                                if (hoverTimeoutRef.current) {
-                                  clearTimeout(hoverTimeoutRef.current);
-                                }
-                                setOpenDropdown(null);
-                              }}
-                            >
-                              {subItem.label}
-                            </Link>
-                          </Tooltip>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Right Side Actions */}
-        <div className="flex items-center gap-3">
-          
-          {/* Language Toggle */}
-          <button
-            onClick={toggleLanguage}
-            className="flex items-center gap-1 px-3 py-1.5 text-sm text-white/80 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-[#0f1115] rounded-lg"
-            aria-label={`Changer la langue vers ${currentLang.code === 'FR' ? 'English' : 'Français'}`}
-          >
-            🌐
-            <span className="font-medium">{currentLang.code}</span>
-          </button>
-
-          {/* Reserve Button */}
-          <Link
-            href="/contact"
-            className="inline-flex items-center rounded-lg bg-[#f2c451] px-4 py-2 font-semibold text-black hover:brightness-95 active:scale-[.98] transition-all focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-[#0f1115]"
-          >
-            {currentReserveButton}
-          </Link>
-
-          {/* Mobile Menu Toggle */}
-          <button
-            onClick={() => setIsMobileOpen(!isMobileOpen)}
-            className="lg:hidden p-2 text-white/80 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-[#0f1115] rounded"
-            aria-label={isMobileOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
-            aria-expanded={isMobileOpen}
-          >
-            {isMobileOpen ? (
-              <X className="w-5 h-5" />
-            ) : (
-              <span className="text-lg">☰</span>
-            )}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Drawer */}
-      {isMobileOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
-          {/* Overlay */}
-          <div 
-            className="fixed inset-0 bg-black/50"
-            onClick={closeMobileMenu}
-            aria-hidden="true"
-          />
-          
-          {/* Drawer */}
-          <div className="fixed inset-y-0 right-0 w-full max-w-sm bg-[#0f1115] shadow-xl">
-            <div className="flex h-full flex-col">
-              
-              {/* Header */}
-              <div className="flex items-center justify-between p-4 border-b border-white/10">
-                <span className="text-lg font-serif font-bold text-white">{currentMobileMenuTitle}</span>
-                <button
-                  onClick={closeMobileMenu}
-                  className="p-2 text-white/80 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-400 rounded"
-                  aria-label="Fermer le menu"
+                <Tooltip 
+                  frLabel={data.content.fr} 
+                  enLabel={data.content.en} 
+                  onSave={updateContent}
                 >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              {/* Navigation Items */}
-              <div className="flex-1 overflow-y-auto p-4">
-                <div className="space-y-2">
-                  {menuItems.map((item) => {
-                    const menuItem = navData.menus.find(m => m.id === item.id);
-                    const frLabel = menuItem?.translations.fr || '';
-                    const enLabel = menuItem?.translations.en || '';
-                    return (
-                      <div key={item.id}>
-                        {item.subItems.length > 0 ? (
-                          <>
-                            <Tooltip frLabel={frLabel} enLabel={enLabel} onSave={(fr, en) => updateMainMenu(item.id, fr, en)}>
-                              <button
-                                onClick={() => handleMobileAccordionToggle(item.label)}
-                                className="flex w-full items-center justify-between px-3 py-3 text-left text-base text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                                aria-expanded={openMobileAccordion === item.label}
-                              >
-                                <span className="flex items-center gap-2">
-                                  {item.label}
-                                </span>
-                                <ChevronDown 
-                                  className={`w-4 h-4 transition-transform ${
-                                    openMobileAccordion === item.label ? 'rotate-180' : ''
-                                  }`} 
-                                />
-                              </button>
-                            </Tooltip>
-                            
-                            {/* Mobile Accordion Content */}
-                            {openMobileAccordion === item.label && (
-                              <div className="ml-4 mt-1 space-y-1">
-                                {item.subItems.map((subItem) => {
-                                  const subMenuItem = navData.subMenus[item.href as keyof typeof navData.subMenus]?.find(s => s.href === subItem.href);
-                                  const subFrLabel = subMenuItem?.label.fr || '';
-                                  const subEnLabel = subMenuItem?.label.en || '';
-                                  return (
-                                    <Tooltip
-                                      key={subItem.href}
-                                      frLabel={subFrLabel}
-                                      enLabel={subEnLabel}
-                                      onSave={(fr, en) => updateSubMenu(item.href, subItem.href, fr, en)}
-                                    >
-                                      <Link
-                                        href={subItem.href}
-                                        onClick={closeMobileMenu}
-                                        className="block px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
-                                      >
-                                        {subItem.label}
-                                      </Link>
-                                    </Tooltip>
-                                  );
-                                })}
-                              </div>
-                            )}
-                          </>
-                        ) : (
-                          <Tooltip frLabel={frLabel} enLabel={enLabel} onSave={(fr, en) => updateMainMenu(item.id, fr, en)}>
-                            <Link
-                              href={item.href}
-                              onClick={closeMobileMenu}
-                              className="flex items-center gap-2 px-3 py-3 text-base text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                            >
-                              {item.label}
-                            </Link>
-                          </Tooltip>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Footer Actions */}
-              <div className="p-4 border-t border-white/10 space-y-3">
-                
-                {/* Language Toggle */}
-                <button
-                  onClick={toggleLanguage}
-                  className="flex w-full items-center justify-center gap-2 px-3 py-2 text-sm text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                >
-                  🌐
-                  <span>Langue: {currentLang.code}</span>
-                </button>
-
-                {/* Reserve Button */}
-                <Link
-                  href="/contact"
-                  onClick={closeMobileMenu}
-                  className="flex w-full items-center justify-center rounded-lg bg-[#f2c451] px-4 py-3 font-semibold text-black hover:brightness-95 active:scale-[.98] transition-all focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                >
-                  {currentReserveButton}
-                </Link>
+                  <span dangerouslySetInnerHTML={{ __html: content }} />
+                </Tooltip>
               </div>
             </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+              {processedHighlights.map((highlight, index) => (
+                <Card key={index} className="overflow-hidden hover-elevate transition-all duration-300">
+                  <ImageTooltip imageUrl={data.highlights[index].image || wellnessImage} onSave={updateHighlightImage(index)}>
+                    <div className="relative h-48 overflow-hidden">
+                      <img 
+                        src={highlight.image} 
+                        alt={highlight.title}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                      <div className="absolute top-4 left-4">
+                        <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/20 backdrop-blur-sm rounded-full">
+                          <div className="text-primary">
+                            {getHighlightIcon(highlight.icon)}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ImageTooltip>
+                  <CardContent className="p-6">
+                    <CardTitle className="text-xl font-serif text-foreground mb-3">
+                      <Tooltip 
+                        frLabel={data.highlights[index].title.fr} 
+                        enLabel={data.highlights[index].title.en} 
+                        onSave={updateHighlightTitle(index)}
+                      >
+                        {formatAmpersand(highlight.title)}
+                      </Tooltip>
+                    </CardTitle>
+                    <p className="text-muted-foreground mb-6 leading-relaxed">
+                      <Tooltip 
+                        frLabel={data.highlights[index].description.fr} 
+                        enLabel={data.highlights[index].description.en} 
+                        onSave={updateHighlightDescription(index)}
+                      >
+                        {highlight.description}
+                      </Tooltip>
+                    </p>
+                    <Link href={highlight.link}>
+                      <Button variant="outline" className="w-full">
+                        <Tooltip 
+                          frLabel={data.highlights[index].linkText.fr} 
+                          enLabel={data.highlights[index].linkText.en} 
+                          onSave={updateHighlightLinkText(index)}
+                        >
+                          {highlight.linkText}
+                        </Tooltip>
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
-    </nav>
+        </section>
+
+        {/* Section Parallax - Bien-être */}
+        <ImageTooltip imageUrl={parallaxImage || wellnessImage} onSave={updateParallaxImage}>
+          <ParallaxSection
+            backgroundImage={parallaxImage || wellnessImage}
+            parallaxSpeed={0.5}
+            minHeight="70vh"
+            overlay={true}
+            overlayOpacity={0.4}
+            className="flex items-center"
+          >
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+            </div>
+          </ParallaxSection>
+        </ImageTooltip>
+
+        {/* Call to Action final */}
+        <section className="py-20 bg-gradient-to-r from-primary/10 to-accent/10">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-6">
+              <Tooltip 
+                frLabel={data.cta.title.fr} 
+                enLabel={data.cta.title.en} 
+                onSave={updateCtaTitle}
+              >
+                {cta.title}
+              </Tooltip>
+            </h2>
+            <p className="text-lg text-muted-foreground mb-8">
+              <Tooltip 
+                frLabel={data.cta.description.fr} 
+                enLabel={data.cta.description.en} 
+                onSave={updateCtaDescription}
+              >
+                {cta.description}
+              </Tooltip>
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href={cta.primaryLink}>
+                <Button size="lg" className="w-full sm:w-auto">
+                  <Tooltip 
+                    frLabel={data.cta.primaryButton.fr} 
+                    enLabel={data.cta.primaryButton.en} 
+                    onSave={updateCtaPrimaryButton}
+                  >
+                    {cta.primaryButton}
+                  </Tooltip>
+                </Button>
+              </Link>
+              <Link href={cta.secondaryLink}>
+                <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                  <Tooltip 
+                    frLabel={data.cta.secondaryButton.fr} 
+                    enLabel={data.cta.secondaryButton.en} 
+                    onSave={updateCtaSecondaryButton}
+                  >
+                    {cta.secondaryButton}
+                  </Tooltip>
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </div>
   );
 };
 
-export default MainNav;
+export default Home;
 
+// src/data/contactData.ts
+export const contactData = {
+  hero: {
+    title: {
+      fr: "Nous Contacter",
+      en: "Contact Us"
+    },
+    description: {
+      fr: "Notre équipe est à votre écoute pour répondre à toutes vos questions et vous accompagner",
+      en: "Our team is here to answer all your questions and assist you"
+    }
+  },
+  contactInfo: [
+    {
+      icon: "Phone",
+      title: {
+        fr: "Téléphone",
+        en: "Phone"
+      },
+      details: [
+        {
+          fr: "+261 20 22 260 60",
+          en: "+261 20 22 260 60"
+        },
+        {
+          fr: "Disponible 24h/24",
+          en: "Available 24/7"
+        }
+      ],
+      action: {
+        fr: "Appeler maintenant",
+        en: "Call now"
+      }
+    },
+    {
+      icon: "Mail",
+      title: {
+        fr: "Email",
+        en: "Email"
+      },
+      details: [
+        {
+          fr: "contact@carlton.mg",
+          en: "contact@carlton.mg"
+        },
+        {
+          fr: "Réponse sous 2h",
+          en: "Response within 2h"
+        }
+      ],
+      action: {
+        fr: "Envoyer un email",
+        en: "Send an email"
+      }
+    },
+    {
+      icon: "MapPin",
+      title: {
+        fr: "Adresse",
+        en: "Address"
+      },
+      details: [
+        {
+          fr: "Rue Pierre Stibbe Anosy Po BOX 959",
+          en: "Rue Pierre Stibbe Anosy Po BOX 959"
+        },
+        {
+          fr: "Antananarivo 101, Madagascar",
+          en: "Antananarivo 101, Madagascar"
+        }
+      ],
+      action: {
+        fr: "Voir sur la carte",
+        en: "View on map"
+      }
+    },
+    {
+      icon: "Clock",
+      title: {
+        fr: "Horaires",
+        en: "Hours"
+      },
+      details: [
+        {
+          fr: "Réception 24h/24",
+          en: "Reception 24/7"
+        },
+        {
+          fr: "Conciergerie toujours disponible",
+          en: "Concierge always available"
+        }
+      ],
+      action: {
+        fr: "Plus d'infos",
+        en: "More info"
+      }
+    }
+  ],
+  form: {
+    title: {
+      fr: "Envoyez-nous un Message",
+      en: "Send us a Message"
+    },
+    subtitle: {
+      fr: "Remplissez ce formulaire, nous vous répondrons rapidement",
+      en: "Fill out this form, we will respond quickly"
+    },
+    departments: [
+      { value: "reservation", label: { fr: "Réservations", en: "Reservations" } },
+      { value: "restaurant", label: { fr: "Restaurants", en: "Restaurants" } },
+      { value: "evenement", label: { fr: "Événements", en: "Events" } },
+      { value: "concierge", label: { fr: "Conciergerie", en: "Concierge" } },
+      { value: "spa", label: { fr: "Loisirs & Bien-être", en: "Leisure & Wellness" } },
+      { value: "direction", label: { fr: "Direction", en: "Management" } },
+      { value: "autre", label: { fr: "Autre demande", en: "Other request" } }
+    ],
+    fields: {
+      firstName: {
+        label: {
+          fr: "Prénom *",
+          en: "First Name *"
+        },
+        placeholder: {
+          fr: "Votre prénom",
+          en: "Your first name"
+        },
+        validation: {
+          min: {
+            fr: "Le prénom doit contenir au moins 2 caractères",
+            en: "First name must contain at least 2 characters"
+          }
+        }
+      },
+      lastName: {
+        label: {
+          fr: "Nom *",
+          en: "Last Name *"
+        },
+        placeholder: {
+          fr: "Votre nom",
+          en: "Your last name"
+        },
+        validation: {
+          min: {
+            fr: "Le nom doit contenir au moins 2 caractères",
+            en: "Last name must contain at least 2 characters"
+          }
+        }
+      },
+      email: {
+        label: {
+          fr: "Email *",
+          en: "Email *"
+        },
+        placeholder: {
+          fr: "votre@email.com",
+          en: "your@email.com"
+        },
+        validation: {
+          email: {
+            fr: "Veuillez saisir une adresse email valide",
+            en: "Please enter a valid email address"
+          }
+        }
+      },
+      phone: {
+        label: {
+          fr: "Téléphone *",
+          en: "Phone *"
+        },
+        placeholder: {
+          fr: "+261 XX XX XXX XX",
+          en: "+261 XX XX XXX XX"
+        },
+        validation: {
+          min: {
+            fr: "Le numéro de téléphone doit contenir au moins 8 chiffres",
+            en: "Phone number must contain at least 8 digits"
+          }
+        }
+      },
+      subject: {
+        label: {
+          fr: "Sujet de votre demande *",
+          en: "Subject of your request *"
+        },
+        placeholder: {
+          fr: "Sélectionnez un sujet",
+          en: "Select a subject"
+        },
+        validation: {
+          min: {
+            fr: "Veuillez sélectionner un sujet",
+            en: "Please select a subject"
+          }
+        }
+      },
+      arrivalDate: {
+        label: {
+          fr: "Date d'arrivée",
+          en: "Arrival Date"
+        }
+      },
+      departureDate: {
+        label: {
+          fr: "Date de départ",
+          en: "Departure Date"
+        }
+      },
+      guests: {
+        label: {
+          fr: "Nombre d'invités",
+          en: "Number of guests"
+        },
+        placeholder: {
+          fr: "2",
+          en: "2"
+        }
+      },
+      message: {
+        label: {
+          fr: "Votre message *",
+          en: "Your message *"
+        },
+        placeholder: {
+          fr: "Décrivez votre demande en détail...",
+          en: "Describe your request in detail..."
+        },
+        validation: {
+          min: {
+            fr: "Le message doit contenir au moins 10 caractères",
+            en: "Message must contain at least 10 characters"
+          }
+        }
+      }
+    },
+    submitButton: {
+      fr: "Envoyer le message",
+      en: "Send message"
+    }
+  },
+  services: {
+    title: {
+      fr: "Nos Services",
+      en: "Our Services"
+    },
+    subtitle: {
+      fr: "À votre disposition pour un séjour parfait",
+      en: "At your disposal for a perfect stay"
+    },
+    list: [
+      {
+        title: {
+          fr: "Réservations",
+          en: "Reservations"
+        },
+        description: {
+          fr: "Chambres, restaurants, événements",
+          en: "Rooms, restaurants, events"
+        },
+        icon: "Calendar"
+      },
+      {
+        title: {
+          fr: "Conciergerie",
+          en: "Concierge"
+        },
+        description: {
+          fr: "Excursions, transports, conseils",
+          en: "Excursions, transportation, advice"
+        },
+        icon: "Users"
+      },
+      {
+        title: {
+          fr: "Transferts Aéroport",
+          en: "Airport Transfers"
+        },
+        description: {
+          fr: "Service de navette premium",
+          en: "Premium shuttle service"
+        },
+        icon: "Plane"
+      },
+      {
+        title: {
+          fr: "Parking",
+          en: "Parking"
+        },
+        description: {
+          fr: "Service de parking sécurisé",
+          en: "Secure parking service"
+        },
+        icon: "Car"
+      }
+    ]
+  },
+  practicalInfo: {
+    title: {
+      fr: "Informations Pratiques",
+      en: "Practical Information"
+    },
+    arrival: {
+      title: {
+        fr: "Arrivée & Départ",
+        en: "Arrival & Departure"
+      },
+      details: [
+        {
+          fr: "Check-in : 15h00",
+          en: "Check-in: 3:00 PM"
+        },
+        {
+          fr: "Check-out : 12h00",
+          en: "Check-out: 12:00 PM"
+        },
+        {
+          fr: "Early check-in/late check-out sur demande",
+          en: "Early check-in/late check-out on request"
+        }
+      ]
+    },
+    airport: {
+      title: {
+        fr: "Aéroport",
+        en: "Airport"
+      },
+      details: [
+        {
+          fr: "Distance : 30 minutes en voiture",
+          en: "Distance: 30 minutes by car"
+        },
+        {
+          fr: "Navette privée disponible",
+          en: "Private shuttle available"
+        },
+        {
+          fr: "Service de transfert VIP",
+          en: "VIP transfer service"
+        }
+      ]
+    },
+    languages: {
+      title: {
+        fr: "Langues parlées",
+        en: "Languages Spoken"
+      },
+      list: [
+        { fr: "Français", en: "French" },
+        { fr: "Anglais", en: "English" },
+        { fr: "Malgache", en: "Malagasy" },
+        { fr: "Italien", en: "Italian" }
+      ]
+    },
+    location: {
+      title: {
+        fr: "Notre Emplacement",
+        en: "Our Location"
+      },
+      subtitle: {
+        fr: "Carlton Madagascar, au cœur d'Antananarivo",
+        en: "Carlton Madagascar, in the heart of Antananarivo"
+      },
+      address: {
+        fr: "Rue Pierre Stibbe Anosy Po BOX 959<br/>Antananarivo 101, Madagascar",
+        en: "Rue Pierre Stibbe Anosy Po BOX 959<br/>Antananarivo 101, Madagascar"
+      },
+      mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3823.8755892545847!2d47.52089897509746!3d-18.91384738248647!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x21f07e7637d2b2d3%3A0x4b9f0b1d3c6b4b5a!2sRue%20Pierre%20Stibbe%2C%20Antananarivo%2C%20Madagascar!5e0!3m2!1sen!2s!4v1632468352847!5m2!1sen!2s",
+      mapTitle: {
+        fr: "Emplacement de l'hôtel Carlton Madagascar",
+        en: "Carlton Madagascar Hotel Location"
+      },
+      directionsButton: {
+        fr: "Obtenir l'itinéraire",
+        en: "Get directions"
+      }
+    }
+  }
+};
 
-// Code a modifier
+// src/components/Contact.tsx
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Phone, Mail, MapPin, Clock, Car, Plane, Users, Calendar, MessageCircle, Send } from 'lucide-react';
+import Footer from '@/components/Footer';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { formatAmpersand } from '@/lib/utils/formatAmpersand';
+import { contactData } from '@/data/contactData';
+import { useLanguage } from '@/components/context/LanguageContext';
 
+const Contact = () => {
+  const { currentLang } = useLanguage();
+  const lang = currentLang.code.toLowerCase();
+  
+  const { hero, contactInfo, form, services, practicalInfo } = contactData;
+  
+  const getText = (textObj: { fr: string; en: string }): string => textObj[lang as keyof typeof textObj];
+
+  const validationMessages = {
+    firstName: { min: getText(form.fields.firstName.validation.min) },
+    lastName: { min: getText(form.fields.lastName.validation.min) },
+    email: { email: getText(form.fields.email.validation.email) },
+    phone: { min: getText(form.fields.phone.validation.min) },
+    subject: { min: getText(form.fields.subject.validation.min) },
+    message: { min: getText(form.fields.message.validation.min) }
+  };
+
+  const contactFormSchema = z.object({
+    firstName: z.string().min(2, validationMessages.firstName.min),
+    lastName: z.string().min(2, validationMessages.lastName.min),
+    email: z.string().email(validationMessages.email.email),
+    phone: z.string().min(8, validationMessages.phone.min),
+    subject: z.string().min(1, validationMessages.subject.min),
+    message: z.string().min(10, validationMessages.message.min),
+    arrivalDate: z.string().optional(),
+    departureDate: z.string().optional(),
+    guests: z.string().optional()
+  });
+
+  type ContactFormData = z.infer<typeof contactFormSchema>;
+
+  const formInstance = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      subject: "",
+      message: "",
+      arrivalDate: "",
+      departureDate: "",
+      guests: ""
+    }
+  });
+
+  const onSubmit = (data: ContactFormData) => {
+    console.log("Formulaire soumis:", data);
+    // Simulation d'envoi sans backend
+  };
+
+  const getContactIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'Phone': return <Phone className="w-6 h-6" />;
+      case 'Mail': return <Mail className="w-6 h-6" />;
+      case 'MapPin': return <MapPin className="w-6 h-6" />;
+      case 'Clock': return <Clock className="w-6 h-6" />;
+      default: return null;
+    }
+  };
+
+  const getServiceIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'Calendar': return <Calendar className="w-8 h-8" />;
+      case 'Users': return <Users className="w-8 h-8" />;
+      case 'Plane': return <Plane className="w-8 h-8" />;
+      case 'Car': return <Car className="w-8 h-8" />;
+      default: return null;
+    }
+  };
+
+  const getLangText = (langObj: { fr: string; en: string } | string, fallback?: string): string => {
+    if (typeof langObj === 'string') return langObj;
+    return getText(langObj);
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      
+      {/* Hero Section */}
+      <section className="pt-20 bg-gradient-to-r from-background to-card/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <div className="text-center">
+            <h1 className="text-5xl md:text-6xl font-serif font-bold text-foreground mb-6">
+              {getText(hero.title)}
+            </h1>
+            <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              {getText(hero.description)}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Information */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            {contactInfo.map((info, index) => (
+              <Card key={index} className="text-center hover-elevate">
+                <CardContent className="pt-6">
+                  <div className="text-primary mb-4 flex justify-center">
+                    {getContactIcon(info.icon)}
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground mb-3">
+                    {getText(info.title)}
+                  </h3>
+                  <div className="space-y-1 mb-4">
+                    {info.details.map((detail, idx) => (
+                      <p key={idx} className="text-muted-foreground text-sm">
+                        {getText(detail)}
+                      </p>
+                    ))}
+                  </div>
+                  <Button variant="outline" size="sm" data-testid={`button-contact-${index}`}>
+                    {getText(info.action)}
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Form & Services */}
+      <section className="py-20 bg-card/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Contact Form */}
+            <Card className="hover-elevate">
+              <CardHeader>
+                <CardTitle className="text-2xl font-serif text-foreground flex items-center gap-2">
+                  <MessageCircle className="w-6 h-6 text-primary" />
+                  {getText(form.title)}
+                </CardTitle>
+                <p className="text-muted-foreground">
+                  {getText(form.subtitle)}
+                </p>
+              </CardHeader>
+              <CardContent>
+                <Form {...formInstance}>
+                  <form onSubmit={formInstance.handleSubmit(onSubmit)} className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={formInstance.control}
+                        name="firstName"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>{getText(form.fields.firstName.label)}</FormLabel>
+                            <FormControl>
+                              <Input placeholder={getText(form.fields.firstName.placeholder)} {...field} data-testid="input-firstname" />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={formInstance.control}
+                        name="lastName"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>{getText(form.fields.lastName.label)}</FormLabel>
+                            <FormControl>
+                              <Input placeholder={getText(form.fields.lastName.placeholder)} {...field} data-testid="input-lastname" />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <FormField
+                        control={formInstance.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>{getText(form.fields.email.label)}</FormLabel>
+                            <FormControl>
+                              <Input type="email" placeholder={getText(form.fields.email.placeholder)} {...field} data-testid="input-email" />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={formInstance.control}
+                        name="phone"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>{getText(form.fields.phone.label)}</FormLabel>
+                            <FormControl>
+                              <Input placeholder={getText(form.fields.phone.placeholder)} {...field} data-testid="input-phone" />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    <FormField
+                      control={formInstance.control}
+                      name="subject"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{getText(form.fields.subject.label)}</FormLabel>
+                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl>
+                              <SelectTrigger data-testid="select-subject">
+                                <SelectValue placeholder={getText(form.fields.subject)} />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {form.departments.map((dept) => (
+                                <SelectItem key={dept.value} value={dept.value}>
+                                  {getText(dept.label)}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <FormField
+                        control={formInstance.control}
+                        name="arrivalDate"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>{getText(form.fields.arrivalDate.label)}</FormLabel>
+                            <FormControl>
+                              <Input type="date" {...field} data-testid="input-arrival" />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={formInstance.control}
+                        name="departureDate"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>{getText(form.fields.departureDate.label)}</FormLabel>
+                            <FormControl>
+                              <Input type="date" {...field} data-testid="input-departure" />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={formInstance.control}
+                        name="guests"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>{getText(form.fields.guests.label)}</FormLabel>
+                            <FormControl>
+                              <Input type="number" placeholder={getText(form.fields.guests.placeholder)} {...field} data-testid="input-guests" />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    <FormField
+                      control={formInstance.control}
+                      name="message"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{getText(form.fields.message.label)}</FormLabel>
+                          <FormControl>
+                            <Textarea 
+                              placeholder={getText(form.fields.message.placeholder)}
+                              className="min-h-[120px]"
+                              {...field}
+                              data-testid="textarea-message"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <Button type="submit" className="w-full" data-testid="button-submit-contact">
+                      <Send className="w-4 h-4 mr-2" />
+                      {getText(form.submitButton)}
+                    </Button>
+                  </form>
+                </Form>
+              </CardContent>
+            </Card>
+
+            {/* Services & Additional Info */}
+            <div className="space-y-8">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-xl font-serif text-foreground">
+                    {getText(services.title)}
+                  </CardTitle>
+                  <p className="text-muted-foreground">
+                    {getText(services.subtitle)}
+                  </p>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {services.list.map((service, index) => (
+                      <div key={index} className="flex items-start gap-3">
+                        <div className="text-primary flex-shrink-0">
+                          {getServiceIcon(service.icon)}
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-foreground mb-1">
+                            {getText(service.title)}
+                          </h4>
+                          <p className="text-sm text-muted-foreground">
+                            {getText(service.description)}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-xl font-serif text-foreground">
+                    {getText(practicalInfo.title)}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-2">{formatAmpersand(getText(practicalInfo.arrival.title))}</h4>
+                    <div className="space-y-1 text-sm text-muted-foreground">
+                      {practicalInfo.arrival.details.map((detail, idx) => (
+                        <p key={idx}>• {getText(detail)}</p>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-2">{getText(practicalInfo.airport.title)}</h4>
+                    <div className="space-y-1 text-sm text-muted-foreground">
+                      {practicalInfo.airport.details.map((detail, idx) => (
+                        <p key={idx}>• {getText(detail)}</p>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-2">{getText(practicalInfo.languages.title)}</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {practicalInfo.languages.list.map((lang, idx) => (
+                        <Badge key={idx} variant="secondary">{getLangText(lang)}</Badge>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Hotel Location Map */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-xl font-serif text-foreground">
+                    {getText(practicalInfo.location.title)}
+                  </CardTitle>
+                  <p className="text-muted-foreground">
+                    {getText(practicalInfo.location.subtitle)}
+                  </p>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3 mb-4">
+                      <MapPin className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="font-semibold text-foreground">Adresse complète</p>
+                        <p className="text-sm text-muted-foreground" dangerouslySetInnerHTML={{ __html: getText(practicalInfo.location.address) }} />
+                      </div>
+                    </div>
+                    
+                    <div className="w-full h-64 bg-card rounded-lg overflow-hidden border">
+                      <iframe
+                        src={practicalInfo.location.mapUrl}
+                        width="100%"
+                        height="256"
+                        style={{ border: 0 }}
+                        allowFullScreen
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        title={getText(practicalInfo.location.mapTitle)}
+                        data-testid="map-hotel-location"
+                      ></iframe>
+                    </div>
+                    
+                    <div className="text-center">
+                      <Button variant="outline" data-testid="button-get-directions">
+                        {getText(practicalInfo.location.directionsButton)}
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default Contact;

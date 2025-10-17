@@ -102,7 +102,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // USERS ROUTES (Admin only for CRUD, but login/register public)
+  // USERS ROUTES (Admin only for all operations, login/register public)
   app.get("/api/users", requireAuth, async (req, res) => {
     try {
       const users = await storage.getAllUsers();
@@ -154,8 +154,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // GLOBAL SECTIONS ROUTES
-  app.get("/api/globalSections", requireAuth, async (req, res) => {
+  // GLOBAL SECTIONS ROUTES (GET public, others admin only)
+  app.get("/api/globalSections", async (req, res) => {
     try {
       const sections = await storage.getAllGlobalSections();
       res.json(sections);
@@ -165,7 +165,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/globalSections/:id", requireAuth, async (req, res) => {
+  app.get("/api/globalSections/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
@@ -178,7 +178,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/globalSections/key/:key", requireAuth, async (req, res) => {
+  app.get("/api/globalSections/key/:key", async (req, res) => {
     try {
       const key = req.params.key;
       const section = await storage.getGlobalSectionByKey(key);
@@ -230,8 +230,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // ROOMS ROUTES
-  app.get("/api/rooms", requireAuth, async (req, res) => {
+  // ROOMS ROUTES (GET public, others admin only)
+  app.get("/api/rooms", async (req, res) => {
     try {
       const rooms = await storage.getAllRooms();
       res.json(rooms);
@@ -241,7 +241,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/rooms/:id", requireAuth, async (req, res) => {
+  app.get("/api/rooms/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
@@ -294,8 +294,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // RESTAURANTS ROUTES
-  app.get("/api/restaurants", requireAuth, async (req, res) => {
+  // RESTAURANTS ROUTES (GET public, others admin only)
+  app.get("/api/restaurants", async (req, res) => {
     try {
       const restaurants = await storage.getAllRestaurants();
       res.json(restaurants);
@@ -305,7 +305,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/restaurants/:id", requireAuth, async (req, res) => {
+  app.get("/api/restaurants/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
@@ -358,8 +358,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // EVENTS ROUTES
-  app.get("/api/events", requireAuth, async (req, res) => {
+  // EVENTS ROUTES (GET public, others admin only)
+  app.get("/api/events", async (req, res) => {
     try {
       const events = await storage.getAllEvents();
       res.json(events);
@@ -369,7 +369,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/events/:id", requireAuth, async (req, res) => {
+  app.get("/api/events/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
@@ -422,8 +422,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // VENUES ROUTES
-  app.get("/api/venues", requireAuth, async (req, res) => {
+  // VENUES ROUTES (GET public, others admin only)
+  app.get("/api/venues", async (req, res) => {
     try {
       const venues = await storage.getAllVenues();
       res.json(venues);
@@ -433,7 +433,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/venues/:id", requireAuth, async (req, res) => {
+  app.get("/api/venues/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
@@ -486,8 +486,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // OFFERS ROUTES
-  app.get("/api/offers", requireAuth, async (req, res) => {
+  // OFFERS ROUTES (GET public, others admin only)
+  app.get("/api/offers", async (req, res) => {
     try {
       const offers = await storage.getAllOffers();
       res.json(offers);
@@ -497,7 +497,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/offers/:id", requireAuth, async (req, res) => {
+  app.get("/api/offers/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
@@ -550,8 +550,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // ATTRACTIONS ROUTES
-  app.get("/api/attractions", requireAuth, async (req, res) => {
+  // ATTRACTIONS ROUTES (GET public, others admin only)
+  app.get("/api/attractions", async (req, res) => {
     try {
       const attractions = await storage.getAllAttractions();
       res.json(attractions);
@@ -561,7 +561,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/attractions/:id", requireAuth, async (req, res) => {
+  app.get("/api/attractions/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
@@ -614,8 +614,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // FACILITIES ROUTES
-  app.get("/api/facilities", requireAuth, async (req, res) => {
+  // FACILITIES ROUTES (GET public, others admin only)
+  app.get("/api/facilities", async (req, res) => {
     try {
       const facilities = await storage.getAllFacilities();
       res.json(facilities);
@@ -625,7 +625,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/facilities/:id", requireAuth, async (req, res) => {
+  app.get("/api/facilities/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
@@ -678,8 +678,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // PROGRAMS ROUTES
-  app.get("/api/programs", requireAuth, async (req, res) => {
+  // PROGRAMS ROUTES (GET public, others admin only)
+  app.get("/api/programs", async (req, res) => {
     try {
       const programs = await storage.getAllPrograms();
       res.json(programs);
@@ -689,7 +689,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/programs/:id", requireAuth, async (req, res) => {
+  app.get("/api/programs/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
@@ -742,8 +742,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // SERVICES ROUTES
-  app.get("/api/services", requireAuth, async (req, res) => {
+  // SERVICES ROUTES (GET public, others admin only)
+  app.get("/api/services", async (req, res) => {
     try {
       const services = await storage.getAllServices();
       res.json(services);
@@ -753,7 +753,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/services/:id", requireAuth, async (req, res) => {
+  app.get("/api/services/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
@@ -806,8 +806,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // GALLERIES ROUTES
-  app.get("/api/galleries", requireAuth, async (req, res) => {
+  // GALLERIES ROUTES (GET public, others admin only)
+  app.get("/api/galleries", async (req, res) => {
     try {
       const galleries = await storage.getAllGalleries();
       res.json(galleries);
@@ -817,7 +817,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/galleries/:id", requireAuth, async (req, res) => {
+  app.get("/api/galleries/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
@@ -870,8 +870,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // CONTACT INFOS ROUTES
-  app.get("/api/contactInfos", requireAuth, async (req, res) => {
+  // CONTACT INFOS ROUTES (GET public, others admin only)
+  app.get("/api/contactInfos", async (req, res) => {
     try {
       const contactInfos = await storage.getAllContactInfos();
       res.json(contactInfos);
@@ -881,7 +881,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/contactInfos/:id", requireAuth, async (req, res) => {
+  app.get("/api/contactInfos/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) return res.status(400).json({ error: "Invalid ID" });
@@ -934,7 +934,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // FILE UPLOAD
+  // FILE UPLOAD (admin only)
   app.post('/api/upload', requireAuth, async (req: AuthRequest, res) => {
     try {
       const uploadDir = path.join(process.cwd(), 'uploads');
@@ -966,8 +966,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Serve uploaded files
+  // Serve uploaded files (public)
   app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+
 
   return createServer(app);
 }

@@ -1,7 +1,7 @@
 // src/components/MainNav.tsx (updated)
 import { useState, useRef, useEffect } from 'react';
-import { Link } from 'wouter';
-import { ChevronDown, X } from 'lucide-react';
+import { Link, useLocation } from 'wouter';
+import { ChevronDown, X, LogOut } from 'lucide-react';
 import { mainNavData } from '@/data/mainNavData';
 import { useLanguage } from './context/LanguageContext';
 import Tooltip from '@/components/Tooltip';
@@ -28,6 +28,15 @@ const MainNav = () => {
   const [error, setError] = useState<string | null>(null);
   const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({});  
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [, setLocation] = useLocation()
+
+  const isLoggedIn = !!localStorage.getItem('userToken');
+  const logoutAriaLabel = currentLang.code === 'FR' ? 'Se déconnecter' : 'Log out';
+
+  const handleLogout = () => {
+    localStorage.removeItem('userToken');
+    window.location.href = '/';
+  };
 
   const langKey = currentLang.code.toLowerCase();
   const { menus, subMenus, languages, reserveButton, mobileMenuTitle } = navData;
@@ -524,6 +533,16 @@ const MainNav = () => {
             <span className="font-medium">{currentLang.code}</span>
           </button>
 
+          {isLoggedIn && (
+            <button
+              onClick={handleLogout}
+              className="flex items-center justify-center p-2 text-white/80 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-[#0f1115] rounded-lg"
+              aria-label={logoutAriaLabel}
+            >
+              <LogOut className="w-4 h-4" />
+            </button>
+          )}
+
           {/* Reserve Button */}
           <Link
             href="/contact"
@@ -657,6 +676,19 @@ const MainNav = () => {
                   🌐
                   <span>Langue: {currentLang.code}</span>
                 </button>
+
+                {isLoggedIn && (
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      closeMobileMenu();
+                    }}
+                    className="flex w-full items-center justify-center p-3 text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                    aria-label={logoutAriaLabel}
+                  >
+                    <LogOut className="w-4 h-4" />
+                  </button>
+                )}
 
                 {/* Reserve Button */}
                 <Link

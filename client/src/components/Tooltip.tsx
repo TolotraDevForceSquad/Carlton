@@ -233,7 +233,7 @@ const ImageTooltip = ({ children, imageUrl, onSave }: ImageTooltipProps) => {
   }
 
   const [showTooltip, setShowTooltip] = useState(false);
-  const [position, setPosition] = useState<'top-right' | 'bottom-right' | 'top-left' | 'bottom-left'>('top-right');
+  const [position, setPosition] = useState<'bottom-left' | 'top-left'>('bottom-left');
   const [showModal, setShowModal] = useState(false);
   const [mode, setMode] = useState<'upload' | 'url'>('url');
   const [inputUrl, setInputUrl] = useState(imageUrl);
@@ -242,28 +242,16 @@ const ImageTooltip = ({ children, imageUrl, onSave }: ImageTooltipProps) => {
   const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const HIDE_DELAY = 150; // ms
 
-  // calc position tooltip small (reste local au trigger)
+  // calc position tooltip inside the image container (to the left)
   const calculatePosition = () => {
     if (triggerRef.current) {
       const rect = triggerRef.current.getBoundingClientRect();
-      const spaceTop = rect.top;
-      const spaceBottom = window.innerHeight - rect.bottom;
-      const spaceRight = window.innerWidth - rect.right;
+      const spaceBottom = rect.height - 60; // Approximate space inside container
 
-      let newPos: typeof position = 'top-right';
+      let newPos: typeof position = 'bottom-left';
 
-      if (spaceTop < 60) {
-        if (spaceBottom >= 60) {
-          newPos = spaceRight >= 120 ? 'bottom-right' : 'bottom-left';
-        } else {
-          newPos = spaceRight >= 120 ? 'top-right' : 'top-left';
-        }
-      } else {
-        newPos = spaceRight >= 120 ? 'top-right' : 'top-left';
-      }
-
-      if (newPos.startsWith('top') && spaceBottom >= 60 && spaceRight < 120) {
-        newPos = 'bottom-left';
+      if (spaceBottom < 60) {
+        newPos = 'top-left';
       }
 
       setPosition(newPos);
@@ -370,16 +358,12 @@ const ImageTooltip = ({ children, imageUrl, onSave }: ImageTooltipProps) => {
 
   const getPositionClasses = () => {
     switch (position) {
-      case 'top-right':
-        return '-top-8 right-0';
-      case 'bottom-right':
-        return 'bottom-[-8px] right-0 translate-y-full';
-      case 'top-left':
-        return '-top-8 left-0';
       case 'bottom-left':
-        return 'bottom-[-8px] left-0 translate-y-full';
+        return 'bottom-4 left-4';
+      case 'top-left':
+        return 'top-4 left-4';
       default:
-        return '-top-8 right-0';
+        return 'bottom-4 left-4';
     }
   };
 
@@ -486,19 +470,17 @@ const ImageTooltip = ({ children, imageUrl, onSave }: ImageTooltipProps) => {
 
   return (
     <>
-      <div className="relative h-full w-full group">
-        <div
-          ref={triggerRef}
-          className="relative w-full h-full"
-          onMouseEnter={handleShow}
-          onMouseLeave={handleHide}
-        >
-          {children}
-        </div>
+      <div 
+        ref={triggerRef}
+        className="relative"
+        onMouseEnter={handleShow}
+        onMouseLeave={handleHide}
+      >
+        {children}
 
         {showTooltip && (
           <div
-            className={`absolute ${getPositionClasses()} px-2 py-1 bg-black/90 text-white text-xs rounded whitespace-nowrap z-50 shadow-lg cursor-pointer hover:bg-black transition-colors`}
+            className={`absolute ${getPositionClasses()} px-2 py-1 bg-black/90 text-white text-xs rounded whitespace-nowrap z-[100] shadow-lg cursor-pointer hover:bg-black transition-colors`}
             onMouseEnter={handleTooltipMouseEnter}
             onMouseLeave={handleTooltipMouseLeave}
             onClick={handleTooltipClick}
