@@ -5,311 +5,302 @@ export const chambresData = {
     en: "Rooms & Suites"
   },
   heroSubtitle: {
-    fr: "171 chambres et suites élégantes avec vue imprenable sur la Haute Ville d'Antananarivo, le Palais de la Reine et le lac Anosy",
-    en: "171 elegant rooms and suites with breathtaking views of Upper Antananarivo, the Queen's Palace and Lake Anosy"
+    fr: "Chambres et suites élégantes avec vue imprenable sur le Palais de la Reine et le lac Anosy",
+    en: "Elegant rooms and suites with breathtaking views of the Queen's Palace and Lake Anosy"
   },
   heroImage: "/uploads/Presidential_suite_bedroom_interior_7adece21.png",
   rooms: [
     {
       id: 1,
       name: {
-        fr: "Presidential Suite",
-        en: "Presidential Suite"
+        fr: "Chambre Executive",
+        en: "Executive Room"
       },
       subtitle: {
-        fr: "Royal Palace & Lake View – L'Excellence Absolue",
-        en: "Royal Palace & Lake View – Absolute Excellence"
+        fr: "24 m² – Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
+        en: "24 m² – Panoramic View or Queen's Palace & Lake Anosy View"
       },
       description: {
-        fr: "Suite présidentielle de 96m² avec vue imprenable sur le Palais de la Reine et le Lac Anosy. Chambre king-size et grand salon confortable avec kitchenette. (2 suites disponibles)",
-        en: "96m² presidential suite with stunning views of the Queen's Palace and Lake Anosy. King-size bedroom and spacious comfortable living room with kitchenette. (2 suites available)"
+        fr: "Un lit King Size ou deux lits jumeaux. Nos chambres Executive allient espace, confort et fonctionnalité pour un séjour des plus agréables. Avec une décoration chaleureuse et un agencement soigné, elles offrent un cadre reposant propice à la détente. Profitez de la vue dégagée sur la ville, qui ajoute une note d’évasion à votre expérience.",
+        en: "One King Size bed or two twin beds. Our Executive Rooms combine space, comfort, and functionality for the most pleasant stay. With warm decoration and careful layout, they offer a relaxing setting conducive to rest. Enjoy the unobstructed city view, adding a touch of escape to your experience."
       },
       image: "/uploads/Luxury_suite_interior_386342fd.png",
-      size: "96m²",
+      size: "24 m²",
+      guests: {
+        fr: "2 personnes",
+        en: "2 people"
+      },
+      features: [
+        {
+          fr: "Lit King Size ou deux lits jumeaux",
+          en: "King Size bed or two twin beds"
+        },
+        {
+          fr: "Vue panoramique ou sur le Palais de la Reine & le lac Anosy",
+          en: "Panoramic view or Queen's Palace & Lake Anosy view"
+        },
+        {
+          fr: "Décoration chaleureuse et agencement soigné",
+          en: "Warm decoration and careful layout"
+        },
+        {
+          fr: "Cadre reposant pour la détente",
+          en: "Relaxing setting for rest"
+        },
+        {
+          fr: "Vue dégagée sur la ville",
+          en: "Unobstructed city view"
+        }
+      ],
+      amenities: {
+        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé et café", "Eau minérale", "WiFi haut débit", "Salle de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
+        en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Tea and coffee service", "Mineral water", "High-speed WiFi", "Luxury marble bathroom", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
+      }
+    },
+    {
+      id: 2,
+      name: {
+        fr: "Chambre Premium",
+        en: "Premium Room"
+      },
+      subtitle: {
+        fr: "24 m² – Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
+        en: "24 m² – Panoramic View or Queen's Palace & Lake Anosy View"
+      },
+      description: {
+        fr: "Un lit King Size ou deux lits jumeaux. Situées aux étages supérieurs, les chambres Premium offrent une atmosphère paisible avec un point de vue imprenable sur le panorama urbain. Dotées d’équipements complets, bénéficiez d’un cadre confortable et intime pour un séjour parfait que ce soit pour le travail ou la détente.",
+        en: "One King Size bed or two twin beds. Located on the upper floors, Premium Rooms offer a peaceful atmosphere with an unbeatable view of the urban panorama. Equipped with complete amenities, enjoy a comfortable and intimate setting for a perfect stay, whether for work or relaxation."
+      },
+      image: "/uploads/Luxury_suite_interior_386342fd.png",
+      size: "24 m²",
+      guests: {
+        fr: "2 personnes",
+        en: "2 people"
+      },
+      features: [
+        {
+          fr: "Lit King Size ou deux lits jumeaux",
+          en: "King Size bed or two twin beds"
+        },
+        {
+          fr: "Vue panoramique ou sur le Palais de la Reine & le lac Anosy",
+          en: "Panoramic view or Queen's Palace & Lake Anosy view"
+        },
+        {
+          fr: "Atmosphère paisible aux étages supérieurs",
+          en: "Peaceful atmosphere on upper floors"
+        },
+        {
+          fr: "Point de vue imprenable sur le panorama urbain",
+          en: "Unbeatable urban panorama view"
+        },
+        {
+          fr: "Cadre confortable pour travail ou détente",
+          en: "Comfortable setting for work or relaxation"
+        }
+      ],
+      amenities: {
+        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé", "Machine à expresso", "Eau minérale", "WiFi haut débit", "Fer et table à repasser", "Salle de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
+        en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Tea service", "Espresso machine", "Mineral water", "High-speed WiFi", "Iron and ironing board", "Luxury marble bathroom", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
+      }
+    },
+    {
+      id: 3,
+      name: {
+        fr: "Club Suite",
+        en: "Club Suite"
+      },
+      subtitle: {
+        fr: "48 m² – Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
+        en: "48 m² – Panoramic View or Queen's Palace & Lake Anosy View"
+      },
+      description: {
+        fr: "Une chambre avec un lit King Size et un salon séparé. Localisées dans les étages élevés, nos Club Suites comprennent une chambre avec un grand lit et un salon séparé. Un espace entièrement équipé, idéal pour un séjour parfait entre détente et travail, dans un confort optimal.",
+        en: "One bedroom with a King Size bed and a separate living room. Located on the upper floors, our Club Suites feature a bedroom with a large bed and a separate living room. A fully equipped space, ideal for a perfect stay between relaxation and work, in optimal comfort."
+      },
+      image: "/uploads/Luxury_suite_interior_386342fd.png",
+      size: "48 m²",
+      guests: {
+        fr: "2 personnes",
+        en: "2 people"
+      },
+      features: [
+        {
+          fr: "Chambre avec lit King Size",
+          en: "Bedroom with King Size bed"
+        },
+        {
+          fr: "Salon séparé",
+          en: "Separate living room"
+        },
+        {
+          fr: "Vue panoramique ou sur le Palais de la Reine & le lac Anosy",
+          en: "Panoramic view or Queen's Palace & Lake Anosy view"
+        },
+        {
+          fr: "Localisée aux étages élevés",
+          en: "Located on upper floors"
+        },
+        {
+          fr: "Espace idéal pour détente et travail",
+          en: "Space ideal for relaxation and work"
+        }
+      ],
+      amenities: {
+        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé", "Machine à expresso", "Eau minérale", "WiFi haut débit", "Fer et table à repasser", "2 salles de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
+        en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Tea service", "Espresso machine", "Mineral water", "High-speed WiFi", "Iron and ironing board", "2 luxury marble bathrooms", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
+      }
+    },
+    {
+      id: 4,
+      name: {
+        fr: "Family Suite",
+        en: "Family Suite"
+      },
+      subtitle: {
+        fr: "72 m² – Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
+        en: "72 m² – Panoramic View or Queen's Palace & Lake Anosy View"
+      },
+      description: {
+        fr: "Espace comprenant une chambre avec un grand lit, une chambre avec deux lits séparés et un salon séparé.",
+        en: "Space including one bedroom with a large bed, one bedroom with two separate beds, and a separate living room."
+      },
+      image: "/uploads/Luxury_suite_interior_386342fd.png",
+      size: "72 m²",
       guests: {
         fr: "4 personnes",
         en: "4 people"
       },
       features: [
         {
-          fr: "Chambre king-size",
-          en: "King-size bedroom"
+          fr: "Chambre avec grand lit",
+          en: "Bedroom with large bed"
         },
         {
-          fr: "Grand salon confortable",
-          en: "Spacious comfortable living room"
+          fr: "Chambre avec deux lits séparés",
+          en: "Bedroom with two separate beds"
+        },
+        {
+          fr: "Salon séparé",
+          en: "Separate living room"
+        },
+        {
+          fr: "Vue panoramique ou sur le Palais de la Reine & le lac Anosy",
+          en: "Panoramic view or Queen's Palace & Lake Anosy view"
+        },
+        {
+          fr: "Espace familial spacieux",
+          en: "Spacious family space"
+        }
+      ],
+      amenities: {
+        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé", "Machine à expresso", "Eau minérale", "WiFi haut débit", "Fer et table à repasser", "2 salles de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
+        en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Tea service", "Espresso machine", "Mineral water", "High-speed WiFi", "Iron and ironing board", "2 luxury marble bathrooms", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
+      }
+    },
+    {
+      id: 5,
+      name: {
+        fr: "Suite – Vue sur le Palais de la Reine & lac Anosy",
+        en: "Suite – Queen's Palace & Lake Anosy View"
+      },
+      subtitle: {
+        fr: "72 m² – Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
+        en: "72 m² – Panoramic View or Queen's Palace & Lake Anosy View"
+      },
+      description: {
+        fr: "Espace comprenant une chambre avec un grand lit et un grand salon. Installées en hauteur, nos Suites disposent d’une chambre avec un grand lit et d’un large salon séparé dans un cadre raffiné et confortable.",
+        en: "Space including one bedroom with a large bed and a large living room. Installed in height, our Suites feature a bedroom with a large bed and a wide separate living room in a refined and comfortable setting."
+      },
+      image: "/uploads/Luxury_suite_interior_386342fd.png",
+      size: "72 m²",
+      guests: {
+        fr: "2 personnes",
+        en: "2 people"
+      },
+      features: [
+        {
+          fr: "Chambre avec grand lit",
+          en: "Bedroom with large bed"
+        },
+        {
+          fr: "Grand salon séparé",
+          en: "Large separate living room"
+        },
+        {
+          fr: "Vue sur le Palais de la Reine & lac Anosy",
+          en: "Queen's Palace & Lake Anosy view"
+        },
+        {
+          fr: "Cadre raffiné et confortable",
+          en: "Refined and comfortable setting"
+        },
+        {
+          fr: "Installée en hauteur",
+          en: "Installed in height"
+        }
+      ],
+      amenities: {
+        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé et café individuel", "Eau minérale", "WiFi haut débit", "Fer et table à repasser", "2 salles de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
+        en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Individual tea and coffee service", "Mineral water", "High-speed WiFi", "Iron and ironing board", "2 luxury marble bathrooms", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
+      }
+    },
+    {
+      id: 6,
+      name: {
+        fr: "Suite Présidentielle – Vue sur le Palais de la Reine & lac Anosy",
+        en: "Presidential Suite – Queen's Palace & Lake Anosy View"
+      },
+      subtitle: {
+        fr: "96 m² – Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
+        en: "96 m² – Panoramic View or Queen's Palace & Lake Anosy View"
+      },
+      description: {
+        fr: "Appartement comprenant une chambre spacieuse avec un grand lit et un salon confortable. Nos Suites Présidentielles sont nichées dans les étages les plus élevés, en surplomb de la ville, vous offrant une perspective unique sur la plaine d’Antananarivo. Elles se composent d’une grande chambre et d’un salon spacieux avec une table à manger et une kitchenette. Inondées de lumière et empreintes de calme, les Suites Présidentielles offrent un cadre exceptionnel pour un séjour tout en confort et en sérénité.",
+        en: "Apartment including a spacious bedroom with a large bed and a comfortable living room. Our Presidential Suites are nestled on the highest floors, overlooking the city, offering you a unique perspective on the Antananarivo plain. They consist of a large bedroom and a spacious living room with a dining table and kitchenette. Flooded with light and imbued with calm, the Presidential Suites offer an exceptional setting for a stay full of comfort and serenity."
+      },
+      image: "/uploads/Presidential_suite_bedroom_interior_7adece21.png",
+      size: "96 m²",
+      guests: {
+        fr: "2 personnes",
+        en: "2 people"
+      },
+      features: [
+        {
+          fr: "Chambre spacieuse avec grand lit",
+          en: "Spacious bedroom with large bed"
+        },
+        {
+          fr: "Salon confortable avec table à manger",
+          en: "Comfortable living room with dining table"
         },
         {
           fr: "Kitchenette équipée",
           en: "Equipped kitchenette"
         },
         {
-          fr: "Vue Palais de la Reine",
-          en: "Queen's Palace view"
+          fr: "Vue unique sur la plaine d’Antananarivo",
+          en: "Unique view of the Antananarivo plain"
         },
         {
-          fr: "Vue Lac Anosy",
-          en: "Lake Anosy view"
+          fr: "Étages les plus élevés",
+          en: "Highest floors"
         },
         {
-          fr: "Salle de bain luxueuse",
-          en: "Luxurious bathroom"
-        },
-        {
-          fr: "Butler service 24h/24",
-          en: "24/7 butler service"
-        },
-        {
-          fr: "Mini-bar premium inclus",
-          en: "Premium minibar included"
+          fr: "Dressing séparé",
+          en: "Separate dressing room"
         }
       ],
       amenities: {
-        fr: ["Wifi", "Climatisation", "Service en chambre", "Parking", "Coffre-fort", "TV 65\""],
-        en: ["Wi-Fi", "Air Conditioning", "Room Service", "Parking", "Safe", "65\" TV"]
-      }
-    },
-    {
-      id: 2,
-      name: {
-        fr: "Suite Royal Palace & Lake View",
-        en: "Royal Palace & Lake View Suite"
-      },
-      subtitle: {
-        fr: "Vue Exceptionnelle – Élégance & Confort",
-        en: "Exceptional View – Elegance & Comfort"
-      },
-      description: {
-        fr: "Suite de 72m² avec vue imprenable sur le Palais de la Reine et le Lac Anosy. Chambre queen-size, grand salon confortable et kitchenette. (2 suites disponibles)",
-        en: "72m² suite with stunning views of the Queen's Palace and Lake Anosy. Queen-size bedroom, spacious comfortable living room and kitchenette. (2 suites available)"
-      },
-      image: "/uploads/Luxury_suite_interior_386342fd.png",
-      size: "72m²",
-      guests: {
-        fr: "3 personnes",
-        en: "3 people"
-      },
-      features: [
-        {
-          fr: "Chambre queen-size",
-          en: "Queen-size bedroom"
-        },
-        {
-          fr: "Grand salon confortable",
-          en: "Spacious comfortable living room"
-        },
-        {
-          fr: "Kitchenette",
-          en: "Kitchenette"
-        },
-        {
-          fr: "Vue Palais de la Reine",
-          en: "Queen's Palace view"
-        },
-        {
-          fr: "Vue Lac Anosy",
-          en: "Lake Anosy view"
-        },
-        {
-          fr: "Salle de bain moderne",
-          en: "Modern bathroom"
-        },
-        {
-          fr: "Accès services premium",
-          en: "Access to premium services"
-        },
-        {
-          fr: "Connexion internet haut débit",
-          en: "High-speed internet connection"
-        }
-      ],
-      amenities: {
-        fr: ["Wifi", "Climatisation", "Service en chambre", "Parking", "Coffre-fort", "TV 55\""],
-        en: ["Wi-Fi", "Air Conditioning", "Room Service", "Parking", "Safe", "55\" TV"]
-      }
-    },
-    {
-      id: 3,
-      name: {
-        fr: "Family Suite",
-        en: "Family Suite"
-      },
-      subtitle: {
-        fr: "Confort Familial – Espace Généreux",
-        en: "Family Comfort – Generous Space"
-      },
-      description: {
-        fr: "Suite familiale unique de 72m² avec chambre queen-size, chambre avec lits jumeaux et salon confortable. Parfaite pour les familles. (1 suite disponible)",
-        en: "Unique 72m² family suite with queen-size bedroom, twin beds room and comfortable living room. Perfect for families. (1 suite available)"
-      },
-      image: "/uploads/Luxury_suite_interior_386342fd.png",
-      size: "72m²",
-      guests: {
-        fr: "2 adultes + 2 enfants",
-        en: "2 adults + 2 children"
-      },
-      features: [
-        {
-          fr: "Chambre queen-size",
-          en: "Queen-size bedroom"
-        },
-        {
-          fr: "Chambre avec lits jumeaux",
-          en: "Twin beds room"
-        },
-        {
-          fr: "Salon confortable",
-          en: "Comfortable living room"
-        },
-        {
-          fr: "Espaces séparés",
-          en: "Separate spaces"
-        },
-        {
-          fr: "Salle de bain familiale",
-          en: "Family bathroom"
-        },
-        {
-          fr: "Équipements enfants",
-          en: "Children's equipment"
-        },
-        {
-          fr: "Mini-réfrigérateur",
-          en: "Mini-fridge"
-        },
-        {
-          fr: "Vue sur la ville",
-          en: "City view"
-        }
-      ],
-      amenities: {
-        fr: ["Wifi", "Climatisation", "Service en chambre", "Parking", "Coffre-fort", "TV 50\""],
-        en: ["Wi-Fi", "Air Conditioning", "Room Service", "Parking", "Safe", "50\" TV"]
-      }
-    },
-    {
-      id: 4,
-      name: {
-        fr: "Club Suite",
-        en: "Club Suite"
-      },
-      subtitle: {
-        fr: "Privilèges Exclusifs – Salon Confortable",
-        en: "Exclusive Privileges – Comfortable Lounge"
-      },
-      description: {
-        fr: "Suite de 48m² avec chambre queen-size et salon confortable. Accès privilégié aux services du Club Carlton. (15 suites disponibles)",
-        en: "48m² suite with queen-size bedroom and comfortable living room. Privileged access to Club Carlton services. (15 suites available)"
-      },
-      image: "/uploads/Luxury_suite_interior_386342fd.png",
-      size: "48m²",
-      guests: {
-        fr: "2 personnes",
-        en: "2 people"
-      },
-      features: [
-        {
-          fr: "Chambre queen-size",
-          en: "Queen-size bedroom"
-        },
-        {
-          fr: "Salon confortable",
-          en: "Comfortable living room"
-        },
-        {
-          fr: "Accès Club Carlton",
-          en: "Club Carlton access"
-        },
-        {
-          fr: "Services personnalisés",
-          en: "Personalized services"
-        },
-        {
-          fr: "Salle de bain moderne",
-          en: "Modern bathroom"
-        },
-        {
-          fr: "Check-in/out privé",
-          en: "Private check-in/out"
-        },
-        {
-          fr: "Petit-déjeuner Club inclus",
-          en: "Club breakfast included"
-        },
-        {
-          fr: "Conciergerie dédiée",
-          en: "Dedicated concierge"
-        }
-      ],
-      amenities: {
-        fr: ["Wifi", "Climatisation", "Service en chambre", "Parking", "Coffre-fort", "TV 55\""],
-        en: ["Wi-Fi", "Air Conditioning", "Room Service", "Parking", "Safe", "55\" TV"]
-      }
-    },
-    {
-      id: 5,
-      name: {
-        fr: "Executive & Premium Rooms",
-        en: "Executive & Premium Rooms"
-      },
-      subtitle: {
-        fr: "Confort Business & Raffinement Moderne",
-        en: "Business Comfort & Modern Refinement"
-      },
-      description: {
-        fr: "Chambres de 24m² avec lit queen ou twin selon préférence. Vue imprenable sur la Haute Ville d'Antananarivo et le Palais de la Reine. Finitions haut de gamme avec services Executive. (151 chambres au total)",
-        en: "24m² rooms with queen or twin bed as preferred. Stunning views of Upper Antananarivo and the Queen's Palace. High-end finishes with Executive services. (151 rooms total)"
-      },
-      image: "/uploads/Luxury_suite_interior_386342fd.png",
-      size: "24m²", 
-      guests: {
-        fr: "2 personnes",
-        en: "2 people"
-      },
-      features: [
-        {
-          fr: "Lit queen ou twin-beds",
-          en: "Queen or twin bed"
-        },
-        {
-          fr: "Vue Haute Ville d'Antananarivo",
-          en: "Upper Antananarivo view"
-        },
-        {
-          fr: "Vue Palais de la Reine",
-          en: "Queen's Palace view"
-        },
-        {
-          fr: "Design contemporain",
-          en: "Contemporary design"
-        },
-        {
-          fr: "Salle de bain moderne",
-          en: "Modern bathroom"
-        },
-        {
-          fr: "Accès Executive Lounge",
-          en: "Executive Lounge access"
-        },
-        {
-          fr: "Minibar premium",
-          en: "Premium minibar"
-        },
-        {
-          fr: "Machine à café Nespresso",
-          en: "Nespresso coffee machine"
-        }
-      ],
-      amenities: {
-        fr: ["Wifi", "Climatisation", "Service en chambre", "Parking", "Coffre-fort", "TV 43\""],
-        en: ["Wi-Fi", "Air Conditioning", "Room Service", "Parking", "Safe", "43\" TV"]
+        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé et café individuel", "Eau minérale", "WiFi haut débit", "Dressing séparé", "Fer et table à repasser", "Salle de douche à l’italienne", "Salle de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
+        en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Individual tea and coffee service", "Mineral water", "High-speed WiFi", "Separate dressing room", "Iron and ironing board", "Italian shower", "Luxury marble bathroom", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
       }
     }
   ],
   stats: {
     totalRooms: 171,
-    categories: 5,
-    maxSize: "96m²"
+    categories: 6,
+    maxSize: "96 m²"
   },
   statsLabels: {
     total: {
@@ -333,59 +324,63 @@ export const chambresData = {
     amenities: {
       fr: "Équipements :",
       en: "Amenities:"
+    },
+    includedServices: {
+      fr: "Services Inclus :",
+      en: "Included Services:"
     }
   },
   servicesTitle: {
-    fr: "Services Inclus",
-    en: "Included Services"
+    fr: "Services Disponibles",
+    en: "Available Services"
   },
   servicesDescription: {
-    fr: "Profitez de nos services premium inclus dans chaque hébergement",
-    en: "Enjoy our premium services included in every accommodation"
+    fr: "Profitez de nos services supplémentaires pour un séjour encore plus personnalisé",
+    en: "Enjoy our additional services for an even more personalized stay"
   },
   services: [
     { 
-      icon: "Wifi", 
-      title: {
-        fr: "Wi-Fi Très Haut Débit",
-        en: "Very High-Speed Wi-Fi"
-      }, 
-      desc: {
-        fr: "Connexion fibre gratuite",
-        en: "Free fiber connection"
-      } 
-    },
-    { 
       icon: "Coffee", 
       title: {
-        fr: "Service en Chambre 24h/24",
-        en: "24/7 Room Service"
+        fr: "Room Service",
+        en: "Room Service"
       }, 
       desc: {
-        fr: "Nos chefs à votre service",
-        en: "Our chefs at your service"
+        fr: "Service en chambre disponible 24h/24",
+        en: "24/7 room service available"
       } 
     },
     { 
-      icon: "Car", 
+      icon: "Scissors", 
       title: {
-        fr: "Parking Sécurisé",
-        en: "Secure Parking"
+        fr: "Service de blanchisserie",
+        en: "Laundry Service"
       }, 
       desc: {
-        fr: "Service voiturier inclus",
-        en: "Valet service included"
+        fr: "Service de nettoyage à sec et repassage",
+        en: "Dry cleaning and ironing service"
       } 
     },
     { 
-      icon: "Bath", 
+      icon: "Briefcase", 
       title: {
-        fr: "Piscine Extérieure 25m",
-        en: "25m Outdoor Pool"
+        fr: "Business Corner",
+        en: "Business Corner"
       }, 
       desc: {
-        fr: "Incluse pour Premium & Suites",
-        en: "Included for Premium & Suites"
+        fr: "Espace de travail équipé",
+        en: "Equipped workspace"
+      } 
+    },
+    { 
+      icon: "Plane", 
+      title: {
+        fr: "Transferts Aéroport",
+        en: "Airport Transfers"
+      }, 
+      desc: {
+        fr: "Navette aéroport-hôtel",
+        en: "Airport-hotel shuttle"
       } 
     }
   ],
@@ -396,5 +391,9 @@ export const chambresData = {
   bookButton: {
     fr: "Réserver cette chambre",
     en: "Book this room"
+  },
+  includedServices: {
+    fr: ["Piscine", "Salle de sport", "Court de tennis", "Parking"],
+    en: ["Pool", "Gym", "Tennis Court", "Parking"]
   }
 };

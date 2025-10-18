@@ -4,7 +4,26 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { MapPin, Users, Wifi, Car, Coffee, Bath, Tv, Wind } from 'lucide-react';
+import {
+  MapPin,
+  Users,
+  Wifi,
+  Car,
+  Coffee,
+  Bath,
+  Tv,
+  Wind,
+  Waves,  // For pool
+  Dumbbell,
+  Activity,  // Alternative for tennis court (sports activity)
+  Plane,
+  Scissors,
+  Briefcase,
+  Phone,       // For telephone
+  Lock,        // For safe
+  ShoppingBag, // For minibar
+  UtensilsCrossed // For iron/ironing board
+} from 'lucide-react';
 import { Tooltip, ImageTooltip } from '@/components/Tooltip';
 import Footer from '@/components/Footer';
 import ParallaxSection from '@/components/ParallaxSection';
@@ -51,6 +70,7 @@ const splitChambresData = (mixedData: typeof chambresData) => {
     labels: {
       features: mixedData.labels.features.fr,
       amenities: mixedData.labels.amenities.fr,
+      includedServices: mixedData.labels.includedServices.fr,
     },
     servicesTitle: mixedData.servicesTitle.fr,
     servicesDescription: mixedData.servicesDescription.fr,
@@ -61,6 +81,7 @@ const splitChambresData = (mixedData: typeof chambresData) => {
     })),
     buttonText: mixedData.buttonText.fr,
     bookButton: mixedData.bookButton.fr,
+    includedServices: mixedData.includedServices.fr,
   };
 
   const dataEn = {
@@ -87,6 +108,7 @@ const splitChambresData = (mixedData: typeof chambresData) => {
     labels: {
       features: mixedData.labels.features.en,
       amenities: mixedData.labels.amenities.en,
+      includedServices: mixedData.labels.includedServices.en,
     },
     servicesTitle: mixedData.servicesTitle.en,
     servicesDescription: mixedData.servicesDescription.en,
@@ -97,6 +119,7 @@ const splitChambresData = (mixedData: typeof chambresData) => {
     })),
     buttonText: mixedData.buttonText.en,
     bookButton: mixedData.bookButton.en,
+    includedServices: mixedData.includedServices.en,
   };
 
   return { dataFr, dataEn };
@@ -142,6 +165,7 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
     labels: {
       features: { fr: dataFr.labels.features, en: enFallback.labels.features || dataFr.labels.features },
       amenities: { fr: dataFr.labels.amenities, en: enFallback.labels.amenities || dataFr.labels.amenities },
+      includedServices: { fr: dataFr.labels.includedServices, en: enFallback.labels.includedServices || dataFr.labels.includedServices },
     },
     servicesTitle: { fr: dataFr.servicesTitle, en: enFallback.servicesTitle || dataFr.servicesTitle },
     servicesDescription: { fr: dataFr.servicesDescription, en: enFallback.servicesDescription || dataFr.servicesDescription },
@@ -152,6 +176,7 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
     })),
     buttonText: { fr: dataFr.buttonText, en: enFallback.buttonText || dataFr.buttonText },
     bookButton: { fr: dataFr.bookButton, en: enFallback.bookButton || dataFr.bookButton },
+    includedServices: { fr: dataFr.includedServices, en: enFallback.includedServices || dataFr.includedServices },
   };
 };
 
@@ -299,7 +324,7 @@ const Chambres = () => {
     };
   };
 
-  const updateLabel = (labelKey: 'features' | 'amenities') => {
+  const updateLabel = (labelKey: 'features' | 'amenities' | 'includedServices') => {
     return async (newFr: string, newEn: string) => {
       const updatedData = {
         ...data,
@@ -454,32 +479,61 @@ const Chambres = () => {
   };
 
   const getAmenityIcon = (amenity: string) => {
-    switch (amenity) {
-      case 'Wifi':
-      case 'Wi-Fi':
-        return <Wifi className="w-4 h-4" />;
-      case 'Climatisation':
-      case 'Air Conditioning':
-        return <Wind className="w-4 h-4" />;
-      case 'Service en chambre':
-      case 'Room Service':
-        return <Coffee className="w-4 h-4" />;
-      case 'Parking':
-        return <Car className="w-4 h-4" />;
-      case 'Coffre-fort':
-      case 'Safe':
-        return <Bath className="w-4 h-4" />;
-      default:
-        return <Tv className="w-4 h-4" />;
+    if (amenity.includes('Wifi') || amenity.includes('WiFi')) {
+      return <Wifi className="w-4 h-4" />;
     }
+    if (amenity.includes('Climatisation') || amenity.includes('Air Conditioning')) {
+      return <Wind className="w-4 h-4" />;
+    }
+    if (amenity.includes('TV') || amenity.includes('Cable TV')) {
+      return <Tv className="w-4 h-4" />;
+    }
+    if (amenity.includes('Téléphone') || amenity.includes('Telephone')) {
+      return <Phone className="w-4 h-4" />;
+    }
+    if (amenity.includes('Coffre-fort') || amenity.includes('Safe')) {
+      return <Lock className="w-4 h-4" />;
+    }
+    if (amenity.includes('Minibar')) {
+      return <ShoppingBag className="w-4 h-4" />;
+    }
+    if (amenity.includes('thé') || amenity.includes('café') || amenity.includes('Tea') || amenity.includes('Coffee')) {
+      return <Coffee className="w-4 h-4" />;
+    }
+    if (amenity.includes('Fer') || amenity.includes('Iron')) {
+      return <UtensilsCrossed className="w-4 h-4" />;
+    }
+    if (amenity.includes('Salle de bain') || amenity.includes('Bathroom')) {
+      return <Bath className="w-4 h-4" />;
+    }
+    if (amenity.includes('Sèche-cheveux') || amenity.includes('Hairdryer')) {
+      return <Wind className="w-4 h-4" />;
+    }
+    return <Tv className="w-4 h-4" />;
+  };
+
+  const getIncludedServiceIcon = (service: string) => {
+    if (service.includes('Piscine') || service.includes('Pool')) {
+      return <Waves className="w-4 h-4" />;  // Waves for pool
+    }
+    if (service.includes('Salle de sport') || service.includes('Gym')) {
+      return <Dumbbell className="w-4 h-4" />;
+    }
+    if (service.includes('Court de tennis') || service.includes('Tennis Court')) {
+      return <Activity className="w-4 h-4" />;  // Activity as alternative for sports/tennis
+    }
+    if (service.includes('Parking')) {
+      return <Car className="w-4 h-4" />;
+    }
+    return <Wifi className="w-4 h-4" />;
   };
 
   const getServiceIcon = (icon: string) => {
     switch (icon) {
-      case 'Wifi': return <Wifi className="w-4 h-4" />;
       case 'Coffee': return <Coffee className="w-4 h-4" />;
-      case 'Car': return <Car className="w-4 h-4" />;
-      case 'Bath': return <Bath className="w-4 h-4" />;
+      case 'Scissors': return <Scissors className="w-4 h-4" />;
+      case 'Briefcase': return <Briefcase className="w-4 h-4" />;
+      case 'Plane': return <Plane className="w-4 h-4" />;
       default: return <Tv className="w-4 h-4" />;
     }
   };
@@ -510,7 +564,7 @@ const Chambres = () => {
         {/* Rooms Skeleton */}
         <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-            {[1, 2, 3, 4, 5].map(i => (
+            {[1, 2, 3, 4, 5, 6].map(i => (
               <div key={i} className="flex flex-col lg:flex lg:flex-row gap-8 animate-pulse">
                 <div className="lg:w-1/2 h-80 lg:h-auto bg-gray-300 rounded" />
                 <div className="lg:w-1/2 space-y-4">
@@ -530,6 +584,12 @@ const Chambres = () => {
                     <div className="h-4 w-1/2 bg-gray-300 rounded" />
                     <div className="flex flex-wrap gap-2">
                       {[1, 2, 3, 4, 5, 6].map(j => <div key={j} className="h-6 w-20 bg-gray-300 rounded-full" />)}
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="h-4 w-1/2 bg-gray-300 rounded" />
+                    <div className="flex flex-wrap gap-2">
+                      {[1, 2, 3, 4].map(j => <div key={j} className="h-6 w-20 bg-gray-300 rounded-full" />)}
                     </div>
                   </div>
                   <div className="h-10 w-full bg-gray-300 rounded" />
@@ -566,6 +626,7 @@ const Chambres = () => {
   }
 
   const getAmenities = (room: any) => room.amenities[lang] || room.amenities.fr;
+  const getIncludedServices = () => data.includedServices[lang] || data.includedServices.fr;
 
   return (
     <div className="min-h-screen bg-background">
@@ -685,21 +746,25 @@ const Chambres = () => {
               <Card
                 key={room.id}
                 className={`overflow-hidden hover-elevate transition-all duration-300 ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
-                  } flex flex-col lg:flex`}
+                  } flex flex-col`}
                 data-testid={`card-room-${room.id}`}
               >
-                <div className="lg:w-1/2">
+                {/* Conteneur d'image modifié */}
+                <div className="lg:w-1/2 flex">
                   <ImageTooltip imageUrl={room.image} onSave={updateRoomImage(index)}>
-
-                    <img
-                      src={room.image || hotelRoom}
-                      alt={getText(room.name)}
-                      className="w-full h-80 lg:h-full object-cover"
-                    />
+                    <div className="w-full h-80 lg:h-full relative">
+                      <img
+                        src={room.image || hotelRoom}
+                        alt={getText(room.name)}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
                   </ImageTooltip>
                 </div>
-                <div className="lg:w-1/2 p-8 flex flex-col justify-between">
-                  <div>
+
+                {/* Conteneur de contenu */}
+                <div className="lg:w-1/2 p-8 flex flex-col">
+                  <div className="flex-1">
                     <CardHeader className="p-0 mb-6">
                       <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-4">
@@ -819,6 +884,27 @@ const Chambres = () => {
                           </div>
                         </div>
                       )}
+
+                      {/* Included Services Section */}
+                      <div>
+                        <h4 className="font-semibold text-foreground mb-3">
+                          <Tooltip
+                            frLabel={data.labels.includedServices.fr}
+                            enLabel={data.labels.includedServices.en}
+                            onSave={updateLabel('includedServices')}
+                          >
+                            <span>{getText(data.labels.includedServices)}</span>
+                          </Tooltip>
+                        </h4>
+                        <div className="flex flex-wrap gap-3">
+                          {getIncludedServices().map((service, idx) => (
+                            <div key={idx} className="flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full text-sm border border-primary/20">
+                              {getIncludedServiceIcon(service)}
+                              <span className="text-primary font-medium">{service}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     </CardContent>
                   </div>
 
