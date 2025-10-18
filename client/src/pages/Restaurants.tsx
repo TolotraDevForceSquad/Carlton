@@ -11,70 +11,69 @@ const Restaurants = () => {
   const restaurants = [
     {
       id: 1,
-      name: "Île Rouge & la Terrasse",
-      type: "Restaurant Gastronomique",
-      description: "Notre restaurant phare vous invite à découvrir une cuisine d'exception où l'art culinaire français se marie harmonieusement aux saveurs authentiques de Madagascar. Une expérience gastronomique inoubliable dans un cadre raffiné avec terrasse panoramique.",
-      detailedDescription: "Île Rouge & la Terrasse propose une cuisine gastronomique qui sublime les produits locaux de Madagascar avec les techniques françaises les plus raffinées. La terrasse offre une vue spectaculaire sur Antananarivo.",
+      name: "Le Bistrot du Carlton",
+      type: "Bistrot – Bar / Cuisine Bistrot revisitée",
+      description: "Bistrot urbain, esprit d’ici et d’ailleurs ! Dans une ambiance chic et rétro, notre bistrot revisite la cuisine traditionnelle avec une touche moderne et internationale.",
+      detailedDescription: "Ici, les plats sont faits maison, préparés avec des produits frais et de saison pour des recettes généreuses et riches en goût. Vous retrouverez des incontournables comme la terrine de foie gras, la salade César, le magret de canard, ou encore des classiques revisités tels que les spaghetti carbonara, le club sandwich, le hamburger maison ou le fish & chips croustillant. Et bien sûr, les desserts comme la crème brûlée ou la mousse au chocolat. Pour compléter le tout, des options végétariens sont disponibles pour régaler tous les appétits. Ouvert du matin jusqu’en soirée, avec terrasse en plein air, c’est l’endroit parfait pour un café, un déjeuner de travail ou un dîner décontracté entre amis.",
       image: restaurantImage,
-      rating: 5,
-      priceRange: "€€€€",
-      hours: "19h00 - 23h00",
-      capacity: "60 couverts + 40 en terrasse",
-      reservationRequired: true,
-      dressCode: "Tenue élégante exigée",
-      specialties: ["Menu dégustation 7 services", "Homard de Nossy-Be", "Zébu de Haute-Matsiatra", "Cocktails signature"],
-      features: ["Terrasse panoramique", "Menu végétarien disponible", "Service de table"]
+      rating: 4,
+      priceRange: "€€€",
+      hours: "Bar: 06h30-23h00 | Restaurant: 11h00-23h00",
+      capacity: "Terrasse en plein air",
+      reservationRequired: false,
+      dressCode: "Tenue décontractée chic",
+      specialties: ["Terrine de foie gras", "Salade César", "Magret de canard", "Spaghetti carbonara", "Club sandwich", "Hamburger maison", "Fish & chips croustillant", "Crème brûlée", "Mousse au chocolat"],
+      features: ["Ouvert tous les jours", "Produits frais et de saison", "Options végétariennes", "Terrasse extérieure", "Idéal pour déjeuners d'affaires"]
     },
     {
       id: 2,
-      name: "Le Bistrot du Carlton",
-      type: "Bar & Brasserie de Classe",
-      description: "Le bistrot emblématique du Carlton dans l'esprit parisien où vous pourrez savourer des plats raffinés dans une ambiance conviviale et chaleureuse. L'endroit parfait pour un déjeuner d'affaires ou un dîner décontracté.",
-      detailedDescription: "Le Bistrot du Carlton recréé l'atmosphère authentique des grandes brasseries parisiennes avec une touche malgache. Un lieu de rencontre privilégié pour les amateurs de bonne cuisine dans un cadre moins formel mais tout aussi qualitatif.",
+      name: "Île Rouge & la Terrasse",
+      type: "Restaurant en salle / Cuisine internationale",
+      description: "Une invitation au voyage des saveurs ! Notre restaurant vous propose une cuisine du monde raffinée, élaborée avec des ingrédients locaux soigneusement sélectionnés.",
+      detailedDescription: "Les spécialités malgaches côtoient des plats internationaux, pour une expérience culinaire variée et raffinée, mêlant traditions locales et saveurs du monde. De larges baies vitrées baignent la salle de lumière naturelle et offrent une vue apaisante sur la piscine et le jardin. C’est dans cette atmosphère chaleureuse que le petit-déjeuner est servi en buffet ou à la carte. Au fil des saisons, le restaurant devient un lieu de retrouvaille privilégié pour célébrer les moments forts de l’année : les fêtes des mères, des pères, Pâques, Noël, Nouvel an ... Famille et proches se retrouvent autour de menus spéciaux ou de buffets généreux et hauts en saveurs, dans une ambiance conviviale et festive.",
       image: restaurantImage,
-      rating: 4,
-      priceRange: "€€€",
-      hours: "12h00 - 15h00, 18h00 - 01h00",
-      capacity: "80 couverts",
-      reservationRequired: false,
-      dressCode: "Tenue décontractée chic",
-      specialties: ["Plateaux de fromages", "Tartares et carpaccios", "Cocktails signature", "Cuisine bistrot"],
-      features: ["Bar à cocktails", "Happy hour 18h-20h", "Terrasse couverte", "Musique live le weekend"]
+      rating: 5,
+      priceRange: "€€€€",
+      hours: "Petit-déjeuner: 06h30-10h30 | Déjeuner: 12h00-15h00 | Dîner: 19h00-23h00",
+      capacity: "60 couverts en salle + terrasse",
+      reservationRequired: true,
+      dressCode: "Tenue élégante exigée",
+      specialties: ["Spécialités malgaches", "Plats internationaux", "Buffet petit-déjeuner", "Menus spéciaux saisonniers"],
+      features: ["Ouvert tous les jours", "Vue sur piscine et jardin", "Événements festifs", "Buffets généreux", "Ingrédients locaux"]
     },
     {
       id: 3,
-      name: "L'Oasis de Tana",
-      type: "Restaurant au Bord de Piscine",
-      description: "Savourez une cuisine légère et rafraîchissante dans un cadre tropical idyllique, les pieds dans l'eau avec vue sur notre piscine infinity. L'endroit rêvé pour un déjeuner sous le soleil d'Antananarivo.",
-      detailedDescription: "L'Oasis de Tana offre une expérience culinaire unique en bord de piscine avec vue sur la capitale malgache. Notre cuisine privilégie les produits frais et locaux, les grillades et les plats healthy, parfaits pour accompagner vos moments de détente aquatiques.",
+      name: "L’Oasis de Tana",
+      type: "Restaurant en plein air / Spécialités: salades, grillades, pizzas",
+      description: "Escapade gustative au grand air ! Au creux d’un jardin paisible, notre restaurant vous accueille dans une ambiance détendue et tranquille.",
+      detailedDescription: "Offrez-vous un moment suspendu pour déguster des plats généreux et variés, soigneusement préparés avec des ingrédients de qualité. Salades gourmandes, grillades savoureuses et desserts irrésistibles composent une carte qui éveille les sens. L’endroit idéal pour un déjeuner d’affaires ou simplement se faire plaisir autour d'un bon repas. Notre bar vous invite à prolonger l’expérience dans un esprit tout aussi relaxant. Laissez-vous surprendre par une sélection de cocktails originaux, frais et délicieux, pensés pour accompagner vos instants de détente jusqu’à la fin de la journée. Une parenthèse pour s’offrir une pause dans un cadre verdoyant.",
       image: restaurantImage,
       rating: 4,
       priceRange: "€€€",
-      hours: "11h00 - 19h00",
-      capacity: "50 places",
+      hours: "Bar: dès 8h00 | Restaurant (hiver): 11h00-17h00 | (été): 11h00-18h00",
+      capacity: "50 places en plein air",
       reservationRequired: false,
-      dressCode: "Tenue de plage acceptée",
-      specialties: ["Salades tropicales", "Grillades au feu de bois", "Cocktails de fruits frais", "Poissons du jour"],
-      features: ["Vue piscine infinity", "Parasols et transats", "Service à la piscine", "Smoothies et jus frais"]
+      dressCode: "Tenue décontractée",
+      specialties: ["Salades gourmandes", "Grillades savoureuses", "Pizzas", "Desserts irrésistibles", "Cocktails originaux"],
+      features: ["Ouvert tous les jours", "Jardin paisible", "Ambiance détendue", "Déjeuners d'affaires", "Cadre verdoyant"]
     },
     {
       id: 4,
-      name: "L'Eclair by Carlton",
-      type: "Pâtisserie Fine",
-      description: "La pâtisserie signature du Carlton vous propose des créations sucrées d'exception, des viennoiseries fraîches aux desserts d'exception. Un temple de la gourmandise à la française avec l'excellence Carlton.",
-      detailedDescription: "L'Éclair by Carlton perpétue la tradition française de la pâtisserie fine avec des créations originales intégrant les saveurs de Madagascar. Notre atelier de pâtisserie, formé en France, sublime la vanille, le cacao et les fruits tropicaux locaux avec la signature Carlton.",
+      name: "L’Eclair by Carlton",
+      type: "Pâtisserie & Boulangerie",
+      description: "Un véritable rendez-vous gourmand en plein centre-ville ! Bienvenue dans notre pâtisserie & boulangerie artisanale !",
+      detailedDescription: "Chaque jour, notre équipe passionnée prépare avec soin des produits faits maison, frais et savoureux : pains variés à la croûte dorée, viennoiseries fondantes, gâteaux et entremets délicats, sans oublier sandwiches gourmands, snacks savoureux, glaces rafraîchissantes, boissons chaudes réconfortantes et salades de fruits fraîches. Ici, l’ambiance est conviviale et chaleureuse, un lieu où les amateurs de douceurs se sentent comme chez eux, accueillis par une équipe souriante et attentive, toujours prête à partager un moment de plaisir et de gourmandise.",
       image: restaurantImage,
       rating: 5,
       priceRange: "€€",
-      hours: "07h00 - 20h00",
-      capacity: "25 places",
+      hours: "06h30-18h30",
+      capacity: "Emporter et 25 places assises",
       reservationRequired: false,
       dressCode: "Aucune restriction",
-      specialties: ["Éclairs signature Carlton", "Macarons aux saveurs malgaches", "Viennoiseries françaises", "Chocolats artisanaux"],
-      features: ["Vitrine réfrigérée", "Emballages cadeaux Carlton", "Commandes sur mesure", "Ateliers pâtisserie"]
+      specialties: ["Pains variés", "Viennoiseries fondantes", "Gâteaux et entremets", "Sandwiches gourmands", "Glaces rafraîchissantes", "Salades de fruits fraîches"],
+      features: ["Ouvert tous les jours", "Produits faits maison", "Ambiance conviviale", "Équipe passionnée", "Emporter disponible"]
     }
   ];
-
 
   return (
     <div className="min-h-screen bg-background">
@@ -94,7 +93,7 @@ const Restaurants = () => {
           </h1>
           <div className="w-32 h-1 bg-primary mx-auto mb-8"></div>
           <p className="text-2xl md:text-3xl max-w-4xl mx-auto leading-relaxed drop-shadow-lg mb-12">
-            Quatre univers culinaires pour une expérience gastronomique d'exception au cœur de Madagascar
+            Quatre univers culinaires uniques pour des expériences gastronomiques variées au cœur de Madagascar
           </p>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
             <div className="text-center">
@@ -114,7 +113,7 @@ const Restaurants = () => {
             <div className="text-center">
               <div className="text-3xl font-bold text-primary mb-2">
                 <Clock className="w-8 h-8 mx-auto mb-2" />
-                7h-23h
+                6h30-23h
               </div>
               <div className="text-lg">Service continu</div>
             </div>
@@ -127,7 +126,7 @@ const Restaurants = () => {
             </div>
           </div>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <a href="#ile-rouge" className="inline-block">
+            <a href="#bistrot" className="inline-block">
               <button className="bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors shadow-lg">
                 Découvrir nos restaurants
               </button>
@@ -146,9 +145,9 @@ const Restaurants = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-16">
             {restaurants.map((restaurant, index) => {
-              const anchorId = restaurant.name === "Île Rouge & la Terrasse" ? "ile-rouge" :
-                              restaurant.name === "Le Bistrot du Carlton" ? "bistrot" :
-                              restaurant.name === "L'Oasis de Tana" ? "oasis" : "eclair";
+              const anchorId = restaurant.name === "Le Bistrot du Carlton" ? "bistrot" :
+                              restaurant.name === "Île Rouge & la Terrasse" ? "ile-rouge" :
+                              restaurant.name === "L’Oasis de Tana" ? "oasis" : "eclair";
               
               return (
                 <Card 
@@ -244,6 +243,23 @@ const Restaurants = () => {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* Call to Action Section */}
+      <section className="py-20 bg-primary/5">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-foreground">
+            Prêt à réserver ?
+          </h2>
+          <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
+            Contactez-nous pour une expérience culinaire inoubliable au Carlton Madagascar.
+          </p>
+          <a href="/contact">
+            <button className="bg-primary text-primary-foreground px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary/90 transition-colors shadow-lg">
+              Nous contacter
+            </button>
+          </a>
         </div>
       </section>
 

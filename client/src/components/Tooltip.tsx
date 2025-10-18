@@ -149,24 +149,24 @@ const Tooltip = ({ children, frLabel, enLabel = '', onSave }: TooltipProps) => {
           <div className="space-y-4">
             <div>
               <label className="block text-sm text-white/80 mb-1">Text FR</label>
-              <input
+              <textarea
                 key="input-fr" // Clé stable pour éviter tout remontage
-                type="text"
                 value={inputFr}
                 onChange={(e) => setInputFr(e.target.value)}
-                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                rows={4}
+                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 resize-vertical min-h-[100px]"
                 placeholder="Text FR"
                 autoFocus // Focus auto sur le premier champ
               />
             </div>
             <div>
               <label className="block text-sm text-white/80 mb-1">Text EN</label>
-              <input
+              <textarea
                 key="input-en" // Clé stable pour éviter tout remontage
-                type="text"
                 value={inputEn}
                 onChange={(e) => setInputEn(e.target.value)}
-                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                rows={4}
+                className="w-full px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 resize-vertical min-h-[100px]"
                 placeholder="Text EN"
               />
             </div>

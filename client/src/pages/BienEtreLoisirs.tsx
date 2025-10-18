@@ -12,77 +12,53 @@ const BienEtreLoisirs = () => {
       id: 1,
       name: "Piscine",
       type: "Détente Aquatique",
-      description: "Notre piscine à débordement de 25 mètres offre une vue imprenable sur Antananarivo. Un véritable joyau suspendu au cœur de la ville, parfait pour la nage et la détente absolue.",
+      description: "Plongez dans notre grande piscine extérieure de 25 mètres, soigneusement maintenue, installée dans un lieu calme et discret au cœur de l'hôtel. Un véritable havre de paix, loin du tumulte urbain, idéal pour se détendre en famille ou entre amis. À deux pas, notre restaurant et notre bar complètent l’expérience pour des moments de convivialité et de plaisir partagé.",
       image: poolImage,
-      hours: "06h00 - 22h00",
+      hours: "",
       features: [
-        "Piscine à débordement 25m",
-        "Bassin pour enfants sécurisé",
-        "Bain à remous intégré",
+        "Bassin pour enfants",
         "Transats de luxe avec parasols",
-        "Service de serviettes inclus",
-        "Bar aquatique l'Oasis",
-        "Éclairage nocturne ambiant",
-        "Température contrôlée 28°C"
+        "Serviettes fournies"
       ],
-      services: ["Maître-nageur présent", "Cours d'aquagym", "Cocktails poolside"]
+      services: ["Maître-nageur présent", "Cours de natation", "Formules d’abonnement"]
     },
     {
       id: 2,
-      name: "Salle de Sport",
+      name: "Fitness",
       type: "Fitness & Forme",
-      description: "Un espace de remise en forme ultra-moderne de 200m² équipé des dernières technologies Technogym pour maintenir votre routine d'entraînement même en voyage.",
+      description: "Équipée d’appareils TechnoGym dernière génération, notre salle de sport vous offre une expérience complète et personnalisée. Quel que soit votre niveau, profitez d’un matériel varié et performant pour allier bien-être et performance dans un cadre serein et soigné. Accès privilégié réservé aux hôtes.",
       image: poolImage,
-      hours: "05h00 - 23h00",
+      hours: "",
       features: [
         "Équipements Technogym dernière génération",
-        "Espace cardio-training climatisé",
-        "Salle de musculation complète",
-        "Zone d'étirement et yoga",
-        "Vestiaires avec sauna",
-        "Douches à l'italienne",
-        "Casiers sécurisés",
-        "Écrans individuels intégrés"
+        "Espace cardio-training",
+        "Équipements de musculation",
+        "Serviettes fournies"
       ],
-      services: ["Coach personnel disponible", "Programmes personnalisés", "Serviettes fournies"]
+      services: ["Coach disponible"]
     },
     {
       id: 3,
-      name: "Court de Tennis",
+      name: "Tennis",
       type: "Sport & Compétition",
-      description: "Court de tennis professionnel en surface dure avec éclairage nocturne, parfait pour maintenir votre niveau de jeu dans un cadre tropical exceptionnel.",
+      description: "Notre court de tennis en terre battue est accessible sur réservation. Raquettes et balles sont mises à votre disposition et un service de coaching privé peut être organisé sur demande. Pour prolonger le plaisir, des séances en soirée sont possibles, grâce à un éclairage spécialement conçu pour jouer dans des conditions idéales. Que vous soyez amateur ou joueur confirmé, vivez l’expérience tennis dans un environnement paisible et exclusif, niché au sein de l'hôtel.",
       image: poolImage,
-      hours: "06h00 - 21h00",
+      hours: "",
       features: [
-        "Court en surface dure régulation",
-        "Éclairage LED professionnel",
-        "Filets et poteaux de compétition",
-        "Gradins pour spectateurs",
-        "Vestiaires dédiés",
-        "Local matériel équipé",
-        "Système de réservation",
-        "Douches et rafraîchissements"
+        "Location de matériels",
+        "Éclairage de nuit"
       ],
-      services: ["Professeur de tennis disponible", "Location de matériel", "Tournois amicaux"]
+      services: ["Coach disponible", "Cours de tennis", "Formules d’abonnement"]
     },
     {
       id: 4,
       name: "Soins Holistiques",
       type: "Bien-être & Relaxation",
-      description: "Espace de soins holistiques dédié à votre bien-être total, alliant techniques traditionnelles malgaches et soins modernes dans un environnement apaisant.",
+      description: "En collaboration avec Holistic Universal, l’hôtel vous invite à découvrir des soins thérapeutiques et énergétiques aux bienfaits profonds.",
       image: poolImage,
-      hours: "09h00 - 21h00",
-      features: [
-        "Cabines de soins privées",
-        "Techniques traditionnelles malgaches",
-        "Massages thérapeutiques",
-        "Soins du visage personnalisés",
-        "Aromathérapie aux huiles locales",
-        "Espace détente avec tisanerie",
-        "Douches sensorielles",
-        "Produits naturels locaux"
-      ],
-      services: ["Thérapeutes certifiés", "Soins sur mesure", "Conseil bien-être"]
+      hours: "",
+      features: [],
+      services: []
     }
   ];
 
@@ -90,17 +66,24 @@ const BienEtreLoisirs = () => {
   const wellnessPrograms = [
     {
       id: 1,
-      title: "Programme Détox Madagascar",
-      duration: "3 jours",
-      description: "Programme complet de détoxification utilisant les plantes endémiques de Madagascar",
-      highlights: ["Soins aux plantes locales", "Nutrition détox", "Yoga quotidien", "Massages drainants"]
+      title: "Massage holistique – 1h",
+      duration: "1h",
+      description: "Vivez l’expérience d’un soin énergétique singulier, associant les vertus des huiles essentielles et ayurvédiques. Un rituel thérapeutique sur mesure qui rééquilibre les énergies, soulage les tensions et nourrit le corps en profondeur.",
+      highlights: []
     },
     {
       id: 2,
-      title: "Ritual Bien-être Traditionnel",
-      duration: "2 heures",
-      description: "Expérience authentique des techniques de soins traditionnels malgaches",
-      highlights: ["Massage aux huiles essentielles", "Gommage au raphia", "Bain aux fleurs", "Relaxation guidée"]
+      title: "Massage avec pierres chaudes – 1h",
+      duration: "1h",
+      description: "Offrez-vous un massage du dos et des jambes à l’huile chaude, enrichi par l’utilisation de pierres semi-précieuses aux vertus énergétiques. Une expérience sensorielle unique pour relâcher les tensions et réharmoniser le corps.",
+      highlights: []
+    },
+    {
+      id: 3,
+      title: "Massage relaxant – 1h",
+      duration: "1h",
+      description: "Lâchez prise dès la première minute. Ce soin allie gestes enveloppants et huiles essentielles apaisante pour éliminer le stress, détendre le corps et revitaliser l’esprit. Un vrai moment de bien-être à s’offrir ou à offrir.",
+      highlights: []
     },
   ];
 
@@ -139,8 +122,8 @@ const BienEtreLoisirs = () => {
             {facilities.map((facility, index) => {
               let sectionId = '';
               if (facility.name === 'Piscine') sectionId = 'piscine';
-              else if (facility.name === 'Salle de Sport') sectionId = 'salle-sport';
-              else if (facility.name === 'Court de Tennis') sectionId = 'tennis';
+              else if (facility.name === 'Fitness') sectionId = 'fitness';
+              else if (facility.name === 'Tennis') sectionId = 'tennis';
               else if (facility.name === 'Soins Holistiques') sectionId = 'soins';
               
               return (
@@ -168,10 +151,12 @@ const BienEtreLoisirs = () => {
                           <Badge variant="outline" className="text-primary border-primary" data-testid={`badge-type-${facility.id}`}>
                             {formatAmpersand(facility.type)}
                           </Badge>
-                          <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                            <Clock className="w-4 h-4" />
-                            <span>{facility.hours}</span>
-                          </div>
+                          {facility.hours && (
+                            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                              <Clock className="w-4 h-4" />
+                              <span>{facility.hours}</span>
+                            </div>
+                          )}
                         </div>
                         <CardTitle className="text-3xl font-serif text-foreground mb-3" data-testid={`title-facility-${facility.id}`}>
                           {facility.name}
@@ -224,10 +209,10 @@ const BienEtreLoisirs = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-serif font-bold text-foreground mb-4">
-              Programmes Bien-être
+              Les soins préférés à ne pas manquer
             </h2>
             <p className="text-lg text-muted-foreground">
-              Découvrez nos programmes holistiques inspirés des traditions malgaches
+              Découvrez nos soins holistiques inspirés des traditions
             </p>
           </div>
           
@@ -249,17 +234,19 @@ const BienEtreLoisirs = () => {
                   <p className="text-muted-foreground" data-testid={`description-program-${program.id}`}>
                     {program.description}
                   </p>
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-2">Programme inclus :</h4>
-                    <div className="space-y-1">
-                      {program.highlights.map((highlight, idx) => (
-                        <div key={idx} className="flex items-start gap-2 text-sm text-muted-foreground" data-testid={`highlight-${program.id}-${idx}`}>
-                          <div className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                          <span>{highlight}</span>
-                        </div>
-                      ))}
+                  {program.highlights.length > 0 && (
+                    <div>
+                      <h4 className="font-semibold text-foreground mb-2">Programme inclus :</h4>
+                      <div className="space-y-1">
+                        {program.highlights.map((highlight, idx) => (
+                          <div key={idx} className="flex items-start gap-2 text-sm text-muted-foreground" data-testid={`highlight-${program.id}-${idx}`}>
+                            <div className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                            <span>{highlight}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </CardContent>
               </Card>
             ))}
@@ -279,7 +266,7 @@ const BienEtreLoisirs = () => {
           <div className="flex justify-center">
             <Button size="lg" data-testid="button-contact-wellness">
               <Heart className="w-4 h-4 mr-2" />
-              Nous contacter
+              Réserver votre séjour
             </Button>
           </div>
         </div>

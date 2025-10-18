@@ -1,5 +1,6 @@
 // src/components/HeroSection.tsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Tooltip, ImageTooltip } from '@/components/Tooltip';
 import { Play, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -9,6 +10,8 @@ import { useLanguage } from './context/LanguageContext';
 import hotelExterior from '@assets/generated_images/Carlton_hotel_exterior_view_8ca3b91a.png';
 
 const SECTION_KEY = 'hero';
+
+const slidePaths = ["/contact", "/chambres", "/galerie", "/restaurants", "/evenements", "/bien-etre-loisirs"];
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('userToken');
@@ -26,6 +29,9 @@ const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showArrows, setShowArrows] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const heroRef = useRef<HTMLDivElement>(null);
 
   // Helper to split heroSectionData into dataFr and dataEn structures
   const splitHeroData = (mixedData: typeof heroSectionData) => {
@@ -35,14 +41,13 @@ const HeroSection = () => {
         title: slide.title.fr,
         subtitle: slide.subtitle.fr,
         description: slide.description.fr,
+        buttons: {
+          primary: slide.buttons.primary.fr,
+        },
       })),
       badge: {
         stars: mixedData.badge.stars,
         text: mixedData.badge.text.fr,
-      },
-      buttons: {
-        primary: mixedData.buttons.primary.fr,
-        secondary: mixedData.buttons.secondary.fr,
       },
       scroll: mixedData.scroll.fr,
     };
@@ -53,14 +58,13 @@ const HeroSection = () => {
         title: slide.title.en,
         subtitle: slide.subtitle.en,
         description: slide.description.en,
+        buttons: {
+          primary: slide.buttons.primary.en,
+        },
       })),
       badge: {
         stars: mixedData.badge.stars,
         text: mixedData.badge.text.en,
-      },
-      buttons: {
-        primary: mixedData.buttons.primary.en,
-        secondary: mixedData.buttons.secondary.en,
       },
       scroll: mixedData.scroll.en,
     };
@@ -76,21 +80,32 @@ const HeroSection = () => {
     }
     const enFallback = dataEn || dataFr;
     const mixed = {
-      slides: dataFr.slides.map((slideFr: any, i: number) => ({
-        image: slideFr.image || heroSectionData.slides[i].image,
-        title: { fr: slideFr.title, en: enFallback.slides[i]?.title || slideFr.title },
-        subtitle: { fr: slideFr.subtitle, en: enFallback.slides[i]?.subtitle || slideFr.subtitle },
-        description: { fr: slideFr.description, en: enFallback.slides[i]?.description || slideFr.description },
-      })),
+      slides: dataFr.slides.map((slideFr: any, i: number) => {
+        const slideEn = enFallback.slides[i];
+        return {
+          image: slideFr.image || heroSectionData.slides[i].image,
+          title: { fr: slideFr.title, en: slideEn?.title || slideFr.title },
+          subtitle: { fr: slideFr.subtitle, en: slideEn?.subtitle || slideFr.subtitle },
+          description: { fr: slideFr.description, en: slideEn?.description || slideFr.description },
+          buttons: {
+            primary: { 
+              fr: slideFr.buttons?.primary || heroSectionData.slides[i].buttons.primary.fr, 
+              en: slideEn?.buttons?.primary || slideFr.buttons?.primary || heroSectionData.slides[i].buttons.primary.en 
+            },
+          },
+        };
+      }),
       badge: {
         stars: dataFr.badge?.stars || heroSectionData.badge.stars,
-        text: { fr: dataFr.badge?.text || heroSectionData.badge.text.fr, en: enFallback.badge?.text || dataFr.badge?.text || heroSectionData.badge.text.en },
+        text: { 
+          fr: dataFr.badge?.text || heroSectionData.badge.text.fr, 
+          en: enFallback.badge?.text || dataFr.badge?.text || heroSectionData.badge.text.en 
+        },
       },
-      buttons: {
-        primary: { fr: dataFr.buttons?.primary || heroSectionData.buttons.primary.fr, en: enFallback.buttons?.primary || dataFr.buttons?.primary || heroSectionData.buttons.primary.en },
-        secondary: { fr: dataFr.buttons?.secondary || heroSectionData.buttons.secondary.fr, en: enFallback.buttons?.secondary || dataFr.buttons?.secondary || heroSectionData.buttons.secondary.en },
+      scroll: { 
+        fr: dataFr.scroll || heroSectionData.scroll.fr, 
+        en: enFallback.scroll || dataFr.scroll || heroSectionData.scroll.en 
       },
-      scroll: { fr: dataFr.scroll || heroSectionData.scroll.fr, en: enFallback.scroll || dataFr.scroll || heroSectionData.scroll.en },
     };
     return mixed;
   };
@@ -147,6 +162,38 @@ const HeroSection = () => {
     };
 
     fetchHeroData();
+  }, []);
+
+  // Mouse move detection for arrow visibility - SIMPLIFIÉ
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!heroRef.current) return;
+
+      const rect = heroRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      
+      setMousePosition({ x, y: 0 });
+
+      // Show arrows when mouse enters the hero section
+      setShowArrows(true);
+    };
+
+    const handleMouseLeave = () => {
+      setShowArrows(false);
+    };
+
+    const heroElement = heroRef.current;
+    if (heroElement) {
+      heroElement.addEventListener('mousemove', handleMouseMove);
+      heroElement.addEventListener('mouseleave', handleMouseLeave);
+    }
+
+    return () => {
+      if (heroElement) {
+        heroElement.removeEventListener('mousemove', handleMouseMove);
+        heroElement.removeEventListener('mouseleave', handleMouseLeave);
+      }
+    };
   }, []);
 
   const updateHeroSection = async (updatedMixedData: typeof heroSectionData) => {
@@ -208,17 +255,20 @@ const HeroSection = () => {
     console.log('Previous slide triggered');
   };
 
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+    console.log(`Slide ${index} selected`);
+  };
+
   const currentSlideData = data.slides[currentSlide];
-  const currentImage = currentSlideData.image || hotelExterior;
   const currentTitle = currentSlideData.title[langKey];
   const currentSubtitle = currentSlideData.subtitle[langKey];
   const currentDescription = currentSlideData.description[langKey];
   const currentBadgeText = data.badge.text[langKey];
-  const currentPrimaryButton = data.buttons.primary[langKey];
-  const currentSecondaryButton = data.buttons.secondary[langKey];
+  const currentPrimaryButton = currentSlideData.buttons.primary[langKey];
   const currentScroll = data.scroll[langKey];
 
-  const updateSlideField = (index: number, field: keyof typeof currentSlideData) => {
+  const updateSlideField = (index: number, field: 'title' | 'subtitle' | 'description') => {
     return async (newFr: string, newEn: string) => {
       // First, update local state
       const updatedData = {
@@ -226,6 +276,30 @@ const HeroSection = () => {
         slides: data.slides.map((slide, i) =>
           i === index
             ? { ...slide, [field]: { fr: newFr, en: newEn } }
+            : slide
+        ),
+      };
+      setData(updatedData);
+
+      // Then, update backend
+      await updateHeroSection(updatedData);
+    };
+  };
+
+  const updateSlidePrimaryButton = (index: number) => {
+    return async (newFr: string, newEn: string) => {
+      // First, update local state
+      const updatedData = {
+        ...data,
+        slides: data.slides.map((slide, i) =>
+          i === index
+            ? { 
+                ...slide, 
+                buttons: { 
+                  ...slide.buttons, 
+                  primary: { fr: newFr, en: newEn } 
+                } 
+              }
             : slide
         ),
       };
@@ -249,23 +323,6 @@ const HeroSection = () => {
 
     // Then, update backend
     await updateHeroSection(updatedData);
-  };
-
-  const updateButtonText = (buttonKey: 'primary' | 'secondary') => {
-    return async (newFr: string, newEn: string) => {
-      // First, update local state
-      const updatedData = {
-        ...data,
-        buttons: {
-          ...data.buttons,
-          [buttonKey]: { fr: newFr, en: newEn },
-        },
-      };
-      setData(updatedData);
-
-      // Then, update backend
-      await updateHeroSection(updatedData);
-    };
   };
 
   const updateScrollText = async (newFr: string, newEn: string) => {
@@ -320,21 +377,32 @@ const HeroSection = () => {
 
   return (
     <ImageTooltip
-      imageUrl={currentImage}
+      imageUrl={currentSlideData.image || hotelExterior}
       onSave={(newUrl) => updateImage(currentSlide, newUrl)}
     >
-      <div className="relative h-screen w-full overflow-hidden">
-        {/* Hero Image with Overlay */}
+      <div 
+        ref={heroRef}
+        className="relative h-screen w-full overflow-hidden cursor-pointer"
+      >
+        {/* Hero Images with Fade Transition */}
         <div className="absolute inset-0">
-          <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url(${currentImage})` }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30 pointer-events-none" />
+          {data.slides.map((slide, index) => {
+            const imageUrl = slide.image || hotelExterior;
+            return (
+              <div
+                key={index}
+                className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-in-out ${
+                  index === currentSlide ? 'opacity-100' : 'opacity-0'
+                }`}
+                style={{ backgroundImage: `url(${imageUrl})` }}
+              />
+            );
+          })}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30 pointer-events-none transition-opacity duration-1000 ease-in-out opacity-100" />
         </div>
 
         {/* Content */}
-        <div className="relative h-full flex items-center justify-center text-center px-4">
+        <div className="relative h-full flex items-center justify-center text-center px-4 z-20">
           <div className="max-w-4xl mx-auto">
             <div className="mb-6">
               <div className="inline-flex items-center px-4 py-2 bg-primary/20 backdrop-blur-sm rounded-full border border-primary/30 mb-8">
@@ -381,83 +449,72 @@ const HeroSection = () => {
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button 
+                asChild
                 size="lg" 
                 className="px-8 py-3 text-lg font-medium"
                 data-testid="button-book-suite"
               >
-                <Tooltip
-                  frLabel={data.buttons.primary.fr}
-                  enLabel={data.buttons.primary.en}
-                  onSave={updateButtonText('primary')}
-                >
-                  <span>{currentPrimaryButton}</span>
-                </Tooltip>
+                <Link href={slidePaths[currentSlide]} className="flex items-center justify-center">
+                  <Tooltip
+                    frLabel={currentSlideData.buttons.primary.fr}
+                    enLabel={currentSlideData.buttons.primary.en}
+                    onSave={updateSlidePrimaryButton(currentSlide)}
+                  >
+                    <span>{currentPrimaryButton}</span>
+                  </Tooltip>
+                </Link>
               </Button>
-              {/* <Button 
-                variant="outline" 
-                size="lg" 
-                className="px-8 py-3 text-lg font-medium bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20"
-                data-testid="button-discover-hotel"
-              >
-                <Play className="w-5 h-5 mr-2" />
-                <Tooltip
-                  frLabel={data.buttons.secondary.fr}
-                  enLabel={data.buttons.secondary.en}
-                  onSave={updateButtonText('secondary')}
-                >
-                  <span>{currentSecondaryButton}</span>
-                </Tooltip>
-              </Button> */}
             </div>
           </div>
         </div>
 
-        {/* Navigation Arrows */}
+        {/* Navigation Arrows - Z-INDEX TRÈS ÉLEVÉ */}
         <Button
           variant="ghost"
           size="icon"
-          className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 backdrop-blur-sm"
+          className={`absolute left-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 backdrop-blur-sm z-[9999] transition-all duration-300 ${
+            showArrows ? 'opacity-100 scale-100' : 'opacity-0 scale-90 pointer-events-none'
+          }`}
           onClick={prevSlide}
           data-testid="button-prev-slide"
         >
-          <ChevronLeft className="w-6 h-6" />
+          <ChevronLeft className="w-8 h-8" />
         </Button>
         
         <Button
           variant="ghost"
           size="icon"
-          className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 backdrop-blur-sm"
+          className={`absolute right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 backdrop-blur-sm z-[9999] transition-all duration-300 ${
+            showArrows ? 'opacity-100 scale-100' : 'opacity-0 scale-90 pointer-events-none'
+          }`}
           onClick={nextSlide}
           data-testid="button-next-slide"
         >
-          <ChevronRight className="w-6 h-6" />
+          <ChevronRight className="w-8 h-8" />
         </Button>
 
         {/* Slide Indicators */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-2">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-2 z-30">
           {data.slides.map((_, index) => (
             <button
               key={index}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === currentSlide ? 'bg-primary' : 'bg-white/30'
+              className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer ${
+                index === currentSlide ? 'bg-primary scale-125' : 'bg-white/30 hover:bg-white/50 hover:scale-110'
               }`}
-              onClick={() => {
-                setCurrentSlide(index);
-                console.log(`Slide ${index} selected`);
-              }}
+              onClick={() => goToSlide(index)}
               data-testid={`button-slide-${index}`}
             />
           ))}
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/70 animate-bounce">
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-white/70 animate-bounce z-10">
           <Tooltip
             frLabel={data.scroll.fr}
             enLabel={data.scroll.en}
             onSave={updateScrollText}
           >
-            <div className="text-xs mb-2">{currentScroll}</div>
+            <div className="text-xs mb-2 text-center">{currentScroll}</div>
           </Tooltip>
           <div className="w-0.5 h-8 bg-white/50 mx-auto"></div>
         </div>

@@ -9,6 +9,8 @@ import Footer from '@/components/Footer';
 import { formatAmpersand } from '@/lib/utils/formatAmpersand';
 import { servicesBoutiquesPageData } from '@/data/servicesBoutiquesData';
 import { useLanguage } from '@/components/context/LanguageContext';
+import servicesImage from '@assets/stock_images/luxury_hotel_concier_6320d533.jpg';
+import boutiquesImage from '@assets/stock_images/luxury_hotel_boutiqu_880b0196.jpg';
 
 const SECTION_KEY = 'servicesBoutiques';
 
@@ -613,29 +615,22 @@ const ServicesBoutiques = () => {
                 </p>
               </Tooltip>
             </div>
-            <ImageTooltip
-              imageUrl={services.image}
-              onSave={updateServicesImage}
-            >
-              <div className="relative w-full h-80">
-                {services.image ? (
+            <div className="lg:w-1/2">
+              <ImageTooltip
+                imageUrl={services.image || servicesImage}
+                onSave={updateServicesImage}
+              >
+                <div className="relative">
                   <img 
-                    src={services.image} 
+                    src={services.image || servicesImage} 
                     alt={getText({ fr: "Services de conciergerie Carlton Madagascar", en: "Carlton Madagascar Concierge Services" })}
                     className="w-full h-80 object-cover rounded-lg shadow-lg"
                     data-testid="img-services-hero"
                   />
-                ) : (
-                  <div className="w-full h-80 bg-muted rounded-lg flex items-center justify-center">
-                    <div className="text-center p-4">
-                      <Bell className="w-16 h-16 text-muted-foreground mx-auto mb-2" />
-                      <p className="text-sm text-muted-foreground">Image des services</p>
-                    </div>
-                  </div>
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
-              </div>
-            </ImageTooltip>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
+                </div>
+              </ImageTooltip>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -722,29 +717,22 @@ const ServicesBoutiques = () => {
                 </p>
               </Tooltip>
             </div>
-            <ImageTooltip
-              imageUrl={boutiques.image}
-              onSave={updateBoutiquesImage}
-            >
-              <div className="relative w-full h-80">
-                {boutiques.image ? (
+            <div className="lg:w-1/2">
+              <ImageTooltip
+                imageUrl={boutiques.image || boutiquesImage}
+                onSave={updateBoutiquesImage}
+              >
+                <div className="relative">
                   <img 
-                    src={boutiques.image} 
+                    src={boutiques.image || boutiquesImage} 
                     alt={getText({ fr: "Boutiques artisanales Carlton Madagascar", en: "Carlton Madagascar Artisan Boutiques" })}
                     className="w-full h-80 object-cover rounded-lg shadow-lg"
                     data-testid="img-boutiques-hero"
                   />
-                ) : (
-                  <div className="w-full h-80 bg-muted rounded-lg flex items-center justify-center">
-                    <div className="text-center p-4">
-                      <ShoppingBag className="w-16 h-16 text-muted-foreground mx-auto mb-2" />
-                      <p className="text-sm text-muted-foreground">Image des boutiques</p>
-                    </div>
-                  </div>
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
-              </div>
-            </ImageTooltip>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
+                </div>
+              </ImageTooltip>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">

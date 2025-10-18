@@ -14,6 +14,12 @@ export const heroSectionData = {
       description: {
         fr: "",
         en: ""
+      },
+      buttons: {
+        primary: {
+          fr: "Réserver maintenant",
+          en: "Book now"
+        }
       }
     },
     {
@@ -29,6 +35,12 @@ export const heroSectionData = {
       description: {
         fr: "",
         en: ""
+      },
+      buttons: {
+        primary: {
+          fr: "Voir nos chambres",
+          en: "See our rooms"
+        }
       }
     },
     {
@@ -44,6 +56,75 @@ export const heroSectionData = {
       description: {
         fr: "En tant que membre certifié de Preferred Hotels and Resorts, nous garantissons les standards les plus élevés pour faire de votre visite un moment mémorable.",
         en: "As a certified member of Preferred Hotels and Resorts, we guarantee the highest standards to make your visit a memorable moment."
+      },
+      buttons: {
+        primary: {
+          fr: "Découvrir l'hôtel",
+          en: "Discover the hotel"
+        }
+      }
+    },
+    {
+      image: "/uploads/Carlton_hotel_exterior_view_8ca3b91a.png",
+      title: {
+        fr: "Restaurants & Bars",
+        en: "Restaurants & Bars"
+      },
+      subtitle: {
+        fr: "Nos restaurants & bars vous accueillent chacun dans des ambiances uniques pour des plaisirs gourmands inoubliables.",
+        en: "Our restaurants & bars welcome you each in unique atmospheres for unforgettable gourmet pleasures."
+      },
+      description: {
+        fr: "",
+        en: ""
+      },
+      buttons: {
+        primary: {
+          fr: "Découvrir nos restaurants",
+          en: "Discover our restaurants"
+        }
+      }
+    },
+    {
+      image: "/uploads/Carlton_hotel_exterior_view_8ca3b91a.png",
+      title: {
+        fr: "Evénements & Réceptions",
+        en: "Events & Receptions"
+      },
+      subtitle: {
+        fr: "Nous proposons différentes formules pour rendre chaque événement unique, personnalisées selon vos besoins.",
+        en: "We suggest different formulas to make each event unique, customized to your needs."
+      },
+      description: {
+        fr: "Cinq espaces pouvant accueillir jusqu'à 550 invités pour vos réceptions mémorables à Antananarivo.",
+        en: "Five spaces that can accommodate up to 550 guests for your memorable receptions in Antananarivo."
+      },
+      buttons: {
+        primary: {
+          fr: "Organiser votre événement",
+          en: "Organize your event"
+        }
+      }
+    },
+    {
+      image: "/uploads/Carlton_hotel_exterior_view_8ca3b91a.png",
+      title: {
+        fr: "Bien-être",
+        en: "Wellness"
+      },
+      subtitle: {
+        fr: "Profitez de nos installations bien-être : piscine, court de tennis, centre de fitness et services cosmétiques.",
+        en: "Enjoy our wellness facilities: pool, tennis court, fitness center and cosmetic services."
+      },
+      description: {
+        fr: "",
+        en: ""
+      },
+      buttons: {
+        primary: {
+          fr: "Découvrez notre bien-être",
+          en: "Discover our wellness"
+        }
       }
     }
   ],
@@ -52,16 +133,6 @@ export const heroSectionData = {
     text: {
       fr: "Hôtel 5 Étoiles",
       en: "5-Star Hotel"
-    }
-  },
-  buttons: {
-    primary: {
-      fr: "Voir nos chambres",
-      en: "See our rooms"
-    },
-    secondary: {
-      fr: "",
-      en: ""
     }
   },
   scroll: {
