@@ -139,7 +139,7 @@ const Contact = () => {
         location: {
           title: mixedData.practicalInfo.location.title.fr,
           subtitle: mixedData.practicalInfo.location.subtitle.fr,
-          head : mixedData.practicalInfo.location.head.fr,
+          addressTitle: mixedData.practicalInfo.location.addressTitle.fr,
           address: mixedData.practicalInfo.location.address.fr,
           mapUrl: mixedData.practicalInfo.location.mapUrl,
           mapTitle: mixedData.practicalInfo.location.mapTitle.fr,
@@ -248,8 +248,8 @@ const Contact = () => {
         location: {
           title: mixedData.practicalInfo.location.title.en,
           subtitle: mixedData.practicalInfo.location.subtitle.en,
+          addressTitle: mixedData.practicalInfo.location.addressTitle.en,
           address: mixedData.practicalInfo.location.address.en,
-          head : mixedData.practicalInfo.location.head.en,
           mapUrl: mixedData.practicalInfo.location.mapUrl,
           mapTitle: mixedData.practicalInfo.location.mapTitle.en,
           directionsButton: mixedData.practicalInfo.location.directionsButton.en,
@@ -379,6 +379,7 @@ const Contact = () => {
         location: {
           title: { fr: dataFr.practicalInfo.location.title, en: enFallback.practicalInfo.location.title || dataFr.practicalInfo.location.title },
           subtitle: { fr: dataFr.practicalInfo.location.subtitle, en: enFallback.practicalInfo.location.subtitle || dataFr.practicalInfo.location.subtitle },
+          addressTitle: { fr: dataFr.practicalInfo.location.addressTitle, en: enFallback.practicalInfo.location.addressTitle || dataFr.practicalInfo.location.addressTitle },
           address: { fr: dataFr.practicalInfo.location.address, en: enFallback.practicalInfo.location.address || dataFr.practicalInfo.location.address },
           mapUrl: dataFr.practicalInfo.location.mapUrl || initialContactData.practicalInfo.location.mapUrl,
           mapTitle: { fr: dataFr.practicalInfo.location.mapTitle, en: enFallback.practicalInfo.location.mapTitle || dataFr.practicalInfo.location.mapTitle },
@@ -1007,6 +1008,18 @@ const Contact = () => {
     await updateContactSection(updatedData);
   };
 
+  const updateLocationAddressTitle = async (newFr: string, newEn: string) => {
+    const updatedData = {
+      ...data,
+      practicalInfo: { 
+        ...data.practicalInfo, 
+        location: { ...data.practicalInfo.location, addressTitle: { fr: newFr, en: newEn } } 
+      }
+    };
+    setData(updatedData);
+    await updateContactSection(updatedData);
+  };
+
   const updateLocationAddress = async (newFr: string, newEn: string) => {
     const updatedData = {
       ...data,
@@ -1316,6 +1329,7 @@ const Contact = () => {
   
   const locationTitle = getText(practicalInfo.location.title);
   const locationSubtitle = getText(practicalInfo.location.subtitle);
+  const locationAddressTitle = getText(practicalInfo.location.addressTitle);
   const locationAddress = getText(practicalInfo.location.address);
   const locationMapTitle = getText(practicalInfo.location.mapTitle);
   const locationDirectionsButton = getText(practicalInfo.location.directionsButton);
@@ -1913,7 +1927,15 @@ const Contact = () => {
                     <div className="flex items-start gap-3 mb-4">
                       <MapPin className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                       <div>
-                        <p className="font-semibold text-foreground">Adresse complète</p>
+                        <p className="font-semibold text-foreground">
+                          <Tooltip 
+                            frLabel={practicalInfo.location.addressTitle.fr} 
+                            enLabel={practicalInfo.location.addressTitle.en} 
+                            onSave={updateLocationAddressTitle}
+                          >
+                            {locationAddressTitle}
+                          </Tooltip>
+                        </p>
                         <p className="text-sm text-muted-foreground">
                           <Tooltip 
                             frLabel={practicalInfo.location.address.fr} 
@@ -1935,15 +1957,7 @@ const Contact = () => {
                         allowFullScreen
                         loading="lazy"
                         referrerPolicy="no-referrer-when-downgrade"
-                        title={
-                          <Tooltip 
-                            frLabel={practicalInfo.location.mapTitle.fr} 
-                            enLabel={practicalInfo.location.mapTitle.en} 
-                            onSave={updateLocationMapTitle}
-                          >
-                            {locationMapTitle}
-                          </Tooltip>
-                        }
+                        title={locationMapTitle}
                         data-testid="map-hotel-location"
                       ></iframe>
                     </div>

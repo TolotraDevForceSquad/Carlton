@@ -361,6 +361,10 @@ export const contactData = {
         fr: "Carlton Madagascar, au cœur d'Antananarivo",
         en: "Carlton Madagascar, in the heart of Antananarivo"
       },
+      addressTitle: {
+        fr: "Adresse complète",
+        en: "Full Address"
+      },
       address: {
         fr: "Rue Pierre Stibbe Anosy Po BOX 959<br/>Antananarivo 101, Madagascar",
         en: "Rue Pierre Stibbe Anosy Po BOX 959<br/>Antananarivo 101, Madagascar"

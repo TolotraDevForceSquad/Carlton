@@ -29,8 +29,10 @@ const splitOffresData = (mixedData: typeof offresPageData) => {
     seasonalSection: {
       title: { fr: "Evènements Spéciaux", en: "Special Events" },
       description: {
-        fr: "Profitez de nos offres spéciales selon les saisons et événements malgaches",
-        en: "Enjoy our special offers according to Malagasy seasons and events"
+        fr: "",
+        en: ""
+        // fr: "Profitez de nos offres spéciales selon les saisons et événements malgaches",
+        // en: "Enjoy our special offers according to Malagasy seasons and events"
       }
     },
     offers: mixedData.offers.map(offer => ({
@@ -125,8 +127,10 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
   const defaultSeasonal = {
     title: { fr: "Evènements Spéciaux", en: "Special Events" },
     description: {
-      fr: "Profitez de nos offres spéciales selon les saisons et événements malgaches",
-      en: "Enjoy our special offers according to Malagasy seasons and events"
+      // fr: "Profitez de nos offres spéciales selon les saisons et événements malgaches",
+      fr: "",
+      // en: "Enjoy our special offers according to Malagasy seasons and events"
+      en: ""
     }
   };
   return {
@@ -729,7 +733,7 @@ const Offres = () => {
                 <span>{getText(ctaButtons.primary)}</span>
               </Tooltip>
             </Button>
-            <Button variant="outline" size="lg" data-testid="button-callback">
+            {/* <Button variant="outline" size="lg" data-testid="button-callback">
               <Tooltip
                 frLabel={ctaButtons.secondary.fr}
                 enLabel={ctaButtons.secondary.en}
@@ -737,7 +741,7 @@ const Offres = () => {
               >
                 <span>{getText(ctaButtons.secondary)}</span>
               </Tooltip>
-            </Button>
+            </Button> */}
           </div>
         </div>
       </section>
