@@ -10,6 +10,10 @@ export const offresPageData = {
       en: "Discover our exceptional stays designed to create unforgettable memories in the heart of Madagascar"
     }
   },
+  offerFeaturesTitle: {
+    fr: "Cette offre comprend :",
+    en: "This offer includes :"
+  },
   offers: [
     {
       id: 1,
@@ -62,7 +66,8 @@ export const offresPageData = {
       highlight: {
         fr: "Le plus populaire",
         en: "The most popular"
-      }
+      },
+      image: '/uploads/Offre.png'
     },
     {
       id: 2,
@@ -115,7 +120,8 @@ export const offresPageData = {
       highlight: {
         fr: "Nouveau",
         en: "New"
-      }
+      },
+      image: '/uploads/Offre.png'
     },
     {
       id: 3,
@@ -168,7 +174,8 @@ export const offresPageData = {
       highlight: {
         fr: "Offre exclusive",
         en: "Exclusive offer"
-      }
+      },
+      image: '/uploads/Offre.png'
     },
     {
       id: 4,
@@ -221,7 +228,8 @@ export const offresPageData = {
       highlight: {
         fr: "Expérience unique",
         en: "Unique experience"
-      }
+      },
+      image: '/uploads/Offre.png'
     }
   ],
   seasonalOffers: [
@@ -237,7 +245,8 @@ export const offresPageData = {
       description: {
         fr: "Ambiance musicale exceptionnelle avec nos musiciens jazz dans le cadre élégant du Bistrot du Carlton",
         en: "Exceptional musical atmosphere with our jazz musicians in the elegant setting of the Bistrot du Carlton"
-      }
+      },
+      image: '/uploads/Env.png'
     },
     {
       title: {
@@ -251,7 +260,8 @@ export const offresPageData = {
       description: {
         fr: "Un buffet gastronomique exceptionnel alliant saveurs françaises et spécialités malgaches",
         en: "An exceptional gastronomic buffet combining French flavors and Malagasy specialties"
-      }
+      },
+      image: '/uploads/Env.png'
     },
     {
       title: {
@@ -265,7 +275,8 @@ export const offresPageData = {
       description: {
         fr: "Découvrez notre sélection de vins et spiritueux accompagnés de mets raffinés",
         en: "Discover our selection of wines and spirits accompanied by refined dishes"
-      }
+      },
+      image: '/uploads/Env.png'
     }
   ],
   cta: {

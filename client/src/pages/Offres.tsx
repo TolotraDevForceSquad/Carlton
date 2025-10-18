@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Star, Calendar, Clock, Sparkles, Users, Gift } from 'lucide-react';
+import { Star, Calendar, Clock, Sparkles, Users, Gift, Plus, Trash2 } from 'lucide-react';
 import { Tooltip, ImageTooltip } from '@/components/Tooltip';
 import Footer from '@/components/Footer';
 import { offresPageData } from '@/data/offresData';
@@ -21,24 +21,16 @@ const getAuthHeaders = () => {
 };
 
 // Helper to split offresPageData into dataFr and dataEn structures
-// We add seasonalSection and image fields dynamically without modifying the source data
 const splitOffresData = (mixedData: typeof offresPageData) => {
-  // Add default seasonalSection and images to mixed data for splitting
   const mixedDataWithExtras = {
     ...mixedData,
-    seasonalSection: {
+    seasonalSection: mixedData.seasonalSection || {
       title: { fr: "Evènements Spéciaux", en: "Special Events" },
       description: {
         fr: "",
         en: ""
-        // fr: "Profitez de nos offres spéciales selon les saisons et événements malgaches",
-        // en: "Enjoy our special offers according to Malagasy seasons and events"
       }
     },
-    offers: mixedData.offers.map(offer => ({
-      ...offer,
-      image: '' // Default empty image
-    }))
   };
 
   const dataFr = {
@@ -50,6 +42,7 @@ const splitOffresData = (mixedData: typeof offresPageData) => {
       title: mixedDataWithExtras.hero.title.fr,
       description: mixedDataWithExtras.hero.description.fr,
     },
+    offerFeaturesTitle: mixedDataWithExtras.offerFeaturesTitle.fr,
     offers: mixedDataWithExtras.offers.map((offer) => ({
       id: offer.id,
       title: offer.title.fr,
@@ -60,12 +53,13 @@ const splitOffresData = (mixedData: typeof offresPageData) => {
       features: offer.features.map((feature) => feature.fr),
       validUntil: offer.validUntil.fr,
       highlight: offer.highlight ? offer.highlight.fr : null,
-      image: offer.image || '',
+      image: offer.image || '/uploads/Offre.png',
     })),
     seasonalOffers: mixedDataWithExtras.seasonalOffers.map((so) => ({
       title: so.title.fr,
       period: so.period.fr,
       description: so.description.fr,
+      image: so.image || '/uploads/Env.png',
     })),
     cta: {
       title: mixedDataWithExtras.cta.title.fr,
@@ -86,6 +80,7 @@ const splitOffresData = (mixedData: typeof offresPageData) => {
       title: mixedDataWithExtras.hero.title.en,
       description: mixedDataWithExtras.hero.description.en,
     },
+    offerFeaturesTitle: mixedDataWithExtras.offerFeaturesTitle.en,
     offers: mixedDataWithExtras.offers.map((offer) => ({
       id: offer.id,
       title: offer.title.en,
@@ -96,12 +91,13 @@ const splitOffresData = (mixedData: typeof offresPageData) => {
       features: offer.features.map((feature) => feature.en),
       validUntil: offer.validUntil.en,
       highlight: offer.highlight ? offer.highlight.en : null,
-      image: offer.image || '',
+      image: offer.image || '/uploads/Offre.png',
     })),
     seasonalOffers: mixedDataWithExtras.seasonalOffers.map((so) => ({
       title: so.title.en,
       period: so.period.en,
       description: so.description.en,
+      image: so.image || '/uploads/Env.png',
     })),
     cta: {
       title: mixedDataWithExtras.cta.title.en,
@@ -117,7 +113,6 @@ const splitOffresData = (mixedData: typeof offresPageData) => {
 };
 
 // Reconstruct mixed data from dataFr and dataEn
-// Ensure seasonalSection and images are present
 const reconstructMixed = (dataFr: any, dataEn: any | null) => {
   if (!dataFr || typeof dataFr !== 'object') {
     console.warn('Invalid dataFr structure, falling back to default');
@@ -127,9 +122,7 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
   const defaultSeasonal = {
     title: { fr: "Evènements Spéciaux", en: "Special Events" },
     description: {
-      // fr: "Profitez de nos offres spéciales selon les saisons et événements malgaches",
       fr: "",
-      // en: "Enjoy our special offers according to Malagasy seasons and events"
       en: ""
     }
   };
@@ -143,6 +136,10 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
     hero: {
       title: { fr: dataFr.hero.title, en: enFallback.hero.title },
       description: { fr: dataFr.hero.description, en: enFallback.hero.description },
+    },
+    offerFeaturesTitle: { 
+      fr: dataFr.offerFeaturesTitle, 
+      en: enFallback.offerFeaturesTitle 
     },
     offers: dataFr.offers.map((offerFr: any, i: number) => {
       const offerEn = enFallback.offers[i] || offerFr;
@@ -161,14 +158,18 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
         highlight: offerFr.highlight
           ? { fr: offerFr.highlight, en: offerEn.highlight || offerFr.highlight }
           : null,
-        image: offerFr.image || '',
+        image: offerFr.image || '/uploads/Offre.png',
       };
     }),
-    seasonalOffers: dataFr.seasonalOffers.map((soFr: any, i: number) => ({
-      title: { fr: soFr.title, en: enFallback.seasonalOffers[i]?.title || soFr.title },
-      period: { fr: soFr.period, en: enFallback.seasonalOffers[i]?.period || soFr.period },
-      description: { fr: soFr.description, en: enFallback.seasonalOffers[i]?.description || soFr.description },
-    })),
+    seasonalOffers: dataFr.seasonalOffers.map((soFr: any, i: number) => {
+      const soEn = enFallback.seasonalOffers[i] || soFr;
+      return {
+        title: { fr: soFr.title, en: soEn.title },
+        period: { fr: soFr.period, en: soEn.period },
+        description: { fr: soFr.description, en: soEn.description },
+        image: soFr.image || '/uploads/Env.png',
+      };
+    }),
     cta: {
       title: { fr: dataFr.cta.title, en: enFallback.cta.title },
       description: { fr: dataFr.cta.description, en: enFallback.cta.description },
@@ -183,9 +184,10 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
 const Offres = () => {
   const { currentLang } = useLanguage();
   const langKey = currentLang.code.toLowerCase();
-  const [data, setData] = useState(reconstructMixed(splitOffresData(offresPageData).dataFr, splitOffresData(offresPageData).dataEn));
+  const [data, setData] = useState(() => reconstructMixed(splitOffresData(offresPageData).dataFr, splitOffresData(offresPageData).dataEn));
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const isAdmin = !!localStorage.getItem('userToken');
 
   // Fetch offres data from backend
   useEffect(() => {
@@ -226,12 +228,12 @@ const Offres = () => {
           const fetchedData = reconstructMixed(section.dataFr, section.dataEn);
           setData(fetchedData);
         } else {
-          setData(reconstructMixed(splitOffresData(offresPageData).dataFr, splitOffresData(offresPageData).dataEn));
+          setData(() => reconstructMixed(splitOffresData(offresPageData).dataFr, splitOffresData(offresPageData).dataEn));
         }
       } catch (err) {
         console.error('Error fetching offres data:', err);
         setError('Failed to load offres data');
-        setData(reconstructMixed(splitOffresData(offresPageData).dataFr, splitOffresData(offresPageData).dataEn));
+        setData(() => reconstructMixed(splitOffresData(offresPageData).dataFr, splitOffresData(offresPageData).dataEn));
       } finally {
         setLoading(false);
       }
@@ -303,6 +305,15 @@ const Offres = () => {
     };
   };
 
+  const updateOfferFeaturesTitle = async (newFr: string, newEn: string) => {
+    const updatedData = {
+      ...data,
+      offerFeaturesTitle: { fr: newFr, en: newEn },
+    };
+    setData(updatedData);
+    await updateOffresSection(updatedData);
+  };
+
   const updateOfferField = (index: number, field: 'title' | 'subtitle' | 'description' | 'duration' | 'category' | 'validUntil' | 'highlight') => {
     return async (newFr: string, newEn: string) => {
       const updatedData = {
@@ -338,6 +349,38 @@ const Offres = () => {
     };
   };
 
+  const addOfferFeature = async (offerIndex: number) => {
+    const updatedData = {
+      ...data,
+      offers: data.offers.map((offer, i) =>
+        i === offerIndex
+          ? {
+              ...offer,
+              features: [...offer.features, { fr: "Exemple d'offre", en: "Exemple d'offre" }],
+            }
+          : offer
+      ),
+    };
+    setData(updatedData);
+    await updateOffresSection(updatedData);
+  };
+
+  const removeOfferFeature = async (offerIndex: number, featureIndex: number) => {
+    const updatedData = {
+      ...data,
+      offers: data.offers.map((offer, i) =>
+        i === offerIndex
+          ? {
+              ...offer,
+              features: offer.features.filter((_, j) => j !== featureIndex),
+            }
+          : offer
+      ),
+    };
+    setData(updatedData);
+    await updateOffresSection(updatedData);
+  };
+
   const updateOfferImage = (index: number) => {
     return async (newUrl: string) => {
       const updatedData = {
@@ -358,6 +401,17 @@ const Offres = () => {
             ? { ...so, [field]: { fr: newFr, en: newEn } }
             : so
         ),
+      };
+      setData(updatedData);
+      await updateOffresSection(updatedData);
+    };
+  };
+
+  const updateSeasonalImage = (index: number) => {
+    return async (newUrl: string) => {
+      const updatedData = {
+        ...data,
+        seasonalOffers: data.seasonalOffers.map((so, i) => (i === index ? { ...so, image: newUrl } : so)),
       };
       setData(updatedData);
       await updateOffresSection(updatedData);
@@ -407,6 +461,81 @@ const Offres = () => {
       setData(updatedData);
       await updateOffresSection(updatedData);
     };
+  };
+
+  const addOffer = async () => {
+    let newOffer;
+    if (data.offers.length > 0) {
+      const maxId = Math.max(...data.offers.map((o: any) => o.id));
+      newOffer = {
+        ...data.offers[0],
+        id: maxId + 1,
+        title: { fr: "Nouvelle Offre", en: "New Offer" },
+      };
+    } else {
+      newOffer = {
+        id: 1,
+        title: { fr: "Nouvelle Offre", en: "New Offer" },
+        subtitle: { fr: "Pour les voyageurs", en: "For travelers" },
+        description: { fr: "Description par défaut.", en: "Default description." },
+        duration: { fr: "2 nuits minimum", en: "Minimum 2 nights" },
+        category: { fr: "Catégorie", en: "Category" },
+        features: [
+          { fr: "Caractéristique 1", en: "Feature 1" },
+          { fr: "Caractéristique 2", en: "Feature 2" },
+        ],
+        validUntil: { fr: "31 Décembre 2025", en: "December 31, 2025" },
+        highlight: null,
+        image: '/uploads/Offre.png',
+      };
+    }
+    const updatedData = {
+      ...data,
+      offers: [...data.offers, newOffer],
+    };
+    setData(updatedData);
+    await updateOffresSection(updatedData);
+  };
+
+  const removeOffer = async (id: number) => {
+    const updatedData = {
+      ...data,
+      offers: data.offers.filter((offer) => offer.id !== id),
+    };
+    setData(updatedData);
+    await updateOffresSection(updatedData);
+  };
+
+  const addSeasonal = async () => {
+    let newSeasonal;
+    if (data.seasonalOffers.length > 0) {
+      newSeasonal = {
+        ...data.seasonalOffers[0],
+        title: { fr: "Nouvel Événement", en: "New Event" },
+      };
+    } else {
+      newSeasonal = {
+        title: { fr: "Nouvel Événement", en: "New Event" },
+        period: { fr: "Tous les ...", en: "Every ..." },
+        description: { fr: "Description par défaut.", en: "Default description." },
+        image: '/uploads/Env.png',
+      };
+    }
+    const updatedData = {
+      ...data,
+      seasonalOffers: [...data.seasonalOffers, newSeasonal],
+    };
+    setData(updatedData);
+    await updateOffresSection(updatedData);
+  };
+
+  const removeSeasonal = async (index: number) => {
+    const updatedData = {
+      ...data,
+      seasonalOffers: data.seasonalOffers.filter((_, i) => i !== index),
+    };
+    setData(updatedData);
+    await updateOffresSection(updatedData);
   };
 
   if (loading) {
@@ -475,8 +604,44 @@ const Offres = () => {
     console.warn(error);
   }
 
-  const { hero, offers, seasonalOffers, seasonalSection, cta } = data;
+  const { hero, offers, seasonalOffers, seasonalSection, cta, offerFeaturesTitle } = data;
   const ctaButtons = cta.buttonTexts;
+
+  const addOfferCard = (
+    <Card className="border-2 border-dashed border-muted-foreground hover:border-primary transition-colors flex flex-col">
+      <CardContent className="flex flex-col items-center justify-center h-full p-8 text-center">
+        <Button
+          variant="outline"
+          size="lg"
+          onClick={addOffer}
+          className="mb-4 rounded-full w-16 h-16 p-0"
+        >
+          <Plus className="w-6 h-6" />
+        </Button>
+        <p className="text-muted-foreground">
+          {currentLang.code === 'fr' ? 'Ajouter une nouvelle offre' : 'Add a new offer'}
+        </p>
+      </CardContent>
+    </Card>
+  );
+
+  const addSeasonalCard = (
+    <Card className="border-2 border-dashed border-muted-foreground hover:border-primary transition-colors text-center flex flex-col">
+      <CardContent className="flex flex-col items-center justify-center h-full p-8">
+        <Button
+          variant="outline"
+          size="lg"
+          onClick={addSeasonal}
+          className="mb-4 rounded-full w-16 h-16 p-0"
+        >
+          <Plus className="w-6 h-6" />
+        </Button>
+        <p className="text-muted-foreground">
+          {currentLang.code === 'fr' ? 'Ajouter un nouvel événement' : 'Add a new event'}
+        </p>
+      </CardContent>
+    </Card>
+  );
 
   return (
     <div className="min-h-screen bg-background">
@@ -513,7 +678,17 @@ const Offres = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
             {offers.map((offer, index) => (
-              <Card key={offer.id} className="overflow-hidden hover-elevate transition-all duration-300">
+              <Card key={offer.id} className="relative overflow-hidden hover-elevate transition-all duration-300 flex flex-col">
+                {isAdmin && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="absolute top-2 right-2 z-10"
+                    onClick={() => removeOffer(offer.id)}
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                )}
                 <CardHeader className="pb-4">
                   <div className="flex items-center justify-between mb-2">
                     <Tooltip
@@ -560,57 +735,90 @@ const Offres = () => {
                   </Tooltip>
                 </CardHeader>
                 
-                <CardContent className="space-y-6">
-                  <Tooltip
-                    frLabel={offer.description.fr}
-                    enLabel={offer.description.en}
-                    onSave={updateOfferField(index, 'description')}
-                  >
-                    <p className="text-muted-foreground leading-relaxed">
-                      {getText(offer.description)}
-                    </p>
-                  </Tooltip>
-                  
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-1">
-                      <Clock className="w-4 h-4" />
-                      <Tooltip
-                        frLabel={offer.duration.fr}
-                        enLabel={offer.duration.en}
-                        onSave={updateOfferField(index, 'duration')}
-                      >
-                        <span>{getText(offer.duration)}</span>
-                      </Tooltip>
+                <CardContent className="flex flex-col flex-1">
+                  <div className="space-y-6 flex-1">
+                    <Tooltip
+                      frLabel={offer.description.fr}
+                      enLabel={offer.description.en}
+                      onSave={updateOfferField(index, 'description')}
+                    >
+                      <p className="text-muted-foreground leading-relaxed">
+                        {getText(offer.description)}
+                      </p>
+                    </Tooltip>
+                    
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                      <div className="flex items-center gap-1">
+                        <Clock className="w-4 h-4" />
+                        <Tooltip
+                          frLabel={offer.duration.fr}
+                          enLabel={offer.duration.en}
+                          onSave={updateOfferField(index, 'duration')}
+                        >
+                          <span>{getText(offer.duration)}</span>
+                        </Tooltip>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Calendar className="w-4 h-4" />
+                        <span>Valable jusqu'au </span>
+                        <Tooltip
+                          frLabel={offer.validUntil.fr}
+                          enLabel={offer.validUntil.en}
+                          onSave={updateOfferField(index, 'validUntil')}
+                        >
+                          <span>{getText(offer.validUntil)}</span>
+                        </Tooltip>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <Calendar className="w-4 h-4" />
-                      <span>Valable jusqu'au </span>
+                    
+                    <div>
                       <Tooltip
-                        frLabel={offer.validUntil.fr}
-                        enLabel={offer.validUntil.en}
-                        onSave={updateOfferField(index, 'validUntil')}
+                        frLabel={offerFeaturesTitle.fr}
+                        enLabel={offerFeaturesTitle.en}
+                        onSave={updateOfferFeaturesTitle}
                       >
-                        <span>{getText(offer.validUntil)}</span>
+                        <h4 className="font-semibold text-foreground mb-3">
+                          {getText(offerFeaturesTitle)}
+                        </h4>
                       </Tooltip>
+                      <ul className="space-y-2">
+                        {offer.features.map((feature, fIndex) => (
+                          <li key={fIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
+                            <Star className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                            <div className="flex-1">
+                              <Tooltip
+                                frLabel={feature.fr}
+                                enLabel={feature.en}
+                                onSave={updateOfferFeature(index, fIndex)}
+                              >
+                                <span>{getText(feature)}</span>
+                              </Tooltip>
+                            </div>
+                            {isAdmin && (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => removeOfferFeature(index, fIndex)}
+                                className="h-6 w-6 p-0"
+                              >
+                                <Trash2 className="w-3 h-3" />
+                              </Button>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                      {isAdmin && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => addOfferFeature(index)}
+                          className="mt-2"
+                        >
+                          <Plus className="w-4 h-4 mr-1" />
+                          Ajouter une caractéristique
+                        </Button>
+                      )}
                     </div>
-                  </div>
-                  
-                  <div>
-                    <h4 className="font-semibold text-foreground mb-3">Cette offre comprend :</h4>
-                    <ul className="space-y-2">
-                      {offer.features.map((feature, fIndex) => (
-                        <li key={fIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
-                          <Star className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                          <Tooltip
-                            frLabel={feature.fr}
-                            enLabel={feature.en}
-                            onSave={updateOfferFeature(index, fIndex)}
-                          >
-                            <span>{getText(feature)}</span>
-                          </Tooltip>
-                        </li>
-                      ))}
-                    </ul>
                   </div>
                   
                   {/* Photo frame for offer */}
@@ -618,20 +826,29 @@ const Offres = () => {
                     imageUrl={offer.image}
                     onSave={updateOfferImage(index)}
                   >
-                    <div className="w-full h-48 bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg border-2 border-primary/20 flex items-center justify-center mt-4">
-                      <div className="text-center p-4">
-                        <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                          <Gift className="w-8 h-8 text-primary" />
+                    {offer.image ? (
+                      <img 
+                        src={offer.image} 
+                        alt={`Photo de ${getText(offer.title)}`} 
+                        className="w-full h-48 object-cover rounded-lg border-2 border-primary/20 mt-4"
+                      />
+                    ) : (
+                      <div className="w-full h-48 bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg border-2 border-primary/20 flex items-center justify-center">
+                        <div className="text-center p-4">
+                          <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <Gift className="w-8 h-8 text-primary" />
+                          </div>
+                          <p className="text-sm text-muted-foreground font-medium">
+                            Photo de l'offre {getText(offer.title)}
+                          </p>
                         </div>
-                        <p className="text-sm text-muted-foreground font-medium">
-                          Photo de l'offre {getText(offer.title)}
-                        </p>
                       </div>
-                    </div>
+                    )}
                   </ImageTooltip>
                 </CardContent>
               </Card>
             ))}
+            {isAdmin && addOfferCard}
           </div>
         </div>
       </section>
@@ -662,7 +879,17 @@ const Offres = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {seasonalOffers.map((offer, index) => (
-              <Card key={index} className="text-center hover-elevate">
+              <Card key={index} className="relative text-center hover-elevate flex flex-col">
+                {isAdmin && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="absolute top-2 right-2 z-10"
+                    onClick={() => removeSeasonal(index)}
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                )}
                 <CardHeader>
                   <Sparkles className="w-12 h-12 text-primary mx-auto mb-4" />
                   <Tooltip
@@ -684,19 +911,47 @@ const Offres = () => {
                     </Badge>
                   </Tooltip>
                 </CardHeader>
-                <CardContent>
-                  <Tooltip
-                    frLabel={offer.description.fr}
-                    enLabel={offer.description.en}
-                    onSave={updateSeasonalField(index, 'description')}
+                <CardContent className="flex flex-col flex-1">
+                  <div className="space-y-4 flex-1">
+                    <Tooltip
+                      frLabel={offer.description.fr}
+                      enLabel={offer.description.en}
+                      onSave={updateSeasonalField(index, 'description')}
+                    >
+                      <p className="text-muted-foreground">
+                        {getText(offer.description)}
+                      </p>
+                    </Tooltip>
+                  </div>
+                  
+                  {/* Photo frame for seasonal offer */}
+                  <ImageTooltip
+                    imageUrl={offer.image}
+                    onSave={updateSeasonalImage(index)}
                   >
-                    <p className="text-muted-foreground mb-4">
-                      {getText(offer.description)}
-                    </p>
-                  </Tooltip>
+                    {offer.image ? (
+                      <img 
+                        src={offer.image} 
+                        alt={`Photo de ${getText(offer.title)}`} 
+                        className="w-full h-48 object-cover rounded-lg border-2 border-primary/20 mt-4"
+                      />
+                    ) : (
+                      <div className="w-full h-48 bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg border-2 border-primary/20 flex items-center justify-center">
+                        <div className="text-center p-4">
+                          <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <Gift className="w-8 h-8 text-primary" />
+                          </div>
+                          <p className="text-sm text-muted-foreground font-medium">
+                            Photo de l'événement {getText(offer.title)}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </ImageTooltip>
                 </CardContent>
               </Card>
             ))}
+            {isAdmin && addSeasonalCard}
           </div>
         </div>
       </section>
