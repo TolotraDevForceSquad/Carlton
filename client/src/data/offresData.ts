@@ -14,132 +14,112 @@ export const offresPageData = {
     fr: "Cette offre comprend :",
     en: "This offer includes :"
   },
+  seasonalSection: {
+    title: { fr: "Événements Spéciaux", en: "Special Events" },
+    description: {
+      fr: "",
+      en: ""
+    },
+    show: true,
+  },
   offers: [
     {
       id: 1,
       title: {
-        fr: "Escapade Romantique",
-        en: "Romantic Getaway"
+        fr: "Business Lunch",
+        en: "Business Lunch"
       },
       subtitle: {
-        fr: "Pour les amoureux",
-        en: "For lovers"
+        fr: "Menu déjeuner à 2 ou 3 services au choix",
+        en: "Lunch menu with 2 or 3 courses to choose"
       },
       description: {
-        fr: "Vivez une expérience inoubliable dans l'une de nos suites de prestige avec vue panoramique sur Antananarivo.",
-        en: "Live an unforgettable experience in one of our prestige suites with panoramic views of Antananarivo."
+        fr: "Un déjeuner en 2 ou 3 plats selon vos envies. Concocté avec soin pour s’adapter à votre emploi du temps, il est servi dans un rythme fluide, sans compromis sur la qualité. Une formule parfaite pour votre pause déjeuner ou une rencontre professionnelle.",
+        en: "A lunch menu in 2 or 3 dishes according to your wishes. Carefully prepared to fit your schedule, served at a smooth pace without compromising on quality. The perfect formula for your lunch break or a professional meeting."
       },
       duration: {
-        fr: "2 nuits minimum",
-        en: "Minimum 2 nights"
+        fr: "Du lundi au vendredi, de 12h à 14h30",
+        en: "Monday to Friday, 12pm to 2:30pm"
       },
       category: {
-        fr: "Romance",
-        en: "Romance"
+        fr: "Déjeuner d'affaires",
+        en: "Business Lunch"
       },
       features: [
         {
-          fr: "Suite avec vue panoramique",
-          en: "Suite with panoramic view"
+          fr: "Menu à 2 services : Entrée + Plat ou Plat + Dessert à 64 000 Ariary",
+          en: "2-course menu: Starter + Main or Main + Dessert at 64,000 Ariary"
         },
         {
-          fr: "Petit-déjeuner en chambre",
-          en: "Breakfast in room"
-        },
-        {
-          fr: "Dîner aux chandelles à Île Rouge",
-          en: "Candlelit dinner at Île Rouge"
-        },
-        {
-          fr: "Massage duo au spa (sur demande)",
-          en: "Duo massage at the spa (on request)"
-        },
-        {
-          fr: "Champagne de bienvenue",
-          en: "Welcome champagne"
+          fr: "Menu à 3 services : Entrée + Plat + Dessert à 73 000 Ariary",
+          en: "3-course menu: Starter + Main + Dessert at 73,000 Ariary"
         }
       ],
       validUntil: {
-        fr: "31 Mars 2024",
-        en: "March 31, 2024"
+        fr: "",
+        en: ""
       },
-      highlight: {
-        fr: "Le plus populaire",
-        en: "The most popular"
-      },
-      image: '/uploads/Offre.png'
+      highlight: null,
+      image: '/uploads/Offre.png',
+      hidden: false
     },
     {
       id: 2,
       title: {
-        fr: "Séjour Gastronomique",
-        en: "Gastronomic Stay"
+        fr: "L’Apéro du Chef",
+        en: "The Chef's Aperitif"
       },
       subtitle: {
-        fr: "Pour les épicuriens",
-        en: "For epicureans"
+        fr: "Suggestion d’apéro sur ardoise du Chef",
+        en: "Chef's chalkboard aperitif suggestion"
       },
       description: {
-        fr: "Découvrez l'excellence culinaire du Carlton Madagascar à travers nos quatre établissements uniques.",
-        en: "Discover the culinary excellence of Carlton Madagascar through our four unique establishments."
+        fr: "Des assiettes d’amuse-bouches salés au choix, variés et savoureux, à partager — ou pas. Parfait pour se détendre en fin de journée, que vous soyez seul ou entre amis, après une longue journée. Un moment de plaisir simple, gourmand et bien mérité.",
+        en: "Plates of savory amuse-bouches to choose from, varied and tasty, to share—or not. Perfect for unwinding at the end of the day, whether alone or with friends, after a long day. A simple, indulgent, and well-deserved moment of pleasure."
       },
       duration: {
-        fr: "3 nuits minimum",
-        en: "Minimum 3 nights"
+        fr: "Du lundi au vendredi à partir de 17h à 19h",
+        en: "Monday to Friday from 5pm to 7pm"
       },
       category: {
-        fr: "Gastronomie",
-        en: "Gastronomy"
+        fr: "Apéritif",
+        en: "Aperitif"
       },
       features: [
         {
-          fr: "Chambre Deluxe avec balcon",
-          en: "Deluxe room with balcony"
+          fr: "28 000 Ariary",
+          en: "28,000 Ariary"
         },
         {
-          fr: "Menu dégustation à Île Rouge",
-          en: "Tasting menu at Île Rouge"
-        },
-        {
-          fr: "Déjeuner tropical à l'Oasis",
-          en: "Tropical lunch at l'Oasis"
-        },
-        {
-          fr: "Soirée cocktails au Bistrot",
-          en: "Cocktail evening at the Bistrot"
-        },
-        {
-          fr: "Atelier pâtisserie à L'Éclair",
-          en: "Pastry workshop at L'Éclair"
+          fr: "Assiettes d’amuse-bouches salés au choix, variés et savoureux",
+          en: "Plates of savory amuse-bouches to choose from, varied and tasty"
         }
       ],
       validUntil: {
-        fr: "30 Avril 2024",
-        en: "April 30, 2024"
+        fr: "",
+        en: ""
       },
-      highlight: {
-        fr: "Nouveau",
-        en: "New"
-      },
-      image: '/uploads/Offre.png'
+      highlight: null,
+      image: '/uploads/Offre.png',
+      hidden: false
     },
     {
       id: 3,
       title: {
-        fr: "Retraite Bien-être",
-        en: "Wellness Retreat"
+        fr: "Yoga",
+        en: "Yoga"
       },
       subtitle: {
-        fr: "Pour se ressourcer",
-        en: "To recharge"
+        fr: "Tous les samedis à 8h",
+        en: "Every Saturday at 8am"
       },
       description: {
-        fr: "Accordez-vous une parenthèse de détente absolue dans un cadre d'exception avec nos services de bien-être.",
-        en: "Treat yourself to an absolute relaxation break in an exceptional setting with our wellness services."
+        fr: "Commencez votre week-end en douceur avec une séance de yoga d’une heure, un rituel parfait pour relâcher la pression du quotidien et retrouver l’équilibre. Un petit-déjeuner est offert à la fin de séance pour prolonger cette pause de bien-être.",
+        en: "Start your weekend gently with a one-hour yoga session, a perfect ritual to release daily stress and regain balance. A breakfast is offered at the end of the session to extend this wellness break."
       },
       duration: {
-        fr: "4 nuits minimum",
-        en: "Minimum 4 nights"
+        fr: "Tous les samedis à 8h",
+        en: "Every Saturday at 8am"
       },
       category: {
         fr: "Bien-être",
@@ -147,89 +127,21 @@ export const offresPageData = {
       },
       features: [
         {
-          fr: "Suite avec terrasse privée",
-          en: "Suite with private terrace"
+          fr: "50 000 Ariary avec petit-déjeuner",
+          en: "50,000 Ariary with breakfast"
         },
         {
-          fr: "Accès illimité fitness & piscine",
-          en: "Unlimited access to fitness & pool"
-        },
-        {
-          fr: "Cours de yoga personnalisé",
-          en: "Personalized yoga classes"
-        },
-        {
-          fr: "Cuisine healthy à l'Oasis",
-          en: "Healthy cuisine at l'Oasis"
-        },
-        {
-          fr: "Activités sportives au choix",
-          en: "Sports activities of your choice"
+          fr: "Séance de yoga d’une heure",
+          en: "One-hour yoga session"
         }
       ],
       validUntil: {
-        fr: "31 Mai 2024",
-        en: "May 31, 2024"
+        fr: "",
+        en: ""
       },
-      highlight: {
-        fr: "Offre exclusive",
-        en: "Exclusive offer"
-      },
-      image: '/uploads/Offre.png'
-    },
-    {
-      id: 4,
-      title: {
-        fr: "Découverte de Madagascar",
-        en: "Discovery of Madagascar"
-      },
-      subtitle: {
-        fr: "Pour les aventuriers",
-        en: "For adventurers"
-      },
-      description: {
-        fr: "Explorez les merveilles de la Grande Île tout en profitant du luxe et du confort du Carlton Madagascar.",
-        en: "Explore the wonders of the Great Island while enjoying the luxury and comfort of Carlton Madagascar."
-      },
-      duration: {
-        fr: "5 nuits minimum",
-        en: "Minimum 5 nights"
-      },
-      category: {
-        fr: "Aventure",
-        en: "Adventure"
-      },
-      features: [
-        {
-          fr: "Suite Présidentielle disponible",
-          en: "Presidential Suite available"
-        },
-        {
-          fr: "Excursions privées avec guide",
-          en: "Private excursions with guide"
-        },
-        {
-          fr: "Transport de luxe inclus",
-          en: "Luxury transport included"
-        },
-        {
-          fr: "Repas dans nos 4 restaurants",
-          en: "Meals in our 4 restaurants"
-        },
-        {
-          fr: "Souvenirs artisanaux offerts",
-          en: "Artisanal souvenirs offered"
-        }
-      ],
-      validUntil: {
-        fr: "30 Juin 2024",
-        en: "June 30, 2024"
-      },
-      highlight: {
-        fr: "Expérience unique",
-        en: "Unique experience"
-      },
-      image: '/uploads/Offre.png'
+      highlight: null,
+      image: '/uploads/Offre.png',
+      hidden: false
     }
   ],
   seasonalOffers: [
@@ -246,7 +158,8 @@ export const offresPageData = {
         fr: "Ambiance musicale exceptionnelle avec nos musiciens jazz dans le cadre élégant du Bistrot du Carlton",
         en: "Exceptional musical atmosphere with our jazz musicians in the elegant setting of the Bistrot du Carlton"
       },
-      image: '/uploads/Env.png'
+      image: '/uploads/Env.png',
+      hidden: false
     },
     {
       title: {
@@ -261,7 +174,8 @@ export const offresPageData = {
         fr: "Un buffet gastronomique exceptionnel alliant saveurs françaises et spécialités malgaches",
         en: "An exceptional gastronomic buffet combining French flavors and Malagasy specialties"
       },
-      image: '/uploads/Env.png'
+      image: '/uploads/Env.png',
+      hidden: false
     },
     {
       title: {
@@ -276,7 +190,8 @@ export const offresPageData = {
         fr: "Découvrez notre sélection de vins et spiritueux accompagnés de mets raffinés",
         en: "Discover our selection of wines and spirits accompanied by refined dishes"
       },
-      image: '/uploads/Env.png'
+      image: '/uploads/Env.png',
+      hidden: false
     }
   ],
   cta: {

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Star, Calendar, Clock, Sparkles, Users, Gift, Plus, Trash2 } from 'lucide-react';
+import { Star, Calendar, Clock, Sparkles, Users, Gift, Plus, Trash2, Eye, EyeOff, ForkKnife, Martini, HeartPulse, Music, Coffee, Wine } from 'lucide-react';
 import { Tooltip, ImageTooltip } from '@/components/Tooltip';
 import Footer from '@/components/Footer';
 import { offresPageData } from '@/data/offresData';
@@ -25,11 +25,12 @@ const splitOffresData = (mixedData: typeof offresPageData) => {
   const mixedDataWithExtras = {
     ...mixedData,
     seasonalSection: mixedData.seasonalSection || {
-      title: { fr: "Evènements Spéciaux", en: "Special Events" },
+      title: { fr: "Événements Spéciaux", en: "Special Events" },
       description: {
         fr: "",
         en: ""
-      }
+      },
+      show: true,
     },
   };
 
@@ -37,6 +38,7 @@ const splitOffresData = (mixedData: typeof offresPageData) => {
     seasonalSection: {
       title: mixedDataWithExtras.seasonalSection.title.fr,
       description: mixedDataWithExtras.seasonalSection.description.fr,
+      show: mixedDataWithExtras.seasonalSection.show,
     },
     hero: {
       title: mixedDataWithExtras.hero.title.fr,
@@ -54,12 +56,14 @@ const splitOffresData = (mixedData: typeof offresPageData) => {
       validUntil: offer.validUntil.fr,
       highlight: offer.highlight ? offer.highlight.fr : null,
       image: offer.image || '/uploads/Offre.png',
+      hidden: offer.hidden || false,
     })),
     seasonalOffers: mixedDataWithExtras.seasonalOffers.map((so) => ({
       title: so.title.fr,
       period: so.period.fr,
       description: so.description.fr,
       image: so.image || '/uploads/Env.png',
+      hidden: so.hidden || false,
     })),
     cta: {
       title: mixedDataWithExtras.cta.title.fr,
@@ -75,6 +79,7 @@ const splitOffresData = (mixedData: typeof offresPageData) => {
     seasonalSection: {
       title: mixedDataWithExtras.seasonalSection.title.en,
       description: mixedDataWithExtras.seasonalSection.description.en,
+      show: mixedDataWithExtras.seasonalSection.show,
     },
     hero: {
       title: mixedDataWithExtras.hero.title.en,
@@ -92,12 +97,14 @@ const splitOffresData = (mixedData: typeof offresPageData) => {
       validUntil: offer.validUntil.en,
       highlight: offer.highlight ? offer.highlight.en : null,
       image: offer.image || '/uploads/Offre.png',
+      hidden: offer.hidden || false,
     })),
     seasonalOffers: mixedDataWithExtras.seasonalOffers.map((so) => ({
       title: so.title.en,
       period: so.period.en,
       description: so.description.en,
       image: so.image || '/uploads/Env.png',
+      hidden: so.hidden || false,
     })),
     cta: {
       title: mixedDataWithExtras.cta.title.en,
@@ -120,26 +127,28 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
   }
   const enFallback = dataEn || dataFr;
   const defaultSeasonal = {
-    title: { fr: "Evènements Spéciaux", en: "Special Events" },
+    title: { fr: "Événements Spéciaux", en: "Special Events" },
     description: {
       fr: "",
       en: ""
-    }
+    },
+    show: true,
   };
   return {
     seasonalSection: dataFr.seasonalSection
       ? {
-          title: { fr: dataFr.seasonalSection.title, en: enFallback.seasonalSection?.title || defaultSeasonal.title.en },
-          description: { fr: dataFr.seasonalSection.description, en: enFallback.seasonalSection?.description || defaultSeasonal.description.en },
-        }
+        title: { fr: dataFr.seasonalSection.title, en: enFallback.seasonalSection?.title || defaultSeasonal.title.en },
+        description: { fr: dataFr.seasonalSection.description, en: enFallback.seasonalSection?.description || defaultSeasonal.description.en },
+        show: dataFr.seasonalSection.show !== undefined ? dataFr.seasonalSection.show : true,
+      }
       : defaultSeasonal,
     hero: {
       title: { fr: dataFr.hero.title, en: enFallback.hero.title },
       description: { fr: dataFr.hero.description, en: enFallback.hero.description },
     },
-    offerFeaturesTitle: { 
-      fr: dataFr.offerFeaturesTitle, 
-      en: enFallback.offerFeaturesTitle 
+    offerFeaturesTitle: {
+      fr: dataFr.offerFeaturesTitle,
+      en: enFallback.offerFeaturesTitle
     },
     offers: dataFr.offers.map((offerFr: any, i: number) => {
       const offerEn = enFallback.offers[i] || offerFr;
@@ -159,6 +168,7 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
           ? { fr: offerFr.highlight, en: offerEn.highlight || offerFr.highlight }
           : null,
         image: offerFr.image || '/uploads/Offre.png',
+        hidden: offerFr.hidden !== undefined ? offerFr.hidden : (offerEn.hidden || false),
       };
     }),
     seasonalOffers: dataFr.seasonalOffers.map((soFr: any, i: number) => {
@@ -168,6 +178,7 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
         period: { fr: soFr.period, en: soEn.period },
         description: { fr: soFr.description, en: soEn.description },
         image: soFr.image || '/uploads/Env.png',
+        hidden: soFr.hidden !== undefined ? soFr.hidden : (soEn.hidden || false),
       };
     }),
     cta: {
@@ -187,6 +198,7 @@ const Offres = () => {
   const [data, setData] = useState(() => reconstructMixed(splitOffresData(offresPageData).dataFr, splitOffresData(offresPageData).dataEn));
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [forceShow, setForceShow] = useState(false);
   const isAdmin = !!localStorage.getItem('userToken');
 
   // Fetch offres data from backend
@@ -291,6 +303,11 @@ const Offres = () => {
 
   const getText = (textObj: { fr: string; en: string }) => textObj[langKey as keyof typeof textObj];
 
+  const validUntilLabel = {
+    fr: "",
+    en: ""
+  };
+
   const updateHeroField = (field: 'title' | 'description') => {
     return async (newFr: string, newEn: string) => {
       const updatedData = {
@@ -336,11 +353,11 @@ const Offres = () => {
         offers: data.offers.map((offer, i) =>
           i === offerIndex
             ? {
-                ...offer,
-                features: offer.features.map((feature, j) =>
-                  j === featureIndex ? { fr: newFr, en: newEn } : feature
-                ),
-              }
+              ...offer,
+              features: offer.features.map((feature, j) =>
+                j === featureIndex ? { fr: newFr, en: newEn } : feature
+              ),
+            }
             : offer
         ),
       };
@@ -355,9 +372,9 @@ const Offres = () => {
       offers: data.offers.map((offer, i) =>
         i === offerIndex
           ? {
-              ...offer,
-              features: [...offer.features, { fr: "Exemple d'offre", en: "Exemple d'offre" }],
-            }
+            ...offer,
+            features: [...offer.features, { fr: "Exemple d'offre", en: "Example offer" }],
+          }
           : offer
       ),
     };
@@ -371,10 +388,21 @@ const Offres = () => {
       offers: data.offers.map((offer, i) =>
         i === offerIndex
           ? {
-              ...offer,
-              features: offer.features.filter((_, j) => j !== featureIndex),
-            }
+            ...offer,
+            features: offer.features.filter((_, j) => j !== featureIndex),
+          }
           : offer
+      ),
+    };
+    setData(updatedData);
+    await updateOffresSection(updatedData);
+  };
+
+  const toggleOfferHidden = async (index: number) => {
+    const updatedData = {
+      ...data,
+      offers: data.offers.map((offer, i) =>
+        i === index ? { ...offer, hidden: !offer.hidden } : offer
       ),
     };
     setData(updatedData);
@@ -407,6 +435,17 @@ const Offres = () => {
     };
   };
 
+  const toggleSeasonalHidden = async (index: number) => {
+    const updatedData = {
+      ...data,
+      seasonalOffers: data.seasonalOffers.map((so, i) =>
+        i === index ? { ...so, hidden: !so.hidden } : so
+      ),
+    };
+    setData(updatedData);
+    await updateOffresSection(updatedData);
+  };
+
   const updateSeasonalImage = (index: number) => {
     return async (newUrl: string) => {
       const updatedData = {
@@ -416,6 +455,20 @@ const Offres = () => {
       setData(updatedData);
       await updateOffresSection(updatedData);
     };
+  };
+
+  const toggleSeasonalVisibility = async () => {
+    const newShow = !data.seasonalSection.show;
+    const updatedData = {
+      ...data,
+      seasonalSection: {
+        ...data.seasonalSection,
+        show: newShow,
+      },
+    };
+    setData(updatedData);
+    if (!newShow) setForceShow(false);
+    await updateOffresSection(updatedData);
   };
 
   const updateSeasonalSectionField = (field: 'title' | 'description') => {
@@ -471,22 +524,24 @@ const Offres = () => {
         ...data.offers[0],
         id: maxId + 1,
         title: { fr: "Nouvelle Offre", en: "New Offer" },
+        hidden: false,
       };
     } else {
       newOffer = {
         id: 1,
         title: { fr: "Nouvelle Offre", en: "New Offer" },
-        subtitle: { fr: "Pour les voyageurs", en: "For travelers" },
-        description: { fr: "Description par défaut.", en: "Default description." },
-        duration: { fr: "2 nuits minimum", en: "Minimum 2 nights" },
-        category: { fr: "Catégorie", en: "Category" },
+        subtitle: { fr: "Pour les gourmands", en: "For foodies" },
+        description: { fr: "Description de l'offre.", en: "Offer description." },
+        duration: { fr: "Du lundi au vendredi", en: "Monday to Friday" },
+        category: { fr: "Gastronomie", en: "Gastronomy" },
         features: [
-          { fr: "Caractéristique 1", en: "Feature 1" },
+          { fr: "Caractéristique 1 à 64 000 Ar", en: "Feature 1 at 64,000 Ar" },
           { fr: "Caractéristique 2", en: "Feature 2" },
         ],
-        validUntil: { fr: "31 Décembre 2025", en: "December 31, 2025" },
+        validUntil: { fr: "", en: "" },
         highlight: null,
         image: '/uploads/Offre.png',
+        hidden: false,
       };
     }
     const updatedData = {
@@ -512,6 +567,7 @@ const Offres = () => {
       newSeasonal = {
         ...data.seasonalOffers[0],
         title: { fr: "Nouvel Événement", en: "New Event" },
+        hidden: false,
       };
     } else {
       newSeasonal = {
@@ -519,6 +575,7 @@ const Offres = () => {
         period: { fr: "Tous les ...", en: "Every ..." },
         description: { fr: "Description par défaut.", en: "Default description." },
         image: '/uploads/Env.png',
+        hidden: false,
       };
     }
     const updatedData = {
@@ -536,6 +593,40 @@ const Offres = () => {
     };
     setData(updatedData);
     await updateOffresSection(updatedData);
+  };
+
+  const getCategoryIcon = (category: string) => {
+    const icons: { [key: string]: React.ComponentType<{ className?: string }> } = {
+      'Déjeuner d\'affaires': ForkKnife,
+      'Business Lunch': ForkKnife,
+      'Apéritif': Martini,
+      'Aperitif': Martini,
+      'Bien-être': HeartPulse,
+      'Wellness': HeartPulse,
+    };
+    return icons[category] || Star;
+  };
+
+  const getSeasonalIcon = (title: string) => {
+    const icons: { [key: string]: React.ComponentType<{ className?: string }> } = {
+      'Soirée Jazz': Music,
+      'Jazz Evening': Music,
+      'Brunch Dominical': Coffee,
+      'Sunday Brunch': Coffee,
+      'Soirée Dégustation': Wine,
+      'Tasting Evening': Wine,
+    };
+    return icons[title] || Sparkles;
+  };
+
+  const addOfferText = {
+    fr: 'Ajouter une nouvelle offre',
+    en: 'Add a new offer'
+  };
+
+  const addSeasonalText = {
+    fr: 'Ajouter un nouvel événement',
+    en: 'Add a new event'
   };
 
   if (loading) {
@@ -607,6 +698,16 @@ const Offres = () => {
   const { hero, offers, seasonalOffers, seasonalSection, cta, offerFeaturesTitle } = data;
   const ctaButtons = cta.buttonTexts;
 
+  const hiddenSectionTexts = {
+    title: { fr: 'Section masquée', en: 'Section hidden' },
+    description: {
+      fr: 'Cette section est cachée pour les visiteurs. Cliquez pour l\'afficher temporairement et éditer.',
+      en: 'This section is hidden from visitors. Click to temporarily show and edit.'
+    },
+    button: { fr: 'Afficher pour édition', en: 'Show for editing' }
+  }
+
+
   const addOfferCard = (
     <Card className="border-2 border-dashed border-muted-foreground hover:border-primary transition-colors flex flex-col">
       <CardContent className="flex flex-col items-center justify-center h-full p-8 text-center">
@@ -619,7 +720,7 @@ const Offres = () => {
           <Plus className="w-6 h-6" />
         </Button>
         <p className="text-muted-foreground">
-          {currentLang.code === 'fr' ? 'Ajouter une nouvelle offre' : 'Add a new offer'}
+          {getText(addOfferText)}
         </p>
       </CardContent>
     </Card>
@@ -637,15 +738,17 @@ const Offres = () => {
           <Plus className="w-6 h-6" />
         </Button>
         <p className="text-muted-foreground">
-          {currentLang.code === 'fr' ? 'Ajouter un nouvel événement' : 'Add a new event'}
+          {getText(addSeasonalText)}
         </p>
       </CardContent>
     </Card>
   );
 
+  const isFr = currentLang.code === 'fr';
+
   return (
     <div className="min-h-screen bg-background">
-      
+
       {/* Hero Section */}
       <section className="pt-20 bg-gradient-to-r from-background to-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -677,284 +780,377 @@ const Offres = () => {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-            {offers.map((offer, index) => (
-              <Card key={offer.id} className="relative overflow-hidden hover-elevate transition-all duration-300 flex flex-col">
-                {isAdmin && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="absolute top-2 right-2 z-10"
-                    onClick={() => removeOffer(offer.id)}
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
-                )}
-                <CardHeader className="pb-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <Tooltip
-                      frLabel={offer.category.fr}
-                      enLabel={offer.category.en}
-                      onSave={updateOfferField(index, 'category')}
-                    >
-                      <Badge 
-                        variant="outline" 
-                        className="text-primary border-primary"
+            {offers.map((offer, index) => {
+              if (!isAdmin && offer.hidden) return null;
+              const CategoryIcon = getCategoryIcon(getText(offer.category));
+              return (
+                <Card key={offer.id} className={`relative overflow-hidden hover-elevate transition-all duration-300 flex flex-col ${offer.hidden ? 'opacity-50' : ''}`}>
+                  {isAdmin && (
+                    <div className="absolute top-2 right-2 z-10 flex gap-1">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => toggleOfferHidden(index)}
+                        title={offer.hidden ? (isFr ? 'Afficher' : 'Show') : (isFr ? 'Masquer' : 'Hide')}
                       >
-                        {getText(offer.category)}
-                      </Badge>
-                    </Tooltip>
-                    {offer.highlight && (
+                        {offer.hidden ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeOffer(offer.id)}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  )}
+                  <CardHeader className="pb-4">
+                    <div className="flex items-center justify-between mb-2">
                       <Tooltip
-                        frLabel={offer.highlight.fr}
-                        enLabel={offer.highlight.en}
-                        onSave={updateOfferField(index, 'highlight')}
+                        frLabel={offer.category.fr}
+                        enLabel={offer.category.en}
+                        onSave={updateOfferField(index, 'category')}
                       >
-                        <Badge className="bg-accent text-accent-foreground">
-                          {getText(offer.highlight)}
+                        <Badge
+                          variant="outline"
+                          className="text-primary border-primary flex items-center"
+                        >
+                          <CategoryIcon className="w-3 h-3 mr-1" />
+                          {getText(offer.category)}
                         </Badge>
                       </Tooltip>
-                    )}
-                  </div>
-                  <Tooltip
-                    frLabel={offer.title.fr}
-                    enLabel={offer.title.en}
-                    onSave={updateOfferField(index, 'title')}
-                  >
-                    <CardTitle className="text-2xl font-serif text-foreground mb-2">
-                      {getText(offer.title)}
-                    </CardTitle>
-                  </Tooltip>
-                  <Tooltip
-                    frLabel={offer.subtitle.fr}
-                    enLabel={offer.subtitle.en}
-                    onSave={updateOfferField(index, 'subtitle')}
-                  >
-                    <p className="text-primary font-luxury italic text-lg">
-                      {getText(offer.subtitle)}
-                    </p>
-                  </Tooltip>
-                </CardHeader>
-                
-                <CardContent className="flex flex-col flex-1">
-                  <div className="space-y-6 flex-1">
-                    <Tooltip
-                      frLabel={offer.description.fr}
-                      enLabel={offer.description.en}
-                      onSave={updateOfferField(index, 'description')}
-                    >
-                      <p className="text-muted-foreground leading-relaxed">
-                        {getText(offer.description)}
-                      </p>
-                    </Tooltip>
-                    
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                      <div className="flex items-center gap-1">
-                        <Clock className="w-4 h-4" />
+                      {offer.highlight && (
                         <Tooltip
-                          frLabel={offer.duration.fr}
-                          enLabel={offer.duration.en}
-                          onSave={updateOfferField(index, 'duration')}
+                          frLabel={offer.highlight.fr}
+                          enLabel={offer.highlight.en}
+                          onSave={updateOfferField(index, 'highlight')}
                         >
-                          <span>{getText(offer.duration)}</span>
+                          <Badge className="bg-accent text-accent-foreground">
+                            {getText(offer.highlight)}
+                          </Badge>
                         </Tooltip>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Calendar className="w-4 h-4" />
-                        <span>Valable jusqu'au </span>
-                        <Tooltip
-                          frLabel={offer.validUntil.fr}
-                          enLabel={offer.validUntil.en}
-                          onSave={updateOfferField(index, 'validUntil')}
-                        >
-                          <span>{getText(offer.validUntil)}</span>
-                        </Tooltip>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <Tooltip
-                        frLabel={offerFeaturesTitle.fr}
-                        enLabel={offerFeaturesTitle.en}
-                        onSave={updateOfferFeaturesTitle}
-                      >
-                        <h4 className="font-semibold text-foreground mb-3">
-                          {getText(offerFeaturesTitle)}
-                        </h4>
-                      </Tooltip>
-                      <ul className="space-y-2">
-                        {offer.features.map((feature, fIndex) => (
-                          <li key={fIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
-                            <Star className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                            <div className="flex-1">
-                              <Tooltip
-                                frLabel={feature.fr}
-                                enLabel={feature.en}
-                                onSave={updateOfferFeature(index, fIndex)}
-                              >
-                                <span>{getText(feature)}</span>
-                              </Tooltip>
-                            </div>
-                            {isAdmin && (
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => removeOfferFeature(index, fIndex)}
-                                className="h-6 w-6 p-0"
-                              >
-                                <Trash2 className="w-3 h-3" />
-                              </Button>
-                            )}
-                          </li>
-                        ))}
-                      </ul>
-                      {isAdmin && (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => addOfferFeature(index)}
-                          className="mt-2"
-                        >
-                          <Plus className="w-4 h-4 mr-1" />
-                          Ajouter une caractéristique
-                        </Button>
                       )}
                     </div>
-                  </div>
-                  
-                  {/* Photo frame for offer */}
-                  <ImageTooltip
-                    imageUrl={offer.image}
-                    onSave={updateOfferImage(index)}
-                  >
-                    {offer.image ? (
-                      <img 
-                        src={offer.image} 
-                        alt={`Photo de ${getText(offer.title)}`} 
-                        className="w-full h-48 object-cover rounded-lg border-2 border-primary/20 mt-4"
-                      />
-                    ) : (
-                      <div className="w-full h-48 bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg border-2 border-primary/20 flex items-center justify-center">
-                        <div className="text-center p-4">
-                          <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                            <Gift className="w-8 h-8 text-primary" />
-                          </div>
-                          <p className="text-sm text-muted-foreground font-medium">
-                            Photo de l'offre {getText(offer.title)}
-                          </p>
+                    <Tooltip
+                      frLabel={offer.title.fr}
+                      enLabel={offer.title.en}
+                      onSave={updateOfferField(index, 'title')}
+                    >
+                      <CardTitle className="text-2xl font-serif text-foreground mb-2">
+                        {getText(offer.title)}
+                      </CardTitle>
+                    </Tooltip>
+                    <Tooltip
+                      frLabel={offer.subtitle.fr}
+                      enLabel={offer.subtitle.en}
+                      onSave={updateOfferField(index, 'subtitle')}
+                    >
+                      <p className="text-primary font-luxury italic text-lg">
+                        {getText(offer.subtitle)}
+                      </p>
+                    </Tooltip>
+                  </CardHeader>
+
+                  <CardContent className="flex flex-col flex-1">
+                    <div className="space-y-6 flex-1">
+                      <Tooltip
+                        frLabel={offer.description.fr}
+                        enLabel={offer.description.en}
+                        onSave={updateOfferField(index, 'description')}
+                      >
+                        <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
+                          {getText(offer.description)}
+                        </p>
+                      </Tooltip>
+
+                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-1">
+                          <Clock className="w-4 h-4" />
+                          <Tooltip
+                            frLabel={offer.duration.fr}
+                            enLabel={offer.duration.en}
+                            onSave={updateOfferField(index, 'duration')}
+                          >
+                            <span>{getText(offer.duration)}</span>
+                          </Tooltip>
                         </div>
+                        {offer.validUntil && (
+                          <div className="flex items-center gap-1">
+                            <Tooltip
+                              frLabel={offer.validUntil.fr}
+                              enLabel={offer.validUntil.en}
+                              onSave={updateOfferField(index, 'validUntil')}
+                            >
+                              <span>{getText(offer.validUntil)}</span>
+                            </Tooltip>
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </ImageTooltip>
-                </CardContent>
-              </Card>
-            ))}
+
+                      <div>
+                        <Tooltip
+                          frLabel={offerFeaturesTitle.fr}
+                          enLabel={offerFeaturesTitle.en}
+                          onSave={updateOfferFeaturesTitle}
+                        >
+                          <h4 className="font-semibold text-foreground mb-3">
+                            {getText(offerFeaturesTitle)}
+                          </h4>
+                        </Tooltip>
+                        <ul className="space-y-2">
+                          {offer.features.map((feature, fIndex) => (
+                            <li key={fIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
+                              <Star className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                              <div className="flex-1">
+                                <Tooltip
+                                  frLabel={feature.fr}
+                                  enLabel={feature.en}
+                                  onSave={updateOfferFeature(index, fIndex)}
+                                >
+                                  <span>{getText(feature)}</span>
+                                </Tooltip>
+                              </div>
+                              {isAdmin && (
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => removeOfferFeature(index, fIndex)}
+                                  className="h-6 w-6 p-0"
+                                >
+                                  <Trash2 className="w-3 h-3" />
+                                </Button>
+                              )}
+                            </li>
+                          ))}
+                        </ul>
+                        {isAdmin && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => addOfferFeature(index)}
+                            className="mt-2"
+                          >
+                            <Plus className="w-4 h-4 mr-1" />
+                            Ajouter une caractéristique
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Photo frame for offer */}
+                    <ImageTooltip
+                      imageUrl={offer.image}
+                      onSave={updateOfferImage(index)}
+                    >
+                      {offer.image ? (
+                        <img
+                          src={offer.image}
+                          alt={`Photo de ${getText(offer.title)}`}
+                          className="w-full h-48 object-cover rounded-lg border-2 border-primary/20 mt-4"
+                        />
+                      ) : (
+                        <div className="w-full h-48 bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg border-2 border-primary/20 flex items-center justify-center">
+                          <div className="text-center p-4">
+                            <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                              <Gift className="w-8 h-8 text-primary" />
+                            </div>
+                            <p className="text-sm text-muted-foreground font-medium">
+                              Photo de l'offre {getText(offer.title)}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                    </ImageTooltip>
+                  </CardContent>
+                </Card>
+              );
+            })}
             {isAdmin && addOfferCard}
           </div>
         </div>
       </section>
 
       {/* Seasonal Offers */}
-      <section className="py-20 bg-card/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <Tooltip
-              frLabel={seasonalSection.title.fr}
-              enLabel={seasonalSection.title.en}
-              onSave={updateSeasonalSectionField('title')}
-            >
-              <h2 className="text-4xl font-serif font-bold text-foreground mb-4">
-                {getText(seasonalSection.title)}
-              </h2>
-            </Tooltip>
-            <Tooltip
-              frLabel={seasonalSection.description.fr}
-              enLabel={seasonalSection.description.en}
-              onSave={updateSeasonalSectionField('description')}
-            >
-              <p className="text-lg text-muted-foreground">
-                {getText(seasonalSection.description)}
-              </p>
-            </Tooltip>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {seasonalOffers.map((offer, index) => (
-              <Card key={index} className="relative text-center hover-elevate flex flex-col">
-                {isAdmin && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="absolute top-2 right-2 z-10"
-                    onClick={() => removeSeasonal(index)}
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
-                )}
-                <CardHeader>
-                  <Sparkles className="w-12 h-12 text-primary mx-auto mb-4" />
-                  <Tooltip
-                    frLabel={offer.title.fr}
-                    enLabel={offer.title.en}
-                    onSave={updateSeasonalField(index, 'title')}
-                  >
-                    <CardTitle className="text-xl font-serif text-foreground">
-                      {getText(offer.title)}
-                    </CardTitle>
-                  </Tooltip>
-                  <Tooltip
-                    frLabel={offer.period.fr}
-                    enLabel={offer.period.en}
-                    onSave={updateSeasonalField(index, 'period')}
-                  >
-                    <Badge variant="outline" className="text-primary border-primary mx-auto">
-                      {getText(offer.period)}
-                    </Badge>
-                  </Tooltip>
-                </CardHeader>
-                <CardContent className="flex flex-col flex-1">
-                  <div className="space-y-4 flex-1">
-                    <Tooltip
-                      frLabel={offer.description.fr}
-                      enLabel={offer.description.en}
-                      onSave={updateSeasonalField(index, 'description')}
+      {seasonalSection.show || forceShow ? (
+        <section className="py-20 bg-card/30">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12 relative">
+              {isAdmin && (
+                <div className="absolute right-4 top-0 flex gap-2">
+                  {seasonalSection.show ? (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={toggleSeasonalVisibility}
+                      title={isFr ? 'Masquer pour le public' : 'Hide for public'}
                     >
-                      <p className="text-muted-foreground">
-                        {getText(offer.description)}
-                      </p>
-                    </Tooltip>
-                  </div>
-                  
-                  {/* Photo frame for seasonal offer */}
-                  <ImageTooltip
-                    imageUrl={offer.image}
-                    onSave={updateSeasonalImage(index)}
-                  >
-                    {offer.image ? (
-                      <img 
-                        src={offer.image} 
-                        alt={`Photo de ${getText(offer.title)}`} 
-                        className="w-full h-48 object-cover rounded-lg border-2 border-primary/20 mt-4"
-                      />
-                    ) : (
-                      <div className="w-full h-48 bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg border-2 border-primary/20 flex items-center justify-center">
-                        <div className="text-center p-4">
-                          <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                            <Gift className="w-8 h-8 text-primary" />
-                          </div>
-                          <p className="text-sm text-muted-foreground font-medium">
-                            Photo de l'événement {getText(offer.title)}
-                          </p>
-                        </div>
+                      <EyeOff className="w-4 h-4" />
+                      <span className="sr-only">{isFr ? 'Masquer' : 'Hide'}</span>
+                    </Button>
+                  ) : forceShow ? (
+                    <div className="flex gap-1">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setForceShow(false)}
+                        title={isFr ? 'Masquer l\'aperçu' : 'Hide preview'}
+                      >
+                        <EyeOff className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={async () => {
+                          const updatedData = {
+                            ...data,
+                            seasonalSection: {
+                              ...data.seasonalSection,
+                              show: true,
+                            },
+                          };
+                          setData(updatedData);
+                          setForceShow(false);
+                          await updateOffresSection(updatedData);
+                        }}
+                        title={isFr ? 'Rendre visible' : 'Make visible'}
+                      >
+                        <Eye className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  ) : null}
+                </div>
+              )}
+              <Tooltip
+                frLabel={seasonalSection.title.fr}
+                enLabel={seasonalSection.title.en}
+                onSave={updateSeasonalSectionField('title')}
+              >
+                <h2 className="text-4xl font-serif font-bold text-foreground mb-4">
+                  {getText(seasonalSection.title)}
+                </h2>
+              </Tooltip>
+              <Tooltip
+                frLabel={seasonalSection.description.fr}
+                enLabel={seasonalSection.description.en}
+                onSave={updateSeasonalSectionField('description')}
+              >
+                <p className="text-lg text-muted-foreground">
+                  {getText(seasonalSection.description)}
+                </p>
+              </Tooltip>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {seasonalOffers.map((offer, index) => {
+                if (!isAdmin && offer.hidden) return null;
+                const SeasonalIcon = getSeasonalIcon(getText(offer.title));
+                return (
+                  <Card key={index} className={`relative text-center hover-elevate flex flex-col ${offer.hidden ? 'opacity-50' : ''}`}>
+                    {isAdmin && (
+                      <div className="absolute top-2 right-2 z-10 flex gap-1">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => toggleSeasonalHidden(index)}
+                          title={offer.hidden ? (isFr ? 'Afficher' : 'Show') : (isFr ? 'Masquer' : 'Hide')}
+                        >
+                          {offer.hidden ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => removeSeasonal(index)}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
                       </div>
                     )}
-                  </ImageTooltip>
+                    <CardHeader>
+                      <SeasonalIcon className="w-12 h-12 text-primary mx-auto mb-4" />
+                      <Tooltip
+                        frLabel={offer.title.fr}
+                        enLabel={offer.title.en}
+                        onSave={updateSeasonalField(index, 'title')}
+                      >
+                        <CardTitle className="text-xl font-serif text-foreground">
+                          {getText(offer.title)}
+                        </CardTitle>
+                      </Tooltip>
+                      <Tooltip
+                        frLabel={offer.period.fr}
+                        enLabel={offer.period.en}
+                        onSave={updateSeasonalField(index, 'period')}
+                      >
+                        <Badge variant="outline" className="text-primary border-primary mx-auto">
+                          {getText(offer.period)}
+                        </Badge>
+                      </Tooltip>
+                    </CardHeader>
+                    <CardContent className="flex flex-col flex-1">
+                      <div className="space-y-4 flex-1">
+                        <Tooltip
+                          frLabel={offer.description.fr}
+                          enLabel={offer.description.en}
+                          onSave={updateSeasonalField(index, 'description')}
+                        >
+                          <p className="text-muted-foreground whitespace-pre-line">
+                            {getText(offer.description)}
+                          </p>
+                        </Tooltip>
+                      </div>
+
+                      {/* Photo frame for seasonal offer */}
+                      <ImageTooltip
+                        imageUrl={offer.image}
+                        onSave={updateSeasonalImage(index)}
+                      >
+                        {offer.image ? (
+                          <img
+                            src={offer.image}
+                            alt={`Photo de ${getText(offer.title)}`}
+                            className="w-full h-48 object-cover rounded-lg border-2 border-primary/20 mt-4"
+                          />
+                        ) : (
+                          <div className="w-full h-48 bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg border-2 border-primary/20 flex items-center justify-center">
+                            <div className="text-center p-4">
+                              <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                                <Gift className="w-8 h-8 text-primary" />
+                              </div>
+                              <p className="text-sm text-muted-foreground font-medium">
+                                Photo de l'événement {getText(offer.title)}
+                              </p>
+                            </div>
+                          </div>
+                        )}
+                      </ImageTooltip>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+              {isAdmin && addSeasonalCard}
+            </div>
+          </div>
+        </section>
+      ) : isAdmin ? (
+        <section className="py-20 bg-card/30">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center py-20">
+              <Card className="max-w-md mx-auto">
+                <CardHeader className="text-center">
+                  <EyeOff className="w-8 h-8 mx-auto text-muted-foreground mb-4" />
+                  <CardTitle className="text-2xl">{getText(hiddenSectionTexts.title)}</CardTitle>
+                  <p className="text-muted-foreground">{getText(hiddenSectionTexts.description)}</p>
+                </CardHeader>
+                <CardContent>
+                  <Button onClick={() => setForceShow(true)} className="w-full">
+                    {getText(hiddenSectionTexts.button)}
+                  </Button>
                 </CardContent>
               </Card>
-            ))}
-            {isAdmin && addSeasonalCard}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       {/* CTA Section */}
       <section className="py-16 bg-gradient-to-r from-primary/10 to-accent/10">
@@ -988,15 +1184,6 @@ const Offres = () => {
                 <span>{getText(ctaButtons.primary)}</span>
               </Tooltip>
             </Button>
-            {/* <Button variant="outline" size="lg" data-testid="button-callback">
-              <Tooltip
-                frLabel={ctaButtons.secondary.fr}
-                enLabel={ctaButtons.secondary.en}
-                onSave={updateCtaButton('secondary')}
-              >
-                <span>{getText(ctaButtons.secondary)}</span>
-              </Tooltip>
-            </Button> */}
           </div>
         </div>
       </section>

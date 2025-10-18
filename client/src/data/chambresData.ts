@@ -1,8 +1,8 @@
 // src/data/chambresData.ts
 export const chambresData = {
   heroTitle: {
-    fr: "Suites & Chambres",
-    en: "Suites & Rooms"
+    fr: "Chambres & Suites",
+    en: "Rooms & Suites"
   },
   heroSubtitle: {
     fr: "171 chambres et suites élégantes avec vue imprenable sur la Haute Ville d'Antananarivo, le Palais de la Reine et le lac Anosy",

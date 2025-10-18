@@ -1,71 +1,142 @@
-// src/components/BienEtreLoisirs.tsx
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
 import { Clock, Star, Sparkles, Heart } from 'lucide-react';
 import Footer from '@/components/Footer';
-import { formatAmpersand } from '@/lib/utils/formatAmpersand';
-import { bienEtreLoisirsData } from '@/data/bienEtreLoisirsData';
 import poolImage from '@assets/generated_images/Spa_wellness_facilities_3dba6f04.png';
+import { formatAmpersand } from '@/lib/utils/formatAmpersand';
 
 const BienEtreLoisirs = () => {
-  const { facilities, wellnessPrograms, heroTitle, heroSubtitle, content, bottomSection, sectionsTitle, sectionsDescription, programsTitle, programsDescription } = bienEtreLoisirsData;
-  
-  // Fallback pour facilities si CMS n'est pas simulé
-  const processedFacilities = facilities.map((facility) => ({
-    ...facility,
-    image: facility.image || poolImage,
-    features: facility.features || [],
-    services: facility.services || []
-  }));
+  const facilities = [
+    {
+      id: 1,
+      name: "Piscine",
+      type: "Détente Aquatique",
+      description: "Notre piscine à débordement de 25 mètres offre une vue imprenable sur Antananarivo. Un véritable joyau suspendu au cœur de la ville, parfait pour la nage et la détente absolue.",
+      image: poolImage,
+      hours: "06h00 - 22h00",
+      features: [
+        "Piscine à débordement 25m",
+        "Bassin pour enfants sécurisé",
+        "Bain à remous intégré",
+        "Transats de luxe avec parasols",
+        "Service de serviettes inclus",
+        "Bar aquatique l'Oasis",
+        "Éclairage nocturne ambiant",
+        "Température contrôlée 28°C"
+      ],
+      services: ["Maître-nageur présent", "Cours d'aquagym", "Cocktails poolside"]
+    },
+    {
+      id: 2,
+      name: "Salle de Sport",
+      type: "Fitness & Forme",
+      description: "Un espace de remise en forme ultra-moderne de 200m² équipé des dernières technologies Technogym pour maintenir votre routine d'entraînement même en voyage.",
+      image: poolImage,
+      hours: "05h00 - 23h00",
+      features: [
+        "Équipements Technogym dernière génération",
+        "Espace cardio-training climatisé",
+        "Salle de musculation complète",
+        "Zone d'étirement et yoga",
+        "Vestiaires avec sauna",
+        "Douches à l'italienne",
+        "Casiers sécurisés",
+        "Écrans individuels intégrés"
+      ],
+      services: ["Coach personnel disponible", "Programmes personnalisés", "Serviettes fournies"]
+    },
+    {
+      id: 3,
+      name: "Court de Tennis",
+      type: "Sport & Compétition",
+      description: "Court de tennis professionnel en surface dure avec éclairage nocturne, parfait pour maintenir votre niveau de jeu dans un cadre tropical exceptionnel.",
+      image: poolImage,
+      hours: "06h00 - 21h00",
+      features: [
+        "Court en surface dure régulation",
+        "Éclairage LED professionnel",
+        "Filets et poteaux de compétition",
+        "Gradins pour spectateurs",
+        "Vestiaires dédiés",
+        "Local matériel équipé",
+        "Système de réservation",
+        "Douches et rafraîchissements"
+      ],
+      services: ["Professeur de tennis disponible", "Location de matériel", "Tournois amicaux"]
+    },
+    {
+      id: 4,
+      name: "Soins Holistiques",
+      type: "Bien-être & Relaxation",
+      description: "Espace de soins holistiques dédié à votre bien-être total, alliant techniques traditionnelles malgaches et soins modernes dans un environnement apaisant.",
+      image: poolImage,
+      hours: "09h00 - 21h00",
+      features: [
+        "Cabines de soins privées",
+        "Techniques traditionnelles malgaches",
+        "Massages thérapeutiques",
+        "Soins du visage personnalisés",
+        "Aromathérapie aux huiles locales",
+        "Espace détente avec tisanerie",
+        "Douches sensorielles",
+        "Produits naturels locaux"
+      ],
+      services: ["Thérapeutes certifiés", "Soins sur mesure", "Conseil bien-être"]
+    }
+  ];
+
+
+  const wellnessPrograms = [
+    {
+      id: 1,
+      title: "Programme Détox Madagascar",
+      duration: "3 jours",
+      description: "Programme complet de détoxification utilisant les plantes endémiques de Madagascar",
+      highlights: ["Soins aux plantes locales", "Nutrition détox", "Yoga quotidien", "Massages drainants"]
+    },
+    {
+      id: 2,
+      title: "Ritual Bien-être Traditionnel",
+      duration: "2 heures",
+      description: "Expérience authentique des techniques de soins traditionnels malgaches",
+      highlights: ["Massage aux huiles essentielles", "Gommage au raphia", "Bain aux fleurs", "Relaxation guidée"]
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-background">
       
       {/* Hero Section */}
-      <section 
-        className="pt-20 bg-gradient-to-r from-background to-card/50 bg-cover bg-center bg-no-repeat relative"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+      <section className="pt-20 bg-gradient-to-r from-background to-card/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
-            <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6 text-foreground">
-              {formatAmpersand(heroTitle)}
+            <h1 className="text-5xl md:text-6xl font-serif font-bold text-foreground mb-6">
+              {formatAmpersand('Bien-être & Loisirs')}
             </h1>
             <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
-            <p className="text-xl max-w-3xl mx-auto text-muted-foreground">
-              {heroSubtitle}
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Évadez-vous dans notre univers de bien-être alliant détente, sport et soins holistiques 
+              au cœur de Madagascar pour une expérience de ressourcement totale
             </p>
           </div>
         </div>
       </section>
-
-      {/* Content Section */}
-      {content && (
-        <section className="py-16 bg-muted/30">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div 
-              className="prose prose-lg dark:prose-invert mx-auto"
-              dangerouslySetInnerHTML={{ __html: content }}
-            />
-          </div>
-        </section>
-      )}
 
       {/* Facilities */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-serif font-bold text-foreground mb-4">
-              {sectionsTitle}
+              Nos Installations
             </h2>
             <p className="text-lg text-muted-foreground">
-              {sectionsDescription}
+              Des équipements haut de gamme pour votre bien-être et vos loisirs
             </p>
           </div>
           
           <div className="space-y-16">
-            {processedFacilities.map((facility, index) => {
+            {facilities.map((facility, index) => {
               let sectionId = '';
               if (facility.name === 'Piscine') sectionId = 'piscine';
               else if (facility.name === 'Salle de Sport') sectionId = 'salle-sport';
@@ -147,15 +218,16 @@ const BienEtreLoisirs = () => {
         </div>
       </section>
 
+
       {/* Wellness Programs */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-serif font-bold text-foreground mb-4">
-              {programsTitle}
+              Programmes Bien-être
             </h2>
             <p className="text-lg text-muted-foreground">
-              {programsDescription}
+              Découvrez nos programmes holistiques inspirés des traditions malgaches
             </p>
           </div>
           
@@ -199,15 +271,15 @@ const BienEtreLoisirs = () => {
       <section className="py-16 bg-gradient-to-r from-primary/10 to-accent/10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-serif font-bold text-foreground mb-4">
-            {bottomSection.title}
+            Votre oasis de détente au cœur d'Antananarivo
           </h2>
           <p className="text-lg text-muted-foreground mb-8">
-            {bottomSection.description}
+            Profitez de nos installations de loisirs et de bien-être ouvertes tous les jours. Nos équipes sont à votre disposition pour personnaliser votre expérience.
           </p>
           <div className="flex justify-center">
             <Button size="lg" data-testid="button-contact-wellness">
               <Heart className="w-4 h-4 mr-2" />
-              {bottomSection.buttonText}
+              Nous contacter
             </Button>
           </div>
         </div>
