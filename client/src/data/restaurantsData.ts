@@ -56,7 +56,7 @@ export const restaurantPageData = {
       hours: { fr: "Bar : 06h30 à 23h00 | Restaurant : 11h00 à 23h00", en: "Bar: 6:30am to 11pm | Restaurant: 11am to 11pm" },
       capacity: { fr: "Terrasse en plein air", en: "Outdoor Terrace" },
       reservationRequired: false,
-      dressCode: { fr: "Tenue décontractée chic", en: "Smart Casual" },
+      dressCode: { fr: "", en: "" },
       specialties: [
         { fr: "Terrine de foie gras", en: "Foie Gras Terrine" },
         { fr: "Salade César", en: "Caesar Salad" },
@@ -95,7 +95,7 @@ export const restaurantPageData = {
       hours: { fr: "Petit-déjeuner : 06h30 à 10h30 | Déjeuner : 12h00 à 15h00 | Dîner : 19h00 à 23h00", en: "Breakfast: 6:30am to 10:30am | Lunch: 12pm to 3pm | Dinner: 7pm to 11pm" },
       capacity: { fr: "60 couverts en salle + terrasse", en: "60 seats indoors + terrace" },
       reservationRequired: true,
-      dressCode: { fr: "Tenue élégante exigée", en: "Elegant Attire Required" },
+      dressCode: { fr: "", en: "" },
       specialties: [
         { fr: "Spécialités malgaches", en: "Malagasy Specialties" },
         { fr: "Plats internationaux", en: "International Dishes" },
@@ -129,7 +129,7 @@ export const restaurantPageData = {
       hours: { fr: "Bar : à partir de 8h00 | Restaurant (hiver) : 11h00 à 17h00 | Restaurant (été) : 11h00 à 18h00", en: "Bar: from 8am | Restaurant (winter): 11am to 5pm | Restaurant (summer): 11am to 6pm" },
       capacity: { fr: "50 places en plein air", en: "50 Outdoor Seats" },
       reservationRequired: false,
-      dressCode: { fr: "Tenue décontractée", en: "Casual Attire" },
+      dressCode: { fr: "", en: "" },
       specialties: [
         { fr: "Salades gourmandes", en: "Gourmet Salads" },
         { fr: "Grillades savoureuses", en: "Savory Grills" },
@@ -164,7 +164,7 @@ export const restaurantPageData = {
       hours: { fr: "De 06h30 à 18h30", en: "From 6:30am to 6:30pm" },
       capacity: { fr: "Emporter et 25 places assises", en: "Takeaway and 25 Seats" },
       reservationRequired: false,
-      dressCode: { fr: "Aucune restriction", en: "No Restrictions" },
+      dressCode: { fr: "", en: "" },
       specialties: [
         { fr: "Pains variés", en: "Varied Breads" },
         { fr: "Viennoiseries fondantes", en: "Melting Pastries" },

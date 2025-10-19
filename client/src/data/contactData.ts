@@ -379,5 +379,19 @@ export const contactData = {
         en: "Get directions"
       }
     }
+  },
+  onlineReviews: {
+    title: {
+      fr: "Avis en ligne",
+      en: "Online Reviews"
+    },
+    subtitle: {
+      fr: "Partagez votre expérience et aidez-nous à briller",
+      en: "Share your experience and help us shine"
+    },
+    callToAction: {
+      fr: "Faites briller nos 5 étoiles",
+      en: "Let’s shine our 5 stars"
+    }
   }
 };

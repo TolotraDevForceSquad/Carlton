@@ -534,7 +534,7 @@ const Restaurants = () => {
         hours: { fr: "Horaires", en: "Hours" },
         capacity: { fr: "Capacité", en: "Capacity" },
         reservationRequired: false,
-        dressCode: { fr: "Code vestimentaire", en: "Dress Code" },
+        dressCode: { fr: "", en: "" },
         specialties: [{ fr: "Spécialité 1", en: "Specialty 1" }],
         features: [{ fr: "Caractéristique 1", en: "Feature 1" }],
         hidden: false
@@ -1011,7 +1011,7 @@ const Restaurants = () => {
                         
                         <div className="p-4 bg-card/50 rounded-lg">
                           <p className="text-sm text-muted-foreground">
-                            <strong>{isFr ? 'Code vestimentaire :' : 'Dress Code: '}</strong>
+                            <strong>{isFr ? ' :' : ' '}</strong>
                             <Tooltip
                               frLabel={restaurant.dressCode.fr}
                               enLabel={restaurant.dressCode.en}

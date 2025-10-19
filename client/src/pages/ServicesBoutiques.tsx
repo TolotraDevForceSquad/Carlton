@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Clock, MapPin, Star, ShoppingBag, Bell, Car, Plane, Shirt, Coffee, Wifi, Scissors, Briefcase, EyeOff, Trash2, Eye, Plus, Mail, Phone } from 'lucide-react';
 import { Tooltip, ImageTooltip } from '@/components/Tooltip';
 import Footer from '@/components/Footer';
@@ -247,6 +248,24 @@ const ServicesBoutiques = () => {
     fetchServicesBoutiquesData();
   }, []);
 
+  // Refetch data after updates to ensure sync
+  const refetchData = async () => {
+    try {
+      const headers = getAuthHeaders();
+      const response = await fetch(`/api/globalSections?sectionKey=${SECTION_KEY}`, { headers });
+      if (response.ok) {
+        const sections = await response.json();
+        const section = sections.find((s: any) => s.sectionKey === SECTION_KEY);
+        if (section) {
+          const fetchedData = reconstructMixed(section.dataFr, section.dataEn);
+          setData(fetchedData);
+        }
+      }
+    } catch (err) {
+      console.error('Error refetching data:', err);
+    }
+  };
+
   // Carousel intervals
   useEffect(() => {
     if (data.services.images.length > 1) {
@@ -308,43 +327,97 @@ const ServicesBoutiques = () => {
       if (!putResponse.ok) {
         throw new Error('Failed to update servicesBoutiques section');
       }
+
+      // Refetch to ensure consistency
+      await refetchData();
     } catch (err) {
       console.error('Error updating servicesBoutiques section:', err);
     }
   };
 
+  // Fonction d'upload unifiée utilisant le même backend que le tooltip
   const uploadImage = async (file: File): Promise<string> => {
+    const token = localStorage.getItem('userToken');
+    if (!token) throw new Error('No authentication token');
+
     const formData = new FormData();
-    formData.append('image', file);
-    const response = await fetch('/api/upload/image', {
+    formData.append('file', file);
+    
+    const response = await fetch('/api/upload', {
       method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
       body: formData,
-      headers: getAuthHeaders(),
     });
+    
     if (!response.ok) {
       throw new Error('Upload failed');
     }
-    const { url } = await response.json();
-    return url;
+    
+    const data = await response.json();
+    return data.fileUrl;
   };
 
   const addImageFromUrlOrFile = async (url: string, file: File | null, isService: boolean) => {
-    let newUrl = url;
-    if (file) {
-      newUrl = await uploadImage(file);
+    try {
+      let newUrl = url;
+      
+      if (file) {
+        // Upload direct du fichier
+        newUrl = await uploadImage(file);
+      } else if (url.trim()) {
+        // Téléchargement depuis l'URL puis upload
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('Failed to fetch image from URL');
+        
+        const contentType = res.headers.get('content-type') || '';
+        let ext = '.jpg';
+        if (contentType.includes('png')) ext = '.png';
+        else if (contentType.includes('jpeg') || contentType.includes('jpg')) ext = '.jpg';
+        
+        const urlParts = url.split('/').pop()?.split('?')[0] || 'image';
+        const filename = `${urlParts}${ext}`;
+        const blob = await res.blob();
+        const fileFromBlob = new File([blob], filename, { type: contentType });
+        
+        newUrl = await uploadImage(fileFromBlob);
+      } else {
+        return; // Nothing to add
+      }
+
+      if (newUrl.trim()) {
+        const sectionKey = isService ? 'services' : 'boutiques';
+        const images = data[sectionKey].images;
+        const updatedData = {
+          ...data,
+          [sectionKey]: {
+            ...data[sectionKey],
+            images: [...images, newUrl.trim()],
+          },
+        };
+        setData(updatedData);
+        await updateServicesBoutiquesSection(updatedData);
+      }
+    } catch (error) {
+      console.error('Error adding image:', error);
+      // Could add toast/error handling here
     }
-    if (newUrl.trim()) {
-      const images = isService ? data.services.images : data.boutiques.images;
-      const updatedData = {
-        ...data,
-        [isService ? 'services' : 'boutiques']: {
-          ...data[isService ? 'services' : 'boutiques'],
-          images: [...images, newUrl.trim()],
-        },
-      };
-      setData(updatedData);
-      await updateServicesBoutiquesSection(updatedData);
-    }
+  };
+
+  const removeImage = async (index: number, isService: boolean) => {
+    const sectionKey = isService ? 'services' : 'boutiques';
+    const images = data[sectionKey].images;
+    const newImages = images.filter((_, i) => i !== index);
+    const updatedData = {
+      ...data,
+      [sectionKey]: {
+        ...data[sectionKey],
+        images: newImages,
+      },
+    };
+    setData(updatedData);
+    await updateServicesBoutiquesSection(updatedData);
   };
 
   const getText = (textObj: { fr: string; en: string } | null) => textObj ? textObj[langKey as keyof typeof textObj] : '';
@@ -370,6 +443,7 @@ const ServicesBoutiques = () => {
     return icons[iconName as keyof typeof icons] || <Bell className="w-6 h-6" />;
   };
 
+  // Les autres fonctions de mise à jour restent identiques...
   const updateHeroField = (field: 'title' | 'description') => {
     return async (newFr: string, newEn: string) => {
       const updatedData = {
@@ -655,7 +729,7 @@ const ServicesBoutiques = () => {
     await updateServicesBoutiquesSection(updatedData);
   };
 
-  const renderContactInfo = (item: any, type: 'service' | 'boutique', index: number) => {
+  const renderContactInfo = (item: any, type: 'service' | 'boutique', index: number, updateContact: (idx: number, field: 'email' | 'phone') => (newValue: string) => void) => {
     const phones = item.phone ? item.phone.split(';').map(p => p.trim()).filter(p => p) : [];
     return (
       <div className="space-y-2 mt-4">
@@ -665,7 +739,7 @@ const ServicesBoutiques = () => {
             <Tooltip
               frLabel={item.email}
               enLabel={item.email}
-              onSave={(newFr, newEn) => updateServiceContact(index, 'email')(newFr)} // or boutique
+              onSave={(newFr, newEn) => updateContact(index, 'email')(newFr)}
             >
               <a href={`mailto:${item.email}`} className="text-primary hover:underline">
                 {item.email}
@@ -684,7 +758,7 @@ const ServicesBoutiques = () => {
                   onSave={(newFr, newEn) => {
                     const currentPhones = item.phone ? item.phone.split(';').map(p => p.trim()) : [];
                     currentPhones[pIndex] = newFr;
-                    updateServiceContact(index, 'phone')(currentPhones.join('; ')); // or boutique
+                    updateContact(index, 'phone')(currentPhones.join('; '));
                   }}
                 >
                   <a href={`tel:${ph}`} className="text-primary hover:underline">
@@ -874,31 +948,38 @@ const ServicesBoutiques = () => {
               </div>
               {isAdmin && (
                 <div className="mt-4 p-4 bg-muted rounded-lg">
-                  <div className="flex gap-2 mb-2">
-                    <input
+                  <div className="flex flex-col sm:flex-row gap-2 mb-4">
+                    <Input
                       type="text"
                       value={newServiceImageUrl}
                       onChange={(e) => setNewServiceImageUrl(e.target.value)}
                       placeholder="URL d'image"
-                      className="flex-1 px-3 py-1 border rounded"
                     />
-                    <input
+                    <Input
                       type="file"
                       accept="image/*"
                       onChange={(e) => setNewServiceImageFile(e.target.files?.[0] || null)}
-                      className="px-3 py-1 border rounded"
                     />
-                    <Button size="sm" onClick={() => addImageFromUrlOrFile(newServiceImageUrl, newServiceImageFile, true)}>Ajouter</Button>
+                    <Button 
+                      size="sm" 
+                      onClick={async () => {
+                        await addImageFromUrlOrFile(newServiceImageUrl, newServiceImageFile, true);
+                        setNewServiceImageUrl('');
+                        setNewServiceImageFile(null);
+                      }}
+                    >
+                      Ajouter
+                    </Button>
                   </div>
-                  <ul className="space-y-1 text-sm">
+                  <ul className="space-y-2 text-sm max-h-40 overflow-y-auto">
                     {serviceImages.map((url, i) => (
-                      <li key={i} className="flex justify-between">
-                        <span className="truncate">{url}</span>
-                        <Button variant="ghost" size="sm" onClick={() => {
-                          // Remove logic
-                          const newImages = serviceImages.filter((_, idx) => idx !== i);
-                          // Update data similarly
-                        }}>
+                      <li key={i} className="flex items-center justify-between p-2 bg-background rounded">
+                        <span className="truncate flex-1 mr-2">{url}</span>
+                        <Button 
+                          variant="destructive" 
+                          size="sm" 
+                          onClick={() => removeImage(i, true)}
+                        >
                           <Trash2 className="w-4 h-4" />
                         </Button>
                       </li>
@@ -961,7 +1042,7 @@ const ServicesBoutiques = () => {
                         ))}
                       </div>
                     )}
-                    {renderContactInfo(service, 'service', index)}
+                    {renderContactInfo(service, 'service', index, updateServiceContact)}
                   </CardContent>
                 </Card>
               );
@@ -978,10 +1059,10 @@ const ServicesBoutiques = () => {
         </div>
       </section>
 
-      {/* Boutiques Section - similar updates */}
+      {/* Boutiques Section */}
       <section className="py-16 bg-card/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Hero with carousel, similar to services, with file upload */}
+          {/* Hero with carousel */}
           <div className="flex flex-col lg:flex-row-reverse gap-12 items-center mb-16">
             <div className="lg:w-1/2">
               <Tooltip frLabel={boutiques.title.fr} enLabel={boutiques.title.en} onSave={updateBoutiquesField('title')}>
@@ -1019,29 +1100,38 @@ const ServicesBoutiques = () => {
               </div>
               {isAdmin && (
                 <div className="mt-4 p-4 bg-muted rounded-lg">
-                  <div className="flex gap-2 mb-2">
-                    <input
+                  <div className="flex flex-col sm:flex-row gap-2 mb-4">
+                    <Input
                       type="text"
                       value={newBoutiqueImageUrl}
                       onChange={(e) => setNewBoutiqueImageUrl(e.target.value)}
                       placeholder="URL d'image"
-                      className="flex-1 px-3 py-1 border rounded"
                     />
-                    <input
+                    <Input
                       type="file"
                       accept="image/*"
                       onChange={(e) => setNewBoutiqueImageFile(e.target.files?.[0] || null)}
-                      className="px-3 py-1 border rounded"
                     />
-                    <Button size="sm" onClick={() => addImageFromUrlOrFile(newBoutiqueImageUrl, newBoutiqueImageFile, false)}>Ajouter</Button>
+                    <Button 
+                      size="sm" 
+                      onClick={async () => {
+                        await addImageFromUrlOrFile(newBoutiqueImageUrl, newBoutiqueImageFile, false);
+                        setNewBoutiqueImageUrl('');
+                        setNewBoutiqueImageFile(null);
+                      }}
+                    >
+                      Ajouter
+                    </Button>
                   </div>
-                  <ul className="space-y-1 text-sm">
+                  <ul className="space-y-2 text-sm max-h-40 overflow-y-auto">
                     {boutiqueImages.map((url, i) => (
-                      <li key={i} className="flex justify-between">
-                        <span className="truncate">{url}</span>
-                        <Button variant="ghost" size="sm" onClick={() => {
-                          // Remove logic similar
-                        }}>
+                      <li key={i} className="flex items-center justify-between p-2 bg-background rounded">
+                        <span className="truncate flex-1 mr-2">{url}</span>
+                        <Button 
+                          variant="destructive" 
+                          size="sm" 
+                          onClick={() => removeImage(i, false)}
+                        >
                           <Trash2 className="w-4 h-4" />
                         </Button>
                       </li>
@@ -1101,7 +1191,7 @@ const ServicesBoutiques = () => {
                         </div>
                       </div>
                     )}
-                    {renderContactInfo(boutique, 'boutique', index)}
+                    {renderContactInfo(boutique, 'boutique', index, updateBoutiqueContact)}
                     {boutique.location && (
                       <div className="flex items-center text-sm text-muted-foreground">
                         <MapPin className="w-4 h-4 mr-2" />

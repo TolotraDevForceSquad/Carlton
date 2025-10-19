@@ -473,7 +473,7 @@ const Home = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
               {processedHighlights.map((highlight, index) => (
-                <Card key={index} className="overflow-hidden hover-elevate transition-all duration-300">
+                <Card key={index} className="flex flex-col h-full overflow-hidden hover-elevate transition-all duration-300">
                   <ImageTooltip imageUrl={data.highlights[index].image || wellnessImage} onSave={updateHighlightImage(index)}>
                     <div className="relative h-48 overflow-hidden">
                       <img 
@@ -493,7 +493,7 @@ const Home = () => {
                       </div>
                     </div>
                   </ImageTooltip>
-                  <CardContent className="p-6">
+                  <CardContent className="flex-1 flex flex-col p-6">
                     <CardTitle className="text-xl font-serif text-foreground mb-3">
                       <Tooltip 
                         frLabel={data.highlights[index].title.fr} 
@@ -503,7 +503,7 @@ const Home = () => {
                         {formatAmpersand(highlight.title)}
                       </Tooltip>
                     </CardTitle>
-                    <p className="text-muted-foreground mb-6 leading-relaxed">
+                    <p className="text-muted-foreground mb-6 leading-relaxed flex-1">
                       <Tooltip 
                         frLabel={data.highlights[index].description.fr} 
                         enLabel={data.highlights[index].description.en} 
@@ -513,7 +513,7 @@ const Home = () => {
                       </Tooltip>
                     </p>
                     <Link href={highlight.link}>
-                      <Button variant="outline" className="w-full">
+                      <Button variant="outline" className="w-full mt-auto">
                         <Tooltip 
                           frLabel={data.highlights[index].linkText.fr} 
                           enLabel={data.highlights[index].linkText.en} 

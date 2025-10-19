@@ -1,4 +1,3 @@
-// src/components/Contact.tsx
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -6,17 +5,30 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Phone, Mail, MapPin, Clock, Car, Plane, Users, Calendar, MessageCircle, Send } from 'lucide-react';
-import Footer from '@/components/Footer';
+import { Phone, Mail, MapPin, Clock, Car, Plane, Users, Calendar, MessageCircle, Send, ShoppingBag, ExternalLink } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { formatAmpersand } from '@/lib/utils/formatAmpersand';
-import { contactData as initialContactData } from '@/data/contactData';
-import { useLanguage } from '@/components/context/LanguageContext';
+import { useMemo, useState, useEffect, useCallback } from 'react';
 import { Tooltip } from '@/components/Tooltip';
-import { useState, useEffect } from 'react';
-import { Skeleton } from '@/components/ui/skeleton';
+import { formatAmpersand } from '@/lib/utils/formatAmpersand';
+import { contactData } from '@/data/contactData';
+import { useLanguage } from '@/components/context/LanguageContext';
+import Footer from '@/components/Footer';
+
+const contactFormBaseSchema = z.object({
+  firstName: z.string().min(2),
+  lastName: z.string().min(2),
+  email: z.string().email(),
+  phone: z.string().min(8),
+  subject: z.string().min(1),
+  message: z.string().min(10),
+  arrivalDate: z.string().optional(),
+  departureDate: z.string().optional(),
+  guests: z.string().optional()
+});
+
+type ContactFormData = z.infer<typeof contactFormBaseSchema>;
 
 const SECTION_KEY = 'contact';
 
@@ -29,434 +41,405 @@ const getAuthHeaders = () => {
   return headers;
 };
 
+const splitContactData = (mixedData: typeof contactData) => {
+  const dataFr = {
+    hero: {
+      title: mixedData.hero.title.fr,
+      description: mixedData.hero.description.fr,
+    },
+    contactInfo: mixedData.contactInfo.map((ci) => ({
+      icon: ci.icon,
+      title: ci.title.fr,
+      details: ci.details.map((d) => d.fr),
+      action: ci.action.fr,
+    })),
+    form: {
+      title: mixedData.form.title.fr,
+      subtitle: mixedData.form.subtitle.fr,
+      departments: mixedData.form.departments.map((d) => ({ value: d.value, label: d.label.fr })),
+      fields: {
+        firstName: {
+          label: mixedData.form.fields.firstName.label.fr,
+          placeholder: mixedData.form.fields.firstName.placeholder.fr,
+          validation: { min: mixedData.form.fields.firstName.validation.min.fr },
+        },
+        lastName: {
+          label: mixedData.form.fields.lastName.label.fr,
+          placeholder: mixedData.form.fields.lastName.placeholder.fr,
+          validation: { min: mixedData.form.fields.lastName.validation.min.fr },
+        },
+        email: {
+          label: mixedData.form.fields.email.label.fr,
+          placeholder: mixedData.form.fields.email.placeholder.fr,
+          validation: { email: mixedData.form.fields.email.validation.email.fr },
+        },
+        phone: {
+          label: mixedData.form.fields.phone.label.fr,
+          placeholder: mixedData.form.fields.phone.placeholder.fr,
+          validation: { min: mixedData.form.fields.phone.validation.min.fr },
+        },
+        subject: {
+          label: mixedData.form.fields.subject.label.fr,
+          placeholder: mixedData.form.fields.subject.placeholder.fr,
+          validation: { min: mixedData.form.fields.subject.validation.min.fr },
+        },
+        arrivalDate: {
+          label: mixedData.form.fields.arrivalDate.label.fr,
+        },
+        departureDate: {
+          label: mixedData.form.fields.departureDate.label.fr,
+        },
+        guests: {
+          label: mixedData.form.fields.guests.label.fr,
+          placeholder: mixedData.form.fields.guests.placeholder.fr,
+        },
+        message: {
+          label: mixedData.form.fields.message.label.fr,
+          placeholder: mixedData.form.fields.message.placeholder.fr,
+          validation: { min: mixedData.form.fields.message.validation.min.fr },
+        },
+      },
+      submitButton: mixedData.form.submitButton.fr,
+    },
+    services: {
+      title: mixedData.services.title.fr,
+      subtitle: mixedData.services.subtitle.fr,
+      list: mixedData.services.list.map((s) => ({
+        title: s.title.fr,
+        description: s.description.fr,
+        icon: s.icon,
+      })),
+    },
+    practicalInfo: {
+      title: mixedData.practicalInfo.title.fr,
+      arrival: {
+        title: mixedData.practicalInfo.arrival.title.fr,
+        details: mixedData.practicalInfo.arrival.details.map((d) => d.fr),
+      },
+      airport: {
+        title: mixedData.practicalInfo.airport.title.fr,
+        details: mixedData.practicalInfo.airport.details.map((d) => d.fr),
+      },
+      languages: {
+        title: mixedData.practicalInfo.languages.title.fr,
+        list: mixedData.practicalInfo.languages.list.map((l) => l.fr),
+      },
+      location: {
+        title: mixedData.practicalInfo.location.title.fr,
+        subtitle: mixedData.practicalInfo.location.subtitle.fr,
+        addressTitle: mixedData.practicalInfo.location.addressTitle.fr,
+        address: mixedData.practicalInfo.location.address.fr,
+        mapUrl: mixedData.practicalInfo.location.mapUrl,
+        mapTitle: mixedData.practicalInfo.location.mapTitle.fr,
+        directionsButton: mixedData.practicalInfo.location.directionsButton.fr,
+      },
+    },
+    onlineReviews: {
+      title: mixedData.onlineReviews.title.fr,
+      subtitle: mixedData.onlineReviews.subtitle.fr,
+      callToAction: mixedData.onlineReviews.callToAction.fr,
+    },
+  };
+
+  const dataEn = {
+    hero: {
+      title: mixedData.hero.title.en,
+      description: mixedData.hero.description.en,
+    },
+    contactInfo: mixedData.contactInfo.map((ci) => ({
+      icon: ci.icon,
+      title: ci.title.en,
+      details: ci.details.map((d) => d.en),
+      action: ci.action.en,
+    })),
+    form: {
+      title: mixedData.form.title.en,
+      subtitle: mixedData.form.subtitle.en,
+      departments: mixedData.form.departments.map((d) => ({ value: d.value, label: d.label.en })),
+      fields: {
+        firstName: {
+          label: mixedData.form.fields.firstName.label.en,
+          placeholder: mixedData.form.fields.firstName.placeholder.en,
+          validation: { min: mixedData.form.fields.firstName.validation.min.en },
+        },
+        lastName: {
+          label: mixedData.form.fields.lastName.label.en,
+          placeholder: mixedData.form.fields.lastName.placeholder.en,
+          validation: { min: mixedData.form.fields.lastName.validation.min.en },
+        },
+        email: {
+          label: mixedData.form.fields.email.label.en,
+          placeholder: mixedData.form.fields.email.placeholder.en,
+          validation: { email: mixedData.form.fields.email.validation.email.en },
+        },
+        phone: {
+          label: mixedData.form.fields.phone.label.en,
+          placeholder: mixedData.form.fields.phone.placeholder.en,
+          validation: { min: mixedData.form.fields.phone.validation.min.en },
+        },
+        subject: {
+          label: mixedData.form.fields.subject.label.en,
+          placeholder: mixedData.form.fields.subject.placeholder.en,
+          validation: { min: mixedData.form.fields.subject.validation.min.en },
+        },
+        arrivalDate: {
+          label: mixedData.form.fields.arrivalDate.label.en,
+        },
+        departureDate: {
+          label: mixedData.form.fields.departureDate.label.en,
+        },
+        guests: {
+          label: mixedData.form.fields.guests.label.en,
+          placeholder: mixedData.form.fields.guests.placeholder.en,
+        },
+        message: {
+          label: mixedData.form.fields.message.label.en,
+          placeholder: mixedData.form.fields.message.placeholder.en,
+          validation: { min: mixedData.form.fields.message.validation.min.en },
+        },
+      },
+      submitButton: mixedData.form.submitButton.en,
+    },
+    services: {
+      title: mixedData.services.title.en,
+      subtitle: mixedData.services.subtitle.en,
+      list: mixedData.services.list.map((s) => ({
+        title: s.title.en,
+        description: s.description.en,
+        icon: s.icon,
+      })),
+    },
+    practicalInfo: {
+      title: mixedData.practicalInfo.title.en,
+      arrival: {
+        title: mixedData.practicalInfo.arrival.title.en,
+        details: mixedData.practicalInfo.arrival.details.map((d) => d.en),
+      },
+      airport: {
+        title: mixedData.practicalInfo.airport.title.en,
+        details: mixedData.practicalInfo.airport.details.map((d) => d.en),
+      },
+      languages: {
+        title: mixedData.practicalInfo.languages.title.en,
+        list: mixedData.practicalInfo.languages.list.map((l) => l.en),
+      },
+      location: {
+        title: mixedData.practicalInfo.location.title.en,
+        subtitle: mixedData.practicalInfo.location.subtitle.en,
+        addressTitle: mixedData.practicalInfo.location.addressTitle.en,
+        address: mixedData.practicalInfo.location.address.en,
+        mapUrl: mixedData.practicalInfo.location.mapUrl,
+        mapTitle: mixedData.practicalInfo.location.mapTitle.en,
+        directionsButton: mixedData.practicalInfo.location.directionsButton.en,
+      },
+    },
+    onlineReviews: {
+      title: mixedData.onlineReviews.title.en,
+      subtitle: mixedData.onlineReviews.subtitle.en,
+      callToAction: mixedData.onlineReviews.callToAction.en,
+    },
+  };
+
+  return { dataFr, dataEn };
+};
+
+const reconstructMixed = (dataFr: any, dataEn: any | null) => {
+  const enFallback = dataEn || dataFr;
+  const hero = {
+    title: { fr: dataFr.hero.title, en: enFallback.hero.title },
+    description: { fr: dataFr.hero.description, en: enFallback.hero.description },
+  };
+  const contactInfo = dataFr.contactInfo.map((ciFr: any, i: number) => {
+    const ciEn = enFallback.contactInfo[i];
+    const details = ciFr.details.map((dFr: string, j: number) => ({
+      fr: dFr,
+      en: ciEn.details[j],
+    }));
+    return {
+      icon: ciFr.icon,
+      title: { fr: ciFr.title, en: ciEn.title },
+      details,
+      action: { fr: ciFr.action, en: ciEn.action },
+    };
+  });
+  const formFields = {
+    firstName: {
+      label: { fr: dataFr.form.fields.firstName.label, en: enFallback.form.fields.firstName.label },
+      placeholder: { fr: dataFr.form.fields.firstName.placeholder, en: enFallback.form.fields.firstName.placeholder },
+      validation: { min: { fr: dataFr.form.fields.firstName.validation.min, en: enFallback.form.fields.firstName.validation.min } },
+    },
+    lastName: {
+      label: { fr: dataFr.form.fields.lastName.label, en: enFallback.form.fields.lastName.label },
+      placeholder: { fr: dataFr.form.fields.lastName.placeholder, en: enFallback.form.fields.lastName.placeholder },
+      validation: { min: { fr: dataFr.form.fields.lastName.validation.min, en: enFallback.form.fields.lastName.validation.min } },
+    },
+    email: {
+      label: { fr: dataFr.form.fields.email.label, en: enFallback.form.fields.email.label },
+      placeholder: { fr: dataFr.form.fields.email.placeholder, en: enFallback.form.fields.email.placeholder },
+      validation: { email: { fr: dataFr.form.fields.email.validation.email, en: enFallback.form.fields.email.validation.email } },
+    },
+    phone: {
+      label: { fr: dataFr.form.fields.phone.label, en: enFallback.form.fields.phone.label },
+      placeholder: { fr: dataFr.form.fields.phone.placeholder, en: enFallback.form.fields.phone.placeholder },
+      validation: { min: { fr: dataFr.form.fields.phone.validation.min, en: enFallback.form.fields.phone.validation.min } },
+    },
+    subject: {
+      label: { fr: dataFr.form.fields.subject.label, en: enFallback.form.fields.subject.label },
+      placeholder: { fr: dataFr.form.fields.subject.placeholder, en: enFallback.form.fields.subject.placeholder },
+      validation: { min: { fr: dataFr.form.fields.subject.validation.min, en: enFallback.form.fields.subject.validation.min } },
+    },
+    arrivalDate: {
+      label: { fr: dataFr.form.fields.arrivalDate.label, en: enFallback.form.fields.arrivalDate.label },
+    },
+    departureDate: {
+      label: { fr: dataFr.form.fields.departureDate.label, en: enFallback.form.fields.departureDate.label },
+    },
+    guests: {
+      label: { fr: dataFr.form.fields.guests.label, en: enFallback.form.fields.guests.label },
+      placeholder: { fr: dataFr.form.fields.guests.placeholder, en: enFallback.form.fields.guests.placeholder },
+    },
+    message: {
+      label: { fr: dataFr.form.fields.message.label, en: enFallback.form.fields.message.label },
+      placeholder: { fr: dataFr.form.fields.message.placeholder, en: enFallback.form.fields.message.placeholder },
+      validation: { min: { fr: dataFr.form.fields.message.validation.min, en: enFallback.form.fields.message.validation.min } },
+    },
+  };
+  const departments = dataFr.form.departments.map((dFr: any, i: number) => ({
+    value: dFr.value,
+    label: { fr: dFr.label, en: enFallback.form.departments[i].label },
+  }));
+  const form = {
+    title: { fr: dataFr.form.title, en: enFallback.form.title },
+    subtitle: { fr: dataFr.form.subtitle, en: enFallback.form.subtitle },
+    departments,
+    fields: formFields,
+    submitButton: { fr: dataFr.form.submitButton, en: enFallback.form.submitButton },
+  };
+  const servicesList = dataFr.services.list.map((sFr: any, i: number) => ({
+    title: { fr: sFr.title, en: enFallback.services.list[i].title },
+    description: { fr: sFr.description, en: enFallback.services.list[i].description },
+    icon: sFr.icon,
+  }));
+  const services = {
+    title: { fr: dataFr.services.title, en: enFallback.services.title },
+    subtitle: { fr: dataFr.services.subtitle, en: enFallback.services.subtitle },
+    list: servicesList,
+  };
+  const arrivalDetails = dataFr.practicalInfo.arrival.details.map((dFr: string, j: number) => ({
+    fr: dFr,
+    en: enFallback.practicalInfo.arrival.details[j],
+  }));
+  const airportDetails = dataFr.practicalInfo.airport.details.map((dFr: string, j: number) => ({
+    fr: dFr,
+    en: enFallback.practicalInfo.airport.details[j],
+  }));
+  const languagesList = dataFr.practicalInfo.languages.list.map((lFr: string, j: number) => ({
+    fr: lFr,
+    en: enFallback.practicalInfo.languages.list[j],
+  }));
+  const location = {
+    title: { fr: dataFr.practicalInfo.location.title, en: enFallback.practicalInfo.location.title },
+    subtitle: { fr: dataFr.practicalInfo.location.subtitle, en: enFallback.practicalInfo.location.subtitle },
+    addressTitle: { fr: dataFr.practicalInfo.location.addressTitle, en: enFallback.practicalInfo.location.addressTitle },
+    address: { fr: dataFr.practicalInfo.location.address, en: enFallback.practicalInfo.location.address },
+    mapUrl: dataFr.practicalInfo.location.mapUrl,
+    mapTitle: { fr: dataFr.practicalInfo.location.mapTitle, en: enFallback.practicalInfo.location.mapTitle },
+    directionsButton: { fr: dataFr.practicalInfo.location.directionsButton, en: enFallback.practicalInfo.location.directionsButton },
+  };
+  const practicalInfo = {
+    title: { fr: dataFr.practicalInfo.title, en: enFallback.practicalInfo.title },
+    arrival: {
+      title: { fr: dataFr.practicalInfo.arrival.title, en: enFallback.practicalInfo.arrival.title },
+      details: arrivalDetails,
+    },
+    airport: {
+      title: { fr: dataFr.practicalInfo.airport.title, en: enFallback.practicalInfo.airport.title },
+      details: airportDetails,
+    },
+    languages: {
+      title: { fr: dataFr.practicalInfo.languages.title, en: enFallback.practicalInfo.languages.title },
+      list: languagesList,
+    },
+    location,
+  };
+  const onlineReviews = {
+    title: { fr: dataFr.onlineReviews.title, en: enFallback.onlineReviews.title },
+    subtitle: { fr: dataFr.onlineReviews.subtitle, en: enFallback.onlineReviews.subtitle },
+    callToAction: { fr: dataFr.onlineReviews.callToAction, en: enFallback.onlineReviews.callToAction },
+  };
+  return { hero, contactInfo, form, services, practicalInfo, onlineReviews };
+};
+
 const Contact = () => {
   const { currentLang } = useLanguage();
-  const lang = currentLang.code.toLowerCase();
-  
-  const [data, setData] = useState(initialContactData);
+  const langKey = currentLang.code.toLowerCase() as 'fr' | 'en';
+  const [data, setData] = useState(contactData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
-  // Helper to split contactData into dataFr and dataEn structures
-  const splitContactData = (mixedData: typeof initialContactData) => {
-    const dataFr = {
-      hero: {
-        title: mixedData.hero.title.fr,
-        description: mixedData.hero.description.fr,
-      },
-      contactInfo: mixedData.contactInfo.map((info) => ({
-        icon: info.icon,
-        title: info.title.fr,
-        details: info.details.map((detail) => detail.fr),
-        action: info.action.fr,
-      })),
-      form: {
-        title: mixedData.form.title.fr,
-        subtitle: mixedData.form.subtitle.fr,
-        departments: mixedData.form.departments.map((dept) => ({
-          value: dept.value,
-          label: dept.label.fr,
-        })),
-        fields: {
-          firstName: {
-            label: mixedData.form.fields.firstName.label.fr,
-            placeholder: mixedData.form.fields.firstName.placeholder.fr,
-            validation: {
-              min: mixedData.form.fields.firstName.validation.min.fr,
-            },
-          },
-          lastName: {
-            label: mixedData.form.fields.lastName.label.fr,
-            placeholder: mixedData.form.fields.lastName.placeholder.fr,
-            validation: {
-              min: mixedData.form.fields.lastName.validation.min.fr,
-            },
-          },
-          email: {
-            label: mixedData.form.fields.email.label.fr,
-            placeholder: mixedData.form.fields.email.placeholder.fr,
-            validation: {
-              email: mixedData.form.fields.email.validation.email.fr,
-            },
-          },
-          phone: {
-            label: mixedData.form.fields.phone.label.fr,
-            placeholder: mixedData.form.fields.phone.placeholder.fr,
-            validation: {
-              min: mixedData.form.fields.phone.validation.min.fr,
-            },
-          },
-          subject: {
-            label: mixedData.form.fields.subject.label.fr,
-            placeholder: mixedData.form.fields.subject.placeholder.fr,
-            validation: {
-              min: mixedData.form.fields.subject.validation.min.fr,
-            },
-          },
-          arrivalDate: {
-            label: mixedData.form.fields.arrivalDate.label.fr,
-          },
-          departureDate: {
-            label: mixedData.form.fields.departureDate.label.fr,
-          },
-          guests: {
-            label: mixedData.form.fields.guests.label.fr,
-            placeholder: mixedData.form.fields.guests.placeholder.fr,
-          },
-          message: {
-            label: mixedData.form.fields.message.label.fr,
-            placeholder: mixedData.form.fields.message.placeholder.fr,
-            validation: {
-              min: mixedData.form.fields.message.validation.min.fr,
-            },
-          },
-        },
-        submitButton: mixedData.form.submitButton.fr,
-      },
-      services: {
-        title: mixedData.services.title.fr,
-        subtitle: mixedData.services.subtitle.fr,
-        list: mixedData.services.list.map((service) => ({
-          title: service.title.fr,
-          description: service.description.fr,
-          icon: service.icon,
-        })),
-      },
-      practicalInfo: {
-        title: mixedData.practicalInfo.title.fr,
-        arrival: {
-          title: mixedData.practicalInfo.arrival.title.fr,
-          details: mixedData.practicalInfo.arrival.details.map((detail) => detail.fr),
-        },
-        airport: {
-          title: mixedData.practicalInfo.airport.title.fr,
-          details: mixedData.practicalInfo.airport.details.map((detail) => detail.fr),
-        },
-        languages: {
-          title: mixedData.practicalInfo.languages.title.fr,
-          list: mixedData.practicalInfo.languages.list.map((langItem) => langItem.fr),
-        },
-        location: {
-          title: mixedData.practicalInfo.location.title.fr,
-          subtitle: mixedData.practicalInfo.location.subtitle.fr,
-          addressTitle: mixedData.practicalInfo.location.addressTitle.fr,
-          address: mixedData.practicalInfo.location.address.fr,
-          mapUrl: mixedData.practicalInfo.location.mapUrl,
-          mapTitle: mixedData.practicalInfo.location.mapTitle.fr,
-          directionsButton: mixedData.practicalInfo.location.directionsButton.fr,
-        },
-      },
-    };
 
-    const dataEn = {
-      hero: {
-        title: mixedData.hero.title.en,
-        description: mixedData.hero.description.en,
-      },
-      contactInfo: mixedData.contactInfo.map((info) => ({
-        icon: info.icon,
-        title: info.title.en,
-        details: info.details.map((detail) => detail.en),
-        action: info.action.en,
-      })),
-      form: {
-        title: mixedData.form.title.en,
-        subtitle: mixedData.form.subtitle.en,
-        departments: mixedData.form.departments.map((dept) => ({
-          value: dept.value,
-          label: dept.label.en,
-        })),
-        fields: {
-          firstName: {
-            label: mixedData.form.fields.firstName.label.en,
-            placeholder: mixedData.form.fields.firstName.placeholder.en,
-            validation: {
-              min: mixedData.form.fields.firstName.validation.min.en,
-            },
-          },
-          lastName: {
-            label: mixedData.form.fields.lastName.label.en,
-            placeholder: mixedData.form.fields.lastName.placeholder.en,
-            validation: {
-              min: mixedData.form.fields.lastName.validation.min.en,
-            },
-          },
-          email: {
-            label: mixedData.form.fields.email.label.en,
-            placeholder: mixedData.form.fields.email.placeholder.en,
-            validation: {
-              email: mixedData.form.fields.email.validation.email.en,
-            },
-          },
-          phone: {
-            label: mixedData.form.fields.phone.label.en,
-            placeholder: mixedData.form.fields.phone.placeholder.en,
-            validation: {
-              min: mixedData.form.fields.phone.validation.min.en,
-            },
-          },
-          subject: {
-            label: mixedData.form.fields.subject.label.en,
-            placeholder: mixedData.form.fields.subject.placeholder.en,
-            validation: {
-              min: mixedData.form.fields.subject.validation.min.en,
-            },
-          },
-          arrivalDate: {
-            label: mixedData.form.fields.arrivalDate.label.en,
-          },
-          departureDate: {
-            label: mixedData.form.fields.departureDate.label.en,
-          },
-          guests: {
-            label: mixedData.form.fields.guests.label.en,
-            placeholder: mixedData.form.fields.guests.placeholder.en,
-          },
-          message: {
-            label: mixedData.form.fields.message.label.en,
-            placeholder: mixedData.form.fields.message.placeholder.en,
-            validation: {
-              min: mixedData.form.fields.message.validation.min.en,
-            },
-          },
-        },
-        submitButton: mixedData.form.submitButton.en,
-      },
-      services: {
-        title: mixedData.services.title.en,
-        subtitle: mixedData.services.subtitle.en,
-        list: mixedData.services.list.map((service) => ({
-          title: service.title.en,
-          description: service.description.en,
-          icon: service.icon,
-        })),
-      },
-      practicalInfo: {
-        title: mixedData.practicalInfo.title.en,
-        arrival: {
-          title: mixedData.practicalInfo.arrival.title.en,
-          details: mixedData.practicalInfo.arrival.details.map((detail) => detail.en),
-        },
-        airport: {
-          title: mixedData.practicalInfo.airport.title.en,
-          details: mixedData.practicalInfo.airport.details.map((detail) => detail.en),
-        },
-        languages: {
-          title: mixedData.practicalInfo.languages.title.en,
-          list: mixedData.practicalInfo.languages.list.map((langItem) => langItem.en),
-        },
-        location: {
-          title: mixedData.practicalInfo.location.title.en,
-          subtitle: mixedData.practicalInfo.location.subtitle.en,
-          addressTitle: mixedData.practicalInfo.location.addressTitle.en,
-          address: mixedData.practicalInfo.location.address.en,
-          mapUrl: mixedData.practicalInfo.location.mapUrl,
-          mapTitle: mixedData.practicalInfo.location.mapTitle.en,
-          directionsButton: mixedData.practicalInfo.location.directionsButton.en,
-        },
-      },
-    };
-
-    return { dataFr, dataEn };
-  };
-
-  // Reconstruct mixed data from dataFr and dataEn
-  const reconstructMixed = (dataFr: any, dataEn: any | null) => {
-    if (!dataFr || typeof dataFr !== 'object') {
-      console.warn('Invalid dataFr structure, falling back to default');
-      return initialContactData;
-    }
-    const enFallback = dataEn || dataFr;
-    const mixed = {
-      hero: {
-        title: { fr: dataFr.hero.title, en: enFallback.hero.title || dataFr.hero.title },
-        description: { fr: dataFr.hero.description, en: enFallback.hero.description || dataFr.hero.description },
-      },
-      contactInfo: dataFr.contactInfo.map((infoFr: any, i: number) => ({
-        icon: infoFr.icon || initialContactData.contactInfo[i].icon,
-        title: { fr: infoFr.title, en: enFallback.contactInfo[i]?.title || infoFr.title },
-        details: infoFr.details.map((dFr: string, j: number) => ({
-          fr: dFr,
-          en: enFallback.contactInfo[i]?.details[j] || dFr,
-        })),
-        action: { fr: infoFr.action, en: enFallback.contactInfo[i]?.action || infoFr.action },
-      })),
-      form: {
-        title: { fr: dataFr.form.title, en: enFallback.form.title || dataFr.form.title },
-        subtitle: { fr: dataFr.form.subtitle, en: enFallback.form.subtitle || dataFr.form.subtitle },
-        departments: dataFr.form.departments.map((deptFr: any, i: number) => ({
-          value: deptFr.value || initialContactData.form.departments[i].value,
-          label: { fr: deptFr.label, en: enFallback.form.departments[i]?.label || deptFr.label },
-        })),
-        fields: {
-          firstName: {
-            label: { fr: dataFr.form.fields.firstName.label, en: enFallback.form.fields.firstName.label || dataFr.form.fields.firstName.label },
-            placeholder: { fr: dataFr.form.fields.firstName.placeholder, en: enFallback.form.fields.firstName.placeholder || dataFr.form.fields.firstName.placeholder },
-            validation: {
-              min: { fr: dataFr.form.fields.firstName.validation.min, en: enFallback.form.fields.firstName.validation.min || dataFr.form.fields.firstName.validation.min },
-            },
-          },
-          lastName: {
-            label: { fr: dataFr.form.fields.lastName.label, en: enFallback.form.fields.lastName.label || dataFr.form.fields.lastName.label },
-            placeholder: { fr: dataFr.form.fields.lastName.placeholder, en: enFallback.form.fields.lastName.placeholder || dataFr.form.fields.lastName.placeholder },
-            validation: {
-              min: { fr: dataFr.form.fields.lastName.validation.min, en: enFallback.form.fields.lastName.validation.min || dataFr.form.fields.lastName.validation.min },
-            },
-          },
-          email: {
-            label: { fr: dataFr.form.fields.email.label, en: enFallback.form.fields.email.label || dataFr.form.fields.email.label },
-            placeholder: { fr: dataFr.form.fields.email.placeholder, en: enFallback.form.fields.email.placeholder || dataFr.form.fields.email.placeholder },
-            validation: {
-              email: { fr: dataFr.form.fields.email.validation.email, en: enFallback.form.fields.email.validation.email || dataFr.form.fields.email.validation.email },
-            },
-          },
-          phone: {
-            label: { fr: dataFr.form.fields.phone.label, en: enFallback.form.fields.phone.label || dataFr.form.fields.phone.label },
-            placeholder: { fr: dataFr.form.fields.phone.placeholder, en: enFallback.form.fields.phone.placeholder || dataFr.form.fields.phone.placeholder },
-            validation: {
-              min: { fr: dataFr.form.fields.phone.validation.min, en: enFallback.form.fields.phone.validation.min || dataFr.form.fields.phone.validation.min },
-            },
-          },
-          subject: {
-            label: { fr: dataFr.form.fields.subject.label, en: enFallback.form.fields.subject.label || dataFr.form.fields.subject.label },
-            placeholder: { fr: dataFr.form.fields.subject.placeholder, en: enFallback.form.fields.subject.placeholder || dataFr.form.fields.subject.placeholder },
-            validation: {
-              min: { fr: dataFr.form.fields.subject.validation.min, en: enFallback.form.fields.subject.validation.min || dataFr.form.fields.subject.validation.min },
-            },
-          },
-          arrivalDate: {
-            label: { fr: dataFr.form.fields.arrivalDate.label, en: enFallback.form.fields.arrivalDate.label || dataFr.form.fields.arrivalDate.label },
-          },
-          departureDate: {
-            label: { fr: dataFr.form.fields.departureDate.label, en: enFallback.form.fields.departureDate.label || dataFr.form.fields.departureDate.label },
-          },
-          guests: {
-            label: { fr: dataFr.form.fields.guests.label, en: enFallback.form.fields.guests.label || dataFr.form.fields.guests.label },
-            placeholder: { fr: dataFr.form.fields.guests.placeholder, en: enFallback.form.fields.guests.placeholder || dataFr.form.fields.guests.placeholder },
-          },
-          message: {
-            label: { fr: dataFr.form.fields.message.label, en: enFallback.form.fields.message.label || dataFr.form.fields.message.label },
-            placeholder: { fr: dataFr.form.fields.message.placeholder, en: enFallback.form.fields.message.placeholder || dataFr.form.fields.message.placeholder },
-            validation: {
-              min: { fr: dataFr.form.fields.message.validation.min, en: enFallback.form.fields.message.validation.min || dataFr.form.fields.message.validation.min },
-            },
-          },
-        },
-        submitButton: { fr: dataFr.form.submitButton, en: enFallback.form.submitButton || dataFr.form.submitButton },
-      },
-      services: {
-        title: { fr: dataFr.services.title, en: enFallback.services.title || dataFr.services.title },
-        subtitle: { fr: dataFr.services.subtitle, en: enFallback.services.subtitle || dataFr.services.subtitle },
-        list: dataFr.services.list.map((serviceFr: any, i: number) => ({
-          title: { fr: serviceFr.title, en: enFallback.services.list[i]?.title || serviceFr.title },
-          description: { fr: serviceFr.description, en: enFallback.services.list[i]?.description || serviceFr.description },
-          icon: serviceFr.icon || initialContactData.services.list[i].icon,
-        })),
-      },
-      practicalInfo: {
-        title: { fr: dataFr.practicalInfo.title, en: enFallback.practicalInfo.title || dataFr.practicalInfo.title },
-        arrival: {
-          title: { fr: dataFr.practicalInfo.arrival.title, en: enFallback.practicalInfo.arrival.title || dataFr.practicalInfo.arrival.title },
-          details: dataFr.practicalInfo.arrival.details.map((dFr: string, j: number) => ({
-            fr: dFr,
-            en: enFallback.practicalInfo.arrival.details[j] || dFr,
-          })),
-        },
-        airport: {
-          title: { fr: dataFr.practicalInfo.airport.title, en: enFallback.practicalInfo.airport.title || dataFr.practicalInfo.airport.title },
-          details: dataFr.practicalInfo.airport.details.map((dFr: string, j: number) => ({
-            fr: dFr,
-            en: enFallback.practicalInfo.airport.details[j] || dFr,
-          })),
-        },
-        languages: {
-          title: { fr: dataFr.practicalInfo.languages.title, en: enFallback.practicalInfo.languages.title || dataFr.practicalInfo.languages.title },
-          list: dataFr.practicalInfo.languages.list.map((lFr: string, j: number) => ({
-            fr: lFr,
-            en: enFallback.practicalInfo.languages.list[j] || lFr,
-          })),
-        },
-        location: {
-          title: { fr: dataFr.practicalInfo.location.title, en: enFallback.practicalInfo.location.title || dataFr.practicalInfo.location.title },
-          subtitle: { fr: dataFr.practicalInfo.location.subtitle, en: enFallback.practicalInfo.location.subtitle || dataFr.practicalInfo.location.subtitle },
-          addressTitle: { fr: dataFr.practicalInfo.location.addressTitle, en: enFallback.practicalInfo.location.addressTitle || dataFr.practicalInfo.location.addressTitle },
-          address: { fr: dataFr.practicalInfo.location.address, en: enFallback.practicalInfo.location.address || dataFr.practicalInfo.location.address },
-          mapUrl: dataFr.practicalInfo.location.mapUrl || initialContactData.practicalInfo.location.mapUrl,
-          mapTitle: { fr: dataFr.practicalInfo.location.mapTitle, en: enFallback.practicalInfo.location.mapTitle || dataFr.practicalInfo.location.mapTitle },
-          directionsButton: { fr: dataFr.practicalInfo.location.directionsButton, en: enFallback.practicalInfo.location.directionsButton || dataFr.practicalInfo.location.directionsButton },
-        },
-      },
-    };
-    return mixed;
-  };
-
-  // Fetch contact data from backend
-  useEffect(() => {
-    const fetchContactData = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const headers = getAuthHeaders();
-        let response = await fetch(`/api/globalSections?sectionKey=${SECTION_KEY}`, { headers });
-        let sections: any[] = [];
-        if (response.ok) {
-          sections = await response.json();
-        }
-        let section = sections.find((s: any) => s.sectionKey === SECTION_KEY);
-        if (!section) {
-          // Table is empty for this sectionKey, create default
-          const { dataFr, dataEn } = splitContactData(initialContactData);
-          const createResponse = await fetch('/api/globalSections', {
-            method: 'POST',
-            headers: { ...headers, 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              sectionKey: SECTION_KEY,
-              dataFr,
-              dataEn,
-              isActive: true,
-            }),
-          });
-
-          if (!createResponse.ok) {
-            throw new Error('Failed to create contact data');
-          }
-
-          const created = await createResponse.json();
-          section = created; // Assume POST returns the created object
-        }
-
-        if (section) {
-          const fetchedData = reconstructMixed(section.dataFr, section.dataEn);
-          setData(fetchedData);
-        } else {
-          setData(initialContactData);
-        }
-      } catch (err) {
-        console.error('Error fetching contact data:', err);
-        setError('Failed to load contact data');
-        // Fallback to default
-        setData(initialContactData);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchContactData();
+  const getContactFormSchema = useCallback((lang: 'fr' | 'en', currentData: typeof contactData) => {
+    return contactFormBaseSchema.refine((val) => true, {
+      firstName: currentData.form.fields.firstName.validation.min[lang],
+      lastName: currentData.form.fields.lastName.validation.min[lang],
+      email: currentData.form.fields.email.validation.email[lang],
+      phone: currentData.form.fields.phone.validation.min[lang],
+      subject: currentData.form.fields.subject.validation.min[lang],
+      message: currentData.form.fields.message.validation.min[lang],
+    });
   }, []);
 
-  const updateContactSection = async (updatedMixedData: typeof initialContactData) => {
+  const schema = useMemo(() => getContactFormSchema(langKey, data), [langKey, data, getContactFormSchema]);
+
+  const form = useForm<ContactFormData>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      subject: "",
+      message: "",
+      arrivalDate: "",
+      departureDate: "",
+      guests: "",
+    },
+  });
+
+  const currentDepartments = useMemo(
+    () => data.form.departments.map((d) => ({ value: d.value, label: d.label[langKey] })),
+    [data, langKey]
+  );
+
+  const onSubmit = (dataForm: ContactFormData) => {
+    console.log("Formulaire soumis:", dataForm);
+    // Ici on traiterait normalement l'envoi du formulaire vers le backend
+  };
+
+  const contactIcons = {
+    Phone,
+    Mail,
+    MapPin,
+    Clock,
+  } as const;
+
+  const serviceIcons = {
+    Calendar,
+    Users,
+    Plane,
+    Car,
+  } as const;
+
+  const updateContactSection = useCallback(async (updatedMixedData: typeof contactData) => {
     try {
       const headers = getAuthHeaders();
-      const currentSectionResponse = await fetch(`/api/globalSections?sectionKey=${SECTION_KEY}`, { headers });
+      let currentSectionResponse = await fetch(`/api/globalSections?sectionKey=${SECTION_KEY}`, { headers });
       let currentData: any[] = [];
       if (currentSectionResponse.ok) {
         currentData = await currentSectionResponse.json();
       }
       let currentSection = currentData.find((s: any) => s.sectionKey === SECTION_KEY);
-
       if (!currentSection) {
-        // Should not happen after initial load, but create if missing
-        const { dataFr, dataEn } = splitContactData(initialContactData);
+        const { dataFr, dataEn } = splitContactData(contactData);
         const createResponse = await fetch('/api/globalSections', {
           method: 'POST',
           headers: { ...headers, 'Content-Type': 'application/json' },
@@ -472,786 +455,528 @@ const Contact = () => {
         }
         currentSection = await createResponse.json();
       }
-
       const { dataFr: updatedDataFr, dataEn: updatedDataEn } = splitContactData(updatedMixedData);
-
       const putResponse = await fetch(`/api/globalSections/${currentSection.id}`, {
         method: 'PUT',
         headers: { ...headers, 'Content-Type': 'application/json' },
         body: JSON.stringify({
           dataFr: updatedDataFr,
-          dataEn: Object.keys(updatedDataEn).length > 0 ? updatedDataEn : null
-        })
+          dataEn: Object.keys(updatedDataEn).length > 0 ? updatedDataEn : null,
+        }),
       });
-
       if (!putResponse.ok) {
         throw new Error('Failed to update contact section');
       }
     } catch (err) {
       console.error('Error updating contact section:', err);
-      // Revert local state on error if needed, but for simplicity, keep it
     }
-  };
-  
-  const getText = (textObj: { fr: string; en: string }): string => textObj[lang as keyof typeof textObj];
-  
-  const getDetailText = (detailObj: { fr: string; en: string }): string => getText(detailObj);
-  
-  const getLangText = (langObj: { fr: string; en: string } | string, fallback?: string): string => {
-    if (typeof langObj === 'string') return langObj;
-    return getText(langObj);
-  };
+  }, []);
 
-  // Update functions
-  const updateHeroTitle = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      hero: { ...data.hero, title: { fr: newFr, en: newEn } }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
+  const updateGeneric = useCallback(
+    (updater: (current: typeof data) => typeof data) => async () => {
+      const updatedData = updater(data);
+      setData(updatedData);
+      await updateContactSection(updatedData);
+    },
+    [data, updateContactSection]
+  );
 
-  const updateHeroDescription = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      hero: { ...data.hero, description: { fr: newFr, en: newEn } }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
+  const updateHeroTitle = useCallback(
+    async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        hero: { ...data.hero, title: { fr: newFr, en: newEn } },
+      };
+      setData(updatedData);
+      await updateContactSection(updatedData);
+    },
+    [data, updateContactSection]
+  );
 
-  const updateContactInfoTitle = (index: number) => async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      contactInfo: data.contactInfo.map((info, i) => 
-        i === index ? { ...info, title: { fr: newFr, en: newEn } } : info
-      )
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
+  const updateHeroDescription = useCallback(
+    async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        hero: { ...data.hero, description: { fr: newFr, en: newEn } },
+      };
+      setData(updatedData);
+      await updateContactSection(updatedData);
+    },
+    [data, updateContactSection]
+  );
 
-  const updateContactInfoDetail = (index: number, detailIndex: number) => async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      contactInfo: data.contactInfo.map((info, i) => 
-        i === index 
-          ? { 
-              ...info, 
-              details: info.details.map((detail, j) => 
-                j === detailIndex ? { fr: newFr, en: newEn } : detail
-              ) 
-            } 
-          : info
-      )
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
+  const updateContactInfoTitle = useCallback(
+    (index: number) =>
+      async (newFr: string, newEn: string) => {
+        const updatedData = {
+          ...data,
+          contactInfo: data.contactInfo.map((ci, i) =>
+            i === index ? { ...ci, title: { fr: newFr, en: newEn } } : ci
+          ),
+        };
+        setData(updatedData);
+        await updateContactSection(updatedData);
+      },
+    [data, updateContactSection]
+  );
 
-  const updateContactInfoAction = (index: number) => async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      contactInfo: data.contactInfo.map((info, i) => 
-        i === index ? { ...info, action: { fr: newFr, en: newEn } } : info
-      )
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
+  const updateContactInfoAction = useCallback(
+    (index: number) =>
+      async (newFr: string, newEn: string) => {
+        const updatedData = {
+          ...data,
+          contactInfo: data.contactInfo.map((ci, i) =>
+            i === index ? { ...ci, action: { fr: newFr, en: newEn } } : ci
+          ),
+        };
+        setData(updatedData);
+        await updateContactSection(updatedData);
+      },
+    [data, updateContactSection]
+  );
 
-  const updateFormTitle = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      form: { ...data.form, title: { fr: newFr, en: newEn } }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
+  const updateContactInfoDetails = useCallback(
+    (index: number) =>
+      async (newFr: string, newEn: string) => {
+        const detailsFr = newFr.split('\n').map((s) => s.trim()).filter(Boolean);
+        const detailsEn = newEn.split('\n').map((s) => s.trim()).filter(Boolean);
+        const maxLen = Math.max(detailsFr.length, detailsEn.length);
+        const newDetails = Array.from({ length: maxLen }, (_, j) => ({
+          fr: detailsFr[j] || '',
+          en: detailsEn[j] || '',
+        }));
+        const updatedData = {
+          ...data,
+          contactInfo: data.contactInfo.map((ci, i) =>
+            i === index ? { ...ci, details: newDetails } : ci
+          ),
+        };
+        setData(updatedData);
+        await updateContactSection(updatedData);
+      },
+    [data, updateContactSection]
+  );
 
-  const updateFormSubtitle = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      form: { ...data.form, subtitle: { fr: newFr, en: newEn } }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
+  const updateFormTitle = useCallback(
+    async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        form: { ...data.form, title: { fr: newFr, en: newEn } },
+      };
+      setData(updatedData);
+      await updateContactSection(updatedData);
+    },
+    [data, updateContactSection]
+  );
 
-  const updateDepartmentLabel = (index: number) => async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      form: { 
-        ...data.form, 
-        departments: data.form.departments.map((dept, i) => 
-          i === index ? { ...dept, label: { fr: newFr, en: newEn } } : dept
-        ) 
+  const updateFormSubtitle = useCallback(
+    async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        form: { ...data.form, subtitle: { fr: newFr, en: newEn } },
+      };
+      setData(updatedData);
+      await updateContactSection(updatedData);
+    },
+    [data, updateContactSection]
+  );
+
+  const updateFormSubmitButton = useCallback(
+    async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        form: { ...data.form, submitButton: { fr: newFr, en: newEn } },
+      };
+      setData(updatedData);
+      await updateContactSection(updatedData);
+    },
+    [data, updateContactSection]
+  );
+
+  const updateFormFieldLabel = useCallback(
+    (fieldName: keyof typeof data.form.fields) =>
+      async (newFr: string, newEn: string) => {
+        const updatedData = {
+          ...data,
+          form: {
+            ...data.form,
+            fields: {
+              ...data.form.fields,
+              [fieldName]: {
+                ...data.form.fields[fieldName],
+                label: { fr: newFr, en: newEn },
+              },
+            },
+          },
+        };
+        setData(updatedData);
+        await updateContactSection(updatedData);
+      },
+    [data, updateContactSection]
+  );
+
+  const updateServicesTitle = useCallback(
+    async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        services: { ...data.services, title: { fr: newFr, en: newEn } },
+      };
+      setData(updatedData);
+      await updateContactSection(updatedData);
+    },
+    [data, updateContactSection]
+  );
+
+  const updateServicesSubtitle = useCallback(
+    async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        services: { ...data.services, subtitle: { fr: newFr, en: newEn } },
+      };
+      setData(updatedData);
+      await updateContactSection(updatedData);
+    },
+    [data, updateContactSection]
+  );
+
+  const updateServiceTitle = useCallback(
+    (index: number) =>
+      async (newFr: string, newEn: string) => {
+        const updatedData = {
+          ...data,
+          services: {
+            ...data.services,
+            list: data.services.list.map((s, i) =>
+              i === index ? { ...s, title: { fr: newFr, en: newEn } } : s
+            ),
+          },
+        };
+        setData(updatedData);
+        await updateContactSection(updatedData);
+      },
+    [data, updateContactSection]
+  );
+
+  const updateServiceDescription = useCallback(
+    (index: number) =>
+      async (newFr: string, newEn: string) => {
+        const updatedData = {
+          ...data,
+          services: {
+            ...data.services,
+            list: data.services.list.map((s, i) =>
+              i === index ? { ...s, description: { fr: newFr, en: newEn } } : s
+            ),
+          },
+        };
+        setData(updatedData);
+        await updateContactSection(updatedData);
+      },
+    [data, updateContactSection]
+  );
+
+  const updatePracticalInfoTitle = useCallback(
+    async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        practicalInfo: { ...data.practicalInfo, title: { fr: newFr, en: newEn } },
+      };
+      setData(updatedData);
+      await updateContactSection(updatedData);
+    },
+    [data, updateContactSection]
+  );
+
+  const updateArrivalTitle = useCallback(
+    async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        practicalInfo: {
+          ...data.practicalInfo,
+          arrival: { ...data.practicalInfo.arrival, title: { fr: newFr, en: newEn } },
+        },
+      };
+      setData(updatedData);
+      await updateContactSection(updatedData);
+    },
+    [data, updateContactSection]
+  );
+
+  const updateArrivalDetails = useCallback(
+    async (newFr: string, newEn: string) => {
+      const detailsFr = newFr.split('\n').map((s) => s.trim()).filter(Boolean);
+      const detailsEn = newEn.split('\n').map((s) => s.trim()).filter(Boolean);
+      const maxLen = Math.max(detailsFr.length, detailsEn.length);
+      const newDetails = Array.from({ length: maxLen }, (_, j) => ({
+        fr: detailsFr[j] || '',
+        en: detailsEn[j] || '',
+      }));
+      const updatedData = {
+        ...data,
+        practicalInfo: {
+          ...data.practicalInfo,
+          arrival: { ...data.practicalInfo.arrival, details: newDetails },
+        },
+      };
+      setData(updatedData);
+      await updateContactSection(updatedData);
+    },
+    [data, updateContactSection]
+  );
+
+  const updateAirportTitle = useCallback(
+    async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        practicalInfo: {
+          ...data.practicalInfo,
+          airport: { ...data.practicalInfo.airport, title: { fr: newFr, en: newEn } },
+        },
+      };
+      setData(updatedData);
+      await updateContactSection(updatedData);
+    },
+    [data, updateContactSection]
+  );
+
+  const updateAirportDetails = useCallback(
+    async (newFr: string, newEn: string) => {
+      const detailsFr = newFr.split('\n').map((s) => s.trim()).filter(Boolean);
+      const detailsEn = newEn.split('\n').map((s) => s.trim()).filter(Boolean);
+      const maxLen = Math.max(detailsFr.length, detailsEn.length);
+      const newDetails = Array.from({ length: maxLen }, (_, j) => ({
+        fr: detailsFr[j] || '',
+        en: detailsEn[j] || '',
+      }));
+      const updatedData = {
+        ...data,
+        practicalInfo: {
+          ...data.practicalInfo,
+          airport: { ...data.practicalInfo.airport, details: newDetails },
+        },
+      };
+      setData(updatedData);
+      await updateContactSection(updatedData);
+    },
+    [data, updateContactSection]
+  );
+
+  const updateLanguagesTitle = useCallback(
+    async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        practicalInfo: {
+          ...data.practicalInfo,
+          languages: { ...data.practicalInfo.languages, title: { fr: newFr, en: newEn } },
+        },
+      };
+      setData(updatedData);
+      await updateContactSection(updatedData);
+    },
+    [data, updateContactSection]
+  );
+
+  const updateLanguagesList = useCallback(
+    async (newFr: string, newEn: string) => {
+      const listFr = newFr.split(',').map((s) => s.trim()).filter(Boolean);
+      const listEn = newEn.split(',').map((s) => s.trim()).filter(Boolean);
+      const maxLen = Math.max(listFr.length, listEn.length);
+      const newList = Array.from({ length: maxLen }, (_, j) => ({
+        fr: listFr[j] || '',
+        en: listEn[j] || '',
+      }));
+      const updatedData = {
+        ...data,
+        practicalInfo: {
+          ...data.practicalInfo,
+          languages: { ...data.practicalInfo.languages, list: newList },
+        },
+      };
+      setData(updatedData);
+      await updateContactSection(updatedData);
+    },
+    [data, updateContactSection]
+  );
+
+  const updateLocationTitle = useCallback(
+    async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        practicalInfo: {
+          ...data.practicalInfo,
+          location: { ...data.practicalInfo.location, title: { fr: newFr, en: newEn } },
+        },
+      };
+      setData(updatedData);
+      await updateContactSection(updatedData);
+    },
+    [data, updateContactSection]
+  );
+
+  const updateLocationSubtitle = useCallback(
+    async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        practicalInfo: {
+          ...data.practicalInfo,
+          location: { ...data.practicalInfo.location, subtitle: { fr: newFr, en: newEn } },
+        },
+      };
+      setData(updatedData);
+      await updateContactSection(updatedData);
+    },
+    [data, updateContactSection]
+  );
+
+  const updateLocationAddressTitle = useCallback(
+    async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        practicalInfo: {
+          ...data.practicalInfo,
+          location: { ...data.practicalInfo.location, addressTitle: { fr: newFr, en: newEn } },
+        },
+      };
+      setData(updatedData);
+      await updateContactSection(updatedData);
+    },
+    [data, updateContactSection]
+  );
+
+  const updateLocationAddress = useCallback(
+    async (newFr: string, newEn: string) => {
+      const updatedAddressFr = newFr.replace(/\n/g, '<br/>');
+      const updatedAddressEn = newEn.replace(/\n/g, '<br/>');
+      const updatedData = {
+        ...data,
+        practicalInfo: {
+          ...data.practicalInfo,
+          location: { ...data.practicalInfo.location, address: { fr: updatedAddressFr, en: updatedAddressEn } },
+        },
+      };
+      setData(updatedData);
+      await updateContactSection(updatedData);
+    },
+    [data, updateContactSection]
+  );
+
+  const updateLocationMapTitle = useCallback(
+    async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        practicalInfo: {
+          ...data.practicalInfo,
+          location: { ...data.practicalInfo.location, mapTitle: { fr: newFr, en: newEn } },
+        },
+      };
+      setData(updatedData);
+      await updateContactSection(updatedData);
+    },
+    [data, updateContactSection]
+  );
+
+  const updateLocationDirectionsButton = useCallback(
+    async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        practicalInfo: {
+          ...data.practicalInfo,
+          location: { ...data.practicalInfo.location, directionsButton: { fr: newFr, en: newEn } },
+        },
+      };
+      setData(updatedData);
+      await updateContactSection(updatedData);
+    },
+    [data, updateContactSection]
+  );
+
+  const updateOnlineReviewsTitle = useCallback(
+    async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        onlineReviews: { ...data.onlineReviews, title: { fr: newFr, en: newEn } },
+      };
+      setData(updatedData);
+      await updateContactSection(updatedData);
+    },
+    [data, updateContactSection]
+  );
+
+  const updateOnlineReviewsSubtitle = useCallback(
+    async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        onlineReviews: { ...data.onlineReviews, subtitle: { fr: newFr, en: newEn } },
+      };
+      setData(updatedData);
+      await updateContactSection(updatedData);
+    },
+    [data, updateContactSection]
+  );
+
+  const updateOnlineReviewsCallToAction = useCallback(
+    async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        onlineReviews: { ...data.onlineReviews, callToAction: { fr: newFr, en: newEn } },
+      };
+      setData(updatedData);
+      await updateContactSection(updatedData);
+    },
+    [data, updateContactSection]
+  );
+
+  useEffect(() => {
+    const fetchContactData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const headers = getAuthHeaders();
+        let response = await fetch(`/api/globalSections?sectionKey=${SECTION_KEY}`, { headers });
+        let sections: any[] = [];
+        if (response.ok) {
+          sections = await response.json();
+        }
+        let section = sections.find((s: any) => s.sectionKey === SECTION_KEY);
+        if (!section) {
+          const { dataFr, dataEn } = splitContactData(contactData);
+          const createResponse = await fetch('/api/globalSections', {
+            method: 'POST',
+            headers: { ...headers, 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              sectionKey: SECTION_KEY,
+              dataFr,
+              dataEn,
+              isActive: true,
+            }),
+          });
+          if (!createResponse.ok) {
+            throw new Error('Failed to create contact data');
+          }
+          const created = await createResponse.json();
+          section = created;
+        }
+        if (section) {
+          const fetchedData = reconstructMixed(section.dataFr, section.dataEn);
+          setData(fetchedData);
+        } else {
+          setData(contactData);
+        }
+      } catch (err) {
+        console.error('Error fetching contact data:', err);
+        setError('Failed to load contact data');
+        setData(contactData);
+      } finally {
+        setLoading(false);
       }
     };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateFirstNameLabel = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      form: { 
-        ...data.form, 
-        fields: { 
-          ...data.form.fields, 
-          firstName: { ...data.form.fields.firstName, label: { fr: newFr, en: newEn } } 
-        } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateFirstNamePlaceholder = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      form: { 
-        ...data.form, 
-        fields: { 
-          ...data.form.fields, 
-          firstName: { ...data.form.fields.firstName, placeholder: { fr: newFr, en: newEn } } 
-        } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateLastNameLabel = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      form: { 
-        ...data.form, 
-        fields: { 
-          ...data.form.fields, 
-          lastName: { ...data.form.fields.lastName, label: { fr: newFr, en: newEn } } 
-        } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateLastNamePlaceholder = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      form: { 
-        ...data.form, 
-        fields: { 
-          ...data.form.fields, 
-          lastName: { ...data.form.fields.lastName, placeholder: { fr: newFr, en: newEn } } 
-        } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateEmailLabel = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      form: { 
-        ...data.form, 
-        fields: { 
-          ...data.form.fields, 
-          email: { ...data.form.fields.email, label: { fr: newFr, en: newEn } } 
-        } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateEmailPlaceholder = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      form: { 
-        ...data.form, 
-        fields: { 
-          ...data.form.fields, 
-          email: { ...data.form.fields.email, placeholder: { fr: newFr, en: newEn } } 
-        } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updatePhoneLabel = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      form: { 
-        ...data.form, 
-        fields: { 
-          ...data.form.fields, 
-          phone: { ...data.form.fields.phone, label: { fr: newFr, en: newEn } } 
-        } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updatePhonePlaceholder = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      form: { 
-        ...data.form, 
-        fields: { 
-          ...data.form.fields, 
-          phone: { ...data.form.fields.phone, placeholder: { fr: newFr, en: newEn } } 
-        } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateSubjectLabel = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      form: { 
-        ...data.form, 
-        fields: { 
-          ...data.form.fields, 
-          subject: { ...data.form.fields.subject, label: { fr: newFr, en: newEn } } 
-        } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateSubjectPlaceholder = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      form: { 
-        ...data.form, 
-        fields: { 
-          ...data.form.fields, 
-          subject: { ...data.form.fields.subject, placeholder: { fr: newFr, en: newEn } } 
-        } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateArrivalDateLabel = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      form: { 
-        ...data.form, 
-        fields: { 
-          ...data.form.fields, 
-          arrivalDate: { ...data.form.fields.arrivalDate, label: { fr: newFr, en: newEn } } 
-        } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateDepartureDateLabel = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      form: { 
-        ...data.form, 
-        fields: { 
-          ...data.form.fields, 
-          departureDate: { ...data.form.fields.departureDate, label: { fr: newFr, en: newEn } } 
-        } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateGuestsLabel = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      form: { 
-        ...data.form, 
-        fields: { 
-          ...data.form.fields, 
-          guests: { ...data.form.fields.guests, label: { fr: newFr, en: newEn } } 
-        } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateGuestsPlaceholder = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      form: { 
-        ...data.form, 
-        fields: { 
-          ...data.form.fields, 
-          guests: { ...data.form.fields.guests, placeholder: { fr: newFr, en: newEn } } 
-        } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateMessageLabel = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      form: { 
-        ...data.form, 
-        fields: { 
-          ...data.form.fields, 
-          message: { ...data.form.fields.message, label: { fr: newFr, en: newEn } } 
-        } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateMessagePlaceholder = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      form: { 
-        ...data.form, 
-        fields: { 
-          ...data.form.fields, 
-          message: { ...data.form.fields.message, placeholder: { fr: newFr, en: newEn } } 
-        } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateSubmitButton = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      form: { ...data.form, submitButton: { fr: newFr, en: newEn } }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateServicesTitle = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      services: { ...data.services, title: { fr: newFr, en: newEn } }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateServicesSubtitle = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      services: { ...data.services, subtitle: { fr: newFr, en: newEn } }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateServiceTitle = (index: number) => async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      services: { 
-        ...data.services, 
-        list: data.services.list.map((service, i) => 
-          i === index ? { ...service, title: { fr: newFr, en: newEn } } : service
-        ) 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateServiceDescription = (index: number) => async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      services: { 
-        ...data.services, 
-        list: data.services.list.map((service, i) => 
-          i === index ? { ...service, description: { fr: newFr, en: newEn } } : service
-        ) 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updatePracticalInfoTitle = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      practicalInfo: { ...data.practicalInfo, title: { fr: newFr, en: newEn } }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateArrivalTitle = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      practicalInfo: { 
-        ...data.practicalInfo, 
-        arrival: { ...data.practicalInfo.arrival, title: { fr: newFr, en: newEn } } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateArrivalDetail = (detailIndex: number) => async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      practicalInfo: { 
-        ...data.practicalInfo, 
-        arrival: { 
-          ...data.practicalInfo.arrival, 
-          details: data.practicalInfo.arrival.details.map((detail, j) => 
-            j === detailIndex ? { fr: newFr, en: newEn } : detail
-          ) 
-        } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateAirportTitle = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      practicalInfo: { 
-        ...data.practicalInfo, 
-        airport: { ...data.practicalInfo.airport, title: { fr: newFr, en: newEn } } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateAirportDetail = (detailIndex: number) => async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      practicalInfo: { 
-        ...data.practicalInfo, 
-        airport: { 
-          ...data.practicalInfo.airport, 
-          details: data.practicalInfo.airport.details.map((detail, j) => 
-            j === detailIndex ? { fr: newFr, en: newEn } : detail
-          ) 
-        } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateLanguagesTitle = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      practicalInfo: { 
-        ...data.practicalInfo, 
-        languages: { ...data.practicalInfo.languages, title: { fr: newFr, en: newEn } } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateLanguageItem = (index: number) => async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      practicalInfo: { 
-        ...data.practicalInfo, 
-        languages: { 
-          ...data.practicalInfo.languages, 
-          list: data.practicalInfo.languages.list.map((langItem, i) => 
-            i === index ? { fr: newFr, en: newEn } : langItem
-          ) 
-        } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateLocationTitle = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      practicalInfo: { 
-        ...data.practicalInfo, 
-        location: { ...data.practicalInfo.location, title: { fr: newFr, en: newEn } } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateLocationSubtitle = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      practicalInfo: { 
-        ...data.practicalInfo, 
-        location: { ...data.practicalInfo.location, subtitle: { fr: newFr, en: newEn } } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateLocationAddressTitle = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      practicalInfo: { 
-        ...data.practicalInfo, 
-        location: { ...data.practicalInfo.location, addressTitle: { fr: newFr, en: newEn } } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateLocationAddress = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      practicalInfo: { 
-        ...data.practicalInfo, 
-        location: { ...data.practicalInfo.location, address: { fr: newFr, en: newEn } } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateLocationMapTitle = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      practicalInfo: { 
-        ...data.practicalInfo, 
-        location: { ...data.practicalInfo.location, mapTitle: { fr: newFr, en: newEn } } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  const updateLocationDirectionsButton = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      practicalInfo: { 
-        ...data.practicalInfo, 
-        location: { ...data.practicalInfo.location, directionsButton: { fr: newFr, en: newEn } } 
-      }
-    };
-    setData(updatedData);
-    await updateContactSection(updatedData);
-  };
-
-  // Form setup (validation messages use current lang from data)
-  const validationMessages = {
-    firstName: { min: getText(data.form.fields.firstName.validation.min) },
-    lastName: { min: getText(data.form.fields.lastName.validation.min) },
-    email: { email: getText(data.form.fields.email.validation.email) },
-    phone: { min: getText(data.form.fields.phone.validation.min) },
-    subject: { min: getText(data.form.fields.subject.validation.min) },
-    message: { min: getText(data.form.fields.message.validation.min) }
-  };
-
-  const contactFormSchema = z.object({
-    firstName: z.string().min(2, validationMessages.firstName.min),
-    lastName: z.string().min(2, validationMessages.lastName.min),
-    email: z.string().email(validationMessages.email.email),
-    phone: z.string().min(8, validationMessages.phone.min),
-    subject: z.string().min(1, validationMessages.subject.min),
-    message: z.string().min(10, validationMessages.message.min),
-    arrivalDate: z.string().optional(),
-    departureDate: z.string().optional(),
-    guests: z.string().optional()
-  });
-
-  type ContactFormData = z.infer<typeof contactFormSchema>;
-
-  const formInstance = useForm<ContactFormData>({
-    resolver: zodResolver(contactFormSchema),
-    defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      subject: "",
-      message: "",
-      arrivalDate: "",
-      departureDate: "",
-      guests: ""
-    }
-  });
-
-  const onSubmit = (data: ContactFormData) => {
-    console.log("Formulaire soumis:", data);
-    // Simulation d'envoi sans backend
-  };
-
-  const getContactIcon = (iconName: string) => {
-    switch (iconName) {
-      case 'Phone': return <Phone className="w-6 h-6" />;
-      case 'Mail': return <Mail className="w-6 h-6" />;
-      case 'MapPin': return <MapPin className="w-6 h-6" />;
-      case 'Clock': return <Clock className="w-6 h-6" />;
-      default: return null;
-    }
-  };
-
-  const getServiceIcon = (iconName: string) => {
-    switch (iconName) {
-      case 'Calendar': return <Calendar className="w-8 h-8" />;
-      case 'Users': return <Users className="w-8 h-8" />;
-      case 'Plane': return <Plane className="w-8 h-8" />;
-      case 'Car': return <Car className="w-8 h-8" />;
-      default: return null;
-    }
-  };
+    fetchContactData();
+  }, []);
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
-        <section className="pt-20 bg-gradient-to-r from-background to-card/50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-            <div className="text-center">
-              <Skeleton className="h-12 w-64 mx-auto mb-6" />
-              <Skeleton className="h-1 w-24 mx-auto mb-6" />
-              <Skeleton className="h-8 w-full max-w-3xl mx-auto" />
-            </div>
-          </div>
-        </section>
-        <section className="py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <div key={i} className="space-y-4">
-                  <Skeleton className="h-12 w-full mx-auto" />
-                  <Skeleton className="h-6 w-3/4 mx-auto" />
-                  <div className="space-y-1">
-                    {Array.from({ length: 2 }).map((__, j) => (
-                      <Skeleton key={j} className="h-4 w-full" />
-                    ))}
-                  </div>
-                  <Skeleton className="h-10 w-full" />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-        <section className="py-20 bg-card/30">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              <div className="space-y-6">
-                <Skeleton className="h-12 w-48" />
-                <Skeleton className="h-6 w-64" />
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {Array.from({ length: 4 }).map((_, i) => (
-                      <div key={i} className="space-y-2">
-                        <Skeleton className="h-4 w-32" />
-                        <Skeleton className="h-10 w-full" />
-                      </div>
-                    ))}
-                  </div>
-                  <div className="space-y-2">
-                    <Skeleton className="h-4 w-32" />
-                    <Skeleton className="h-10 w-full rounded-md" />
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {Array.from({ length: 3 }).map((_, i) => (
-                      <div key={i} className="space-y-2">
-                        <Skeleton className="h-4 w-24" />
-                        <Skeleton className="h-10 w-full" />
-                      </div>
-                    ))}
-                  </div>
-                  <div className="space-y-2">
-                    <Skeleton className="h-4 w-32" />
-                    <Skeleton className="h-32 w-full rounded-md" />
-                  </div>
-                  <Skeleton className="h-10 w-full" />
-                </div>
-              </div>
-              <div className="space-y-8">
-                <div className="space-y-2">
-                  <Skeleton className="h-8 w-40" />
-                  <Skeleton className="h-5 w-64" />
-                </div>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <Skeleton className="h-8 w-8 mt-2" />
-                    <div className="space-y-1 flex-1">
-                      <Skeleton className="h-5 w-32" />
-                      <Skeleton className="h-4 w-full" />
-                    </div>
-                  </div>
-                  {Array.from({ length: 3 }).map((_, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <Skeleton className="h-8 w-8 mt-2" />
-                      <div className="space-y-1 flex-1">
-                        <Skeleton className="h-5 w-32" />
-                        <Skeleton className="h-4 w-full" />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <div className="space-y-2">
-                  <Skeleton className="h-8 w-48" />
-                  <div className="space-y-2">
-                    <div className="space-y-1">
-                      <Skeleton className="h-5 w-32" />
-                      {Array.from({ length: 3 }).map((__, j) => (
-                        <Skeleton key={j} className="h-4 w-3/4" />
-                      ))}
-                    </div>
-                    <div className="space-y-1">
-                      <Skeleton className="h-5 w-24" />
-                      {Array.from({ length: 3 }).map((__, j) => (
-                        <Skeleton key={j} className="h-4 w-3/4" />
-                      ))}
-                    </div>
-                    <div className="space-y-1">
-                      <Skeleton className="h-5 w-32" />
-                      <div className="flex flex-wrap gap-2">
-                        {Array.from({ length: 4 }).map((___, k) => (
-                          <Skeleton key={k} className="h-6 w-16" />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Skeleton className="h-8 w-48" />
-                  <Skeleton className="h-5 w-64" />
-                  <div className="space-y-4">
-                    <div className="flex items-start gap-3">
-                      <Skeleton className="h-5 w-5 mt-2" />
-                      <div className="space-y-1 flex-1">
-                        <Skeleton className="h-5 w-32" />
-                        <p className="text-sm text-muted-foreground" dangerouslySetInnerHTML={{ __html: '<span class="font-semibold">Adresse complète</span><br/>loading...' }} />
-                      </div>
-                    </div>
-                    <Skeleton className="h-64 w-full rounded-lg" />
-                    <Skeleton className="h-10 w-40 mx-auto" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <Footer />
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="text-foreground">Chargement des données de contact...</div>
       </div>
     );
   }
@@ -1260,106 +985,23 @@ const Contact = () => {
     console.warn(error);
   }
 
-  const { hero, contactInfo, form, services, practicalInfo } = data;
-  
-  const heroTitle = getText(hero.title);
-  const heroDescription = getText(hero.description);
-  
-  const processedContactInfo = contactInfo.map(info => ({
-    ...info,
-    titleText: getText(info.title),
-    detailsText: info.details.map(getDetailText),
-    actionText: getText(info.action)
-  }));
-  
-  const formTitle = getText(form.title);
-  const formSubtitle = getText(form.subtitle);
-  
-  const processedDepartments = form.departments.map(dept => ({
-    ...dept,
-    labelText: getText(dept.label)
-  }));
-  
-  const firstNameLabel = getText(form.fields.firstName.label);
-  const firstNamePlaceholder = getText(form.fields.firstName.placeholder);
-  
-  const lastNameLabel = getText(form.fields.lastName.label);
-  const lastNamePlaceholder = getText(form.fields.lastName.placeholder);
-  
-  const emailLabel = getText(form.fields.email.label);
-  const emailPlaceholder = getText(form.fields.email.placeholder);
-  
-  const phoneLabel = getText(form.fields.phone.label);
-  const phonePlaceholder = getText(form.fields.phone.placeholder);
-  
-  const subjectLabel = getText(form.fields.subject.label);
-  const subjectPlaceholder = getText(form.fields.subject.placeholder);
-  
-  const arrivalDateLabel = getText(form.fields.arrivalDate.label);
-  
-  const departureDateLabel = getText(form.fields.departureDate.label);
-  
-  const guestsLabel = getText(form.fields.guests.label);
-  const guestsPlaceholder = getText(form.fields.guests.placeholder);
-  
-  const messageLabel = getText(form.fields.message.label);
-  const messagePlaceholder = getText(form.fields.message.placeholder);
-  
-  const submitButtonText = getText(form.submitButton);
-  
-  const servicesTitle = getText(services.title);
-  const servicesSubtitle = getText(services.subtitle);
-  
-  const processedServicesList = services.list.map(service => ({
-    ...service,
-    titleText: getText(service.title),
-    descriptionText: getText(service.description)
-  }));
-  
-  const practicalInfoTitle = getText(practicalInfo.title);
-  
-  const arrivalTitle = getText(practicalInfo.arrival.title);
-  const arrivalDetails = practicalInfo.arrival.details.map(getDetailText);
-  
-  const airportTitle = getText(practicalInfo.airport.title);
-  const airportDetails = practicalInfo.airport.details.map(getDetailText);
-  
-  const languagesTitle = getText(practicalInfo.languages.title);
-  const languagesList = practicalInfo.languages.list.map(getLangText);
-  
-  const locationTitle = getText(practicalInfo.location.title);
-  const locationSubtitle = getText(practicalInfo.location.subtitle);
-  const locationAddressTitle = getText(practicalInfo.location.addressTitle);
-  const locationAddress = getText(practicalInfo.location.address);
-  const locationMapTitle = getText(practicalInfo.location.mapTitle);
-  const locationDirectionsButton = getText(practicalInfo.location.directionsButton);
-
   return (
     <div className="min-h-screen bg-background">
-      
       {/* Hero Section */}
       <section className="pt-20 bg-gradient-to-r from-background to-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
-            <h1 className="text-5xl md:text-6xl font-serif font-bold text-foreground mb-6">
-              <Tooltip 
-                frLabel={hero.title.fr} 
-                enLabel={hero.title.en} 
-                onSave={updateHeroTitle}
-              >
-                {heroTitle}
-              </Tooltip>
-            </h1>
+            <Tooltip frLabel={data.hero.title.fr} enLabel={data.hero.title.en} onSave={updateHeroTitle}>
+              <h1 className="text-5xl md:text-6xl font-serif font-bold text-foreground mb-6">
+                {formatAmpersand(data.hero.title[langKey])}
+              </h1>
+            </Tooltip>
             <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              <Tooltip 
-                frLabel={hero.description.fr} 
-                enLabel={hero.description.en} 
-                onSave={updateHeroDescription}
-              >
-                {heroDescription}
-              </Tooltip>
-            </p>
+            <Tooltip frLabel={data.hero.description.fr} enLabel={data.hero.description.en} onSave={updateHeroDescription}>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                {data.hero.description[langKey]}
+              </p>
+            </Tooltip>
           </div>
         </div>
       </section>
@@ -1368,46 +1010,37 @@ const Contact = () => {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            {processedContactInfo.map((info, index) => (
-              <Card key={index} className="text-center hover-elevate">
-                <CardContent className="pt-6">
-                  <div className="text-primary mb-4 flex justify-center">
-                    {getContactIcon(info.icon)}
-                  </div>
-                  <h3 className="text-lg font-semibold text-foreground mb-3">
-                    <Tooltip 
-                      frLabel={contactInfo[index].title.fr} 
-                      enLabel={contactInfo[index].title.en} 
-                      onSave={updateContactInfoTitle(index)}
-                    >
-                      {info.titleText}
+            {data.contactInfo.map((info, index) => {
+              const IconComponent = contactIcons[info.icon as keyof typeof contactIcons];
+              const detailsTextFr = info.details.map((d) => d.fr).join('\n');
+              const detailsTextEn = info.details.map((d) => d.en).join('\n');
+              return (
+                <Card key={index} className="text-center hover-elevate">
+                  <CardContent className="pt-6">
+                    <div className="text-primary mb-4 flex justify-center">
+                      <IconComponent className="w-6 h-6" />
+                    </div>
+                    <Tooltip frLabel={info.title.fr} enLabel={info.title.en} onSave={updateContactInfoTitle(index)}>
+                      <h3 className="text-lg font-semibold text-foreground mb-3">{info.title[langKey]}</h3>
                     </Tooltip>
-                  </h3>
-                  <div className="space-y-1 mb-4">
-                    {info.detailsText.map((detail, idx) => (
-                      <p key={idx} className="text-muted-foreground text-sm">
-                        <Tooltip 
-                          frLabel={contactInfo[index].details[idx].fr} 
-                          enLabel={contactInfo[index].details[idx].en} 
-                          onSave={updateContactInfoDetail(index, idx)}
-                        >
-                          {detail}
-                        </Tooltip>
-                      </p>
-                    ))}
-                  </div>
-                  <Button variant="outline" size="sm" data-testid={`button-contact-${index}`}>
-                    <Tooltip 
-                      frLabel={contactInfo[index].action.fr} 
-                      enLabel={contactInfo[index].action.en} 
-                      onSave={updateContactInfoAction(index)}
-                    >
-                      {info.actionText}
+                    <Tooltip frLabel={detailsTextFr} enLabel={detailsTextEn} onSave={updateContactInfoDetails(index)}>
+                      <div className="space-y-1 mb-4">
+                        {info.details.map((detail, idx) => (
+                          <p key={idx} className="text-muted-foreground text-sm">
+                            {detail[langKey]}
+                          </p>
+                        ))}
+                      </div>
                     </Tooltip>
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
+                    <Button variant="outline" size="sm" data-testid={`button-contact-${index}`}>
+                      <Tooltip frLabel={info.action.fr} enLabel={info.action.en} onSave={updateContactInfoAction(index)}>
+                        <span>{info.action[langKey]}</span>
+                      </Tooltip>
+                    </Button>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -1421,55 +1054,37 @@ const Contact = () => {
               <CardHeader>
                 <CardTitle className="text-2xl font-serif text-foreground flex items-center gap-2">
                   <MessageCircle className="w-6 h-6 text-primary" />
-                  <Tooltip 
-                    frLabel={form.title.fr} 
-                    enLabel={form.title.en} 
-                    onSave={updateFormTitle}
-                  >
-                    {formTitle}
+                  <Tooltip frLabel={data.form.title.fr} enLabel={data.form.title.en} onSave={updateFormTitle}>
+                    <span>{data.form.title[langKey]}</span>
                   </Tooltip>
                 </CardTitle>
-                <p className="text-muted-foreground">
-                  <Tooltip 
-                    frLabel={form.subtitle.fr} 
-                    enLabel={form.subtitle.en} 
-                    onSave={updateFormSubtitle}
-                  >
-                    {formSubtitle}
-                  </Tooltip>
-                </p>
+                <Tooltip frLabel={data.form.subtitle.fr} enLabel={data.form.subtitle.en} onSave={updateFormSubtitle}>
+                  <p className="text-muted-foreground">{data.form.subtitle[langKey]}</p>
+                </Tooltip>
               </CardHeader>
               <CardContent>
-                <Form {...formInstance}>
-                  <form onSubmit={formInstance.handleSubmit(onSubmit)} className="space-y-6">
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <FormField
-                        control={formInstance.control}
+                        control={form.control}
                         name="firstName"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>
-                              <Tooltip 
-                                frLabel={form.fields.firstName.label.fr} 
-                                enLabel={form.fields.firstName.label.en} 
-                                onSave={updateFirstNameLabel}
+                              <Tooltip
+                                frLabel={data.form.fields.firstName.label.fr}
+                                enLabel={data.form.fields.firstName.label.en}
+                                onSave={updateFormFieldLabel('firstName')}
                               >
-                                {firstNameLabel}
+                                <span>{data.form.fields.firstName.label[langKey]}</span>
                               </Tooltip>
                             </FormLabel>
                             <FormControl>
-                              <Input 
-                                placeholder={
-                                  <Tooltip 
-                                    frLabel={form.fields.firstName.placeholder.fr} 
-                                    enLabel={form.fields.firstName.placeholder.en} 
-                                    onSave={updateFirstNamePlaceholder}
-                                  >
-                                    {firstNamePlaceholder}
-                                  </Tooltip>
-                                } 
-                                {...field} 
-                                data-testid="input-firstname" 
+                              <Input
+                                placeholder={data.form.fields.firstName.placeholder[langKey]}
+                                {...field}
+                                data-testid="input-firstname"
                               />
                             </FormControl>
                             <FormMessage />
@@ -1477,32 +1092,24 @@ const Contact = () => {
                         )}
                       />
                       <FormField
-                        control={formInstance.control}
+                        control={form.control}
                         name="lastName"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>
-                              <Tooltip 
-                                frLabel={form.fields.lastName.label.fr} 
-                                enLabel={form.fields.lastName.label.en} 
-                                onSave={updateLastNameLabel}
+                              <Tooltip
+                                frLabel={data.form.fields.lastName.label.fr}
+                                enLabel={data.form.fields.lastName.label.en}
+                                onSave={updateFormFieldLabel('lastName')}
                               >
-                                {lastNameLabel}
+                                <span>{data.form.fields.lastName.label[langKey]}</span>
                               </Tooltip>
                             </FormLabel>
                             <FormControl>
-                              <Input 
-                                placeholder={
-                                  <Tooltip 
-                                    frLabel={form.fields.lastName.placeholder.fr} 
-                                    enLabel={form.fields.lastName.placeholder.en} 
-                                    onSave={updateLastNamePlaceholder}
-                                  >
-                                    {lastNamePlaceholder}
-                                  </Tooltip>
-                                } 
-                                {...field} 
-                                data-testid="input-lastname" 
+                              <Input
+                                placeholder={data.form.fields.lastName.placeholder[langKey]}
+                                {...field}
+                                data-testid="input-lastname"
                               />
                             </FormControl>
                             <FormMessage />
@@ -1513,33 +1120,25 @@ const Contact = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <FormField
-                        control={formInstance.control}
+                        control={form.control}
                         name="email"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>
-                              <Tooltip 
-                                frLabel={form.fields.email.label.fr} 
-                                enLabel={form.fields.email.label.en} 
-                                onSave={updateEmailLabel}
+                              <Tooltip
+                                frLabel={data.form.fields.email.label.fr}
+                                enLabel={data.form.fields.email.label.en}
+                                onSave={updateFormFieldLabel('email')}
                               >
-                                {emailLabel}
+                                <span>{data.form.fields.email.label[langKey]}</span>
                               </Tooltip>
                             </FormLabel>
                             <FormControl>
-                              <Input 
-                                type="email" 
-                                placeholder={
-                                  <Tooltip 
-                                    frLabel={form.fields.email.placeholder.fr} 
-                                    enLabel={form.fields.email.placeholder.en} 
-                                    onSave={updateEmailPlaceholder}
-                                  >
-                                    {emailPlaceholder}
-                                  </Tooltip>
-                                } 
-                                {...field} 
-                                data-testid="input-email" 
+                              <Input
+                                type="email"
+                                placeholder={data.form.fields.email.placeholder[langKey]}
+                                {...field}
+                                data-testid="input-email"
                               />
                             </FormControl>
                             <FormMessage />
@@ -1547,32 +1146,24 @@ const Contact = () => {
                         )}
                       />
                       <FormField
-                        control={formInstance.control}
+                        control={form.control}
                         name="phone"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>
-                              <Tooltip 
-                                frLabel={form.fields.phone.label.fr} 
-                                enLabel={form.fields.phone.label.en} 
-                                onSave={updatePhoneLabel}
+                              <Tooltip
+                                frLabel={data.form.fields.phone.label.fr}
+                                enLabel={data.form.fields.phone.label.en}
+                                onSave={updateFormFieldLabel('phone')}
                               >
-                                {phoneLabel}
+                                <span>{data.form.fields.phone.label[langKey]}</span>
                               </Tooltip>
                             </FormLabel>
                             <FormControl>
-                              <Input 
-                                placeholder={
-                                  <Tooltip 
-                                    frLabel={form.fields.phone.placeholder.fr} 
-                                    enLabel={form.fields.phone.placeholder.en} 
-                                    onSave={updatePhonePlaceholder}
-                                  >
-                                    {phonePlaceholder}
-                                  </Tooltip>
-                                } 
-                                {...field} 
-                                data-testid="input-phone" 
+                              <Input
+                                placeholder={data.form.fields.phone.placeholder[langKey]}
+                                {...field}
+                                data-testid="input-phone"
                               />
                             </FormControl>
                             <FormMessage />
@@ -1582,45 +1173,29 @@ const Contact = () => {
                     </div>
 
                     <FormField
-                      control={formInstance.control}
+                      control={form.control}
                       name="subject"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>
-                            <Tooltip 
-                              frLabel={form.fields.subject.label.fr} 
-                              enLabel={form.fields.subject.label.en} 
-                              onSave={updateSubjectLabel}
+                            <Tooltip
+                              frLabel={data.form.fields.subject.label.fr}
+                              enLabel={data.form.fields.subject.label.en}
+                              onSave={updateFormFieldLabel('subject')}
                             >
-                              {subjectLabel}
+                              <span>{data.form.fields.subject.label[langKey]}</span>
                             </Tooltip>
                           </FormLabel>
                           <Select onValueChange={field.onChange} defaultValue={field.value}>
                             <FormControl>
                               <SelectTrigger data-testid="select-subject">
-                                <SelectValue 
-                                  placeholder={
-                                    <Tooltip 
-                                      frLabel={form.fields.subject.placeholder.fr} 
-                                      enLabel={form.fields.subject.placeholder.en} 
-                                      onSave={updateSubjectPlaceholder}
-                                    >
-                                      {subjectPlaceholder}
-                                    </Tooltip>
-                                  } 
-                                />
+                                <SelectValue placeholder={data.form.fields.subject.placeholder[langKey]} />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              {processedDepartments.map((dept, idx) => (
+                              {currentDepartments.map((dept) => (
                                 <SelectItem key={dept.value} value={dept.value}>
-                                  <Tooltip 
-                                    frLabel={form.departments[idx].label.fr} 
-                                    enLabel={form.departments[idx].label.en} 
-                                    onSave={updateDepartmentLabel(idx)}
-                                  >
-                                    {dept.labelText}
-                                  </Tooltip>
+                                  {dept.label}
                                 </SelectItem>
                               ))}
                             </SelectContent>
@@ -1632,17 +1207,17 @@ const Contact = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <FormField
-                        control={formInstance.control}
+                        control={form.control}
                         name="arrivalDate"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>
-                              <Tooltip 
-                                frLabel={form.fields.arrivalDate.label.fr} 
-                                enLabel={form.fields.arrivalDate.label.en} 
-                                onSave={updateArrivalDateLabel}
+                              <Tooltip
+                                frLabel={data.form.fields.arrivalDate.label.fr}
+                                enLabel={data.form.fields.arrivalDate.label.en}
+                                onSave={updateFormFieldLabel('arrivalDate')}
                               >
-                                {arrivalDateLabel}
+                                <span>{data.form.fields.arrivalDate.label[langKey]}</span>
                               </Tooltip>
                             </FormLabel>
                             <FormControl>
@@ -1652,17 +1227,17 @@ const Contact = () => {
                         )}
                       />
                       <FormField
-                        control={formInstance.control}
+                        control={form.control}
                         name="departureDate"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>
-                              <Tooltip 
-                                frLabel={form.fields.departureDate.label.fr} 
-                                enLabel={form.fields.departureDate.label.en} 
-                                onSave={updateDepartureDateLabel}
+                              <Tooltip
+                                frLabel={data.form.fields.departureDate.label.fr}
+                                enLabel={data.form.fields.departureDate.label.en}
+                                onSave={updateFormFieldLabel('departureDate')}
                               >
-                                {departureDateLabel}
+                                <span>{data.form.fields.departureDate.label[langKey]}</span>
                               </Tooltip>
                             </FormLabel>
                             <FormControl>
@@ -1672,33 +1247,25 @@ const Contact = () => {
                         )}
                       />
                       <FormField
-                        control={formInstance.control}
+                        control={form.control}
                         name="guests"
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>
-                              <Tooltip 
-                                frLabel={form.fields.guests.label.fr} 
-                                enLabel={form.fields.guests.label.en} 
-                                onSave={updateGuestsLabel}
+                              <Tooltip
+                                frLabel={data.form.fields.guests.label.fr}
+                                enLabel={data.form.fields.guests.label.en}
+                                onSave={updateFormFieldLabel('guests')}
                               >
-                                {guestsLabel}
+                                <span>{data.form.fields.guests.label[langKey]}</span>
                               </Tooltip>
                             </FormLabel>
                             <FormControl>
-                              <Input 
-                                type="number" 
-                                placeholder={
-                                  <Tooltip 
-                                    frLabel={form.fields.guests.placeholder.fr} 
-                                    enLabel={form.fields.guests.placeholder.en} 
-                                    onSave={updateGuestsPlaceholder}
-                                  >
-                                    {guestsPlaceholder}
-                                  </Tooltip>
-                                } 
-                                {...field} 
-                                data-testid="input-guests" 
+                              <Input
+                                type="number"
+                                placeholder={data.form.fields.guests.placeholder[langKey]}
+                                {...field}
+                                data-testid="input-guests"
                               />
                             </FormControl>
                           </FormItem>
@@ -1707,30 +1274,22 @@ const Contact = () => {
                     </div>
 
                     <FormField
-                      control={formInstance.control}
+                      control={form.control}
                       name="message"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>
-                            <Tooltip 
-                              frLabel={form.fields.message.label.fr} 
-                              enLabel={form.fields.message.label.en} 
-                              onSave={updateMessageLabel}
+                            <Tooltip
+                              frLabel={data.form.fields.message.label.fr}
+                              enLabel={data.form.fields.message.label.en}
+                              onSave={updateFormFieldLabel('message')}
                             >
-                              {messageLabel}
+                              <span>{data.form.fields.message.label[langKey]}</span>
                             </Tooltip>
                           </FormLabel>
                           <FormControl>
-                            <Textarea 
-                              placeholder={
-                                <Tooltip 
-                                  frLabel={form.fields.message.placeholder.fr} 
-                                  enLabel={form.fields.message.placeholder.en} 
-                                  onSave={updateMessagePlaceholder}
-                                >
-                                  {messagePlaceholder}
-                                </Tooltip>
-                              }
+                            <Textarea
+                              placeholder={data.form.fields.message.placeholder[langKey]}
                               className="min-h-[120px]"
                               {...field}
                               data-testid="textarea-message"
@@ -1743,12 +1302,8 @@ const Contact = () => {
 
                     <Button type="submit" className="w-full" data-testid="button-submit-contact">
                       <Send className="w-4 h-4 mr-2" />
-                      <Tooltip 
-                        frLabel={form.submitButton.fr} 
-                        enLabel={form.submitButton.en} 
-                        onSave={updateSubmitButton}
-                      >
-                        {submitButtonText}
+                      <Tooltip frLabel={data.form.submitButton.fr} enLabel={data.form.submitButton.en} onSave={updateFormSubmitButton}>
+                        <span>{data.form.submitButton[langKey]}</span>
                       </Tooltip>
                     </Button>
                   </form>
@@ -1760,142 +1315,138 @@ const Contact = () => {
             <div className="space-y-8">
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-xl font-serif text-foreground">
-                    <Tooltip 
-                      frLabel={services.title.fr} 
-                      enLabel={services.title.en} 
-                      onSave={updateServicesTitle}
-                    >
-                      {servicesTitle}
-                    </Tooltip>
-                  </CardTitle>
-                  <p className="text-muted-foreground">
-                    <Tooltip 
-                      frLabel={services.subtitle.fr} 
-                      enLabel={services.subtitle.en} 
-                      onSave={updateServicesSubtitle}
-                    >
-                      {servicesSubtitle}
-                    </Tooltip>
-                  </p>
+                  <Tooltip frLabel={data.services.title.fr} enLabel={data.services.title.en} onSave={updateServicesTitle}>
+                    <CardTitle className="text-xl font-serif text-foreground">{data.services.title[langKey]}</CardTitle>
+                  </Tooltip>
+                  <Tooltip frLabel={data.services.subtitle.fr} enLabel={data.services.subtitle.en} onSave={updateServicesSubtitle}>
+                    <p className="text-muted-foreground">{data.services.subtitle[langKey]}</p>
+                  </Tooltip>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {processedServicesList.map((service, index) => (
-                      <div key={index} className="flex items-start gap-3">
-                        <div className="text-primary flex-shrink-0">
-                          {getServiceIcon(service.icon)}
-                        </div>
-                        <div>
-                          <h4 className="font-semibold text-foreground mb-1">
-                            <Tooltip 
-                              frLabel={services.list[index].title.fr} 
-                              enLabel={services.list[index].title.en} 
-                              onSave={updateServiceTitle(index)}
-                            >
-                              {service.titleText}
+                    {data.services.list.map((service, index) => {
+                      const IconComponent = serviceIcons[service.icon as keyof typeof serviceIcons];
+                      return (
+                        <div key={index} className="flex items-start gap-3">
+                          <div className="text-primary flex-shrink-0">
+                            <IconComponent className="w-8 h-8" />
+                          </div>
+                          <div>
+                            <Tooltip frLabel={service.title.fr} enLabel={service.title.en} onSave={updateServiceTitle(index)}>
+                              <h4 className="font-semibold text-foreground mb-1">{service.title[langKey]}</h4>
                             </Tooltip>
-                          </h4>
-                          <p className="text-sm text-muted-foreground">
-                            <Tooltip 
-                              frLabel={services.list[index].description.fr} 
-                              enLabel={services.list[index].description.en} 
-                              onSave={updateServiceDescription(index)}
-                            >
-                              {service.descriptionText}
+                            <Tooltip frLabel={service.description.fr} enLabel={service.description.en} onSave={updateServiceDescription(index)}>
+                              <p className="text-sm text-muted-foreground">{service.description[langKey]}</p>
                             </Tooltip>
-                          </p>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-xl font-serif text-foreground">
-                    <Tooltip 
-                      frLabel={practicalInfo.title.fr} 
-                      enLabel={practicalInfo.title.en} 
-                      onSave={updatePracticalInfoTitle}
-                    >
-                      {practicalInfoTitle}
-                    </Tooltip>
-                  </CardTitle>
+                  <Tooltip frLabel={data.practicalInfo.title.fr} enLabel={data.practicalInfo.title.en} onSave={updatePracticalInfoTitle}>
+                    <CardTitle className="text-xl font-serif text-foreground">{data.practicalInfo.title[langKey]}</CardTitle>
+                  </Tooltip>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
-                    <h4 className="font-semibold text-foreground mb-2">
-                      <Tooltip 
-                        frLabel={practicalInfo.arrival.title.fr} 
-                        enLabel={practicalInfo.arrival.title.en} 
-                        onSave={updateArrivalTitle}
-                      >
-                        {formatAmpersand(arrivalTitle)}
-                      </Tooltip>
-                    </h4>
-                    <div className="space-y-1 text-sm text-muted-foreground">
-                      {arrivalDetails.map((detail, idx) => (
-                        <p key={idx}>
-                          • <Tooltip 
-                               frLabel={practicalInfo.arrival.details[idx].fr} 
-                               enLabel={practicalInfo.arrival.details[idx].en} 
-                               onSave={updateArrivalDetail(idx)}
-                             >
-                               {detail}
-                             </Tooltip>
-                        </p>
-                      ))}
-                    </div>
+                    <Tooltip frLabel={data.practicalInfo.arrival.title.fr} enLabel={data.practicalInfo.arrival.title.en} onSave={updateArrivalTitle}>
+                      <h4 className="font-semibold text-foreground mb-2">{formatAmpersand(data.practicalInfo.arrival.title[langKey])}</h4>
+                    </Tooltip>
+                    <Tooltip
+                      frLabel={data.practicalInfo.arrival.details.map((d) => d.fr).join('\n')}
+                      enLabel={data.practicalInfo.arrival.details.map((d) => d.en).join('\n')}
+                      onSave={updateArrivalDetails}
+                    >
+                      <div className="space-y-1 text-sm text-muted-foreground">
+                        {data.practicalInfo.arrival.details.map((detail, idx) => (
+                          <p key={idx}>• {detail[langKey]}</p>
+                        ))}
+                      </div>
+                    </Tooltip>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-foreground mb-2">
-                      <Tooltip 
-                        frLabel={practicalInfo.airport.title.fr} 
-                        enLabel={practicalInfo.airport.title.en} 
-                        onSave={updateAirportTitle}
-                      >
-                        {airportTitle}
-                      </Tooltip>
-                    </h4>
-                    <div className="space-y-1 text-sm text-muted-foreground">
-                      {airportDetails.map((detail, idx) => (
-                        <p key={idx}>
-                          • <Tooltip 
-                               frLabel={practicalInfo.airport.details[idx].fr} 
-                               enLabel={practicalInfo.airport.details[idx].en} 
-                               onSave={updateAirportDetail(idx)}
-                             >
-                               {detail}
-                             </Tooltip>
-                        </p>
-                      ))}
-                    </div>
+                    <Tooltip frLabel={data.practicalInfo.airport.title.fr} enLabel={data.practicalInfo.airport.title.en} onSave={updateAirportTitle}>
+                      <h4 className="font-semibold text-foreground mb-2">{data.practicalInfo.airport.title[langKey]}</h4>
+                    </Tooltip>
+                    <Tooltip
+                      frLabel={data.practicalInfo.airport.details.map((d) => d.fr).join('\n')}
+                      enLabel={data.practicalInfo.airport.details.map((d) => d.en).join('\n')}
+                      onSave={updateAirportDetails}
+                    >
+                      <div className="space-y-1 text-sm text-muted-foreground">
+                        {data.practicalInfo.airport.details.map((detail, idx) => (
+                          <p key={idx}>• {detail[langKey]}</p>
+                        ))}
+                      </div>
+                    </Tooltip>
                   </div>
                   <div>
-                    <h4 className="font-semibold text-foreground mb-2">
-                      <Tooltip 
-                        frLabel={practicalInfo.languages.title.fr} 
-                        enLabel={practicalInfo.languages.title.en} 
-                        onSave={updateLanguagesTitle}
+                    <Tooltip frLabel={data.practicalInfo.languages.title.fr} enLabel={data.practicalInfo.languages.title.en} onSave={updateLanguagesTitle}>
+                      <h4 className="font-semibold text-foreground mb-2">{data.practicalInfo.languages.title[langKey]}</h4>
+                    </Tooltip>
+                    <Tooltip
+                      frLabel={data.practicalInfo.languages.list.map((l) => l.fr).join(', ')}
+                      enLabel={data.practicalInfo.languages.list.map((l) => l.en).join(', ')}
+                      onSave={updateLanguagesList}
+                    >
+                      <div className="flex flex-wrap gap-2">
+                        {data.practicalInfo.languages.list.map((langObj, i) => (
+                          <Badge key={i} variant="secondary">
+                            {langObj[langKey]}
+                          </Badge>
+                        ))}
+                      </div>
+                    </Tooltip>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Online Reviews */}
+              <Card>
+                <CardHeader>
+                  <Tooltip frLabel={data.onlineReviews.title.fr} enLabel={data.onlineReviews.title.en} onSave={updateOnlineReviewsTitle}>
+                    <CardTitle className="text-xl font-serif text-foreground">{data.onlineReviews.title[langKey]}</CardTitle>
+                  </Tooltip>
+                  <Tooltip frLabel={data.onlineReviews.subtitle.fr} enLabel={data.onlineReviews.subtitle.en} onSave={updateOnlineReviewsSubtitle}>
+                    <p className="text-muted-foreground">{data.onlineReviews.subtitle[langKey]}</p>
+                  </Tooltip>
+                </CardHeader>
+                <CardContent className="text-center space-y-4">
+                  <Tooltip frLabel={data.onlineReviews.callToAction.fr} enLabel={data.onlineReviews.callToAction.en} onSave={updateOnlineReviewsCallToAction}>
+                    <p className="text-lg font-semibold text-foreground">{data.onlineReviews.callToAction[langKey]}</p>
+                  </Tooltip>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <Button variant="outline" asChild size="lg">
+                      <a href="https://g.page/r/CWQgJ2tAtguBEAE/review" target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        Google
+                      </a>
+                    </Button>
+                    <Button variant="outline" asChild size="lg">
+                      <a
+                        href="https://www.tripadvisor.com/UserReviewEdit-g293809-d300675-Hotel_Carlton_Madagascar-Antananarivo_Antananarivo_Province.html"
+                        target="_blank"
+                        rel="noopener noreferrer"
                       >
-                        {languagesTitle}
-                      </Tooltip>
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {languagesList.map((langItem, idx) => (
-                        <Badge key={idx} variant="secondary">
-                          <Tooltip 
-                            frLabel={practicalInfo.languages.list[idx].fr} 
-                            enLabel={practicalInfo.languages.list[idx].en} 
-                            onSave={updateLanguageItem(idx)}
-                          >
-                            {langItem}
-                          </Tooltip>
-                        </Badge>
-                      ))}
-                    </div>
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        Tripadvisor
+                      </a>
+                    </Button>
+                    <Button variant="outline" asChild size="lg">
+                      <a
+                        href="https://www.tripadvisor.fr/Hotel_Review-g293809-d300675-Reviews-Hotel_Carlton_Madagascar-Antananarivo_Antananarivo_Province.html?m=19905"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        Booking
+                      </a>
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
@@ -1903,74 +1454,68 @@ const Contact = () => {
               {/* Hotel Location Map */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-xl font-serif text-foreground">
-                    <Tooltip 
-                      frLabel={practicalInfo.location.title.fr} 
-                      enLabel={practicalInfo.location.title.en} 
-                      onSave={updateLocationTitle}
-                    >
-                      {locationTitle}
-                    </Tooltip>
-                  </CardTitle>
-                  <p className="text-muted-foreground">
-                    <Tooltip 
-                      frLabel={practicalInfo.location.subtitle.fr} 
-                      enLabel={practicalInfo.location.subtitle.en} 
-                      onSave={updateLocationSubtitle}
-                    >
-                      {locationSubtitle}
-                    </Tooltip>
-                  </p>
+                  <Tooltip frLabel={data.practicalInfo.location.title.fr} enLabel={data.practicalInfo.location.title.en} onSave={updateLocationTitle}>
+                    <CardTitle className="text-xl font-serif text-foreground">{data.practicalInfo.location.title[langKey]}</CardTitle>
+                  </Tooltip>
+                  <Tooltip frLabel={data.practicalInfo.location.subtitle.fr} enLabel={data.practicalInfo.location.subtitle.en} onSave={updateLocationSubtitle}>
+                    <p className="text-muted-foreground">{data.practicalInfo.location.subtitle[langKey]}</p>
+                  </Tooltip>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     <div className="flex items-start gap-3 mb-4">
                       <MapPin className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                       <div>
-                        <p className="font-semibold text-foreground">
-                          <Tooltip 
-                            frLabel={practicalInfo.location.addressTitle.fr} 
-                            enLabel={practicalInfo.location.addressTitle.en} 
-                            onSave={updateLocationAddressTitle}
-                          >
-                            {locationAddressTitle}
-                          </Tooltip>
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                          <Tooltip 
-                            frLabel={practicalInfo.location.address.fr} 
-                            enLabel={practicalInfo.location.address.en} 
-                            onSave={updateLocationAddress}
-                          >
-                            <span dangerouslySetInnerHTML={{ __html: locationAddress }} />
-                          </Tooltip>
-                        </p>
+                        <Tooltip
+                          frLabel={data.practicalInfo.location.addressTitle.fr}
+                          enLabel={data.practicalInfo.location.addressTitle.en}
+                          onSave={updateLocationAddressTitle}
+                        >
+                          <p className="font-semibold text-foreground">{data.practicalInfo.location.addressTitle[langKey]}</p>
+                        </Tooltip>
+                        <Tooltip
+                          frLabel={data.practicalInfo.location.address.fr.replace(/<br\s*\/?>/gi, '\n')}
+                          enLabel={data.practicalInfo.location.address.en.replace(/<br\s*\/?>/gi, '\n')}
+                          onSave={updateLocationAddress}
+                        >
+                          <p
+                            className="text-sm text-muted-foreground"
+                            dangerouslySetInnerHTML={{ __html: data.practicalInfo.location.address[langKey] }}
+                          />
+                        </Tooltip>
                       </div>
                     </div>
-                    
+
                     <div className="w-full h-64 bg-card rounded-lg overflow-hidden border">
                       <iframe
-                        src={practicalInfo.location.mapUrl}
+                        src={data.practicalInfo.location.mapUrl}
                         width="100%"
                         height="256"
                         style={{ border: 0 }}
                         allowFullScreen
                         loading="lazy"
                         referrerPolicy="no-referrer-when-downgrade"
-                        title={locationMapTitle}
+                        title={data.practicalInfo.location.mapTitle[langKey]}
                         data-testid="map-hotel-location"
                       ></iframe>
                     </div>
-                    
+
                     <div className="text-center">
-                      <Button variant="outline" data-testid="button-get-directions">
-                        <Tooltip 
-                          frLabel={practicalInfo.location.directionsButton.fr} 
-                          enLabel={practicalInfo.location.directionsButton.en} 
-                          onSave={updateLocationDirectionsButton}
+                      <Button variant="outline" asChild data-testid="button-get-directions">
+                        <a
+                          href="https://www.google.com/maps/dir/?api=1&destination=Rue%20Pierre%20Stibbe%20Anosy%2C%20Antananarivo%20101%2C%20Madagascar"
+                          target="_blank"
+                          rel="noopener noreferrer"
                         >
-                          {locationDirectionsButton}
-                        </Tooltip>
+                          <MapPin className="w-4 h-4 mr-2" />
+                          <Tooltip
+                            frLabel={data.practicalInfo.location.directionsButton.fr}
+                            enLabel={data.practicalInfo.location.directionsButton.en}
+                            onSave={updateLocationDirectionsButton}
+                          >
+                            <span>{data.practicalInfo.location.directionsButton[langKey]}</span>
+                          </Tooltip>
+                        </a>
                       </Button>
                     </div>
                   </div>
