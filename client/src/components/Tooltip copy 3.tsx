@@ -3,6 +3,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 
+interface Position {
+  x: number;
+  y: number;
+}
+
 interface TooltipProps {
   children: React.ReactNode;
   frLabel: string;
@@ -17,40 +22,66 @@ const Tooltip = ({ children, frLabel, enLabel = '', onSave }: TooltipProps) => {
   }
 
   const [showTooltip, setShowTooltip] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [position, setPosition] = useState<Position | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [inputFr, setInputFr] = useState(frLabel);
   const [inputEn, setInputEn] = useState(enLabel);
   const triggerRef = useRef<HTMLDivElement>(null);
-  const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const HIDE_DELAY = 300; // ms, increased to reduce flicker
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  const showTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const LONG_PRESS_DELAY = 500; // ms
 
-  const handleShow = (e: React.MouseEvent) => {
-    if (hideTimeoutRef.current) {
-      clearTimeout(hideTimeoutRef.current);
-      hideTimeoutRef.current = null;
+  const cancelPendingShow = () => {
+    if (showTimeoutRef.current) {
+      clearTimeout(showTimeoutRef.current);
+      showTimeoutRef.current = null;
     }
-    if (!showTooltip) {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    }
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (e.button !== 0) return; // Only left button for long press
+    cancelPendingShow();
+    const pos: Position = { x: e.clientX, y: e.clientY };
+    showTimeoutRef.current = setTimeout(() => {
+      setPosition(pos);
+      setShowTooltip(true);
+    }, LONG_PRESS_DELAY);
+  };
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    cancelPendingShow();
+  };
+
+  const handleMouseLeave = () => {
+    cancelPendingShow();
+  };
+
+  const handleContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault();
+    cancelPendingShow(); // Cancel any pending long press
+    const pos: Position = { x: e.clientX, y: e.clientY };
+    setPosition(pos);
     setShowTooltip(true);
   };
 
-  const handleHide = () => {
-    hideTimeoutRef.current = setTimeout(() => {
+  const handleDocumentClick = (e: MouseEvent) => {
+    if (
+      showTooltip &&
+      tooltipRef.current &&
+      triggerRef.current &&
+      !tooltipRef.current.contains(e.target as Node) &&
+      !triggerRef.current.contains(e.target as Node)
+    ) {
       setShowTooltip(false);
-    }, HIDE_DELAY);
-  };
-
-  const handleTooltipMouseEnter = () => {
-    if (hideTimeoutRef.current) {
-      clearTimeout(hideTimeoutRef.current);
-      hideTimeoutRef.current = null;
+      setPosition(null);
     }
   };
 
-  const handleTooltipMouseLeave = () => {
-    handleHide();
+  const handleTooltipClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShowTooltip(false);
+    setPosition(null);
+    setShowModal(true);
   };
 
   const handleSave = () => {
@@ -64,18 +95,22 @@ const Tooltip = ({ children, frLabel, enLabel = '', onSave }: TooltipProps) => {
     setShowModal(false);
   };
 
-  const handleTooltipClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setShowTooltip(false);
-    setShowModal(true);
-  };
-
-  // cleanup
+  // Cleanup timeouts
   useEffect(() => {
     return () => {
-      if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+      cancelPendingShow();
     };
   }, []);
+
+  // Document click listener for hiding tooltip
+  useEffect(() => {
+    if (showTooltip) {
+      document.addEventListener('click', handleDocumentClick);
+    }
+    return () => {
+      document.removeEventListener('click', handleDocumentClick);
+    };
+  }, [showTooltip]);
 
   // Contenu du modal directement intégré (sans composant interne)
   const modalContent = showModal ? createPortal(
@@ -155,20 +190,23 @@ const Tooltip = ({ children, frLabel, enLabel = '', onSave }: TooltipProps) => {
       <div
         ref={triggerRef}
         className="relative"
-        onMouseEnter={handleShow}
-        onMouseLeave={handleHide}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
+        onContextMenu={handleContextMenu}
       >
         {children}
 
-        {showTooltip && (
+        {showTooltip && position && (
           <div
-            className="fixed px-2 py-1 bg-black/90 text-white text-xs rounded whitespace-nowrap z-50 shadow-lg cursor-pointer hover:bg-black transition-colors"
+            ref={tooltipRef}
             style={{
-              left: `${mousePos.x + 10}px`,
-              top: `${mousePos.y - 30}px`,
+              position: 'fixed' as const,
+              left: position.x,
+              top: position.y,
+              zIndex: 50,
             }}
-            onMouseEnter={handleTooltipMouseEnter}
-            onMouseLeave={handleTooltipMouseLeave}
+            className="px-2 py-1 bg-black/90 text-white text-xs rounded whitespace-nowrap shadow-lg cursor-pointer hover:bg-black transition-colors"
             onClick={handleTooltipClick}
           >
             Modifier
@@ -195,41 +233,60 @@ const ImageTooltip = ({ children, imageUrl, onSave }: ImageTooltipProps) => {
   }
 
   const [showTooltip, setShowTooltip] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [position, setPosition] = useState<Position | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [mode, setMode] = useState<'upload' | 'url'>('url');
   const [inputUrl, setInputUrl] = useState(imageUrl);
   const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
   const triggerRef = useRef<HTMLElement>(null);
-  const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const HIDE_DELAY = 300; // ms, increased to reduce flicker
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  const showTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const LONG_PRESS_DELAY = 500; // ms
 
-  const handleShow = (e: React.MouseEvent) => {
-    if (hideTimeoutRef.current) {
-      clearTimeout(hideTimeoutRef.current);
-      hideTimeoutRef.current = null;
+  const cancelPendingShow = () => {
+    if (showTimeoutRef.current) {
+      clearTimeout(showTimeoutRef.current);
+      showTimeoutRef.current = null;
     }
-    if (!showTooltip) {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    }
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (e.button !== 0) return; // Only left button for long press
+    cancelPendingShow();
+    const pos: Position = { x: e.clientX, y: e.clientY };
+    showTimeoutRef.current = setTimeout(() => {
+      setPosition(pos);
+      setShowTooltip(true);
+    }, LONG_PRESS_DELAY);
+  };
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    cancelPendingShow();
+  };
+
+  const handleMouseLeave = () => {
+    cancelPendingShow();
+  };
+
+  const handleContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault();
+    cancelPendingShow(); // Cancel any pending long press
+    const pos: Position = { x: e.clientX, y: e.clientY };
+    setPosition(pos);
     setShowTooltip(true);
   };
 
-  const handleHide = () => {
-    hideTimeoutRef.current = setTimeout(() => {
+  const handleDocumentClick = (e: MouseEvent) => {
+    if (
+      showTooltip &&
+      tooltipRef.current &&
+      triggerRef.current &&
+      !tooltipRef.current.contains(e.target as Node) &&
+      !triggerRef.current.contains(e.target as Node)
+    ) {
       setShowTooltip(false);
-    }, HIDE_DELAY);
-  };
-
-  const handleTooltipMouseEnter = () => {
-    if (hideTimeoutRef.current) {
-      clearTimeout(hideTimeoutRef.current);
-      hideTimeoutRef.current = null;
+      setPosition(null);
     }
-  };
-
-  const handleTooltipMouseLeave = () => {
-    handleHide();
   };
 
   const handleTooltipClick = (e: React.MouseEvent) => {
@@ -238,6 +295,7 @@ const ImageTooltip = ({ children, imageUrl, onSave }: ImageTooltipProps) => {
     setInputUrl(imageUrl);
     setMode('url');
     setShowTooltip(false);
+    setPosition(null);
     setShowModal(true);
   };
 
@@ -297,12 +355,22 @@ const ImageTooltip = ({ children, imageUrl, onSave }: ImageTooltipProps) => {
     setShowModal(false);
   };
 
-  // cleanup
+  // Cleanup timeouts
   useEffect(() => {
     return () => {
-      if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+      cancelPendingShow();
     };
   }, []);
+
+  // Document click listener for hiding tooltip
+  useEffect(() => {
+    if (showTooltip) {
+      document.addEventListener('click', handleDocumentClick);
+    }
+    return () => {
+      document.removeEventListener('click', handleDocumentClick);
+    };
+  }, [showTooltip]);
 
   const isSaveDisabled = mode === 'upload' ? !selectedFile : !inputUrl;
 
@@ -409,8 +477,10 @@ const ImageTooltip = ({ children, imageUrl, onSave }: ImageTooltipProps) => {
   const childProps = {
     ...clonedChild.props,
     ref: triggerRef,
-    onMouseEnter: (e: React.MouseEvent) => handleShow(e),
-    onMouseLeave: handleHide,
+    onMouseDown: handleMouseDown,
+    onMouseUp: handleMouseUp,
+    onMouseLeave: handleMouseLeave,
+    onContextMenu: handleContextMenu,
     className: clonedChild.props.className
       ? `${clonedChild.props.className} relative`
       : 'relative',
@@ -420,15 +490,16 @@ const ImageTooltip = ({ children, imageUrl, onSave }: ImageTooltipProps) => {
     <>
       {React.cloneElement(clonedChild, childProps)}
 
-      {showTooltip && (
+      {showTooltip && position && (
         <div
-          className="fixed px-2 py-1 bg-black/90 text-white text-xs rounded whitespace-nowrap z-[100] shadow-lg cursor-pointer hover:bg-black transition-colors"
+          ref={tooltipRef}
           style={{
-            left: `${mousePos.x + 10}px`,
-            top: `${mousePos.y - 30}px`,
+            position: 'fixed' as const,
+            left: position.x,
+            top: position.y,
+            zIndex: 100,
           }}
-          onMouseEnter={handleTooltipMouseEnter}
-          onMouseLeave={handleTooltipMouseLeave}
+          className="px-2 py-1 bg-black/90 text-white text-xs rounded whitespace-nowrap shadow-lg cursor-pointer hover:bg-black transition-colors"
           onClick={handleTooltipClick}
         >
           Modifier image

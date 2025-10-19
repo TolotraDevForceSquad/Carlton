@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Users, Calendar, Clock, MapPin, Star, Utensils, Music, Camera, Heart } from 'lucide-react';
+import { Users, Calendar, Clock, MapPin, Star, Utensils, Music, Camera, Heart, GraduationCap, Theater, Martini, Layout } from 'lucide-react';
 import Footer from '@/components/Footer';
 import eventImage from '@assets/generated_images/Fine_dining_restaurant_1275a5b9.png';
 import { formatAmpersand } from '@/lib/utils/formatAmpersand';
@@ -10,8 +10,43 @@ const Evenements = () => {
   const eventTypes = [
     {
       id: 1,
+      name: "Évènements Corporate",
+      type: "Excellence professionnelle",
+      description: "Organisez vos réunions, ateliers, séminaires, conférences et événements d'entreprise dans nos espaces modulables équipés des dernières technologies. Un service impeccable pour des réunions réussies.",
+      image: eventImage,
+      hours: "Demi-journée à plusieurs jours",
+      capacity: "10 - 500 participants",
+      features: [
+        "Salles modulables",
+        "Sonorisation et vidéoprojecteur",
+        "Connexion Wi-Fi haut débit",
+        "Service de restauration sur mesure"
+      ],
+      services: ["Support technique", "Restauration d'affaires", "Hébergement groupe"]
+    },
+    {
+      id: 2,
+      name: "Réceptions & Galas",
+      type: "Événements d'exception",
+      description: "Pour vos réceptions officielles, cérémonies et galas, nous offrons un cadre prestigieux et un service haut de gamme nécessaires à votre succès.",
+      image: eventImage,
+      hours: "Soirée ou journée complète",
+      capacity: "50 - 500 invités",
+      features: [
+        "Scénographie personnalisée",
+        "Éclairage professionnel",
+        "Sonorisation complète",
+        "Service de sécurité",
+        "Vestiaire et accueil VIP",
+        "Buffets ou dîners assis",
+        "Bar à cocktails premium"
+      ],
+      services: ["Scénographie premium", "Services VIP", "Communication événementielle"]
+    },
+    {
+      id: 3,
       name: "Mariages de Prestige",
-      type: "Célébration d'exception",
+      type: "Votre jour le plus beau",
       description: "Célébrez votre union dans un cadre d'exception avec nos services de mariage sur mesure. Du cocktail de réception au dîner de gala, chaque détail est pensé pour créer des souvenirs inoubliables.",
       image: eventImage,
       hours: "Journée complète ou weekend",
@@ -29,27 +64,7 @@ const Evenements = () => {
       services: ["Planning personnalisé", "Coordination jour J", "Services premium"]
     },
     {
-      id: 2,
-      name: "Événements Corporate",
-      type: "Excellence professionnelle",
-      description: "Organisez vos séminaires, conférences et événements d'entreprise dans nos espaces modulables équipés des dernières technologies. Un service impeccable pour des réunions réussies.",
-      image: eventImage,
-      hours: "Demi-journée à 3 jours",
-      capacity: "10 - 300 participants",
-      features: [
-        "Salles modulables équipées",
-        "Matériel audiovisuel inclus",
-        "Connexion Wi-Fi haut débit",
-        "Service de restauration adapté",
-        "Équipe technique dédiée",
-        "Parking réservé",
-        "Service de conciergerie",
-        "Chambres à tarif préférentiel"
-      ],
-      services: ["Support technique", "Restauration d'affaires", "Hébergement groupe"]
-    },
-    {
-      id: 3,
+      id: 4,
       name: "Anniversaires & Célébrations",
       type: "Moments précieux",
       description: "Anniversaires marquants, jubilés, célébrations familiales... Nous créons des événements intimes ou grandioses selon vos envies, avec une attention particulière aux détails.",
@@ -67,26 +82,6 @@ const Evenements = () => {
         "Souvenirs personnalisés"
       ],
       services: ["Décoration personnalisée", "Animation sur mesure", "Photographie souvenir"]
-    },
-    {
-      id: 4,
-      name: "Lancements & Galas",
-      type: "Événements d'exception",
-      description: "Pour vos lancements de produits, galas de charité ou réceptions officielles, nous offrons le cadre prestigieux et les services haut de gamme nécessaires à votre succès.",
-      image: eventImage,
-      hours: "Soirée ou journée",
-      capacity: "50 - 400 invités",
-      features: [
-        "Scénographie personnalisée",
-        "Éclairage professionnel",
-        "Sonorisation complète",
-        "Service de sécurité",
-        "Vestiaire et accueil VIP",
-        "Buffets ou dîners assis",
-        "Bar à cocktails premium",
-        "Relations presse si demandé"
-      ],
-      services: ["Scénographie premium", "Services VIP", "Communication événementielle"]
     }
   ];
 
@@ -125,95 +120,180 @@ const Evenements = () => {
 
   const venues = [
     {
-      name: "Ravinala",
-      capacity: "150-550 personnes",
-      area: "728m²",
-      features: ["150 classe", "550 théâtre", "160 U", "500 banquet/cocktail", "200 board"]
+      name: "RAVINALA",
+      area: "728 m²",
+      uShape: 150,
+      classroom: 550,
+      theatre: 160,
+      banquet: 500,
+      cocktail: 500,
+      boardroom: 200,
+      features: [
+        "150 U-shape",
+        "550 Classroom",
+        "160 Théâtre",
+        "500 Banquet",
+        "500 Cocktail",
+        "200 Boardroom"
+      ]
     },
     {
-      name: "Ravinala A",
-      capacity: "90-300 personnes", 
-      area: "475m²",
-      features: ["90 classe", "300 théâtre", "110 U", "200 banquet", "300 cocktail", "70 board"]
+      name: "RAVINALA A",
+      area: "475 m²",
+      uShape: 90,
+      classroom: 300,
+      theatre: 110,
+      banquet: 200,
+      cocktail: 300,
+      boardroom: 70,
+      features: [
+        "90 U-shape",
+        "300 Classroom",
+        "110 Théâtre",
+        "200 Banquet",
+        "300 Cocktail",
+        "70 Boardroom"
+      ]
     },
     {
-      name: "Ravinala B",
-      capacity: "50-200 personnes",
-      area: "253m²", 
-      features: ["50 classe", "200 théâtre", "50 U", "100 banquet", "200 cocktail", "50 board"]
+      name: "RAVINALA B",
+      area: "253 m²",
+      uShape: 50,
+      classroom: 200,
+      theatre: 50,
+      banquet: 100,
+      cocktail: 200,
+      boardroom: 50,
+      features: [
+        "50 U-shape",
+        "200 Classroom",
+        "50 Théâtre",
+        "100 Banquet",
+        "200 Cocktail",
+        "50 Boardroom"
+      ]
     },
     {
-      name: "Toit de Tana",
-      capacity: "50-100 personnes",
-      area: "298m²",
-      features: ["50 classe", "100 théâtre", "50 U", "100 banquet/cocktail", "40 board"]
+      name: "ROI",
+      area: "48.5 m²",
+      uShape: 15,
+      classroom: 30,
+      theatre: 15,
+      banquet: 20,
+      cocktail: 30,
+      boardroom: 15,
+      features: [
+        "15 U-shape",
+        "30 Classroom",
+        "15 Théâtre",
+        "20 Banquet",
+        "30 Cocktail",
+        "15 Boardroom"
+      ]
     },
     {
-      name: "La Terrasse",
-      capacity: "150-200 personnes",
-      area: "272m²",
-      features: ["150 théâtre", "200 banquet", "150 cocktail"]
+      name: "REINE",
+      area: "48.5 m²",
+      uShape: 15,
+      classroom: 30,
+      theatre: 15,
+      banquet: 20,
+      cocktail: 30,
+      boardroom: 15,
+      features: [
+        "15 U-shape",
+        "30 Classroom",
+        "15 Théâtre",
+        "20 Banquet",
+        "30 Cocktail",
+        "15 Boardroom"
+      ]
     },
     {
-      name: "Oasis de Tana",
-      capacity: "250-300 personnes",
-      area: "391m²",
-      features: ["250 banquet", "300 cocktail", "Cadre piscine"]
+      name: "EXECUTIVE BOARDROOM",
+      area: "47 m²",
+      uShape: null,
+      classroom: null,
+      theatre: null,
+      banquet: null,
+      cocktail: null,
+      boardroom: 15,
+      features: [
+        "15 Boardroom",
+        "Réunions exécutives",
+        "Équipement AV complet"
+      ]
     },
     {
-      name: "Executive Boardroom",
-      capacity: "15 personnes",
-      area: "47m²",
-      features: ["15 board", "Réunions exec", "Équipement AV"]
+      name: "TOIT DE TANA",
+      area: "298 m²",
+      uShape: 50,
+      classroom: 100,
+      theatre: 50,
+      banquet: 100,
+      cocktail: 100,
+      boardroom: 40,
+      features: [
+        "50 U-shape",
+        "100 Classroom",
+        "50 Théâtre",
+        "100 Banquet",
+        "100 Cocktail",
+        "40 Boardroom"
+      ]
     },
     {
-      name: "Salle Roi",
-      capacity: "15-30 personnes",
-      area: "48.5m²",
-      features: ["15 classe", "30 théâtre", "15 U", "20 banquet", "30 cocktail", "15 board"]
+      name: "LA TERRASSE AILE DROITE",
+      area: "96 m²",
+      uShape: 30,
+      classroom: 50,
+      theatre: 20,
+      banquet: 40,
+      cocktail: 50,
+      boardroom: 30,
+      features: [
+        "30 U-shape",
+        "50 Classroom",
+        "20 Théâtre",
+        "40 Banquet",
+        "50 Cocktail",
+        "30 Boardroom"
+      ]
     },
     {
-      name: "Salle Reine",
-      capacity: "15-30 personnes", 
-      area: "48.5m²",
-      features: ["15 classe", "30 théâtre", "15 U", "20 banquet", "30 cocktail", "15 board"]
+      name: "VALIHA A",
+      area: "39 m²",
+      uShape: null,
+      classroom: null,
+      theatre: null,
+      banquet: null,
+      cocktail: null,
+      boardroom: 20,
+      features: [
+        "20 Boardroom",
+        "Salle de réunion compacte"
+      ]
     },
     {
-      name: "Terrasse Aile Droite",
-      capacity: "30-50 personnes",
-      area: "96m²",
-      features: ["30 classe", "50 théâtre", "20 U", "40 banquet", "50 cocktail", "30 board"]
-    },
-    {
-      name: "Terrasse Aile Gauche", 
-      capacity: "100 personnes",
-      area: "176m²",
-      features: ["100 théâtre", "100 banquet", "100 cocktail"]
-    },
-    {
-      name: "Valiha A",
-      capacity: "20 personnes",
-      area: "39m²",
-      features: ["20 board", "Salle réunion"]
-    },
-    {
-      name: "Valiha B",
-      capacity: "15 personnes",
-      area: "27m²", 
-      features: ["15 board", "Salle réunion"]
-    },
-    {
-      name: "Foyer",
-      capacity: "200 personnes",
-      area: "170m²",
-      features: ["200 cocktail", "Espace accueil"]
+      name: "VALIHA B",
+      area: "27 m²",
+      uShape: null,
+      classroom: null,
+      theatre: null,
+      banquet: null,
+      cocktail: null,
+      boardroom: 15,
+      features: [
+        "15 Boardroom",
+        "Salle de réunion intime"
+      ]
     }
   ];
 
   return (
     <div className="min-h-screen bg-background">
       
-      {/* Hero Section - Style similaire à BienEtreLoisirs */}
+      {/* Hero Section */}
       <section className="pt-20 bg-gradient-to-r from-background to-card/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
@@ -227,19 +307,19 @@ const Evenements = () => {
             </p>
           </div>
 
-          {/* Stats Section - Style épuré */}
+          {/* Stats Section */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 max-w-4xl mx-auto">
             <div className="text-center">
               <div className="text-3xl font-bold text-primary mb-2">
                 <Users className="w-8 h-8 mx-auto mb-2" />
-                400
+                500
               </div>
               <div className="text-sm text-muted-foreground">Invités maximum</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-primary mb-2">
                 <Calendar className="w-8 h-8 mx-auto mb-2" />
-                15
+                10
               </div>
               <div className="text-sm text-muted-foreground">Salles d'événements</div>
             </div>
@@ -261,7 +341,7 @@ const Evenements = () => {
         </div>
       </section>
 
-      {/* Event Types - Structure similaire à BienEtreLoisirs */}
+      {/* Event Types */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -276,10 +356,10 @@ const Evenements = () => {
           <div className="space-y-16">
             {eventTypes.map((event, index) => {
               let sectionId = '';
-              if (event.name === 'Mariages de Prestige') sectionId = 'mariages';
-              else if (event.name === 'Événements Corporate') sectionId = 'corporate';
+              if (event.name === 'Évènements Corporate') sectionId = 'corporate';
+              else if (event.name === 'Réceptions & Galas') sectionId = 'galas';
+              else if (event.name === 'Mariages de Prestige') sectionId = 'mariages';
               else if (event.name === 'Anniversaires & Célébrations') sectionId = 'celebrations';
-              else if (event.name === 'Lancements & Galas') sectionId = 'galas';
               
               return (
                 <Card 
@@ -323,7 +403,7 @@ const Evenements = () => {
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div>
-                            <h4 className="font-semibold text-foreground mb-3">Caractéristiques :</h4>
+                            <h4 className="font-semibold text-foreground mb-3">Équipements & Services :</h4>
                             <div className="space-y-2">
                               {event.features.map((feature, idx) => (
                                 <div key={idx} className="flex items-start gap-2 text-sm text-muted-foreground" data-testid={`feature-${event.id}-${idx}`}>
@@ -398,55 +478,62 @@ const Evenements = () => {
         </div>
       </section>
 
-      {/* Venues Section - Liste complète restaurée */}
+      {/* Venues Section */}
       <section id="salles" className="py-20 bg-gradient-to-b from-background to-card/30 scroll-mt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-serif font-bold text-foreground mb-4">
-              Nos Espaces d'Exception
+              Nos Espaces
             </h2>
             <p className="text-lg text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-              Découvrez nos 15 salles d'événements, conçues pour s'adapter à tous vos besoins. 
-              De l'intimité d'une réunion restreinte à l'ampleur d'un gala de prestige.
+              Découvrez nos espaces modulables, adaptés à tous types d'événements. De la petite réunion à la grande réception.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {venues.map((venue, index) => (
-              <Card key={index} className="hover-elevate transition-all duration-300 group">
-                <CardHeader className="pb-4">
-                  <CardTitle className="text-xl font-serif text-foreground group-hover:text-primary transition-colors">
-                    {venue.name}
-                  </CardTitle>
-                  <div className="flex flex-wrap gap-2 text-sm">
-                    <Badge variant="secondary" className="bg-primary/10 text-primary">
-                      <Users className="w-3 h-3 mr-1" />
-                      {venue.capacity}
-                    </Badge>
-                    <Badge variant="secondary" className="bg-primary/10 text-primary">
-                      <MapPin className="w-3 h-3 mr-1" />
-                      {venue.area}
-                    </Badge>
-                  </div>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <div className="space-y-3">
-                    {venue.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-center gap-3 text-sm text-muted-foreground group-hover:text-foreground transition-colors">
-                        <div className="w-2 h-2 bg-primary/60 rounded-full flex-shrink-0"></div>
-                        <span className="leading-relaxed">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="mt-6 pt-4 border-t border-border/50">
-                    <Button variant="outline" size="sm" className="w-full group-hover:bg-primary group-hover:text-white transition-all">
-                      <Calendar className="w-4 h-4 mr-2" />
-                      Réserver cette salle
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+          {/* Tableau des Espaces */}
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse border border-border/50 bg-card">
+              <thead>
+                <tr className="bg-primary/5">
+                  <th className="border border-border/50 px-4 py-3 text-left font-semibold text-foreground">VENUES</th>
+                  <th className="border border-border/50 px-4 py-3 text-center font-semibold text-foreground">
+                    <MapPin className="w-5 h-5 mx-auto mb-1" title="Surface en m²" />
+                  </th>
+                  <th className="border border-border/50 px-4 py-3 text-center font-semibold text-foreground">
+                    <Layout className="w-5 h-5 mx-auto mb-1" title="U-shape" />
+                  </th>
+                  <th className="border border-border/50 px-4 py-3 text-center font-semibold text-foreground">
+                    <GraduationCap className="w-5 h-5 mx-auto mb-1" title="Classroom" />
+                  </th>
+                  <th className="border border-border/50 px-4 py-3 text-center font-semibold text-foreground">
+                    <Theater className="w-5 h-5 mx-auto mb-1" title="Théâtre" />
+                  </th>
+                  <th className="border border-border/50 px-4 py-3 text-center font-semibold text-foreground">
+                    <Utensils className="w-5 h-5 mx-auto mb-1" title="Banquet" />
+                  </th>
+                  <th className="border border-border/50 px-4 py-3 text-center font-semibold text-foreground">
+                    <Martini className="w-5 h-5 mx-auto mb-1" title="Cocktail" />
+                  </th>
+                  <th className="border border-border/50 px-4 py-3 text-center font-semibold text-foreground">
+                    <Users className="w-5 h-5 mx-auto mb-1" title="Boardroom" />
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {venues.map((venue, index) => (
+                  <tr key={index} className="hover:bg-accent/20 transition-colors">
+                    <td className="border border-border/50 px-4 py-3 font-medium text-foreground">{venue.name}</td>
+                    <td className="border border-border/50 px-4 py-3 text-center text-muted-foreground">{venue.area}</td>
+                    <td className="border border-border/50 px-4 py-3 text-center text-muted-foreground">{venue.uShape ?? '-'}</td>
+                    <td className="border border-border/50 px-4 py-3 text-center text-muted-foreground">{venue.classroom ?? '-'}</td>
+                    <td className="border border-border/50 px-4 py-3 text-center text-muted-foreground">{venue.theatre ?? '-'}</td>
+                    <td className="border border-border/50 px-4 py-3 text-center text-muted-foreground">{venue.banquet ?? '-'}</td>
+                    <td className="border border-border/50 px-4 py-3 text-center text-muted-foreground">{venue.cocktail ?? '-'}</td>
+                    <td className="border border-border/50 px-4 py-3 text-center text-muted-foreground">{venue.boardroom ?? '-'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
 
           <div className="mt-16 text-center">
@@ -459,9 +546,10 @@ const Evenements = () => {
                   Nos équipes peuvent aménager et configurer nos espaces selon vos besoins spécifiques. 
                   Contactez-nous pour discuter de votre projet unique.
                 </p>
-                <Button size="lg" className="shadow-lg">
-                  <Users className="w-5 h-5 mr-2" />
-                  Consulter nos experts
+                <Button size="lg" className="shadow-lg" asChild>
+                  <a href="#contact">
+                    👉 Demander un devis
+                  </a>
                 </Button>
               </CardContent>
             </Card>
@@ -469,7 +557,7 @@ const Evenements = () => {
         </div>
       </section>
 
-      {/* Contact CTA - Style cohérent avec BienEtreLoisirs */}
+      {/* Contact CTA */}
       <section className="py-16 bg-gradient-to-r from-primary/10 to-accent/10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-serif font-bold text-foreground mb-4">

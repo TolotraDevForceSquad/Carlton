@@ -698,11 +698,11 @@ const Chambres = () => {
 
   const getServiceIcon = (icon: string) => {
     switch (icon) {
-      case 'Coffee': return <Coffee className="w-4 h-4" />;
-      case 'Scissors': return <Scissors className="w-4 h-4" />;
-      case 'Briefcase': return <Briefcase className="w-4 h-4" />;
-      case 'Plane': return <Plane className="w-4 h-4" />;
-      default: return <Tv className="w-4 h-4" />;
+      case 'Coffee': return <Coffee className="w-8 h-8" />;
+      case 'Scissors': return <Scissors className="w-8 h-8" />;
+      case 'Briefcase': return <Briefcase className="w-8 h-8" />;
+      case 'Plane': return <Plane className="w-8 h-8" />;
+      default: return <Tv className="w-8 h-8" />;
     }
   };
 

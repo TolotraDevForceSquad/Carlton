@@ -35,8 +35,8 @@ export const decouvrirAntananarivoPageData = {
           en: "Historic Antananarivo train station, witness to the colonial era and starting point to Madagascar's regions."
         },
         distance: {
-          fr: "1,7 km - 10 min du Carlton",
-          en: "1.7 km - 10 min from the Carlton"
+          fr: "1,7 km – 10 min du Carlton",
+          en: "1.7 km – 10 min from the Carlton"
         },
         duration: {
           fr: "30 min",
@@ -68,6 +68,47 @@ export const decouvrirAntananarivoPageData = {
       },
       {
         title: {
+          fr: "Marchés, artisanat & vie locale d’Analakely",
+          en: "Analakely Markets, Crafts & Local Life"
+        },
+        description: {
+          fr: "Quartier animé au cœur de la capitale, célèbre pour ses marchés colorés, artisanat local et l'effervescence de la vie quotidienne malgache.",
+          en: "Lively neighborhood in the heart of the capital, famous for its colorful markets, local crafts, and the buzz of Malagasy daily life."
+        },
+        distance: {
+          fr: "2 km – 10 min du Carlton",
+          en: "2 km – 10 min from the Carlton"
+        },
+        duration: {
+          fr: "1-2 heures",
+          en: "1-2 hours"
+        },
+        category: {
+          fr: "Vie Locale",
+          en: "Local Life"
+        },
+        highlights: [
+          {
+            fr: "Marchés colorés",
+            en: "Colorful markets"
+          },
+          {
+            fr: "Artisanat authentique",
+            en: "Authentic crafts"
+          },
+          {
+            fr: "Vie quotidienne",
+            en: "Daily life"
+          },
+          {
+            fr: "Ambiance unique",
+            en: "Unique atmosphere"
+          }
+        ],
+        icon: "ShoppingBag"
+      },
+      {
+        title: {
           fr: "Musée de la Photographie",
           en: "Photography Museum"
         },
@@ -76,8 +117,8 @@ export const decouvrirAntananarivoPageData = {
           en: "Unique collection tracing Madagascar's history through the lens, the island's visual memory."
         },
         distance: {
-          fr: "2,8 km - 10 min du Carlton",
-          en: "2.8 km - 10 min from the Carlton"
+          fr: "2,8 km – 10 min du Carlton",
+          en: "2.8 km – 10 min from the Carlton"
         },
         duration: {
           fr: "1-2 heures",
@@ -109,41 +150,123 @@ export const decouvrirAntananarivoPageData = {
       },
       {
         title: {
-          fr: "Palais de la Reine « Manjakamiadana »",
-          en: "Queen's Palace 'Manjakamiadana'"
+          fr: "Palais d’Andafiavaratra",
+          en: "Andafiavaratra Palace"
         },
         description: {
-          fr: "Ancien palais royal, symbole de la royauté malgache perché sur la colline avec vue panoramique sur Antananarivo.",
-          en: "Former royal palace, symbol of Malagasy royalty perched on the hill with panoramic views of Antananarivo."
+          fr: "Ancien palais du Premier ministre, joyau architectural mêlant styles malgache et colonial, au cœur du pouvoir historique.",
+          en: "Former Prime Minister's palace, architectural gem blending Malagasy and colonial styles, at the heart of historical power."
         },
         distance: {
-          fr: "3,1 km - 15 min du Carlton",
-          en: "3.1 km - 15 min from the Carlton"
+          fr: "env. 3 km – 12 min du Carlton",
+          en: "approx. 3 km – 12 min from the Carlton"
         },
         duration: {
-          fr: "2-3 heures",
-          en: "2-3 hours"
+          fr: "1 heure",
+          en: "1 hour"
         },
         category: {
-          fr: "Patrimoine Royal",
-          en: "Royal Heritage"
+          fr: "Patrimoine",
+          en: "Heritage"
         },
         highlights: [
           {
-            fr: "Vue panoramique",
-            en: "Panoramic view"
+            fr: "Architecture mixte",
+            en: "Mixed architecture"
           },
           {
-            fr: "Histoire royale",
-            en: "Royal history"
+            fr: "Histoire politique",
+            en: "Political history"
           },
           {
-            fr: "Architecture traditionnelle",
-            en: "Traditional architecture"
+            fr: "Bâtiment officiel",
+            en: "Official building"
           },
           {
-            fr: "Colline sacrée",
-            en: "Sacred hill"
+            fr: "Centre-ville",
+            en: "City center"
+          }
+        ],
+        icon: "Building"
+      },
+      {
+        title: {
+          fr: "Cathédrale de l’Immaculée-Conception (Andohalo)",
+          en: "Immaculate Conception Cathedral (Andohalo)"
+        },
+        description: {
+          fr: "Cathédrale catholique majeure d'Antananarivo, perchée sur la colline d'Andohalo, symbole de la foi et de l'architecture gothique.",
+          en: "Major Catholic cathedral of Antananarivo, perched on Andohalo hill, symbol of faith and Gothic architecture."
+        },
+        distance: {
+          fr: "env. 3 km – 12 min du Carlton",
+          en: "approx. 3 km – 12 min from the Carlton"
+        },
+        duration: {
+          fr: "45 min",
+          en: "45 min"
+        },
+        category: {
+          fr: "Patrimoine Religieux",
+          en: "Religious Heritage"
+        },
+        highlights: [
+          {
+            fr: "Architecture gothique",
+            en: "Gothic architecture"
+          },
+          {
+            fr: "Colline Andohalo",
+            en: "Andohalo hill"
+          },
+          {
+            fr: "Lieu de culte",
+            en: "Place of worship"
+          },
+          {
+            fr: "Vues panoramiques",
+            en: "Panoramic views"
+          }
+        ],
+        icon: "Building"
+      },
+      {
+        title: {
+          fr: "Quartiers historiques : Andohalo, Faravohitra",
+          en: "Historic Districts: Andohalo, Faravohitra"
+        },
+        description: {
+          fr: "Quartiers hauts d'Antananarivo aux ruelles escarpées, églises anciennes et panoramas sur la ville rouge.",
+          en: "Upper districts of Antananarivo with steep alleys, ancient churches, and panoramas over the red city."
+        },
+        distance: {
+          fr: "3 km – 15 min du Carlton",
+          en: "3 km – 15 min from the Carlton"
+        },
+        duration: {
+          fr: "2 heures",
+          en: "2 hours"
+        },
+        category: {
+          fr: "Histoire",
+          en: "History"
+        },
+        highlights: [
+          {
+            fr: "Ruelles pittoresques",
+            en: "Picturesque alleys"
+          },
+          {
+            fr: "Églises anciennes",
+            en: "Ancient churches"
+          },
+          {
+            fr: "Vues sur Tana",
+            en: "Views over Tana"
+          },
+          {
+            fr: "Ambiance historique",
+            en: "Historic atmosphere"
           }
         ],
         icon: "Building"
@@ -158,8 +281,8 @@ export const decouvrirAntananarivoPageData = {
           en: "Zoo and botanical garden showcasing Madagascar's endemic fauna and flora, perfect for families."
         },
         distance: {
-          fr: "3 km - 15 min du Carlton",
-          en: "3 km - 15 min from the Carlton"
+          fr: "3 km – 15 min du Carlton",
+          en: "3 km – 15 min from the Carlton"
         },
         duration: {
           fr: "3-4 heures",
@@ -191,7 +314,48 @@ export const decouvrirAntananarivoPageData = {
       },
       {
         title: {
-          fr: "Galerie d'Art Lisy (Marché Artisanat)",
+          fr: "Palais de la Reine « Manjakamiadana »",
+          en: "Queen's Palace 'Manjakamiadana'"
+        },
+        description: {
+          fr: "Ancien palais royal, symbole de la royauté malgache perché sur la colline avec vue panoramique sur Antananarivo.",
+          en: "Former royal palace, symbol of Malagasy royalty perched on the hill with panoramic views of Antananarivo."
+        },
+        distance: {
+          fr: "3,1 km – 15 min du Carlton",
+          en: "3.1 km – 15 min from the Carlton"
+        },
+        duration: {
+          fr: "2-3 heures",
+          en: "2-3 hours"
+        },
+        category: {
+          fr: "Patrimoine Royal",
+          en: "Royal Heritage"
+        },
+        highlights: [
+          {
+            fr: "Vue panoramique",
+            en: "Panoramic view"
+          },
+          {
+            fr: "Histoire royale",
+            en: "Royal history"
+          },
+          {
+            fr: "Architecture traditionnelle",
+            en: "Traditional architecture"
+          },
+          {
+            fr: "Colline sacrée",
+            en: "Sacred hill"
+          }
+        ],
+        icon: "Building"
+      },
+      {
+        title: {
+          fr: "Galerie d’Art Lisy (Marché Artisanat)",
           en: "Lisy Art Gallery (Crafts Market)"
         },
         description: {
@@ -199,8 +363,8 @@ export const decouvrirAntananarivoPageData = {
           en: "Malagasy crafts market where you can discover sculptures, textiles, jewelry, and authentic souvenirs."
         },
         distance: {
-          fr: "4 km - 15 min du Carlton",
-          en: "4 km - 15 min from the Carlton"
+          fr: "4 km – 15 min du Carlton",
+          en: "4 km – 15 min from the Carlton"
         },
         duration: {
           fr: "1-2 heures",
@@ -240,8 +404,8 @@ export const decouvrirAntananarivoPageData = {
           en: "Urban ornithological reserve housing numerous endemic and migratory bird species."
         },
         distance: {
-          fr: "8 km - 30 min du Carlton",
-          en: "8 km - 30 min from the Carlton"
+          fr: "8 km – 30 min du Carlton",
+          en: "8 km – 30 min from the Carlton"
         },
         duration: {
           fr: "2-3 heures",
@@ -270,311 +434,6 @@ export const decouvrirAntananarivoPageData = {
           }
         ],
         icon: "TreePine"
-      },
-      {
-        title: {
-          fr: "Parc des Lémuriens",
-          en: "Lemurs Park"
-        },
-        description: {
-          fr: "Parc dédié aux lémuriens de Madagascar où observer ces primates emblématiques dans leur environnement naturel.",
-          en: "Park dedicated to Madagascar's lemurs where you can observe these iconic primates in their natural environment."
-        },
-        distance: {
-          fr: "22 km - 1h du Carlton",
-          en: "22 km - 1h from the Carlton"
-        },
-        duration: {
-          fr: "Demi-journée",
-          en: "Half day"
-        },
-        category: {
-          fr: "Faune",
-          en: "Fauna"
-        },
-        highlights: [
-          {
-            fr: "Lémuriens en liberté",
-            en: "Free-roaming lemurs"
-          },
-          {
-            fr: "Faune endémique",
-            en: "Endemic fauna"
-          },
-          {
-            fr: "Observation rapprochée",
-            en: "Close observation"
-          },
-          {
-            fr: "Conservation",
-            en: "Conservation"
-          }
-        ],
-        icon: "TreePine"
-      },
-      {
-        title: {
-          fr: "Croc Farm Ivato",
-          en: "Ivato Croc Farm"
-        },
-        description: {
-          fr: "Ferme aux crocodiles près de l'aéroport, découverte de la faune reptilienne de Madagascar.",
-          en: "Crocodile farm near the airport, discovery of Madagascar's reptilian fauna."
-        },
-        distance: {
-          fr: "23 km - 1h du Carlton",
-          en: "23 km - 1h from the Carlton"
-        },
-        duration: {
-          fr: "2 heures",
-          en: "2 hours"
-        },
-        category: {
-          fr: "Faune",
-          en: "Fauna"
-        },
-        highlights: [
-          {
-            fr: "Crocodiles endémiques",
-            en: "Endemic crocodiles"
-          },
-          {
-            fr: "Éducation nature",
-            en: "Nature education"
-          },
-          {
-            fr: "Proximité aéroport",
-            en: "Airport proximity"
-          },
-          {
-            fr: "Expérience unique",
-            en: "Unique experience"
-          }
-        ],
-        icon: "TreePine"
-      }
-    ]
-  },
-  excursions: {
-    title: {
-      fr: "Excursions & Découvertes",
-      en: "Excursions & Discoveries"
-    },
-    description: {
-      fr: "Partez à la découverte des merveilles naturelles et culturelles de Madagascar. Des sites culturels aux parcs nationaux, vivez des expériences inoubliables.",
-      en: "Set off to discover Madagascar's natural and cultural wonders. From cultural sites to national parks, live unforgettable experiences."
-    },
-    includesLabel: {
-      fr: "Inclus :",
-      en: "Included:"
-    },
-    priceNote: {
-      fr: "Tarifs et réservations à la Conciergerie",
-      en: "Rates and reservations at the Concierge"
-    },
-    image: "/uploads/madagascar_nature_ex_fda9bbfe.jpg",
-    items: [
-      {
-        title: {
-          fr: "Colline Royale « Ambohimanga »",
-          en: "Royal Hill 'Ambohimanga'"
-        },
-        description: {
-          fr: "Ancienne cité royale et lieu sacré des Malgaches, parfait pour une excursion d'une journée.",
-          en: "Ancient royal city and sacred place for Malagasy people, perfect for a day excursion."
-        },
-        distance: {
-          fr: "23 km - 1h",
-          en: "23 km - 1h"
-        },
-        duration: {
-          fr: "Journée complète",
-          en: "Full day"
-        },
-        category: {
-          fr: "Patrimoine",
-          en: "Heritage"
-        },
-        price: {
-          fr: "À partir de 80€",
-          en: "From 80€"
-        },
-        includes: [
-          {
-            fr: "Transport privé",
-            en: "Private transport"
-          },
-          {
-            fr: "Guide francophone",
-            en: "French-speaking guide"
-          },
-          {
-            fr: "Déjeuner",
-            en: "Lunch"
-          },
-          {
-            fr: "Entrées",
-            en: "Entries"
-          }
-        ],
-        icon: "Mountain"
-      },
-      {
-        title: {
-          fr: "Parc National d'Andasibe",
-          en: "Andasibe National Park"
-        },
-        description: {
-          fr: "Parc national célèbre pour ses lémuriens Indri-Indri et sa forêt primaire tropicale.",
-          en: "National park famous for its Indri-Indri lemurs and primary tropical forest."
-        },
-        distance: {
-          fr: "159 km - 3h30",
-          en: "159 km - 3h30"
-        },
-        duration: {
-          fr: "2 jours / 1 nuit",
-          en: "2 days / 1 night"
-        },
-        category: {
-          fr: "Nature & Faune",
-          en: "Nature & Fauna"
-        },
-        price: {
-          fr: "À partir de 220€",
-          en: "From 220€"
-        },
-        includes: [
-          {
-            fr: "Transport 4x4",
-            en: "4x4 transport"
-          },
-          {
-            fr: "Guide spécialisé",
-            en: "Specialized guide"
-          },
-          {
-            fr: "Hébergement",
-            en: "Accommodation"
-          },
-          {
-            fr: "Repas",
-            en: "Meals"
-          }
-        ],
-        icon: "TreePine"
-      },
-      {
-        title: {
-          fr: "Mandraka Parc",
-          en: "Mandraka Park"
-        },
-        description: {
-          fr: "Parc naturel offrant découverte de la faune et flore malgaches dans un cadre préservé.",
-          en: "Natural park offering discovery of Malagasy fauna and flora in a preserved setting."
-        },
-        distance: {
-          fr: "66 km - 2h",
-          en: "66 km - 2h"
-        },
-        duration: {
-          fr: "Journée complète",
-          en: "Full day"
-        },
-        category: {
-          fr: "Nature & Découverte",
-          en: "Nature & Discovery"
-        },
-        price: {
-          fr: "À partir de 120€",
-          en: "From 120€"
-        },
-        includes: [
-          {
-            fr: "Transport confortable",
-            en: "Comfortable transport"
-          },
-          {
-            fr: "Guide nature",
-            en: "Nature guide"
-          },
-          {
-            fr: "Déjeuner",
-            en: "Lunch"
-          },
-          {
-            fr: "Activités",
-            en: "Activities"
-          }
-        ],
-        icon: "TreePine"
-      }
-    ]
-  },
-  restaurants: {
-    title: {
-      fr: "Restaurants Recommandés",
-      en: "Recommended Restaurants"
-    },
-    description: {
-      fr: "Découvrez les meilleures tables d'Antananarivo sélectionnées par nos équipes. De la cuisine française raffinée aux spécialités malgaches, savourez l'authenticité.",
-      en: "Discover Antananarivo's best tables selected by our teams. From refined French cuisine to Malagasy specialties, savor authenticity."
-    },
-    image: "/uploads/madagascar_local_res_99c0381a.jpg",
-    items: [
-      {
-        name: {
-          fr: "La Table de Nicole",
-          en: "La Table de Nicole"
-        },
-        cuisine: {
-          fr: "Gastronomie française",
-          en: "French gastronomy"
-        },
-        distance: {
-          fr: "4 km",
-          en: "4 km"
-        },
-        specialite: {
-          fr: "Cuisine française raffinée",
-          en: "Refined French cuisine"
-        }
-      },
-      {
-        name: {
-          fr: "Restaurant Sakamanga",
-          en: "Sakamanga Restaurant"
-        },
-        cuisine: {
-          fr: "Fusion malgache",
-          en: "Malagasy fusion"
-        },
-        distance: {
-          fr: "5 km", 
-          en: "5 km"
-        },
-        specialite: {
-          fr: "Spécialités locales revisitées",
-          en: "Revisited local specialties"
-        }
-      },
-      {
-        name: {
-          fr: "Villa Vanille",
-          en: "Villa Vanille"
-        },
-        cuisine: {
-          fr: "Internationale",
-          en: "International"
-        },
-        distance: {
-          fr: "6 km",
-          en: "6 km"
-        },
-        specialite: {
-          fr: "Cadre colonial authentique",
-          en: "Authentic colonial setting"
-        }
       }
     ]
   },
@@ -588,8 +447,8 @@ export const decouvrirAntananarivoPageData = {
       en: "Book your stay at Carlton Madagascar and discover the treasures of the capital and the continent island"
     },
     buttonText: {
-      fr: "Réserver votre chambre",
-      en: "Book your room"
+      fr: "Réserver votre séjour",
+      en: "Book your stay"
     }
   },
   categories: {

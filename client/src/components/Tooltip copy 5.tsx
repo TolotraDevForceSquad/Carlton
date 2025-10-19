@@ -23,16 +23,14 @@ const Tooltip = ({ children, frLabel, enLabel = '', onSave }: TooltipProps) => {
   const [inputEn, setInputEn] = useState(enLabel);
   const triggerRef = useRef<HTMLDivElement>(null);
   const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const HIDE_DELAY = 300; // ms, increased to reduce flicker
+  const HIDE_DELAY = 150; // ms
 
   const handleShow = (e: React.MouseEvent) => {
     if (hideTimeoutRef.current) {
       clearTimeout(hideTimeoutRef.current);
       hideTimeoutRef.current = null;
     }
-    if (!showTooltip) {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    }
+    setMousePos({ x: e.clientX, y: e.clientY });
     setShowTooltip(true);
   };
 
@@ -202,16 +200,14 @@ const ImageTooltip = ({ children, imageUrl, onSave }: ImageTooltipProps) => {
   const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
   const triggerRef = useRef<HTMLElement>(null);
   const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const HIDE_DELAY = 300; // ms, increased to reduce flicker
+  const HIDE_DELAY = 150; // ms
 
   const handleShow = (e: React.MouseEvent) => {
     if (hideTimeoutRef.current) {
       clearTimeout(hideTimeoutRef.current);
       hideTimeoutRef.current = null;
     }
-    if (!showTooltip) {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    }
+    setMousePos({ x: e.clientX, y: e.clientY });
     setShowTooltip(true);
   };
 

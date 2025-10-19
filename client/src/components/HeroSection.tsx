@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Tooltip, ImageTooltip } from '@/components/Tooltip';
-import { Play, ChevronLeft, ChevronRight, Pause } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { formatAmpersand } from '@/lib/utils/formatAmpersand';
 import { heroSectionData } from '@/data/heroSectionData';
 import { useLanguage } from './context/LanguageContext';
@@ -30,13 +30,12 @@ const HeroSection = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showArrows, setShowArrows] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
   const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
 
   // Configuration du carousel
-  const AUTO_PLAY_INTERVAL = 1000; // 5 secondes entre chaque slide
+  const AUTO_PLAY_INTERVAL = 5000; // 5 secondes entre chaque slide
   const TRANSITION_DURATION = 700; // Durée de la transition en ms
 
   // Helper to split heroSectionData into dataFr and dataEn structures
@@ -171,9 +170,12 @@ const HeroSection = () => {
 
   // Auto-play functionality for carousel
   useEffect(() => {
-    if (isPaused || loading) return;
+    if (loading) return;
 
     const startAutoPlay = () => {
+      if (autoPlayRef.current) {
+        clearInterval(autoPlayRef.current);
+      }
       autoPlayRef.current = setInterval(() => {
         handleNextSlide();
       }, AUTO_PLAY_INTERVAL);
@@ -186,17 +188,15 @@ const HeroSection = () => {
         clearInterval(autoPlayRef.current);
       }
     };
-  }, [data.slides.length, isPaused, loading]);
+  }, [data.slides.length, loading]);
 
-  // Mouse detection for arrow visibility and pause functionality
+  // Mouse detection for arrow visibility
   useEffect(() => {
     const handleMouseEnter = () => {
-      setIsPaused(true);
       setShowArrows(true);
     };
 
     const handleMouseLeave = () => {
-      setIsPaused(false);
       setShowArrows(false);
     };
 
@@ -274,6 +274,12 @@ const HeroSection = () => {
 
     setTimeout(() => {
       setIsTransitioning(false);
+      // Restart auto-play after transition
+      if (data.slides.length > 1) {
+        autoPlayRef.current = setInterval(() => {
+          handleNextSlide();
+        }, AUTO_PLAY_INTERVAL);
+      }
     }, TRANSITION_DURATION);
   };
 
@@ -290,6 +296,12 @@ const HeroSection = () => {
 
     setTimeout(() => {
       setIsTransitioning(false);
+      // Restart auto-play after transition
+      if (data.slides.length > 1) {
+        autoPlayRef.current = setInterval(() => {
+          handleNextSlide();
+        }, AUTO_PLAY_INTERVAL);
+      }
     }, TRANSITION_DURATION);
   };
 
@@ -306,6 +318,12 @@ const HeroSection = () => {
 
     setTimeout(() => {
       setIsTransitioning(false);
+      // Restart auto-play after transition
+      if (data.slides.length > 1) {
+        autoPlayRef.current = setInterval(() => {
+          handleNextSlide();
+        }, AUTO_PLAY_INTERVAL);
+      }
     }, TRANSITION_DURATION);
   };
 
@@ -550,23 +568,6 @@ const HeroSection = () => {
               data-testid={`button-slide-${index}`}
             />
           ))}
-        </div>
-
-        {/* Auto-play Control */}
-        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex items-center space-x-2 z-30">
-          <div className="text-xs text-white/70">
-            {isPaused ? 'Pause' : 'Lecture auto'}
-          </div>
-          <button
-            className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white/30 transition-colors"
-            onClick={() => setIsPaused(!isPaused)}
-          >
-            {isPaused ? (
-              <Play className="w-4 h-4 text-white" />
-            ) : (
-              <Pause className="w-4 h-4 text-white" />
-            )}
-          </button>
         </div>
 
         {/* Scroll Indicator */}

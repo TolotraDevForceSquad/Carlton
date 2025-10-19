@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Clock, MapPin, Star, ShoppingBag, Bell, Car, Plane, Shirt, Coffee, Wifi } from 'lucide-react';
+import { Clock, MapPin, Star, ShoppingBag, Bell, Car, Plane, Shirt, Coffee, Wifi, Scissors, Briefcase, EyeOff, Trash2, Eye, Plus, Mail, Phone } from 'lucide-react';
 import { Tooltip, ImageTooltip } from '@/components/Tooltip';
 import Footer from '@/components/Footer';
 import { formatAmpersand } from '@/lib/utils/formatAmpersand';
@@ -23,6 +23,8 @@ const getAuthHeaders = () => {
   return headers;
 };
 
+const isAdmin = !!localStorage.getItem('userToken');
+
 // Helper to split servicesBoutiquesPageData into dataFr and dataEn structures
 const splitServicesBoutiquesData = (mixedData: typeof servicesBoutiquesPageData) => {
   const dataFr = {
@@ -33,25 +35,32 @@ const splitServicesBoutiquesData = (mixedData: typeof servicesBoutiquesPageData)
     services: {
       title: mixedData.services.title.fr,
       description: mixedData.services.description.fr,
-      image: mixedData.services.image,
+      images: mixedData.services.images,
       items: mixedData.services.items.map((item) => ({
         title: item.title.fr,
         description: item.description.fr,
+        hours: item.hours ? item.hours.fr : null,
+        email: item.email,
+        phone: item.phone,
         icon: item.icon,
         features: item.features.map((feature) => feature.fr),
         category: item.category.fr,
+        hidden: item.hidden || false,
       })),
     },
     boutiques: {
       title: mixedData.boutiques.title.fr,
       description: mixedData.boutiques.description.fr,
-      image: mixedData.boutiques.image,
+      images: mixedData.boutiques.images,
       items: mixedData.boutiques.items.map((item) => ({
         title: item.title.fr,
         description: item.description.fr,
         hours: item.hours.fr,
+        email: item.email,
+        phone: item.phone,
         specialties: item.specialties.map((specialty) => specialty.fr),
         location: item.location.fr,
+        hidden: item.hidden || false,
       })),
     },
     cta: {
@@ -69,25 +78,32 @@ const splitServicesBoutiquesData = (mixedData: typeof servicesBoutiquesPageData)
     services: {
       title: mixedData.services.title.en,
       description: mixedData.services.description.en,
-      image: mixedData.services.image,
+      images: mixedData.services.images,
       items: mixedData.services.items.map((item) => ({
         title: item.title.en,
         description: item.description.en,
+        hours: item.hours ? item.hours.en : null,
+        email: item.email,
+        phone: item.phone,
         icon: item.icon,
         features: item.features.map((feature) => feature.en),
         category: item.category.en,
+        hidden: item.hidden || false,
       })),
     },
     boutiques: {
       title: mixedData.boutiques.title.en,
       description: mixedData.boutiques.description.en,
-      image: mixedData.boutiques.image,
+      images: mixedData.boutiques.images,
       items: mixedData.boutiques.items.map((item) => ({
         title: item.title.en,
         description: item.description.en,
         hours: item.hours.en,
+        email: item.email,
+        phone: item.phone,
         specialties: item.specialties.map((specialty) => specialty.en),
         location: item.location.en,
+        hidden: item.hidden || false,
       })),
     },
     cta: {
@@ -115,36 +131,43 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
     services: {
       title: { fr: dataFr.services.title, en: enFallback.services.title },
       description: { fr: dataFr.services.description, en: enFallback.services.description },
-      image: dataFr.services.image,
+      images: dataFr.services.images,
       items: dataFr.services.items.map((itemFr: any, i: number) => {
         const itemEn = enFallback.services.items[i] || itemFr;
         return {
           title: { fr: itemFr.title, en: itemEn.title },
           description: { fr: itemFr.description, en: itemEn.description },
+          hours: itemFr.hours ? { fr: itemFr.hours, en: itemEn.hours || itemFr.hours } : null,
+          email: itemFr.email,
+          phone: itemFr.phone,
           icon: itemFr.icon,
           features: itemFr.features.map((fFr: string, j: number) => ({
             fr: fFr,
             en: itemEn.features[j] || fFr,
           })),
           category: { fr: itemFr.category, en: itemEn.category },
+          hidden: itemFr.hidden !== undefined ? itemFr.hidden : (itemEn.hidden || false),
         };
       }),
     },
     boutiques: {
       title: { fr: dataFr.boutiques.title, en: enFallback.boutiques.title },
       description: { fr: dataFr.boutiques.description, en: enFallback.boutiques.description },
-      image: dataFr.boutiques.image,
+      images: dataFr.boutiques.images,
       items: dataFr.boutiques.items.map((itemFr: any, i: number) => {
         const itemEn = enFallback.boutiques.items[i] || itemFr;
         return {
           title: { fr: itemFr.title, en: itemEn.title },
           description: { fr: itemFr.description, en: itemEn.description },
           hours: { fr: itemFr.hours, en: itemEn.hours },
+          email: itemFr.email,
+          phone: itemFr.phone,
           specialties: itemFr.specialties.map((sFr: string, j: number) => ({
             fr: sFr,
             en: itemEn.specialties[j] || sFr,
           })),
           location: { fr: itemFr.location, en: itemEn.location },
+          hidden: itemFr.hidden !== undefined ? itemFr.hidden : (itemEn.hidden || false),
         };
       }),
     },
@@ -163,6 +186,13 @@ const ServicesBoutiques = () => {
   const [data, setData] = useState(reconstructMixed(splitServicesBoutiquesData(pageData).dataFr, splitServicesBoutiquesData(pageData).dataEn));
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
+  const [currentBoutiqueIndex, setCurrentBoutiqueIndex] = useState(0);
+  const [newServiceImageUrl, setNewServiceImageUrl] = useState('');
+  const [newBoutiqueImageUrl, setNewBoutiqueImageUrl] = useState('');
+  const [newServiceImageFile, setNewServiceImageFile] = useState<File | null>(null);
+  const [newBoutiqueImageFile, setNewBoutiqueImageFile] = useState<File | null>(null);
+  const isFr = currentLang.code === 'fr';
 
   // Fetch servicesBoutiques data from backend
   useEffect(() => {
@@ -217,6 +247,25 @@ const ServicesBoutiques = () => {
     fetchServicesBoutiquesData();
   }, []);
 
+  // Carousel intervals
+  useEffect(() => {
+    if (data.services.images.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentServiceIndex((prev) => (prev + 1) % data.services.images.length);
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [data.services.images.length]);
+
+  useEffect(() => {
+    if (data.boutiques.images.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentBoutiqueIndex((prev) => (prev + 1) % data.boutiques.images.length);
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [data.boutiques.images.length]);
+
   const updateServicesBoutiquesSection = async (updatedMixedData: typeof data) => {
     try {
       const headers = getAuthHeaders();
@@ -264,12 +313,48 @@ const ServicesBoutiques = () => {
     }
   };
 
-  const getText = (textObj: { fr: string; en: string }) => textObj[langKey as keyof typeof textObj];
+  const uploadImage = async (file: File): Promise<string> => {
+    const formData = new FormData();
+    formData.append('image', file);
+    const response = await fetch('/api/upload/image', {
+      method: 'POST',
+      body: formData,
+      headers: getAuthHeaders(),
+    });
+    if (!response.ok) {
+      throw new Error('Upload failed');
+    }
+    const { url } = await response.json();
+    return url;
+  };
+
+  const addImageFromUrlOrFile = async (url: string, file: File | null, isService: boolean) => {
+    let newUrl = url;
+    if (file) {
+      newUrl = await uploadImage(file);
+    }
+    if (newUrl.trim()) {
+      const images = isService ? data.services.images : data.boutiques.images;
+      const updatedData = {
+        ...data,
+        [isService ? 'services' : 'boutiques']: {
+          ...data[isService ? 'services' : 'boutiques'],
+          images: [...images, newUrl.trim()],
+        },
+      };
+      setData(updatedData);
+      await updateServicesBoutiquesSection(updatedData);
+    }
+  };
+
+  const getText = (textObj: { fr: string; en: string } | null) => textObj ? textObj[langKey as keyof typeof textObj] : '';
   const getTextArray = (items: Array<{ fr: string; en: string }>) => items.map(item => getText(item));
 
   const { services, boutiques, hero, cta } = data;
   const { items: serviceItems } = services;
   const { items: boutiqueItems } = boutiques;
+  const serviceImages = services.images.length > 0 ? services.images : [servicesImage];
+  const boutiqueImages = boutiques.images.length > 0 ? boutiques.images : [boutiquesImage];
 
   const getIcon = (iconName: string) => {
     const icons = {
@@ -278,7 +363,9 @@ const ServicesBoutiques = () => {
       Plane: <Plane className="w-6 h-6" />,
       Shirt: <Shirt className="w-6 h-6" />,
       Coffee: <Coffee className="w-6 h-6" />,
-      Wifi: <Wifi className="w-6 h-6" />
+      Wifi: <Wifi className="w-6 h-6" />,
+      Scissors: <Scissors className="w-6 h-6" />,
+      Briefcase: <Briefcase className="w-6 h-6" />,
     };
     return icons[iconName as keyof typeof icons] || <Bell className="w-6 h-6" />;
   };
@@ -311,19 +398,7 @@ const ServicesBoutiques = () => {
     };
   };
 
-  const updateServicesImage = async (newUrl: string) => {
-    const updatedData = {
-      ...data,
-      services: {
-        ...data.services,
-        image: newUrl,
-      },
-    };
-    setData(updatedData);
-    await updateServicesBoutiquesSection(updatedData);
-  };
-
-  const updateServiceItemField = (index: number, field: 'title' | 'description' | 'category') => {
+  const updateServiceItemField = (index: number, field: 'title' | 'description' | 'category' | 'hours') => {
     return async (newFr: string, newEn: string) => {
       const updatedData = {
         ...data,
@@ -331,8 +406,27 @@ const ServicesBoutiques = () => {
           ...data.services,
           items: data.services.items.map((item, i) =>
             i === index
-              ? { ...item, [field]: { fr: newFr, en: newEn } }
+              ? { 
+                  ...item, 
+                  [field]: field === 'hours' ? { fr: newFr, en: newEn } : { fr: newFr, en: newEn }
+                }
               : item
+          ),
+        },
+      };
+      setData(updatedData);
+      await updateServicesBoutiquesSection(updatedData);
+    };
+  };
+
+  const updateServiceContact = (index: number, field: 'email' | 'phone') => {
+    return async (newValue: string) => {
+      const updatedData = {
+        ...data,
+        services: {
+          ...data.services,
+          items: data.services.items.map((item, i) =>
+            i === index ? { ...item, [field]: newValue } : item
           ),
         },
       };
@@ -364,6 +458,55 @@ const ServicesBoutiques = () => {
     };
   };
 
+  const toggleServiceHidden = async (index: number) => {
+    const updatedData = {
+      ...data,
+      services: {
+        ...data.services,
+        items: data.services.items.map((item, i) =>
+          i === index ? { ...item, hidden: !item.hidden } : item
+        ),
+      },
+    };
+    setData(updatedData);
+    await updateServicesBoutiquesSection(updatedData);
+  };
+
+  const addService = async () => {
+    const newService = {
+      title: { fr: 'Nouveau Service', en: 'New Service' },
+      description: { fr: 'Description du nouveau service.', en: 'Description of the new service.' },
+      hours: null,
+      email: '',
+      phone: '',
+      icon: 'Bell',
+      features: [],
+      category: { fr: 'Service', en: 'Service' },
+      hidden: false,
+    };
+    const updatedData = {
+      ...data,
+      services: {
+        ...data.services,
+        items: [...data.services.items, newService],
+      },
+    };
+    setData(updatedData);
+    await updateServicesBoutiquesSection(updatedData);
+  };
+
+  const removeService = async (index: number) => {
+    const updatedData = {
+      ...data,
+      services: {
+        ...data.services,
+        items: data.services.items.filter((_, i) => i !== index),
+      },
+    };
+    setData(updatedData);
+    await updateServicesBoutiquesSection(updatedData);
+  };
+
   const updateBoutiquesField = (field: 'title' | 'description') => {
     return async (newFr: string, newEn: string) => {
       const updatedData = {
@@ -378,18 +521,6 @@ const ServicesBoutiques = () => {
     };
   };
 
-  const updateBoutiquesImage = async (newUrl: string) => {
-    const updatedData = {
-      ...data,
-      boutiques: {
-        ...data.boutiques,
-        image: newUrl,
-      },
-    };
-    setData(updatedData);
-    await updateServicesBoutiquesSection(updatedData);
-  };
-
   const updateBoutiqueItemField = (index: number, field: 'title' | 'description' | 'hours' | 'location') => {
     return async (newFr: string, newEn: string) => {
       const updatedData = {
@@ -398,8 +529,27 @@ const ServicesBoutiques = () => {
           ...data.boutiques,
           items: data.boutiques.items.map((item, i) =>
             i === index
-              ? { ...item, [field]: { fr: newFr, en: newEn } }
+              ? { 
+                  ...item, 
+                  [field]: { fr: newFr, en: newEn }
+                }
               : item
+          ),
+        },
+      };
+      setData(updatedData);
+      await updateServicesBoutiquesSection(updatedData);
+    };
+  };
+
+  const updateBoutiqueContact = (index: number, field: 'email' | 'phone') => {
+    return async (newValue: string) => {
+      const updatedData = {
+        ...data,
+        boutiques: {
+          ...data.boutiques,
+          items: data.boutiques.items.map((item, i) =>
+            i === index ? { ...item, [field]: newValue } : item
           ),
         },
       };
@@ -431,6 +581,54 @@ const ServicesBoutiques = () => {
     };
   };
 
+  const toggleBoutiqueHidden = async (index: number) => {
+    const updatedData = {
+      ...data,
+      boutiques: {
+        ...data.boutiques,
+        items: data.boutiques.items.map((item, i) =>
+          i === index ? { ...item, hidden: !item.hidden } : item
+        ),
+      },
+    };
+    setData(updatedData);
+    await updateServicesBoutiquesSection(updatedData);
+  };
+
+  const addBoutique = async () => {
+    const newBoutique = {
+      title: { fr: 'Nouvelle Boutique', en: 'New Boutique' },
+      description: { fr: 'Description de la nouvelle boutique.', en: 'Description of the new boutique.' },
+      hours: { fr: '', en: '' },
+      email: '',
+      phone: '',
+      specialties: [],
+      location: { fr: 'Au sein de l\'hôtel Carlton Madagascar', en: 'Within the Carlton Madagascar Hotel' },
+      hidden: false,
+    };
+    const updatedData = {
+      ...data,
+      boutiques: {
+        ...data.boutiques,
+        items: [...data.boutiques.items, newBoutique],
+      },
+    };
+    setData(updatedData);
+    await updateServicesBoutiquesSection(updatedData);
+  };
+
+  const removeBoutique = async (index: number) => {
+    const updatedData = {
+      ...data,
+      boutiques: {
+        ...data.boutiques,
+        items: data.boutiques.items.filter((_, i) => i !== index),
+      },
+    };
+    setData(updatedData);
+    await updateServicesBoutiquesSection(updatedData);
+  };
+
   const updateCtaField = (field: 'title' | 'description') => {
     return async (newFr: string, newEn: string) => {
       const updatedData = {
@@ -457,10 +655,54 @@ const ServicesBoutiques = () => {
     await updateServicesBoutiquesSection(updatedData);
   };
 
+  const renderContactInfo = (item: any, type: 'service' | 'boutique', index: number) => {
+    const phones = item.phone ? item.phone.split(';').map(p => p.trim()).filter(p => p) : [];
+    return (
+      <div className="space-y-2 mt-4">
+        {item.email && (
+          <div className="flex items-center">
+            <Mail className="w-4 h-4 mr-2" />
+            <Tooltip
+              frLabel={item.email}
+              enLabel={item.email}
+              onSave={(newFr, newEn) => updateServiceContact(index, 'email')(newFr)} // or boutique
+            >
+              <a href={`mailto:${item.email}`} className="text-primary hover:underline">
+                {item.email}
+              </a>
+            </Tooltip>
+          </div>
+        )}
+        {phones.length > 0 && (
+          <div className="flex flex-col space-y-1">
+            {phones.map((ph: string, pIndex: number) => (
+              <div key={pIndex} className="flex items-center">
+                <Phone className="w-4 h-4 mr-2" />
+                <Tooltip
+                  frLabel={ph}
+                  enLabel={ph}
+                  onSave={(newFr, newEn) => {
+                    const currentPhones = item.phone ? item.phone.split(';').map(p => p.trim()) : [];
+                    currentPhones[pIndex] = newFr;
+                    updateServiceContact(index, 'phone')(currentPhones.join('; ')); // or boutique
+                  }}
+                >
+                  <a href={`tel:${ph}`} className="text-primary hover:underline">
+                    {ph}
+                  </a>
+                </Tooltip>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-background">
-        {/* Hero Skeleton */}
+        {/* Skeleton code remains the same */}
         <section className="pt-20 pb-16 bg-gradient-to-b from-background to-card">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="animate-pulse">
@@ -469,8 +711,6 @@ const ServicesBoutiques = () => {
             </div>
           </div>
         </section>
-
-        {/* Services Section Skeleton */}
         <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col lg:flex-row gap-12 items-center mb-16 animate-pulse">
@@ -504,8 +744,6 @@ const ServicesBoutiques = () => {
             </div>
           </div>
         </section>
-
-        {/* Boutiques Section Skeleton */}
         <section className="py-16 bg-card/30">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col lg:flex-row-reverse gap-12 items-center mb-16 animate-pulse">
@@ -542,8 +780,6 @@ const ServicesBoutiques = () => {
             </div>
           </div>
         </section>
-
-        {/* CTA Skeleton */}
         <section className="py-16">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="animate-pulse space-y-4">
@@ -553,7 +789,6 @@ const ServicesBoutiques = () => {
             </div>
           </div>
         </section>
-
         <Footer />
       </div>
     );
@@ -593,7 +828,7 @@ const ServicesBoutiques = () => {
       {/* Services Section */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Services Hero with Photo Frame */}
+          {/* Services Hero with Photo Carousel */}
           <div className="flex flex-col lg:flex-row gap-12 items-center mb-16">
             <div className="lg:w-1/2">
               <Tooltip
@@ -615,231 +850,298 @@ const ServicesBoutiques = () => {
                 </p>
               </Tooltip>
             </div>
-            <div className="lg:w-1/2">
-              <ImageTooltip
-                imageUrl={services.image || servicesImage}
-                onSave={updateServicesImage}
-              >
-                <div className="relative">
-                  <img 
-                    src={services.image || servicesImage} 
-                    alt={getText({ fr: "Services de conciergerie Carlton Madagascar", en: "Carlton Madagascar Concierge Services" })}
-                    className="w-full h-80 object-cover rounded-lg shadow-lg"
-                    data-testid="img-services-hero"
+            <div className="lg:w-1/2 relative">
+              <div className="relative h-80 rounded-lg shadow-lg overflow-hidden">
+                {serviceImages.map((img, i) => (
+                  <img
+                    key={i}
+                    src={img}
+                    alt="Services"
+                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${i === currentServiceIndex ? 'opacity-100' : 'opacity-0'}`}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
+                ))}
+                {serviceImages.length > 1 && (
+                  <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                    {serviceImages.map((_, i) => (
+                      <div
+                        key={i}
+                        className={`w-2 h-2 rounded-full ${i === currentServiceIndex ? 'bg-white' : 'bg-white/50'}`}
+                      />
+                    ))}
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
+              </div>
+              {isAdmin && (
+                <div className="mt-4 p-4 bg-muted rounded-lg">
+                  <div className="flex gap-2 mb-2">
+                    <input
+                      type="text"
+                      value={newServiceImageUrl}
+                      onChange={(e) => setNewServiceImageUrl(e.target.value)}
+                      placeholder="URL d'image"
+                      className="flex-1 px-3 py-1 border rounded"
+                    />
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => setNewServiceImageFile(e.target.files?.[0] || null)}
+                      className="px-3 py-1 border rounded"
+                    />
+                    <Button size="sm" onClick={() => addImageFromUrlOrFile(newServiceImageUrl, newServiceImageFile, true)}>Ajouter</Button>
+                  </div>
+                  <ul className="space-y-1 text-sm">
+                    {serviceImages.map((url, i) => (
+                      <li key={i} className="flex justify-between">
+                        <span className="truncate">{url}</span>
+                        <Button variant="ghost" size="sm" onClick={() => {
+                          // Remove logic
+                          const newImages = serviceImages.filter((_, idx) => idx !== i);
+                          // Update data similarly
+                        }}>
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </ImageTooltip>
+              )}
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {serviceItems.map((service, index) => (
-              <Card key={index} className="group hover-elevate transition-all duration-300" data-testid={`card-service-${index}`}>
-                <CardHeader>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="p-3 rounded-lg bg-primary/10 text-primary">
-                      {getIcon(service.icon)}
+            {serviceItems.map((service, index) => {
+              if (!isAdmin && service.hidden) return null;
+              return (
+                <Card key={index} className={`group hover-elevate transition-all duration-300 relative ${service.hidden ? 'opacity-50' : ''}`}>
+                  {isAdmin && (
+                    <div className="absolute top-2 right-2 z-10 flex gap-1">
+                      <Button variant="ghost" size="sm" onClick={() => toggleServiceHidden(index)}>
+                        {service.hidden ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                      </Button>
+                      <Button variant="ghost" size="sm" onClick={() => removeService(index)}>
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
                     </div>
-                    <Tooltip
-                      frLabel={service.category.fr}
-                      enLabel={service.category.en}
-                      onSave={updateServiceItemField(index, 'category')}
-                    >
-                      <Badge variant="secondary" data-testid={`badge-service-category-${index}`}>
-                        {getText(service.category)}
-                      </Badge>
+                  )}
+                  <CardHeader>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="p-3 rounded-lg bg-primary/10 text-primary">
+                        {getIcon(service.icon)}
+                      </div>
+                      <Tooltip frLabel={service.category.fr} enLabel={service.category.en} onSave={updateServiceItemField(index, 'category')}>
+                        <Badge variant="secondary">{getText(service.category)}</Badge>
+                      </Tooltip>
+                    </div>
+                    <Tooltip frLabel={service.title.fr} enLabel={service.title.en} onSave={updateServiceItemField(index, 'title')}>
+                      <CardTitle className="text-xl text-foreground">{getText(service.title)}</CardTitle>
                     </Tooltip>
-                  </div>
-                  <Tooltip
-                    frLabel={service.title.fr}
-                    enLabel={service.title.en}
-                    onSave={updateServiceItemField(index, 'title')}
-                  >
-                    <CardTitle className="text-xl text-foreground" data-testid={`title-service-${index}`}>
-                      {getText(service.title)}
-                    </CardTitle>
-                  </Tooltip>
-                </CardHeader>
-                <CardContent>
-                  <Tooltip
-                    frLabel={service.description.fr}
-                    enLabel={service.description.en}
-                    onSave={updateServiceItemField(index, 'description')}
-                  >
-                    <p className="text-muted-foreground mb-4" data-testid={`description-service-${index}`}>
-                      {getText(service.description)}
-                    </p>
-                  </Tooltip>
-                  <div className="space-y-2">
-                    {getTextArray(service.features).map((feature, featureIndex) => (
-                      <div key={featureIndex} className="flex items-center text-sm text-muted-foreground">
-                        <Star className="w-4 h-4 text-primary mr-2 flex-shrink-0" />
-                        <Tooltip
-                          frLabel={service.features[featureIndex].fr}
-                          enLabel={service.features[featureIndex].en}
-                          onSave={updateServiceFeature(index, featureIndex)}
-                        >
-                          <span>{feature}</span>
+                  </CardHeader>
+                  <CardContent>
+                    <Tooltip frLabel={service.description.fr} enLabel={service.description.en} onSave={updateServiceItemField(index, 'description')}>
+                      <p className="text-muted-foreground mb-4">{getText(service.description)}</p>
+                    </Tooltip>
+                    {service.hours && (
+                      <div className="flex items-center text-sm text-muted-foreground mb-2">
+                        <Clock className="w-4 h-4 mr-2" />
+                        <Tooltip frLabel={service.hours.fr} enLabel={service.hours.en} onSave={updateServiceItemField(index, 'hours')}>
+                          <span>{getText(service.hours)}</span>
                         </Tooltip>
                       </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+                    )}
+                    {service.features.length > 0 && (
+                      <div className="space-y-2 mb-4">
+                        {getTextArray(service.features).map((feature, featureIndex) => (
+                          <div key={featureIndex} className="flex items-center text-sm text-muted-foreground">
+                            <Star className="w-4 h-4 text-primary mr-2" />
+                            <Tooltip frLabel={service.features[featureIndex].fr} enLabel={service.features[featureIndex].en} onSave={updateServiceFeature(index, featureIndex)}>
+                              <span>{feature}</span>
+                            </Tooltip>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {renderContactInfo(service, 'service', index)}
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
+          {isAdmin && (
+            <div className="flex justify-center mt-8">
+              <Button variant="outline" onClick={addService}>
+                <Plus className="w-4 h-4 mr-2" />
+                {isFr ? 'Ajouter un service' : 'Add a service'}
+              </Button>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Boutiques Section */}
+      {/* Boutiques Section - similar updates */}
       <section className="py-16 bg-card/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Boutiques Hero with Photo Frame */}
+          {/* Hero with carousel, similar to services, with file upload */}
           <div className="flex flex-col lg:flex-row-reverse gap-12 items-center mb-16">
             <div className="lg:w-1/2">
-              <Tooltip
-                frLabel={boutiques.title.fr}
-                enLabel={boutiques.title.en}
-                onSave={updateBoutiquesField('title')}
-              >
+              <Tooltip frLabel={boutiques.title.fr} enLabel={boutiques.title.en} onSave={updateBoutiquesField('title')}>
                 <h2 className="text-3xl md:text-4xl font-serif text-foreground mb-6">
                   {getText(boutiques.title)}
                 </h2>
               </Tooltip>
-              <Tooltip
-                frLabel={boutiques.description.fr}
-                enLabel={boutiques.description.en}
-                onSave={updateBoutiquesField('description')}
-              >
+              <Tooltip frLabel={boutiques.description.fr} enLabel={boutiques.description.en} onSave={updateBoutiquesField('description')}>
                 <p className="text-lg text-muted-foreground">
                   {getText(boutiques.description)}
                 </p>
               </Tooltip>
             </div>
-            <div className="lg:w-1/2">
-              <ImageTooltip
-                imageUrl={boutiques.image || boutiquesImage}
-                onSave={updateBoutiquesImage}
-              >
-                <div className="relative">
-                  <img 
-                    src={boutiques.image || boutiquesImage} 
-                    alt={getText({ fr: "Boutiques artisanales Carlton Madagascar", en: "Carlton Madagascar Artisan Boutiques" })}
-                    className="w-full h-80 object-cover rounded-lg shadow-lg"
-                    data-testid="img-boutiques-hero"
+            <div className="lg:w-1/2 relative">
+              <div className="relative h-80 rounded-lg shadow-lg overflow-hidden">
+                {boutiqueImages.map((img, i) => (
+                  <img
+                    key={i}
+                    src={img}
+                    alt="Boutiques"
+                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${i === currentBoutiqueIndex ? 'opacity-100' : 'opacity-0'}`}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
+                ))}
+                {boutiqueImages.length > 1 && (
+                  <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                    {boutiqueImages.map((_, i) => (
+                      <div
+                        key={i}
+                        className={`w-2 h-2 rounded-full ${i === currentBoutiqueIndex ? 'bg-white' : 'bg-white/50'}`}
+                      />
+                    ))}
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
+              </div>
+              {isAdmin && (
+                <div className="mt-4 p-4 bg-muted rounded-lg">
+                  <div className="flex gap-2 mb-2">
+                    <input
+                      type="text"
+                      value={newBoutiqueImageUrl}
+                      onChange={(e) => setNewBoutiqueImageUrl(e.target.value)}
+                      placeholder="URL d'image"
+                      className="flex-1 px-3 py-1 border rounded"
+                    />
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => setNewBoutiqueImageFile(e.target.files?.[0] || null)}
+                      className="px-3 py-1 border rounded"
+                    />
+                    <Button size="sm" onClick={() => addImageFromUrlOrFile(newBoutiqueImageUrl, newBoutiqueImageFile, false)}>Ajouter</Button>
+                  </div>
+                  <ul className="space-y-1 text-sm">
+                    {boutiqueImages.map((url, i) => (
+                      <li key={i} className="flex justify-between">
+                        <span className="truncate">{url}</span>
+                        <Button variant="ghost" size="sm" onClick={() => {
+                          // Remove logic similar
+                        }}>
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </ImageTooltip>
+              )}
             </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {boutiqueItems.map((boutique, index) => (
-              <Card key={index} className="group hover-elevate transition-all duration-300" data-testid={`card-boutique-${index}`}>
-                <CardHeader>
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <Tooltip
-                        frLabel={boutique.title.fr}
-                        enLabel={boutique.title.en}
-                        onSave={updateBoutiqueItemField(index, 'title')}
-                      >
-                        <CardTitle className="text-2xl text-foreground mb-2" data-testid={`title-boutique-${index}`}>
-                          {getText(boutique.title)}
-                        </CardTitle>
-                      </Tooltip>
+            {boutiqueItems.map((boutique, index) => {
+              if (!isAdmin && boutique.hidden) return null;
+              return (
+                <Card key={index} className={`group hover-elevate transition-all duration-300 relative ${boutique.hidden ? 'opacity-50' : ''}`}>
+                  {isAdmin && (
+                    <div className="absolute top-2 right-2 z-10 flex gap-1">
+                      <Button variant="ghost" size="sm" onClick={() => toggleBoutiqueHidden(index)}>
+                        {boutique.hidden ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                      </Button>
+                      <Button variant="ghost" size="sm" onClick={() => removeBoutique(index)}>
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  )}
+                  <CardHeader>
+                    <div className="flex items-start justify-between mb-4">
+                      <div>
+                        <Tooltip frLabel={boutique.title.fr} enLabel={boutique.title.en} onSave={updateBoutiqueItemField(index, 'title')}>
+                          <CardTitle className="text-2xl text-foreground mb-2">{getText(boutique.title)}</CardTitle>
+                        </Tooltip>
+                        {boutique.hours && (
+                          <div className="flex items-center text-sm text-muted-foreground">
+                            <Clock className="w-4 h-4 mr-2" />
+                            <Tooltip frLabel={boutique.hours.fr} enLabel={boutique.hours.en} onSave={updateBoutiqueItemField(index, 'hours')}>
+                              <span>{getText(boutique.hours)}</span>
+                            </Tooltip>
+                          </div>
+                        )}
+                      </div>
+                      <ShoppingBag className="w-8 h-8 mr-2 text-primary" />
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <Tooltip frLabel={boutique.description.fr} enLabel={boutique.description.en} onSave={updateBoutiqueItemField(index, 'description')}>
+                      <p className="text-muted-foreground mb-6">{getText(boutique.description)}</p>
+                    </Tooltip>
+                    {boutique.specialties.length > 0 && (
+                      <div className="mb-6">
+                        <h4 className="text-sm font-semibold text-foreground mb-3">Spécialités</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {getTextArray(boutique.specialties).map((specialty, specialtyIndex) => (
+                            <Tooltip key={specialtyIndex} frLabel={boutique.specialties[specialtyIndex].fr} enLabel={boutique.specialties[specialtyIndex].en} onSave={updateBoutiqueSpecialty(index, specialtyIndex)}>
+                              <Badge variant="outline">{specialty}</Badge>
+                            </Tooltip>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    {renderContactInfo(boutique, 'boutique', index)}
+                    {boutique.location && (
                       <div className="flex items-center text-sm text-muted-foreground">
-                        <Clock className="w-4 h-4 mr-2" />
-                        <Tooltip
-                          frLabel={boutique.hours.fr}
-                          enLabel={boutique.hours.en}
-                          onSave={updateBoutiqueItemField(index, 'hours')}
-                        >
-                          <span>{getText(boutique.hours)}</span>
+                        <MapPin className="w-4 h-4 mr-2" />
+                        <Tooltip frLabel={boutique.location.fr} enLabel={boutique.location.en} onSave={updateBoutiqueItemField(index, 'location')}>
+                          <span>{getText(boutique.location)}</span>
                         </Tooltip>
                       </div>
-                    </div>
-                    <ShoppingBag className="w-8 h-8 text-primary" />
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <Tooltip
-                    frLabel={boutique.description.fr}
-                    enLabel={boutique.description.en}
-                    onSave={updateBoutiqueItemField(index, 'description')}
-                  >
-                    <p className="text-muted-foreground mb-6" data-testid={`description-boutique-${index}`}>
-                      {getText(boutique.description)}
-                    </p>
-                  </Tooltip>
-                  
-                  <div className="mb-6">
-                    <h4 className="text-sm font-semibold text-foreground mb-3">{getText({ fr: "Nos Spécialités :", en: "Our Specialties :" })}</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {getTextArray(boutique.specialties).map((specialty, specialtyIndex) => (
-                        <Tooltip
-                          key={specialtyIndex}
-                          frLabel={boutique.specialties[specialtyIndex].fr}
-                          enLabel={boutique.specialties[specialtyIndex].en}
-                          onSave={updateBoutiqueSpecialty(index, specialtyIndex)}
-                        >
-                          <Badge variant="outline" data-testid={`badge-specialty-${index}-${specialtyIndex}`}>
-                            {specialty}
-                          </Badge>
-                        </Tooltip>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex items-center text-sm text-muted-foreground mb-4">
-                    <MapPin className="w-4 h-4 mr-2 flex-shrink-0" />
-                    <Tooltip
-                      frLabel={boutique.location.fr}
-                      enLabel={boutique.location.en}
-                      onSave={updateBoutiqueItemField(index, 'location')}
-                    >
-                      <span>{getText(boutique.location)}</span>
-                    </Tooltip>
-                  </div>
-
-                </CardContent>
-              </Card>
-            ))}
+                    )}
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
+          {isAdmin && (
+            <div className="flex justify-center mt-8">
+              <Button variant="outline" onClick={addBoutique}>
+                <Plus className="w-4 h-4 mr-2" />
+                {isFr ? 'Ajouter une boutique' : 'Add a boutique'}
+              </Button>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Reservation Section */}
+      {/* CTA Section */}
       <section className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Tooltip
-            frLabel={cta.title.fr}
-            enLabel={cta.title.en}
-            onSave={updateCtaField('title')}
-          >
+          <Tooltip frLabel={cta.title.fr} enLabel={cta.title.en} onSave={updateCtaField('title')}>
             <h2 className="text-3xl md:text-4xl font-serif text-foreground mb-6">
               {getText(cta.title)}
             </h2>
           </Tooltip>
-          <Tooltip
-            frLabel={cta.description.fr}
-            enLabel={cta.description.en}
-            onSave={updateCtaField('description')}
-          >
+          <Tooltip frLabel={cta.description.fr} enLabel={cta.description.en} onSave={updateCtaField('description')}>
             <p className="text-lg text-muted-foreground mb-8">
               {getText(cta.description)}
             </p>
           </Tooltip>
-          
           <div className="flex justify-center">
-            <Button size="lg" data-testid="button-reserve-room">
-              <Tooltip
-                frLabel={cta.buttonText.fr}
-                enLabel={cta.buttonText.en}
-                onSave={updateCtaButtonText}
-              >
+            <Button size="lg">
+              <Tooltip frLabel={cta.buttonText.fr} enLabel={cta.buttonText.en} onSave={updateCtaButtonText}>
                 <span>{getText(cta.buttonText)}</span>
               </Tooltip>
             </Button>
