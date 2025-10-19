@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Tooltip, ImageTooltip } from '@/components/Tooltip';
-import { Play, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Play, ChevronLeft, ChevronRight, Pause } from 'lucide-react';
 import { formatAmpersand } from '@/lib/utils/formatAmpersand';
 import { heroSectionData } from '@/data/heroSectionData';
 import { useLanguage } from './context/LanguageContext';
@@ -30,8 +30,14 @@ const HeroSection = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showArrows, setShowArrows] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isPaused, setIsPaused] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
+  const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Configuration du carousel
+  const AUTO_PLAY_INTERVAL = 1000; // 5 secondes entre chaque slide
+  const TRANSITION_DURATION = 700; // Durée de la transition en ms
 
   // Helper to split heroSectionData into dataFr and dataEn structures
   const splitHeroData = (mixedData: typeof heroSectionData) => {
@@ -142,7 +148,7 @@ const HeroSection = () => {
           }
 
           const created = await createResponse.json();
-          section = created; // Assume POST returns the created object
+          section = created;
         }
 
         if (section) {
@@ -154,7 +160,6 @@ const HeroSection = () => {
       } catch (err) {
         console.error('Error fetching hero data:', err);
         setError('Failed to load hero data');
-        // Fallback to default
         setData(heroSectionData);
       } finally {
         setLoading(false);
@@ -164,33 +169,46 @@ const HeroSection = () => {
     fetchHeroData();
   }, []);
 
-  // Mouse move detection for arrow visibility - SIMPLIFIÉ
+  // Auto-play functionality for carousel
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!heroRef.current) return;
+    if (isPaused || loading) return;
 
-      const rect = heroRef.current.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      
-      setMousePosition({ x, y: 0 });
+    const startAutoPlay = () => {
+      autoPlayRef.current = setInterval(() => {
+        handleNextSlide();
+      }, AUTO_PLAY_INTERVAL);
+    };
 
-      // Show arrows when mouse enters the hero section
+    startAutoPlay();
+
+    return () => {
+      if (autoPlayRef.current) {
+        clearInterval(autoPlayRef.current);
+      }
+    };
+  }, [data.slides.length, isPaused, loading]);
+
+  // Mouse detection for arrow visibility and pause functionality
+  useEffect(() => {
+    const handleMouseEnter = () => {
+      setIsPaused(true);
       setShowArrows(true);
     };
 
     const handleMouseLeave = () => {
+      setIsPaused(false);
       setShowArrows(false);
     };
 
     const heroElement = heroRef.current;
     if (heroElement) {
-      heroElement.addEventListener('mousemove', handleMouseMove);
+      heroElement.addEventListener('mouseenter', handleMouseEnter);
       heroElement.addEventListener('mouseleave', handleMouseLeave);
     }
 
     return () => {
       if (heroElement) {
-        heroElement.removeEventListener('mousemove', handleMouseMove);
+        heroElement.removeEventListener('mouseenter', handleMouseEnter);
         heroElement.removeEventListener('mouseleave', handleMouseLeave);
       }
     };
@@ -207,7 +225,6 @@ const HeroSection = () => {
       let currentSection = currentData.find((s: any) => s.sectionKey === SECTION_KEY);
 
       if (!currentSection) {
-        // Should not happen after initial load, but create if missing
         const { dataFr, dataEn } = splitHeroData(heroSectionData);
         const createResponse = await fetch('/api/globalSections', {
           method: 'POST',
@@ -241,23 +258,55 @@ const HeroSection = () => {
       }
     } catch (err) {
       console.error('Error updating hero section:', err);
-      // Revert local state on error if needed, but for simplicity, keep it
     }
   };
 
-  const nextSlide = () => {
+  const handleNextSlide = () => {
+    if (isTransitioning) return;
+    
+    setIsTransitioning(true);
     setCurrentSlide((prev) => (prev + 1) % data.slides.length);
-    console.log('Next slide triggered');
+    
+    // Reset auto-play timer on manual navigation
+    if (autoPlayRef.current) {
+      clearInterval(autoPlayRef.current);
+    }
+
+    setTimeout(() => {
+      setIsTransitioning(false);
+    }, TRANSITION_DURATION);
   };
 
-  const prevSlide = () => {
+  const handlePrevSlide = () => {
+    if (isTransitioning) return;
+    
+    setIsTransitioning(true);
     setCurrentSlide((prev) => (prev - 1 + data.slides.length) % data.slides.length);
-    console.log('Previous slide triggered');
+    
+    // Reset auto-play timer on manual navigation
+    if (autoPlayRef.current) {
+      clearInterval(autoPlayRef.current);
+    }
+
+    setTimeout(() => {
+      setIsTransitioning(false);
+    }, TRANSITION_DURATION);
   };
 
   const goToSlide = (index: number) => {
+    if (isTransitioning || index === currentSlide) return;
+    
+    setIsTransitioning(true);
     setCurrentSlide(index);
-    console.log(`Slide ${index} selected`);
+    
+    // Reset auto-play timer on manual navigation
+    if (autoPlayRef.current) {
+      clearInterval(autoPlayRef.current);
+    }
+
+    setTimeout(() => {
+      setIsTransitioning(false);
+    }, TRANSITION_DURATION);
   };
 
   const currentSlideData = data.slides[currentSlide];
@@ -270,7 +319,6 @@ const HeroSection = () => {
 
   const updateSlideField = (index: number, field: 'title' | 'subtitle' | 'description') => {
     return async (newFr: string, newEn: string) => {
-      // First, update local state
       const updatedData = {
         ...data,
         slides: data.slides.map((slide, i) =>
@@ -280,15 +328,12 @@ const HeroSection = () => {
         ),
       };
       setData(updatedData);
-
-      // Then, update backend
       await updateHeroSection(updatedData);
     };
   };
 
   const updateSlidePrimaryButton = (index: number) => {
     return async (newFr: string, newEn: string) => {
-      // First, update local state
       const updatedData = {
         ...data,
         slides: data.slides.map((slide, i) =>
@@ -304,14 +349,11 @@ const HeroSection = () => {
         ),
       };
       setData(updatedData);
-
-      // Then, update backend
       await updateHeroSection(updatedData);
     };
   };
 
   const updateBadgeText = async (newFr: string, newEn: string) => {
-    // First, update local state
     const updatedData = {
       ...data,
       badge: {
@@ -320,32 +362,24 @@ const HeroSection = () => {
       },
     };
     setData(updatedData);
-
-    // Then, update backend
     await updateHeroSection(updatedData);
   };
 
   const updateScrollText = async (newFr: string, newEn: string) => {
-    // First, update local state
     const updatedData = {
       ...data,
       scroll: { fr: newFr, en: newEn },
     };
     setData(updatedData);
-
-    // Then, update backend
     await updateHeroSection(updatedData);
   };
 
   const updateImage = async (index: number, newUrl: string) => {
-    // First, update local state
     const updatedData = {
       ...data,
       slides: data.slides.map((slide, i) => i === index ? { ...slide, image: newUrl } : slide),
     };
     setData(updatedData);
-
-    // Then, update backend
     await updateHeroSection(updatedData);
   };
 
@@ -384,25 +418,31 @@ const HeroSection = () => {
         ref={heroRef}
         className="relative h-screen w-full overflow-hidden cursor-pointer"
       >
-        {/* Hero Images with Fade Transition */}
-        <div className="absolute inset-0">
-          {data.slides.map((slide, index) => {
-            const imageUrl = slide.image || hotelExterior;
-            return (
-              <div
-                key={index}
-                className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ease-in-out ${
-                  index === currentSlide ? 'opacity-100' : 'opacity-0'
-                }`}
-                style={{ backgroundImage: `url(${imageUrl})` }}
-              />
-            );
-          })}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30 pointer-events-none transition-opacity duration-1000 ease-in-out opacity-100" />
+        {/* Hero Images with Slide Transition */}
+        <div className="relative h-full w-full overflow-hidden">
+          <div 
+            className="flex h-full transition-transform ease-in-out"
+            style={{ 
+              transform: `translateX(-${currentSlide * 100}%)`,
+              transitionDuration: `${TRANSITION_DURATION}ms`
+            }}
+          >
+            {data.slides.map((slide, index) => {
+              const imageUrl = slide.image || hotelExterior;
+              return (
+                <div
+                  key={index}
+                  className="w-full h-full flex-shrink-0 bg-cover bg-center bg-no-repeat"
+                  style={{ backgroundImage: `url(${imageUrl})` }}
+                />
+              );
+            })}
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30 pointer-events-none" />
         </div>
 
         {/* Content */}
-        <div className="relative h-full flex items-center justify-center text-center px-4 z-20">
+        <div className="absolute inset-0 h-full flex items-center justify-center text-center px-4 z-20">
           <div className="max-w-4xl mx-auto">
             <div className="mb-6">
               <div className="inline-flex items-center px-4 py-2 bg-primary/20 backdrop-blur-sm rounded-full border border-primary/30 mb-8">
@@ -468,14 +508,15 @@ const HeroSection = () => {
           </div>
         </div>
 
-        {/* Navigation Arrows - Z-INDEX TRÈS ÉLEVÉ */}
+        {/* Navigation Arrows */}
         <Button
           variant="ghost"
           size="icon"
           className={`absolute left-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 backdrop-blur-sm z-[9999] transition-all duration-300 ${
             showArrows ? 'opacity-100 scale-100' : 'opacity-0 scale-90 pointer-events-none'
           }`}
-          onClick={prevSlide}
+          onClick={handlePrevSlide}
+          disabled={isTransitioning}
           data-testid="button-prev-slide"
         >
           <ChevronLeft className="w-8 h-8" />
@@ -487,7 +528,8 @@ const HeroSection = () => {
           className={`absolute right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 backdrop-blur-sm z-[9999] transition-all duration-300 ${
             showArrows ? 'opacity-100 scale-100' : 'opacity-0 scale-90 pointer-events-none'
           }`}
-          onClick={nextSlide}
+          onClick={handleNextSlide}
+          disabled={isTransitioning}
           data-testid="button-next-slide"
         >
           <ChevronRight className="w-8 h-8" />
@@ -499,12 +541,32 @@ const HeroSection = () => {
             <button
               key={index}
               className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer ${
-                index === currentSlide ? 'bg-primary scale-125' : 'bg-white/30 hover:bg-white/50 hover:scale-110'
-              }`}
+                index === currentSlide 
+                  ? 'bg-primary scale-125' 
+                  : 'bg-white/30 hover:bg-white/50 hover:scale-110'
+              } ${isTransitioning ? 'pointer-events-none' : ''}`}
               onClick={() => goToSlide(index)}
+              disabled={isTransitioning}
               data-testid={`button-slide-${index}`}
             />
           ))}
+        </div>
+
+        {/* Auto-play Control */}
+        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex items-center space-x-2 z-30">
+          <div className="text-xs text-white/70">
+            {isPaused ? 'Pause' : 'Lecture auto'}
+          </div>
+          <button
+            className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white/30 transition-colors"
+            onClick={() => setIsPaused(!isPaused)}
+          >
+            {isPaused ? (
+              <Play className="w-4 h-4 text-white" />
+            ) : (
+              <Pause className="w-4 h-4 text-white" />
+            )}
+          </button>
         </div>
 
         {/* Scroll Indicator */}
