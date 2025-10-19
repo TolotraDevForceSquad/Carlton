@@ -1,17 +1,233 @@
-// src/components/HeroSection.tsx
-import { useState, useEffect, useRef } from 'react';
-import { Link } from 'wouter';
+// src/data/offresData.ts
+export const offresPageData = {
+  hero: {
+    title: {
+      fr: "Offres Spéciales",
+      en: "Special Offers"
+    },
+    description: {
+      fr: "Découvrez nos séjours d'exception conçus pour créer des souvenirs inoubliables au cœur de Madagascar",
+      en: "Discover our exceptional stays designed to create unforgettable memories in the heart of Madagascar"
+    }
+  },
+  offerFeaturesTitle: {
+    fr: "Cette offre comprend :",
+    en: "This offer includes :"
+  },
+  seasonalSection: {
+    title: { fr: "Événements Spéciaux", en: "Special Events" },
+    description: {
+      fr: "",
+      en: ""
+    },
+    show: true,
+  },
+  offers: [
+    {
+      id: 1,
+      title: {
+        fr: "Business Lunch",
+        en: "Business Lunch"
+      },
+      subtitle: {
+        fr: "Menu déjeuner à 2 ou 3 services au choix",
+        en: "Lunch menu with 2 or 3 courses to choose"
+      },
+      description: {
+        fr: "Un déjeuner en 2 ou 3 plats selon vos envies. Concocté avec soin pour s’adapter à votre emploi du temps, il est servi dans un rythme fluide, sans compromis sur la qualité. Une formule parfaite pour votre pause déjeuner ou une rencontre professionnelle.",
+        en: "A lunch menu in 2 or 3 dishes according to your wishes. Carefully prepared to fit your schedule, served at a smooth pace without compromising on quality. The perfect formula for your lunch break or a professional meeting."
+      },
+      duration: {
+        fr: "Du lundi au vendredi, de 12h à 14h30",
+        en: "Monday to Friday, 12pm to 2:30pm"
+      },
+      category: {
+        fr: "Déjeuner d'affaires",
+        en: "Business Lunch"
+      },
+      features: [
+        {
+          fr: "Menu à 2 services : Entrée + Plat ou Plat + Dessert à 64 000 Ariary",
+          en: "2-course menu: Starter + Main or Main + Dessert at 64,000 Ariary"
+        },
+        {
+          fr: "Menu à 3 services : Entrée + Plat + Dessert à 73 000 Ariary",
+          en: "3-course menu: Starter + Main + Dessert at 73,000 Ariary"
+        }
+      ],
+      validUntil: {
+        fr: "",
+        en: ""
+      },
+      highlight: null,
+      image: '/uploads/Offre.png',
+      hidden: false
+    },
+    {
+      id: 2,
+      title: {
+        fr: "L’Apéro du Chef",
+        en: "The Chef's Aperitif"
+      },
+      subtitle: {
+        fr: "Suggestion d’apéro sur ardoise du Chef",
+        en: "Chef's chalkboard aperitif suggestion"
+      },
+      description: {
+        fr: "Des assiettes d’amuse-bouches salés au choix, variés et savoureux, à partager — ou pas. Parfait pour se détendre en fin de journée, que vous soyez seul ou entre amis, après une longue journée. Un moment de plaisir simple, gourmand et bien mérité.",
+        en: "Plates of savory amuse-bouches to choose from, varied and tasty, to share—or not. Perfect for unwinding at the end of the day, whether alone or with friends, after a long day. A simple, indulgent, and well-deserved moment of pleasure."
+      },
+      duration: {
+        fr: "Du lundi au vendredi à partir de 17h à 19h",
+        en: "Monday to Friday from 5pm to 7pm"
+      },
+      category: {
+        fr: "Apéritif",
+        en: "Aperitif"
+      },
+      features: [
+        {
+          fr: "28 000 Ariary",
+          en: "28,000 Ariary"
+        },
+        {
+          fr: "Assiettes d’amuse-bouches salés au choix, variés et savoureux",
+          en: "Plates of savory amuse-bouches to choose from, varied and tasty"
+        }
+      ],
+      validUntil: {
+        fr: "",
+        en: ""
+      },
+      highlight: null,
+      image: '/uploads/Offre.png',
+      hidden: false
+    },
+    {
+      id: 3,
+      title: {
+        fr: "Yoga",
+        en: "Yoga"
+      },
+      subtitle: {
+        fr: "Tous les samedis à 8h",
+        en: "Every Saturday at 8am"
+      },
+      description: {
+        fr: "Commencez votre week-end en douceur avec une séance de yoga d’une heure, un rituel parfait pour relâcher la pression du quotidien et retrouver l’équilibre. Un petit-déjeuner est offert à la fin de séance pour prolonger cette pause de bien-être.",
+        en: "Start your weekend gently with a one-hour yoga session, a perfect ritual to release daily stress and regain balance. A breakfast is offered at the end of the session to extend this wellness break."
+      },
+      duration: {
+        fr: "Tous les samedis à 8h",
+        en: "Every Saturday at 8am"
+      },
+      category: {
+        fr: "Bien-être",
+        en: "Wellness"
+      },
+      features: [
+        {
+          fr: "50 000 Ariary avec petit-déjeuner",
+          en: "50,000 Ariary with breakfast"
+        },
+        {
+          fr: "Séance de yoga d’une heure",
+          en: "One-hour yoga session"
+        }
+      ],
+      validUntil: {
+        fr: "",
+        en: ""
+      },
+      highlight: null,
+      image: '/uploads/Offre.png',
+      hidden: false
+    }
+  ],
+  seasonalOffers: [
+    {
+      title: {
+        fr: "Soirée Jazz",
+        en: "Jazz Evening"
+      },
+      period: {
+        fr: "Chaque vendredi",
+        en: "Every Friday"
+      },
+      description: {
+        fr: "Ambiance musicale exceptionnelle avec nos musiciens jazz dans le cadre élégant du Bistrot du Carlton",
+        en: "Exceptional musical atmosphere with our jazz musicians in the elegant setting of the Bistrot du Carlton"
+      },
+      image: '/uploads/Env.png',
+      hidden: false
+    },
+    {
+      title: {
+        fr: "Brunch Dominical",
+        en: "Sunday Brunch"
+      },
+      period: {
+        fr: "Tous les dimanches",
+        en: "Every Sunday"
+      },
+      description: {
+        fr: "Un buffet gastronomique exceptionnel alliant saveurs françaises et spécialités malgaches",
+        en: "An exceptional gastronomic buffet combining French flavors and Malagasy specialties"
+      },
+      image: '/uploads/Env.png',
+      hidden: false
+    },
+    {
+      title: {
+        fr: "Soirée Dégustation",
+        en: "Tasting Evening"
+      },
+      period: {
+        fr: "Premier samedi du mois",
+        en: "First Saturday of the month"
+      },
+      description: {
+        fr: "Découvrez notre sélection de vins et spiritueux accompagnés de mets raffinés",
+        en: "Discover our selection of wines and spirits accompanied by refined dishes"
+      },
+      image: '/uploads/Env.png',
+      hidden: false
+    }
+  ],
+  cta: {
+    title: {
+      fr: "Besoin d'une offre sur mesure ?",
+      en: "Need a custom offer?"
+    },
+    description: {
+      fr: "Notre équipe de conciergerie est à votre disposition pour créer un séjour parfaitement adapté à vos envies",
+      en: "Our concierge team is at your disposal to create a stay perfectly tailored to your desires"
+    },
+    buttonTexts: {
+      primary: {
+        fr: "Contacter notre conciergerie",
+        en: "Contact our concierge"
+      },
+      secondary: {
+        fr: "Demander un rappel",
+        en: "Request a callback"
+      }
+    }
+  }
+};
+
+// src/pages/Offres.tsx
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Star, Calendar, Clock, Sparkles, Users, Gift, Plus, Trash2, Eye, EyeOff, ForkKnife, Martini, HeartPulse, Music, Coffee, Wine } from 'lucide-react';
 import { Tooltip, ImageTooltip } from '@/components/Tooltip';
-import { Play, ChevronLeft, ChevronRight, Pause } from 'lucide-react';
-import { formatAmpersand } from '@/lib/utils/formatAmpersand';
-import { heroSectionData } from '@/data/heroSectionData';
-import { useLanguage } from './context/LanguageContext';
-import hotelExterior from '@assets/generated_images/Carlton_hotel_exterior_view_8ca3b91a.png';
+import Footer from '@/components/Footer';
+import { offresPageData } from '@/data/offresData';
+import { useLanguage } from '@/components/context/LanguageContext';
 
-const SECTION_KEY = 'hero';
-
-const slidePaths = ["/contact", "/chambres", "/galerie", "/restaurants", "/evenements", "/bien-etre-loisirs"];
+const SECTION_KEY = 'offres';
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('userToken');
@@ -22,103 +238,190 @@ const getAuthHeaders = () => {
   return headers;
 };
 
-const HeroSection = () => {
+// Helper to split offresPageData into dataFr and dataEn structures
+const splitOffresData = (mixedData: typeof offresPageData) => {
+  const mixedDataWithExtras = {
+    ...mixedData,
+    seasonalSection: mixedData.seasonalSection || {
+      title: { fr: "Événements Spéciaux", en: "Special Events" },
+      description: {
+        fr: "",
+        en: ""
+      },
+      show: true,
+    },
+  };
+
+  const dataFr = {
+    seasonalSection: {
+      title: mixedDataWithExtras.seasonalSection.title.fr,
+      description: mixedDataWithExtras.seasonalSection.description.fr,
+      show: mixedDataWithExtras.seasonalSection.show,
+    },
+    hero: {
+      title: mixedDataWithExtras.hero.title.fr,
+      description: mixedDataWithExtras.hero.description.fr,
+    },
+    offerFeaturesTitle: mixedDataWithExtras.offerFeaturesTitle.fr,
+    offers: mixedDataWithExtras.offers.map((offer) => ({
+      id: offer.id,
+      title: offer.title.fr,
+      subtitle: offer.subtitle.fr,
+      description: offer.description.fr,
+      duration: offer.duration.fr,
+      category: offer.category.fr,
+      features: offer.features.map((feature) => feature.fr),
+      validUntil: offer.validUntil.fr,
+      highlight: offer.highlight ? offer.highlight.fr : null,
+      image: offer.image || '/uploads/Offre.png',
+      hidden: offer.hidden || false,
+    })),
+    seasonalOffers: mixedDataWithExtras.seasonalOffers.map((so) => ({
+      title: so.title.fr,
+      period: so.period.fr,
+      description: so.description.fr,
+      image: so.image || '/uploads/Env.png',
+      hidden: so.hidden || false,
+    })),
+    cta: {
+      title: mixedDataWithExtras.cta.title.fr,
+      description: mixedDataWithExtras.cta.description.fr,
+      buttonTexts: {
+        primary: mixedDataWithExtras.cta.buttonTexts.primary.fr,
+        secondary: mixedDataWithExtras.cta.buttonTexts.secondary.fr,
+      },
+    },
+  };
+
+  const dataEn = {
+    seasonalSection: {
+      title: mixedDataWithExtras.seasonalSection.title.en,
+      description: mixedDataWithExtras.seasonalSection.description.en,
+      show: mixedDataWithExtras.seasonalSection.show,
+    },
+    hero: {
+      title: mixedDataWithExtras.hero.title.en,
+      description: mixedDataWithExtras.hero.description.en,
+    },
+    offerFeaturesTitle: mixedDataWithExtras.offerFeaturesTitle.en,
+    offers: mixedDataWithExtras.offers.map((offer) => ({
+      id: offer.id,
+      title: offer.title.en,
+      subtitle: offer.subtitle.en,
+      description: offer.description.en,
+      duration: offer.duration.en,
+      category: offer.category.en,
+      features: offer.features.map((feature) => feature.en),
+      validUntil: offer.validUntil.en,
+      highlight: offer.highlight ? offer.highlight.en : null,
+      image: offer.image || '/uploads/Offre.png',
+      hidden: offer.hidden || false,
+    })),
+    seasonalOffers: mixedDataWithExtras.seasonalOffers.map((so) => ({
+      title: so.title.en,
+      period: so.period.en,
+      description: so.description.en,
+      image: so.image || '/uploads/Env.png',
+      hidden: so.hidden || false,
+    })),
+    cta: {
+      title: mixedDataWithExtras.cta.title.en,
+      description: mixedDataWithExtras.cta.description.en,
+      buttonTexts: {
+        primary: mixedDataWithExtras.cta.buttonTexts.primary.en,
+        secondary: mixedDataWithExtras.cta.buttonTexts.secondary.en,
+      },
+    },
+  };
+
+  return { dataFr, dataEn };
+};
+
+// Reconstruct mixed data from dataFr and dataEn
+const reconstructMixed = (dataFr: any, dataEn: any | null) => {
+  if (!dataFr || typeof dataFr !== 'object') {
+    console.warn('Invalid dataFr structure, falling back to default');
+    return offresPageData;
+  }
+  const enFallback = dataEn || dataFr;
+  const defaultSeasonal = {
+    title: { fr: "Événements Spéciaux", en: "Special Events" },
+    description: {
+      fr: "",
+      en: ""
+    },
+    show: true,
+  };
+  return {
+    seasonalSection: dataFr.seasonalSection
+      ? {
+        title: { fr: dataFr.seasonalSection.title, en: enFallback.seasonalSection?.title || defaultSeasonal.title.en },
+        description: { fr: dataFr.seasonalSection.description, en: enFallback.seasonalSection?.description || defaultSeasonal.description.en },
+        show: dataFr.seasonalSection.show !== undefined ? dataFr.seasonalSection.show : true,
+      }
+      : defaultSeasonal,
+    hero: {
+      title: { fr: dataFr.hero.title, en: enFallback.hero.title },
+      description: { fr: dataFr.hero.description, en: enFallback.hero.description },
+    },
+    offerFeaturesTitle: {
+      fr: dataFr.offerFeaturesTitle,
+      en: enFallback.offerFeaturesTitle
+    },
+    offers: dataFr.offers.map((offerFr: any, i: number) => {
+      const offerEn = enFallback.offers[i] || offerFr;
+      return {
+        id: offerFr.id,
+        title: { fr: offerFr.title, en: offerEn.title },
+        subtitle: { fr: offerFr.subtitle, en: offerEn.subtitle },
+        description: { fr: offerFr.description, en: offerEn.description },
+        duration: { fr: offerFr.duration, en: offerEn.duration },
+        category: { fr: offerFr.category, en: offerEn.category },
+        features: offerFr.features.map((fFr: string, j: number) => ({
+          fr: fFr,
+          en: offerEn.features[j] || fFr,
+        })),
+        validUntil: { fr: offerFr.validUntil, en: offerEn.validUntil },
+        highlight: offerFr.highlight
+          ? { fr: offerFr.highlight, en: offerEn.highlight || offerFr.highlight }
+          : null,
+        image: offerFr.image || '/uploads/Offre.png',
+        hidden: offerFr.hidden !== undefined ? offerFr.hidden : (offerEn.hidden || false),
+      };
+    }),
+    seasonalOffers: dataFr.seasonalOffers.map((soFr: any, i: number) => {
+      const soEn = enFallback.seasonalOffers[i] || soFr;
+      return {
+        title: { fr: soFr.title, en: soEn.title },
+        period: { fr: soFr.period, en: soEn.period },
+        description: { fr: soFr.description, en: soEn.description },
+        image: soFr.image || '/uploads/Env.png',
+        hidden: soFr.hidden !== undefined ? soFr.hidden : (soEn.hidden || false),
+      };
+    }),
+    cta: {
+      title: { fr: dataFr.cta.title, en: enFallback.cta.title },
+      description: { fr: dataFr.cta.description, en: enFallback.cta.description },
+      buttonTexts: {
+        primary: { fr: dataFr.cta.buttonTexts.primary, en: enFallback.cta.buttonTexts.primary },
+        secondary: { fr: dataFr.cta.buttonTexts.secondary, en: enFallback.cta.buttonTexts.secondary },
+      },
+    },
+  };
+};
+
+const Offres = () => {
   const { currentLang } = useLanguage();
   const langKey = currentLang.code.toLowerCase();
-  const [data, setData] = useState(heroSectionData);
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [data, setData] = useState(() => reconstructMixed(splitOffresData(offresPageData).dataFr, splitOffresData(offresPageData).dataEn));
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [showArrows, setShowArrows] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const heroRef = useRef<HTMLDivElement>(null);
-  const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
+  const [forceShow, setForceShow] = useState(false);
+  const isAdmin = !!localStorage.getItem('userToken');
 
-  // Configuration du carousel
-  const AUTO_PLAY_INTERVAL = 1000; // 5 secondes entre chaque slide
-  const TRANSITION_DURATION = 700; // Durée de la transition en ms
-
-  // Helper to split heroSectionData into dataFr and dataEn structures
-  const splitHeroData = (mixedData: typeof heroSectionData) => {
-    const dataFr = {
-      slides: mixedData.slides.map((slide) => ({
-        image: slide.image,
-        title: slide.title.fr,
-        subtitle: slide.subtitle.fr,
-        description: slide.description.fr,
-        buttons: {
-          primary: slide.buttons.primary.fr,
-        },
-      })),
-      badge: {
-        stars: mixedData.badge.stars,
-        text: mixedData.badge.text.fr,
-      },
-      scroll: mixedData.scroll.fr,
-    };
-
-    const dataEn = {
-      slides: mixedData.slides.map((slide) => ({
-        image: slide.image,
-        title: slide.title.en,
-        subtitle: slide.subtitle.en,
-        description: slide.description.en,
-        buttons: {
-          primary: slide.buttons.primary.en,
-        },
-      })),
-      badge: {
-        stars: mixedData.badge.stars,
-        text: mixedData.badge.text.en,
-      },
-      scroll: mixedData.scroll.en,
-    };
-
-    return { dataFr, dataEn };
-  };
-
-  // Reconstruct mixed data from dataFr and dataEn
-  const reconstructMixed = (dataFr: any, dataEn: any | null) => {
-    if (!dataFr || typeof dataFr !== 'object' || !Array.isArray(dataFr.slides)) {
-      console.warn('Invalid dataFr structure, falling back to default');
-      return heroSectionData;
-    }
-    const enFallback = dataEn || dataFr;
-    const mixed = {
-      slides: dataFr.slides.map((slideFr: any, i: number) => {
-        const slideEn = enFallback.slides[i];
-        return {
-          image: slideFr.image || heroSectionData.slides[i].image,
-          title: { fr: slideFr.title, en: slideEn?.title || slideFr.title },
-          subtitle: { fr: slideFr.subtitle, en: slideEn?.subtitle || slideFr.subtitle },
-          description: { fr: slideFr.description, en: slideEn?.description || slideFr.description },
-          buttons: {
-            primary: { 
-              fr: slideFr.buttons?.primary || heroSectionData.slides[i].buttons.primary.fr, 
-              en: slideEn?.buttons?.primary || slideFr.buttons?.primary || heroSectionData.slides[i].buttons.primary.en 
-            },
-          },
-        };
-      }),
-      badge: {
-        stars: dataFr.badge?.stars || heroSectionData.badge.stars,
-        text: { 
-          fr: dataFr.badge?.text || heroSectionData.badge.text.fr, 
-          en: enFallback.badge?.text || dataFr.badge?.text || heroSectionData.badge.text.en 
-        },
-      },
-      scroll: { 
-        fr: dataFr.scroll || heroSectionData.scroll.fr, 
-        en: enFallback.scroll || dataFr.scroll || heroSectionData.scroll.en 
-      },
-    };
-    return mixed;
-  };
-
-  // Fetch hero data from backend
+  // Fetch offres data from backend
   useEffect(() => {
-    const fetchHeroData = async () => {
+    const fetchOffresData = async () => {
       try {
         setLoading(true);
         setError(null);
@@ -131,7 +434,7 @@ const HeroSection = () => {
         let section = sections.find((s: any) => s.sectionKey === SECTION_KEY);
         if (!section) {
           // Table is empty for this sectionKey, create default
-          const { dataFr, dataEn } = splitHeroData(heroSectionData);
+          const { dataFr, dataEn } = splitOffresData(offresPageData);
           const createResponse = await fetch('/api/globalSections', {
             method: 'POST',
             headers: { ...headers, 'Content-Type': 'application/json' },
@@ -144,7 +447,7 @@ const HeroSection = () => {
           });
 
           if (!createResponse.ok) {
-            throw new Error('Failed to create hero data');
+            throw new Error('Failed to create offres data');
           }
 
           const created = await createResponse.json();
@@ -155,69 +458,24 @@ const HeroSection = () => {
           const fetchedData = reconstructMixed(section.dataFr, section.dataEn);
           setData(fetchedData);
         } else {
-          setData(heroSectionData);
+          setData(() => reconstructMixed(splitOffresData(offresPageData).dataFr, splitOffresData(offresPageData).dataEn));
         }
       } catch (err) {
-        console.error('Error fetching hero data:', err);
-        setError('Failed to load hero data');
-        setData(heroSectionData);
+        console.error('Error fetching offres data:', err);
+        setError('Failed to load offres data');
+        setData(() => reconstructMixed(splitOffresData(offresPageData).dataFr, splitOffresData(offresPageData).dataEn));
       } finally {
         setLoading(false);
       }
     };
 
-    fetchHeroData();
+    fetchOffresData();
   }, []);
 
-  // Auto-play functionality for carousel
-  useEffect(() => {
-    if (isPaused || loading) return;
-
-    const startAutoPlay = () => {
-      autoPlayRef.current = setInterval(() => {
-        handleNextSlide();
-      }, AUTO_PLAY_INTERVAL);
-    };
-
-    startAutoPlay();
-
-    return () => {
-      if (autoPlayRef.current) {
-        clearInterval(autoPlayRef.current);
-      }
-    };
-  }, [data.slides.length, isPaused, loading]);
-
-  // Mouse detection for arrow visibility and pause functionality
-  useEffect(() => {
-    const handleMouseEnter = () => {
-      setIsPaused(true);
-      setShowArrows(true);
-    };
-
-    const handleMouseLeave = () => {
-      setIsPaused(false);
-      setShowArrows(false);
-    };
-
-    const heroElement = heroRef.current;
-    if (heroElement) {
-      heroElement.addEventListener('mouseenter', handleMouseEnter);
-      heroElement.addEventListener('mouseleave', handleMouseLeave);
-    }
-
-    return () => {
-      if (heroElement) {
-        heroElement.removeEventListener('mouseenter', handleMouseEnter);
-        heroElement.removeEventListener('mouseleave', handleMouseLeave);
-      }
-    };
-  }, []);
-
-  const updateHeroSection = async (updatedMixedData: typeof heroSectionData) => {
+  const updateOffresSection = async (updatedMixedData: typeof data) => {
     try {
       const headers = getAuthHeaders();
-      const currentSectionResponse = await fetch(`/api/globalSections?sectionKey=${SECTION_KEY}`, { headers });
+      let currentSectionResponse = await fetch(`/api/globalSections?sectionKey=${SECTION_KEY}`, { headers });
       let currentData: any[] = [];
       if (currentSectionResponse.ok) {
         currentData = await currentSectionResponse.json();
@@ -225,7 +483,7 @@ const HeroSection = () => {
       let currentSection = currentData.find((s: any) => s.sectionKey === SECTION_KEY);
 
       if (!currentSection) {
-        const { dataFr, dataEn } = splitHeroData(heroSectionData);
+        const { dataFr, dataEn } = splitOffresData(offresPageData);
         const createResponse = await fetch('/api/globalSections', {
           method: 'POST',
           headers: { ...headers, 'Content-Type': 'application/json' },
@@ -242,165 +500,411 @@ const HeroSection = () => {
         currentSection = await createResponse.json();
       }
 
-      const { dataFr: updatedDataFr, dataEn: updatedDataEn } = splitHeroData(updatedMixedData);
+      const { dataFr: updatedDataFr, dataEn: updatedDataEn } = splitOffresData(updatedMixedData);
 
       const putResponse = await fetch(`/api/globalSections/${currentSection.id}`, {
         method: 'PUT',
         headers: { ...headers, 'Content-Type': 'application/json' },
         body: JSON.stringify({
           dataFr: updatedDataFr,
-          dataEn: Object.keys(updatedDataEn).length > 0 ? updatedDataEn : null
-        })
+          dataEn: Object.keys(updatedDataEn).length > 0 ? updatedDataEn : null,
+        }),
       });
 
       if (!putResponse.ok) {
-        throw new Error('Failed to update hero section');
+        throw new Error('Failed to update offres section');
       }
     } catch (err) {
-      console.error('Error updating hero section:', err);
+      console.error('Error updating offres section:', err);
     }
   };
 
-  const handleNextSlide = () => {
-    if (isTransitioning) return;
-    
-    setIsTransitioning(true);
-    setCurrentSlide((prev) => (prev + 1) % data.slides.length);
-    
-    // Reset auto-play timer on manual navigation
-    if (autoPlayRef.current) {
-      clearInterval(autoPlayRef.current);
-    }
+  const getText = (textObj: { fr: string; en: string }) => textObj[langKey as keyof typeof textObj];
 
-    setTimeout(() => {
-      setIsTransitioning(false);
-    }, TRANSITION_DURATION);
+  const validUntilLabel = {
+    fr: "",
+    en: ""
   };
 
-  const handlePrevSlide = () => {
-    if (isTransitioning) return;
-    
-    setIsTransitioning(true);
-    setCurrentSlide((prev) => (prev - 1 + data.slides.length) % data.slides.length);
-    
-    // Reset auto-play timer on manual navigation
-    if (autoPlayRef.current) {
-      clearInterval(autoPlayRef.current);
-    }
-
-    setTimeout(() => {
-      setIsTransitioning(false);
-    }, TRANSITION_DURATION);
-  };
-
-  const goToSlide = (index: number) => {
-    if (isTransitioning || index === currentSlide) return;
-    
-    setIsTransitioning(true);
-    setCurrentSlide(index);
-    
-    // Reset auto-play timer on manual navigation
-    if (autoPlayRef.current) {
-      clearInterval(autoPlayRef.current);
-    }
-
-    setTimeout(() => {
-      setIsTransitioning(false);
-    }, TRANSITION_DURATION);
-  };
-
-  const currentSlideData = data.slides[currentSlide];
-  const currentTitle = currentSlideData.title[langKey];
-  const currentSubtitle = currentSlideData.subtitle[langKey];
-  const currentDescription = currentSlideData.description[langKey];
-  const currentBadgeText = data.badge.text[langKey];
-  const currentPrimaryButton = currentSlideData.buttons.primary[langKey];
-  const currentScroll = data.scroll[langKey];
-
-  const updateSlideField = (index: number, field: 'title' | 'subtitle' | 'description') => {
+  const updateHeroField = (field: 'title' | 'description') => {
     return async (newFr: string, newEn: string) => {
       const updatedData = {
         ...data,
-        slides: data.slides.map((slide, i) =>
-          i === index
-            ? { ...slide, [field]: { fr: newFr, en: newEn } }
-            : slide
-        ),
+        hero: {
+          ...data.hero,
+          [field]: { fr: newFr, en: newEn },
+        },
       };
       setData(updatedData);
-      await updateHeroSection(updatedData);
+      await updateOffresSection(updatedData);
     };
   };
 
-  const updateSlidePrimaryButton = (index: number) => {
-    return async (newFr: string, newEn: string) => {
-      const updatedData = {
-        ...data,
-        slides: data.slides.map((slide, i) =>
-          i === index
-            ? { 
-                ...slide, 
-                buttons: { 
-                  ...slide.buttons, 
-                  primary: { fr: newFr, en: newEn } 
-                } 
-              }
-            : slide
-        ),
-      };
-      setData(updatedData);
-      await updateHeroSection(updatedData);
-    };
-  };
-
-  const updateBadgeText = async (newFr: string, newEn: string) => {
+  const updateOfferFeaturesTitle = async (newFr: string, newEn: string) => {
     const updatedData = {
       ...data,
-      badge: {
-        ...data.badge,
-        text: { fr: newFr, en: newEn },
+      offerFeaturesTitle: { fr: newFr, en: newEn },
+    };
+    setData(updatedData);
+    await updateOffresSection(updatedData);
+  };
+
+  const updateOfferField = (index: number, field: 'title' | 'subtitle' | 'description' | 'duration' | 'category' | 'validUntil' | 'highlight') => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        offers: data.offers.map((offer, i) =>
+          i === index
+            ? { ...offer, [field]: { fr: newFr, en: newEn } }
+            : offer
+        ),
+      };
+      setData(updatedData);
+      await updateOffresSection(updatedData);
+    };
+  };
+
+  const updateOfferFeature = (offerIndex: number, featureIndex: number) => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        offers: data.offers.map((offer, i) =>
+          i === offerIndex
+            ? {
+              ...offer,
+              features: offer.features.map((feature, j) =>
+                j === featureIndex ? { fr: newFr, en: newEn } : feature
+              ),
+            }
+            : offer
+        ),
+      };
+      setData(updatedData);
+      await updateOffresSection(updatedData);
+    };
+  };
+
+  const addOfferFeature = async (offerIndex: number) => {
+    const updatedData = {
+      ...data,
+      offers: data.offers.map((offer, i) =>
+        i === offerIndex
+          ? {
+            ...offer,
+            features: [...offer.features, { fr: "Exemple d'offre", en: "Example offer" }],
+          }
+          : offer
+      ),
+    };
+    setData(updatedData);
+    await updateOffresSection(updatedData);
+  };
+
+  const removeOfferFeature = async (offerIndex: number, featureIndex: number) => {
+    const updatedData = {
+      ...data,
+      offers: data.offers.map((offer, i) =>
+        i === offerIndex
+          ? {
+            ...offer,
+            features: offer.features.filter((_, j) => j !== featureIndex),
+          }
+          : offer
+      ),
+    };
+    setData(updatedData);
+    await updateOffresSection(updatedData);
+  };
+
+  const toggleOfferHidden = async (index: number) => {
+    const updatedData = {
+      ...data,
+      offers: data.offers.map((offer, i) =>
+        i === index ? { ...offer, hidden: !offer.hidden } : offer
+      ),
+    };
+    setData(updatedData);
+    await updateOffresSection(updatedData);
+  };
+
+  const updateOfferImage = (index: number) => {
+    return async (newUrl: string) => {
+      const updatedData = {
+        ...data,
+        offers: data.offers.map((offer, i) => (i === index ? { ...offer, image: newUrl } : offer)),
+      };
+      setData(updatedData);
+      await updateOffresSection(updatedData);
+    };
+  };
+
+  const updateSeasonalField = (index: number, field: 'title' | 'period' | 'description') => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        seasonalOffers: data.seasonalOffers.map((so, i) =>
+          i === index
+            ? { ...so, [field]: { fr: newFr, en: newEn } }
+            : so
+        ),
+      };
+      setData(updatedData);
+      await updateOffresSection(updatedData);
+    };
+  };
+
+  const toggleSeasonalHidden = async (index: number) => {
+    const updatedData = {
+      ...data,
+      seasonalOffers: data.seasonalOffers.map((so, i) =>
+        i === index ? { ...so, hidden: !so.hidden } : so
+      ),
+    };
+    setData(updatedData);
+    await updateOffresSection(updatedData);
+  };
+
+  const updateSeasonalImage = (index: number) => {
+    return async (newUrl: string) => {
+      const updatedData = {
+        ...data,
+        seasonalOffers: data.seasonalOffers.map((so, i) => (i === index ? { ...so, image: newUrl } : so)),
+      };
+      setData(updatedData);
+      await updateOffresSection(updatedData);
+    };
+  };
+
+  const toggleSeasonalVisibility = async () => {
+    const newShow = !data.seasonalSection.show;
+    const updatedData = {
+      ...data,
+      seasonalSection: {
+        ...data.seasonalSection,
+        show: newShow,
       },
     };
     setData(updatedData);
-    await updateHeroSection(updatedData);
+    if (!newShow) setForceShow(false);
+    await updateOffresSection(updatedData);
   };
 
-  const updateScrollText = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      scroll: { fr: newFr, en: newEn },
+  const updateSeasonalSectionField = (field: 'title' | 'description') => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        seasonalSection: {
+          ...data.seasonalSection,
+          [field]: { fr: newFr, en: newEn },
+        },
+      };
+      setData(updatedData);
+      await updateOffresSection(updatedData);
     };
-    setData(updatedData);
-    await updateHeroSection(updatedData);
   };
 
-  const updateImage = async (index: number, newUrl: string) => {
+  const updateCtaField = (field: 'title' | 'description') => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        cta: {
+          ...data.cta,
+          [field]: { fr: newFr, en: newEn },
+        },
+      };
+      setData(updatedData);
+      await updateOffresSection(updatedData);
+    };
+  };
+
+  const updateCtaButton = (buttonKey: 'primary' | 'secondary') => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        cta: {
+          ...data.cta,
+          buttonTexts: {
+            ...data.cta.buttonTexts,
+            [buttonKey]: { fr: newFr, en: newEn },
+          },
+        },
+      };
+      setData(updatedData);
+      await updateOffresSection(updatedData);
+    };
+  };
+
+  const addOffer = async () => {
+    let newOffer;
+    if (data.offers.length > 0) {
+      const maxId = Math.max(...data.offers.map((o: any) => o.id));
+      newOffer = {
+        ...data.offers[0],
+        id: maxId + 1,
+        title: { fr: "Nouvelle Offre", en: "New Offer" },
+        hidden: false,
+      };
+    } else {
+      newOffer = {
+        id: 1,
+        title: { fr: "Nouvelle Offre", en: "New Offer" },
+        subtitle: { fr: "Pour les gourmands", en: "For foodies" },
+        description: { fr: "Description de l'offre.", en: "Offer description." },
+        duration: { fr: "Du lundi au vendredi", en: "Monday to Friday" },
+        category: { fr: "Gastronomie", en: "Gastronomy" },
+        features: [
+          { fr: "Caractéristique 1 à 64 000 Ar", en: "Feature 1 at 64,000 Ar" },
+          { fr: "Caractéristique 2", en: "Feature 2" },
+        ],
+        validUntil: { fr: "", en: "" },
+        highlight: null,
+        image: '/uploads/Offre.png',
+        hidden: false,
+      };
+    }
     const updatedData = {
       ...data,
-      slides: data.slides.map((slide, i) => i === index ? { ...slide, image: newUrl } : slide),
+      offers: [...data.offers, newOffer],
     };
     setData(updatedData);
-    await updateHeroSection(updatedData);
+    await updateOffresSection(updatedData);
+  };
+
+  const removeOffer = async (id: number) => {
+    const updatedData = {
+      ...data,
+      offers: data.offers.filter((offer) => offer.id !== id),
+    };
+    setData(updatedData);
+    await updateOffresSection(updatedData);
+  };
+
+  const addSeasonal = async () => {
+    let newSeasonal;
+    if (data.seasonalOffers.length > 0) {
+      newSeasonal = {
+        ...data.seasonalOffers[0],
+        title: { fr: "Nouvel Événement", en: "New Event" },
+        hidden: false,
+      };
+    } else {
+      newSeasonal = {
+        title: { fr: "Nouvel Événement", en: "New Event" },
+        period: { fr: "Tous les ...", en: "Every ..." },
+        description: { fr: "Description par défaut.", en: "Default description." },
+        image: '/uploads/Env.png',
+        hidden: false,
+      };
+    }
+    const updatedData = {
+      ...data,
+      seasonalOffers: [...data.seasonalOffers, newSeasonal],
+    };
+    setData(updatedData);
+    await updateOffresSection(updatedData);
+  };
+
+  const removeSeasonal = async (index: number) => {
+    const updatedData = {
+      ...data,
+      seasonalOffers: data.seasonalOffers.filter((_, i) => i !== index),
+    };
+    setData(updatedData);
+    await updateOffresSection(updatedData);
+  };
+
+  const getCategoryIcon = (category: string) => {
+    const icons: { [key: string]: React.ComponentType<{ className?: string }> } = {
+      'Déjeuner d\'affaires': ForkKnife,
+      'Business Lunch': ForkKnife,
+      'Apéritif': Martini,
+      'Aperitif': Martini,
+      'Bien-être': HeartPulse,
+      'Wellness': HeartPulse,
+    };
+    return icons[category] || Star;
+  };
+
+  const getSeasonalIcon = (title: string) => {
+    const icons: { [key: string]: React.ComponentType<{ className?: string }> } = {
+      'Soirée Jazz': Music,
+      'Jazz Evening': Music,
+      'Brunch Dominical': Coffee,
+      'Sunday Brunch': Coffee,
+      'Soirée Dégustation': Wine,
+      'Tasting Evening': Wine,
+    };
+    return icons[title] || Sparkles;
+  };
+
+  const addOfferText = {
+    fr: 'Ajouter une nouvelle offre',
+    en: 'Add a new offer'
+  };
+
+  const addSeasonalText = {
+    fr: 'Ajouter un nouvel événement',
+    en: 'Add a new event'
   };
 
   if (loading) {
     return (
-      <div className="relative h-screen w-full overflow-hidden bg-gray-900">
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" />
-        <div className="relative h-full flex items-center justify-center text-center px-4">
-          <div className="max-w-4xl mx-auto space-y-8">
-            <div className="animate-pulse bg-white/10 rounded-full w-32 h-6 mx-auto mb-8" />
-            <div className="space-y-4">
-              <div className="animate-pulse bg-white/10 rounded w-64 h-12 mx-auto" />
-              <div className="animate-pulse bg-white/10 rounded w-96 h-8 mx-auto" />
-              <div className="animate-pulse bg-white/10 rounded w-full h-6 mx-auto max-w-md" />
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <div className="animate-pulse bg-white/10 rounded-lg w-32 h-12" />
-              <div className="animate-pulse bg-white/10 rounded-lg w-40 h-12" />
+      <div className="min-h-screen bg-background">
+        <section className="pt-20 bg-gradient-to-r from-background to-card/50 py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center animate-pulse">
+              <div className="h-12 w-96 bg-muted mx-auto mb-6" />
+              <div className="h-6 w-80 bg-muted mx-auto mb-6" />
             </div>
           </div>
-        </div>
+        </section>
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {[1, 2].map((i) => (
+                <div key={i} className="space-y-4">
+                  <div className="h-6 w-48 bg-muted" />
+                  <div className="h-4 w-full bg-muted" />
+                  <div className="h-48 bg-muted rounded-lg" />
+                  <div className="space-y-2">
+                    {[1, 2, 3, 4, 5].map((j) => (
+                      <div key={j} className="h-4 w-3/4 bg-muted" />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+        <section className="py-20 bg-card/30">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12 animate-pulse">
+              <div className="h-8 w-64 bg-muted mx-auto mb-4" />
+              <div className="h-5 w-80 bg-muted mx-auto" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="space-y-4">
+                  <div className="h-12 w-12 bg-muted rounded-full mx-auto" />
+                  <div className="h-6 w-48 bg-muted mx-auto" />
+                  <div className="h-4 w-32 bg-muted mx-auto" />
+                  <div className="h-4 w-full bg-muted" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+        <section className="py-16 bg-gradient-to-r from-primary/10 to-accent/10">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-pulse">
+            <div className="h-8 w-80 bg-muted mx-auto mb-4" />
+            <div className="h-5 w-96 bg-muted mx-auto mb-8" />
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="h-12 w-48 bg-muted" />
+              <div className="h-12 w-40 bg-muted" />
+            </div>
+          </div>
+        </section>
+        <Footer />
       </div>
     );
   }
@@ -409,558 +913,503 @@ const HeroSection = () => {
     console.warn(error);
   }
 
-  return (
-    <ImageTooltip
-      imageUrl={currentSlideData.image || hotelExterior}
-      onSave={(newUrl) => updateImage(currentSlide, newUrl)}
-    >
-      <div 
-        ref={heroRef}
-        className="relative h-screen w-full overflow-hidden cursor-pointer"
-      >
-        {/* Hero Images with Slide Transition */}
-        <div className="relative h-full w-full overflow-hidden">
-          <div 
-            className="flex h-full transition-transform ease-in-out"
-            style={{ 
-              transform: `translateX(-${currentSlide * 100}%)`,
-              transitionDuration: `${TRANSITION_DURATION}ms`
-            }}
-          >
-            {data.slides.map((slide, index) => {
-              const imageUrl = slide.image || hotelExterior;
-              return (
-                <div
-                  key={index}
-                  className="w-full h-full flex-shrink-0 bg-cover bg-center bg-no-repeat"
-                  style={{ backgroundImage: `url(${imageUrl})` }}
-                />
-              );
-            })}
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30 pointer-events-none" />
-        </div>
+  const { hero, offers, seasonalOffers, seasonalSection, cta, offerFeaturesTitle } = data;
+  const ctaButtons = cta.buttonTexts;
 
-        {/* Content */}
-        <div className="absolute inset-0 h-full flex items-center justify-center text-center px-4 z-20">
-          <div className="max-w-4xl mx-auto">
-            <div className="mb-6">
-              <div className="inline-flex items-center px-4 py-2 bg-primary/20 backdrop-blur-sm rounded-full border border-primary/30 mb-8">
-                <span className="text-primary text-sm font-medium">{data.badge.stars}</span>
-                <Tooltip
-                  frLabel={data.badge.text.fr}
-                  enLabel={data.badge.text.en}
-                  onSave={updateBadgeText}
-                >
-                  <span className="ml-2 text-primary text-sm">{currentBadgeText}</span>
-                </Tooltip>
-              </div>
-            </div>
-            
+  const hiddenSectionTexts = {
+    title: { fr: 'Section masquée', en: 'Section hidden' },
+    description: {
+      fr: 'Cette section est cachée pour les visiteurs. Cliquez pour l\'afficher temporairement et éditer.',
+      en: 'This section is hidden from visitors. Click to temporarily show and edit.'
+    },
+    button: { fr: 'Afficher pour édition', en: 'Show for editing' }
+  }
+
+
+  const addOfferCard = (
+    <Card className="border-2 border-dashed border-muted-foreground hover:border-primary transition-colors flex flex-col">
+      <CardContent className="flex flex-col items-center justify-center h-full p-8 text-center">
+        <Button
+          variant="outline"
+          size="lg"
+          onClick={addOffer}
+          className="mb-4 rounded-full w-16 h-16 p-0"
+        >
+          <Plus className="w-6 h-6" />
+        </Button>
+        <p className="text-muted-foreground">
+          {getText(addOfferText)}
+        </p>
+      </CardContent>
+    </Card>
+  );
+
+  const addSeasonalCard = (
+    <Card className="border-2 border-dashed border-muted-foreground hover:border-primary transition-colors text-center flex flex-col">
+      <CardContent className="flex flex-col items-center justify-center h-full p-8">
+        <Button
+          variant="outline"
+          size="lg"
+          onClick={addSeasonal}
+          className="mb-4 rounded-full w-16 h-16 p-0"
+        >
+          <Plus className="w-6 h-6" />
+        </Button>
+        <p className="text-muted-foreground">
+          {getText(addSeasonalText)}
+        </p>
+      </CardContent>
+    </Card>
+  );
+
+  const isFr = currentLang.code === 'fr';
+
+  return (
+    <div className="min-h-screen bg-background">
+
+      {/* Hero Section */}
+      <section className="pt-20 bg-gradient-to-r from-background to-card/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <div className="text-center">
             <Tooltip
-              frLabel={currentSlideData.title.fr}
-              enLabel={currentSlideData.title.en}
-              onSave={updateSlideField(currentSlide, 'title')}
+              frLabel={hero.title.fr}
+              enLabel={hero.title.en}
+              onSave={updateHeroField('title')}
             >
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-white mb-6 leading-tight">
-                {formatAmpersand(currentTitle)}
+              <h1 className="text-5xl md:text-6xl font-serif font-bold text-foreground mb-6">
+                {getText(hero.title)}
               </h1>
             </Tooltip>
-            
+            <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
             <Tooltip
-              frLabel={currentSlideData.subtitle.fr}
-              enLabel={currentSlideData.subtitle.en}
-              onSave={updateSlideField(currentSlide, 'subtitle')}
+              frLabel={hero.description.fr}
+              enLabel={hero.description.en}
+              onSave={updateHeroField('description')}
             >
-              <h2 className="text-xl md:text-2xl lg:text-3xl font-luxury italic text-accent mb-8">
-                {currentSubtitle}
-              </h2>
-            </Tooltip>
-            
-            <Tooltip
-              frLabel={currentSlideData.description.fr}
-              enLabel={currentSlideData.description.en}
-              onSave={updateSlideField(currentSlide, 'description')}
-            >
-              <p className="text-base md:text-lg lg:text-xl text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed">
-                {currentDescription}
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                {getText(hero.description)}
               </p>
             </Tooltip>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button 
-                asChild
-                size="lg" 
-                className="px-8 py-3 text-lg font-medium"
-                data-testid="button-book-suite"
-              >
-                <Link href={slidePaths[currentSlide]} className="flex items-center justify-center">
-                  <Tooltip
-                    frLabel={currentSlideData.buttons.primary.fr}
-                    enLabel={currentSlideData.buttons.primary.en}
-                    onSave={updateSlidePrimaryButton(currentSlide)}
-                  >
-                    <span>{currentPrimaryButton}</span>
-                  </Tooltip>
-                </Link>
-              </Button>
-            </div>
           </div>
         </div>
+      </section>
 
-        {/* Navigation Arrows */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className={`absolute left-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 backdrop-blur-sm z-[9999] transition-all duration-300 ${
-            showArrows ? 'opacity-100 scale-100' : 'opacity-0 scale-90 pointer-events-none'
-          }`}
-          onClick={handlePrevSlide}
-          disabled={isTransitioning}
-          data-testid="button-prev-slide"
-        >
-          <ChevronLeft className="w-8 h-8" />
-        </Button>
-        
-        <Button
-          variant="ghost"
-          size="icon"
-          className={`absolute right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20 backdrop-blur-sm z-[9999] transition-all duration-300 ${
-            showArrows ? 'opacity-100 scale-100' : 'opacity-0 scale-90 pointer-events-none'
-          }`}
-          onClick={handleNextSlide}
-          disabled={isTransitioning}
-          data-testid="button-next-slide"
-        >
-          <ChevronRight className="w-8 h-8" />
-        </Button>
-
-        {/* Slide Indicators */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-2 z-30">
-          {data.slides.map((_, index) => (
-            <button
-              key={index}
-              className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer ${
-                index === currentSlide 
-                  ? 'bg-primary scale-125' 
-                  : 'bg-white/30 hover:bg-white/50 hover:scale-110'
-              } ${isTransitioning ? 'pointer-events-none' : ''}`}
-              onClick={() => goToSlide(index)}
-              disabled={isTransitioning}
-              data-testid={`button-slide-${index}`}
-            />
-          ))}
-        </div>
-
-        {/* Auto-play Control */}
-        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex items-center space-x-2 z-30">
-          <div className="text-xs text-white/70">
-            {isPaused ? 'Pause' : 'Lecture auto'}
-          </div>
-          <button
-            className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white/30 transition-colors"
-            onClick={() => setIsPaused(!isPaused)}
-          >
-            {isPaused ? (
-              <Play className="w-4 h-4 text-white" />
-            ) : (
-              <Pause className="w-4 h-4 text-white" />
-            )}
-          </button>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-white/70 animate-bounce z-10">
-          <Tooltip
-            frLabel={data.scroll.fr}
-            enLabel={data.scroll.en}
-            onSave={updateScrollText}
-          >
-            <div className="text-xs mb-2 text-center">{currentScroll}</div>
-          </Tooltip>
-          <div className="w-0.5 h-8 bg-white/50 mx-auto"></div>
-        </div>
-      </div>
-    </ImageTooltip>
-  );
-};
-
-export default HeroSection;
-
-// src/data/footerData.ts
-export const footerData = {
-  hotelName: {
-    fr: "Carlton Madagascar",
-    en: "Carlton Madagascar"
-  },
-  hotelDescription: {
-    fr: "L'art de vivre à la française au cœur d'Antananarivo. Un hôtel 5 étoiles où luxe et raffinement créent une expérience inoubliable.",
-    en: "The art of French living in the heart of Antananarivo. A 5-star hotel where luxury and refinement create an unforgettable experience."
-  },
-  newsletter: {
-    title: {
-      fr: "Newsletter",
-      en: "Newsletter"
-    },
-    subtitle: {
-      fr: "Recevez nos offres exclusives et actualités",
-      en: "Receive our exclusive offers and latest news"
-    },
-    inputPlaceholder: {
-      fr: "Votre email",
-      en: "Your email"
-    },
-    submitButton: {
-      fr: "S'abonner",
-      en: "Subscribe"
-    }
-  },
-  footerSections: [
-    {
-      title: {
-        fr: "L'Hôtel",
-        en: "The Hotel"
-      },
-      links: [
-        {
-          label: {
-            fr: "À propos",
-            en: "About"
-          },
-          href: "/about"
-        },
-        {
-          label: {
-            fr: "Histoire",
-            en: "History"
-          },
-          href: "/history"
-        },
-        {
-          label: {
-            fr: "Récompenses",
-            en: "Awards"
-          },
-          href: "/awards"
-        },
-        {
-          label: {
-            fr: "Emplois",
-            en: "Careers"
-          },
-          href: "/careers"
-        }
-      ]
-    },
-    {
-      title: {
-        fr: "Services",
-        en: "Services"
-      },
-      links: [
-        {
-          label: {
-            fr: "Chambres & Suites",
-            en: "Rooms & Suites"
-          },
-          href: "/chambres"
-        },
-        {
-          label: {
-            fr: "Restaurants",
-            en: "Restaurants"
-          },
-          href: "/restaurants"
-        },
-        {
-          label: {
-            fr: "Spa & Bien-être",
-            en: "Spa & Wellness"
-          },
-          href: "/spa"
-        },
-        {
-          label: {
-            fr: "Événements",
-            en: "Events"
-          },
-          href: "/evenements"
-        }
-      ]
-    },
-    {
-      title: {
-        fr: "Informations",
-        en: "Information"
-      },
-      links: [
-        {
-          label: {
-            fr: "Conditions générales",
-            en: "Terms and Conditions"
-          },
-          href: "/terms"
-        },
-        {
-          label: {
-            fr: "Politique de confidentialité",
-            en: "Privacy Policy"
-          },
-          href: "/privacy"
-        },
-        {
-          label: {
-            fr: "Plan du site",
-            en: "Sitemap"
-          },
-          href: "/sitemap"
-        },
-        {
-          label: {
-            fr: "FAQ",
-            en: "FAQ"
-          },
-          href: "/faq"
-        }
-      ]
-    }
-  ],
-  contactItems: [
-    {
-      icon: "MapPin",
-      label: {
-        fr: "Adresse",
-        en: "Address"
-      },
-      value: {
-        fr: "Rue Pierre Stibbe Anosy<br />101 Antananarivo, Madagascar",
-        en: "Rue Pierre Stibbe Anosy<br />101 Antananarivo, Madagascar"
-      }
-    },
-    {
-      icon: "Phone",
-      label: {
-        fr: "Téléphone",
-        en: "Phone"
-      },
-      value: "+261 20 22 260 60"
-    },
-    {
-      icon: "Mail",
-      label: {
-        fr: "Email",
-        en: "Email"
-      },
-      value: "contact@carlton.mg"
-    },
-    {
-      icon: "Clock",
-      label: {
-        fr: "Réception",
-        en: "Reception"
-      },
-      value: {
-        fr: "24h/24 - 7j/7",
-        en: "24/7"
-      }
-    }
-  ],
-  bottomCopyright: {
-    fr: "© 2025 Carlton Madagascar. Tous droits réservés.",
-    en: "© 2025 Carlton Madagascar. All rights reserved."
-  },
-  bottomStars: {
-    fr: "★★★★★ Hôtel 5 étoiles",
-    en: "★★★★★ 5-Star Hotel"
-  },
-  bottomSocialText: {
-    fr: "Suivez-nous :",
-    en: "Follow us:"
-  },
-  logos: [
-    {
-      src: "/uploads/I Prefer_logo_white_H_LARGE_1758205962584.png",
-      alt: "I Prefer Hotel Rewards",
-      className: "h-12 opacity-80 hover:opacity-100 transition-opacity"
-    },
-    {
-      src: "/uploads/Preferred Lifestyle LOGO LARGE_black_1758205962584.png",
-      alt: "Preferred Lifestyle",
-      className: "h-12 opacity-80 hover:opacity-100 transition-opacity filter invert"
-    }
-  ],
-  socialLinks: [
-    { icon: "Facebook", href: "#", label: "Facebook" },
-    { icon: "Instagram", href: "#", label: "Instagram" },
-    { icon: "Twitter", href: "#", label: "Twitter" },
-    { icon: "Linkedin", href: "#", label: "LinkedIn" }
-  ]
-};
-
-// Footer.tsx
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Separator } from '@/components/ui/separator';
-import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Twitter, Linkedin } from 'lucide-react';
-import { Link } from 'wouter';
-import { footerData } from '@/data/footerData';
-import { formatAmpersand } from '@/lib/utils/formatAmpersand';
-
-const Footer = () => {
-  // TODO: Integrate with i18n hook (e.g., useTranslation from react-i18next) to get dynamic lang
-  // For now, hardcoded to 'fr' - replace with actual lang logic
-  const lang = 'fr' as 'fr' | 'en';
-
-  const getText = (texts: { fr: string; en: string }): string => texts[lang];
-  const getValue = (value: string | { fr: string; en: string }): string => 
-    typeof value === 'string' ? value : value[lang];
-
-  const handleNewsletterSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Newsletter subscription submitted');
-  };
-
-  const iconComponents = {
-    MapPin,
-    Phone,
-    Mail,
-    Clock,
-  };
-
-  const socialIconComponents = {
-    Facebook,
-    Instagram,
-    Twitter,
-    Linkedin,
-  };
-
-  return (
-    <footer className="bg-sidebar border-t border-sidebar-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Main Footer Content */}
-        <div className="py-16">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            {/* Hotel Info & Newsletter */}
-            <div className="lg:col-span-1">
-              <div className="mb-6">
-                <h3 className="text-2xl font-serif font-bold text-sidebar-foreground mb-4">
-                  {getText(footerData.hotelName)}
-                </h3>
-                <p className="text-sidebar-foreground/80 mb-6">
-                  {getText(footerData.hotelDescription)}
-                </p>
-              </div>
-              
-              {/* Newsletter */}
-              <div>
-                <h4 className="font-semibold text-sidebar-foreground mb-3">
-                  {getText(footerData.newsletter.title)}
-                </h4>
-                <p className="text-sm text-sidebar-foreground/70 mb-4">
-                  {getText(footerData.newsletter.subtitle)}
-                </p>
-                <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
-                  <Input 
-                    type="email" 
-                    placeholder={getText(footerData.newsletter.inputPlaceholder)}
-                    className="flex-1 bg-sidebar-accent border-sidebar-border text-sidebar-foreground"
-                    data-testid="input-newsletter"
-                  />
-                  <Button type="submit" size="sm" data-testid="button-newsletter">
-                    {getText(footerData.newsletter.submitButton)}
-                  </Button>
-                </form>
-              </div>
-            </div>
-
-            {/* Footer Links */}
-            {footerData.footerSections.map((section, index) => (
-              <div key={index}>
-                <h4 className="font-semibold text-sidebar-foreground mb-4">
-                  {getText(section.title)}
-                </h4>
-                <ul className="space-y-2">
-                  {section.links.map((link, linkIndex) => (
-                    <li key={linkIndex}>
-                      <Link 
-                        href={link.href}
-                        className="text-sidebar-foreground/70 hover:text-primary transition-colors text-sm"
-                        data-testid={`link-footer-${link.href.slice(1)}`}
-                      >
-                        {formatAmpersand(getText(link.label))}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <Separator className="bg-sidebar-border" />
-
-        {/* Contact Info */}
-        <div className="py-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {footerData.contactItems.map((item, index) => {
-              const IconComponent = iconComponents[item.icon as keyof typeof iconComponents];
+      {/* Main Offers */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+            {offers.map((offer, index) => {
+              if (!isAdmin && offer.hidden) return null;
+              const CategoryIcon = getCategoryIcon(getText(offer.category));
               return (
-                <div key={index} className="flex items-start gap-3">
-                  <IconComponent className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-                  <div>
-                    <p className="text-sm font-medium text-sidebar-foreground">{getText(item.label)}</p>
-                    <p className="text-sm text-sidebar-foreground/70" dangerouslySetInnerHTML={{ __html: getValue(item.value) }} />
-                  </div>
-                </div>
+                <Card key={offer.id} className={`relative overflow-hidden hover-elevate transition-all duration-300 flex flex-col ${offer.hidden ? 'opacity-50' : ''}`}>
+                  {isAdmin && (
+                    <div className="absolute top-2 right-2 z-10 flex gap-1">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => toggleOfferHidden(index)}
+                        title={offer.hidden ? (isFr ? 'Afficher' : 'Show') : (isFr ? 'Masquer' : 'Hide')}
+                      >
+                        {offer.hidden ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeOffer(offer.id)}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  )}
+                  <CardHeader className="pb-4">
+                    <div className="flex items-center justify-between mb-2">
+                      <Tooltip
+                        frLabel={offer.category.fr}
+                        enLabel={offer.category.en}
+                        onSave={updateOfferField(index, 'category')}
+                      >
+                        <Badge
+                          variant="outline"
+                          className="text-primary border-primary flex items-center"
+                        >
+                          <CategoryIcon className="w-3 h-3 mr-1" />
+                          {getText(offer.category)}
+                        </Badge>
+                      </Tooltip>
+                      {offer.highlight && (
+                        <Tooltip
+                          frLabel={offer.highlight.fr}
+                          enLabel={offer.highlight.en}
+                          onSave={updateOfferField(index, 'highlight')}
+                        >
+                          <Badge className="bg-accent text-accent-foreground">
+                            {getText(offer.highlight)}
+                          </Badge>
+                        </Tooltip>
+                      )}
+                    </div>
+                    <Tooltip
+                      frLabel={offer.title.fr}
+                      enLabel={offer.title.en}
+                      onSave={updateOfferField(index, 'title')}
+                    >
+                      <CardTitle className="text-2xl font-serif text-foreground mb-2">
+                        {getText(offer.title)}
+                      </CardTitle>
+                    </Tooltip>
+                    <Tooltip
+                      frLabel={offer.subtitle.fr}
+                      enLabel={offer.subtitle.en}
+                      onSave={updateOfferField(index, 'subtitle')}
+                    >
+                      <p className="text-primary font-luxury italic text-lg">
+                        {getText(offer.subtitle)}
+                      </p>
+                    </Tooltip>
+                  </CardHeader>
+
+                  <CardContent className="flex flex-col flex-1">
+                    <div className="space-y-6 flex-1">
+                      <Tooltip
+                        frLabel={offer.description.fr}
+                        enLabel={offer.description.en}
+                        onSave={updateOfferField(index, 'description')}
+                      >
+                        <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
+                          {getText(offer.description)}
+                        </p>
+                      </Tooltip>
+
+                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-1">
+                          <Clock className="w-4 h-4" />
+                          <Tooltip
+                            frLabel={offer.duration.fr}
+                            enLabel={offer.duration.en}
+                            onSave={updateOfferField(index, 'duration')}
+                          >
+                            <span>{getText(offer.duration)}</span>
+                          </Tooltip>
+                        </div>
+                        {offer.validUntil && (
+                          <div className="flex items-center gap-1">
+                            <Tooltip
+                              frLabel={offer.validUntil.fr}
+                              enLabel={offer.validUntil.en}
+                              onSave={updateOfferField(index, 'validUntil')}
+                            >
+                              <span>{getText(offer.validUntil)}</span>
+                            </Tooltip>
+                          </div>
+                        )}
+                      </div>
+
+                      <div>
+                        <Tooltip
+                          frLabel={offerFeaturesTitle.fr}
+                          enLabel={offerFeaturesTitle.en}
+                          onSave={updateOfferFeaturesTitle}
+                        >
+                          <h4 className="font-semibold text-foreground mb-3">
+                            {getText(offerFeaturesTitle)}
+                          </h4>
+                        </Tooltip>
+                        <ul className="space-y-2">
+                          {offer.features.map((feature, fIndex) => (
+                            <li key={fIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
+                              <Star className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                              <div className="flex-1">
+                                <Tooltip
+                                  frLabel={feature.fr}
+                                  enLabel={feature.en}
+                                  onSave={updateOfferFeature(index, fIndex)}
+                                >
+                                  <span>{getText(feature)}</span>
+                                </Tooltip>
+                              </div>
+                              {isAdmin && (
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => removeOfferFeature(index, fIndex)}
+                                  className="h-6 w-6 p-0"
+                                >
+                                  <Trash2 className="w-3 h-3" />
+                                </Button>
+                              )}
+                            </li>
+                          ))}
+                        </ul>
+                        {isAdmin && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => addOfferFeature(index)}
+                            className="mt-2"
+                          >
+                            <Plus className="w-4 h-4 mr-1" />
+                            Ajouter une caractéristique
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Photo frame for offer */}
+                    <ImageTooltip
+                      imageUrl={offer.image}
+                      onSave={updateOfferImage(index)}
+                    >
+                      {offer.image ? (
+                        <img
+                          src={offer.image}
+                          alt={`Photo de ${getText(offer.title)}`}
+                          className="w-full h-48 object-cover rounded-lg border-2 border-primary/20 mt-4"
+                        />
+                      ) : (
+                        <div className="w-full h-48 bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg border-2 border-primary/20 flex items-center justify-center">
+                          <div className="text-center p-4">
+                            <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                              <Gift className="w-8 h-8 text-primary" />
+                            </div>
+                            <p className="text-sm text-muted-foreground font-medium">
+                              Photo de l'offre {getText(offer.title)}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                    </ImageTooltip>
+                  </CardContent>
+                </Card>
               );
             })}
+            {isAdmin && addOfferCard}
           </div>
         </div>
+      </section>
 
-        <Separator className="bg-sidebar-border" />
+      {/* Seasonal Offers */}
+      {seasonalSection.show || forceShow ? (
+        <section className="py-20 bg-card/30">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12 relative">
+              {isAdmin && (
+                <div className="absolute right-4 top-0 flex gap-2">
+                  {seasonalSection.show ? (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={toggleSeasonalVisibility}
+                      title={isFr ? 'Masquer pour le public' : 'Hide for public'}
+                    >
+                      <EyeOff className="w-4 h-4" />
+                      <span className="sr-only">{isFr ? 'Masquer' : 'Hide'}</span>
+                    </Button>
+                  ) : forceShow ? (
+                    <div className="flex gap-1">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setForceShow(false)}
+                        title={isFr ? 'Masquer l\'aperçu' : 'Hide preview'}
+                      >
+                        <EyeOff className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={async () => {
+                          const updatedData = {
+                            ...data,
+                            seasonalSection: {
+                              ...data.seasonalSection,
+                              show: true,
+                            },
+                          };
+                          setData(updatedData);
+                          setForceShow(false);
+                          await updateOffresSection(updatedData);
+                        }}
+                        title={isFr ? 'Rendre visible' : 'Make visible'}
+                      >
+                        <Eye className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  ) : null}
+                </div>
+              )}
+              <Tooltip
+                frLabel={seasonalSection.title.fr}
+                enLabel={seasonalSection.title.en}
+                onSave={updateSeasonalSectionField('title')}
+              >
+                <h2 className="text-4xl font-serif font-bold text-foreground mb-4">
+                  {getText(seasonalSection.title)}
+                </h2>
+              </Tooltip>
+              <Tooltip
+                frLabel={seasonalSection.description.fr}
+                enLabel={seasonalSection.description.en}
+                onSave={updateSeasonalSectionField('description')}
+              >
+                <p className="text-lg text-muted-foreground">
+                  {getText(seasonalSection.description)}
+                </p>
+              </Tooltip>
+            </div>
 
-        {/* Bottom Footer */}
-        <div className="py-6">
-          <div className="flex items-center justify-center gap-6 flex-wrap">
-            <p className="text-sm text-sidebar-foreground/70">
-              {getText(footerData.bottomCopyright)}
-            </p>
-            
-            <span>{getText(footerData.bottomStars)}</span>
-            
-            {footerData.logos.map((logo, index) => (
-              <img 
-                key={index}
-                src={logo.src} 
-                alt={logo.alt}
-                className={logo.className}
-                data-testid={`logo-${index === 0 ? 'iprefer' : 'preferred-lifestyle'}`}
-              />
-            ))}
-            
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-sidebar-foreground/70 mr-2">{getText(footerData.bottomSocialText)}</span>
-              {footerData.socialLinks.map((social, index) => {
-                const IconComponent = socialIconComponents[social.icon as keyof typeof socialIconComponents];
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {seasonalOffers.map((offer, index) => {
+                if (!isAdmin && offer.hidden) return null;
+                const SeasonalIcon = getSeasonalIcon(getText(offer.title));
                 return (
-                  <Button
-                    key={index}
-                    variant="ghost"
-                    size="sm"
-                    className="w-8 h-8 p-0 text-sidebar-foreground/70 hover:text-primary"
-                    data-testid={`button-social-${social.label.toLowerCase()}`}
-                  >
-                    <IconComponent className="w-4 h-4" />
-                    <span className="sr-only">{social.label}</span>
-                  </Button>
+                  <Card key={index} className={`relative text-center hover-elevate flex flex-col ${offer.hidden ? 'opacity-50' : ''}`}>
+                    {isAdmin && (
+                      <div className="absolute top-2 right-2 z-10 flex gap-1">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => toggleSeasonalHidden(index)}
+                          title={offer.hidden ? (isFr ? 'Afficher' : 'Show') : (isFr ? 'Masquer' : 'Hide')}
+                        >
+                          {offer.hidden ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => removeSeasonal(index)}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    )}
+                    <CardHeader>
+                      <SeasonalIcon className="w-12 h-12 text-primary mx-auto mb-4" />
+                      <Tooltip
+                        frLabel={offer.title.fr}
+                        enLabel={offer.title.en}
+                        onSave={updateSeasonalField(index, 'title')}
+                      >
+                        <CardTitle className="text-xl font-serif text-foreground">
+                          {getText(offer.title)}
+                        </CardTitle>
+                      </Tooltip>
+                      <Tooltip
+                        frLabel={offer.period.fr}
+                        enLabel={offer.period.en}
+                        onSave={updateSeasonalField(index, 'period')}
+                      >
+                        <Badge variant="outline" className="text-primary border-primary mx-auto">
+                          {getText(offer.period)}
+                        </Badge>
+                      </Tooltip>
+                    </CardHeader>
+                    <CardContent className="flex flex-col flex-1">
+                      <div className="space-y-4 flex-1">
+                        <Tooltip
+                          frLabel={offer.description.fr}
+                          enLabel={offer.description.en}
+                          onSave={updateSeasonalField(index, 'description')}
+                        >
+                          <p className="text-muted-foreground whitespace-pre-line">
+                            {getText(offer.description)}
+                          </p>
+                        </Tooltip>
+                      </div>
+
+                      {/* Photo frame for seasonal offer */}
+                      <ImageTooltip
+                        imageUrl={offer.image}
+                        onSave={updateSeasonalImage(index)}
+                      >
+                        {offer.image ? (
+                          <img
+                            src={offer.image}
+                            alt={`Photo de ${getText(offer.title)}`}
+                            className="w-full h-48 object-cover rounded-lg border-2 border-primary/20 mt-4"
+                          />
+                        ) : (
+                          <div className="w-full h-48 bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg border-2 border-primary/20 flex items-center justify-center">
+                            <div className="text-center p-4">
+                              <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                                <Gift className="w-8 h-8 text-primary" />
+                              </div>
+                              <p className="text-sm text-muted-foreground font-medium">
+                                Photo de l'événement {getText(offer.title)}
+                              </p>
+                            </div>
+                          </div>
+                        )}
+                      </ImageTooltip>
+                    </CardContent>
+                  </Card>
                 );
               })}
+              {isAdmin && addSeasonalCard}
             </div>
           </div>
+        </section>
+      ) : isAdmin ? (
+        <section className="py-20 bg-card/30">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center py-20">
+              <Card className="max-w-md mx-auto">
+                <CardHeader className="text-center">
+                  <EyeOff className="w-8 h-8 mx-auto text-muted-foreground mb-4" />
+                  <CardTitle className="text-2xl">{getText(hiddenSectionTexts.title)}</CardTitle>
+                  <p className="text-muted-foreground">{getText(hiddenSectionTexts.description)}</p>
+                </CardHeader>
+                <CardContent>
+                  <Button onClick={() => setForceShow(true)} className="w-full">
+                    {getText(hiddenSectionTexts.button)}
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
+      {/* CTA Section */}
+      <section className="py-16 bg-gradient-to-r from-primary/10 to-accent/10">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <Tooltip
+            frLabel={cta.title.fr}
+            enLabel={cta.title.en}
+            onSave={updateCtaField('title')}
+          >
+            <h2 className="text-3xl font-serif font-bold text-foreground mb-4">
+              {getText(cta.title)}
+            </h2>
+          </Tooltip>
+          <Tooltip
+            frLabel={cta.description.fr}
+            enLabel={cta.description.en}
+            onSave={updateCtaField('description')}
+          >
+            <p className="text-lg text-muted-foreground mb-8">
+              {getText(cta.description)}
+            </p>
+          </Tooltip>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="lg" data-testid="button-contact-concierge">
+              <Users className="w-4 h-4 mr-2" />
+              <Tooltip
+                frLabel={ctaButtons.primary.fr}
+                enLabel={ctaButtons.primary.en}
+                onSave={updateCtaButton('primary')}
+              >
+                <span>{getText(ctaButtons.primary)}</span>
+              </Tooltip>
+            </Button>
+          </div>
         </div>
-      </div>
-    </footer>
+      </section>
+
+      <Footer />
+    </div>
   );
 };
 
-export default Footer;
+export default Offres;
+

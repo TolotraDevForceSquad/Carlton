@@ -21,8 +21,12 @@ import {
   Briefcase,
   Phone,       // For telephone
   Lock,        // For safe
-  ShoppingBag, // For minibar
-  UtensilsCrossed // For iron/ironing board
+  ShoppingBag,
+  EyeOff,
+  Trash2, // For minibar
+  Eye,
+  UtensilsCrossed, // For iron/ironing board
+  Plus
 } from 'lucide-react';
 import { Tooltip, ImageTooltip } from '@/components/Tooltip';
 import Footer from '@/components/Footer';
@@ -60,6 +64,7 @@ const splitChambresData = (mixedData: typeof chambresData) => {
       features: room.features.map((feature) => feature.fr),
       amenities: room.amenities.fr,
       image: room.image,
+      hidden: room.hidden || false,
     })),
     stats: mixedData.stats,
     statsLabels: {
@@ -78,6 +83,7 @@ const splitChambresData = (mixedData: typeof chambresData) => {
       icon: service.icon,
       title: service.title.fr,
       desc: service.desc.fr,
+      hidden: service.hidden || false,
     })),
     buttonText: mixedData.buttonText.fr,
     bookButton: mixedData.bookButton.fr,
@@ -98,6 +104,7 @@ const splitChambresData = (mixedData: typeof chambresData) => {
       features: room.features.map((feature) => feature.en),
       amenities: room.amenities.en,
       image: room.image,
+      hidden: room.hidden || false,
     })),
     stats: mixedData.stats,
     statsLabels: {
@@ -116,6 +123,7 @@ const splitChambresData = (mixedData: typeof chambresData) => {
       icon: service.icon,
       title: service.title.en,
       desc: service.desc.en,
+      hidden: service.hidden || false,
     })),
     buttonText: mixedData.buttonText.en,
     bookButton: mixedData.bookButton.en,
@@ -154,6 +162,7 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
           en: roomEn.amenities || roomFr.amenities,
         },
         image: roomFr.image,
+        hidden: roomFr.hidden !== undefined ? roomFr.hidden : (roomEn.hidden || false),
       };
     }),
     stats: dataFr.stats,
@@ -173,6 +182,7 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
       icon: serviceFr.icon,
       title: { fr: serviceFr.title, en: enFallback.services[i]?.title || serviceFr.title },
       desc: { fr: serviceFr.desc, en: enFallback.services[i]?.desc || serviceFr.desc },
+      hidden: serviceFr.hidden !== undefined ? serviceFr.hidden : (enFallback.services[i]?.hidden || false),
     })),
     buttonText: { fr: dataFr.buttonText, en: enFallback.buttonText || dataFr.buttonText },
     bookButton: { fr: dataFr.bookButton, en: enFallback.bookButton || dataFr.bookButton },
@@ -183,9 +193,16 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
 const Chambres = () => {
   const { currentLang } = useLanguage();
   const lang = currentLang.code.toLowerCase();
-  const [data, setData] = useState(chambresData);
+  const [data, setData] = useState(() => {
+    // Ensure hidden is added to default data if not present
+    const defaultData = { ...chambresData };
+    defaultData.rooms = defaultData.rooms.map(room => ({ ...room, hidden: room.hidden || false }));
+    defaultData.services = defaultData.services.map(service => ({ ...service, hidden: service.hidden || false }));
+    return defaultData;
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const isAdmin = !!localStorage.getItem('userToken');
 
   // Fetch chambres data from backend
   useEffect(() => {
@@ -194,7 +211,7 @@ const Chambres = () => {
         setLoading(true);
         setError(null);
         const headers = getAuthHeaders();
-        let response = await fetch('/api/globalSections', { headers });
+        let response = await fetch(`/api/globalSections?sectionKey=${SECTION_KEY}`, { headers });
         let sections: any[] = [];
         if (response.ok) {
           sections = await response.json();
@@ -240,10 +257,10 @@ const Chambres = () => {
     fetchChambresData();
   }, []);
 
-  const updateChambresSection = async (updatedMixedData: typeof chambresData) => {
+  const updateChambresSection = async (updatedMixedData: typeof data) => {
     try {
       const headers = getAuthHeaders();
-      let currentSectionResponse = await fetch('/api/globalSections', { headers });
+      let currentSectionResponse = await fetch(`/api/globalSections?sectionKey=${SECTION_KEY}`, { headers });
       let currentData: any[] = [];
       if (currentSectionResponse.ok) {
         currentData = await currentSectionResponse.json();
@@ -365,6 +382,41 @@ const Chambres = () => {
     };
   };
 
+  const toggleServiceHidden = async (serviceIndex: number) => {
+    const updatedData = {
+      ...data,
+      services: data.services.map((service, i) =>
+        i === serviceIndex ? { ...service, hidden: !service.hidden } : service
+      ),
+    };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const addService = async () => {
+    const newService = {
+      icon: 'Coffee',
+      title: { fr: 'Nouveau Service', en: 'New Service' },
+      desc: { fr: 'Description du nouveau service.', en: 'Description of the new service.' },
+      hidden: false,
+    };
+    const updatedData = {
+      ...data,
+      services: [...data.services, newService],
+    };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const removeService = async (index: number) => {
+    const updatedData = {
+      ...data,
+      services: data.services.filter((_, i) => i !== index),
+    };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
   const updateButtonText = async (newFr: string, newEn: string) => {
     const updatedData = { ...data, buttonText: { fr: newFr, en: newEn } };
     setData(updatedData);
@@ -399,11 +451,11 @@ const Chambres = () => {
         rooms: data.rooms.map((room, i) =>
           i === roomIndex
             ? {
-              ...room,
-              features: room.features.map((feature, j) =>
-                j === featureIndex ? { fr: newFr, en: newEn } : feature
-              ),
-            }
+                ...room,
+                features: room.features.map((feature, j) =>
+                  j === featureIndex ? { fr: newFr, en: newEn } : feature
+                ),
+              }
             : room
         ),
       };
@@ -412,31 +464,95 @@ const Chambres = () => {
     };
   };
 
+  const addRoomFeature = async (roomIndex: number) => {
+    const updatedData = {
+      ...data,
+      rooms: data.rooms.map((room, i) =>
+        i === roomIndex
+          ? {
+              ...room,
+              features: [...room.features, { fr: 'Nouvelle caractéristique', en: 'New feature' }],
+            }
+          : room
+      ),
+    };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const removeRoomFeature = async (roomIndex: number, featureIndex: number) => {
+    const updatedData = {
+      ...data,
+      rooms: data.rooms.map((room, i) =>
+        i === roomIndex
+          ? {
+              ...room,
+              features: room.features.filter((_, j) => j !== featureIndex),
+            }
+          : room
+      ),
+    };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
   const updateRoomAmenity = (roomIndex: number, amenityIndex: number) => {
     return async (newFr: string, newEn: string) => {
-      const currentEn = data.rooms[roomIndex].amenities.en || [...data.rooms[roomIndex].amenities.fr];
-      const updatedAmenitiesFr = [...data.rooms[roomIndex].amenities.fr];
-      const updatedAmenitiesEn = [...currentEn];
-      updatedAmenitiesFr[amenityIndex] = newFr;
-      updatedAmenitiesEn[amenityIndex] = newEn;
-
       const updatedData = {
         ...data,
         rooms: data.rooms.map((room, i) =>
           i === roomIndex
             ? {
-              ...room,
-              amenities: {
-                fr: updatedAmenitiesFr,
-                en: updatedAmenitiesEn,
-              },
-            }
+                ...room,
+                amenities: {
+                  fr: room.amenities.fr.map((a, j) => j === amenityIndex ? newFr : a),
+                  en: room.amenities.en.map((a, j) => j === amenityIndex ? newEn : a),
+                },
+              }
             : room
         ),
       };
       setData(updatedData);
       await updateChambresSection(updatedData);
     };
+  };
+
+  const addRoomAmenity = async (roomIndex: number) => {
+    const updatedData = {
+      ...data,
+      rooms: data.rooms.map((room, i) =>
+        i === roomIndex
+          ? {
+              ...room,
+              amenities: {
+                fr: [...room.amenities.fr, 'Nouvelle commodité'],
+                en: [...room.amenities.en, 'New amenity'],
+              },
+            }
+          : room
+      ),
+    };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const removeRoomAmenity = async (roomIndex: number, amenityIndex: number) => {
+    const updatedData = {
+      ...data,
+      rooms: data.rooms.map((room, i) =>
+        i === roomIndex
+          ? {
+              ...room,
+              amenities: {
+                fr: room.amenities.fr.filter((_, j) => j !== amenityIndex),
+                en: room.amenities.en.filter((_, j) => j !== amenityIndex),
+              },
+            }
+          : room
+      ),
+    };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
   };
 
   const updateRoomImage = (roomIndex: number) => {
@@ -451,11 +567,11 @@ const Chambres = () => {
   };
 
   const updateRoomSize = (roomIndex: number) => {
-    return async (newFr: string, newEn: string) => {
+    return async (newSize: string) => {
       const updatedData = {
         ...data,
         rooms: data.rooms.map((room, i) =>
-          i === roomIndex ? { ...room, size: newFr } : room
+          i === roomIndex ? { ...room, size: newSize } : room
         ),
       };
       setData(updatedData);
@@ -464,18 +580,70 @@ const Chambres = () => {
   };
 
   const updateStatValue = (key: 'totalRooms' | 'categories' | 'maxSize') => {
-    return async (newFr: string, newEn: string) => {
-      const newValue = key === 'maxSize' ? newFr : (parseInt(newFr) || 0);
+    return async (newValue: string) => {
+      const parsedValue = key === 'maxSize' ? newValue : parseInt(newValue) || 0;
       const updatedData = {
         ...data,
         stats: {
           ...data.stats,
-          [key]: newValue,
+          [key]: parsedValue,
         },
       };
       setData(updatedData);
       await updateChambresSection(updatedData);
     };
+  };
+
+  const toggleRoomHidden = async (roomIndex: number) => {
+    const updatedData = {
+      ...data,
+      rooms: data.rooms.map((room, i) =>
+        i === roomIndex ? { ...room, hidden: !room.hidden } : room
+      ),
+    };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const addRoom = async () => {
+    let newRoom;
+    if (data.rooms.length > 0) {
+      const maxId = Math.max(...data.rooms.map((r: any) => r.id));
+      newRoom = {
+        ...data.rooms[0],
+        id: maxId + 1,
+        name: { fr: 'Nouvelle Chambre', en: 'New Room' },
+        hidden: false,
+      };
+    } else {
+      newRoom = {
+        id: 1,
+        name: { fr: 'Nouvelle Chambre', en: 'New Room' },
+        subtitle: { fr: 'Sous-titre', en: 'Subtitle' },
+        description: { fr: 'Description de la chambre.', en: 'Room description.' },
+        size: '30 m²',
+        guests: { fr: '2 personnes', en: '2 guests' },
+        features: [{ fr: 'Caractéristique 1', en: 'Feature 1' }],
+        amenities: { fr: ['Wifi'], en: ['Wifi'] },
+        image: hotelRoom,
+        hidden: false,
+      };
+    }
+    const updatedData = {
+      ...data,
+      rooms: [...data.rooms, newRoom],
+    };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const removeRoom = async (id: number) => {
+    const updatedData = {
+      ...data,
+      rooms: data.rooms.filter((room) => room.id !== id),
+    };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
   };
 
   const getAmenityIcon = (amenity: string) => {
@@ -520,7 +688,7 @@ const Chambres = () => {
       return <Dumbbell className="w-4 h-4" />;
     }
     if (service.includes('Court de tennis') || service.includes('Tennis Court')) {
-      return <Activity className="w-4 h-4" />;  // Activity as alternative for sports/tennis
+      return <Activity className="w-4 h-4" />;
     }
     if (service.includes('Parking')) {
       return <Car className="w-4 h-4" />;
@@ -537,6 +705,26 @@ const Chambres = () => {
       default: return <Tv className="w-4 h-4" />;
     }
   };
+
+  const isFr = currentLang.code === 'fr';
+
+  const addRoomCard = (
+    <Card className="border-2 border-dashed border-muted-foreground hover:border-primary transition-colors flex flex-col">
+      <CardContent className="flex flex-col items-center justify-center h-full p-8 text-center">
+        <Button
+          variant="outline"
+          size="lg"
+          onClick={addRoom}
+          className="mb-4 rounded-full w-16 h-16 p-0"
+        >
+          <Plus className="w-6 h-6" />
+        </Button>
+        <p className="text-muted-foreground">
+          {isFr ? 'Ajouter une nouvelle chambre' : 'Add a new room'}
+        </p>
+      </CardContent>
+    </Card>
+  );
 
   if (loading) {
     return (
@@ -596,6 +784,11 @@ const Chambres = () => {
                 </div>
               </div>
             ))}
+            {isAdmin && (
+              <div className="flex justify-center">
+                <div className="h-64 w-full max-w-md bg-gray-300 rounded-lg" />
+              </div>
+            )}
           </div>
         </section>
         {/* Services Skeleton */}
@@ -614,6 +807,11 @@ const Chambres = () => {
                 </div>
               ))}
             </div>
+            {isAdmin && (
+              <div className="flex justify-center mt-8">
+                <div className="h-12 w-48 bg-gray-300 rounded" />
+              </div>
+            )}
           </div>
         </section>
         <Footer />
@@ -742,189 +940,255 @@ const Chambres = () => {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-16">
-            {data.rooms.map((room, index) => (
-              <Card
-                key={room.id}
-                className={`overflow-hidden hover-elevate transition-all duration-300 ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
-                  } flex flex-col`}
-                data-testid={`card-room-${room.id}`}
-              >
-                {/* Conteneur d'image modifié */}
-                <div className="lg:w-1/2 flex">
-                  <ImageTooltip imageUrl={room.image} onSave={updateRoomImage(index)}>
-                    <div className="w-full h-80 lg:h-full relative">
-                      <img
-                        src={room.image || hotelRoom}
-                        alt={getText(room.name)}
-                        className="w-full h-full object-cover"
-                      />
+            {data.rooms.map((room, index) => {
+              if (!isAdmin && room.hidden) return null;
+              return (
+                <Card
+                  key={room.id}
+                  className={`relative overflow-hidden hover-elevate transition-all duration-300 ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
+                    } flex flex-col ${room.hidden ? 'opacity-50' : ''}`}
+                  data-testid={`card-room-${room.id}`}
+                >
+                  {isAdmin && (
+                    <div className="absolute top-2 right-2 z-10 flex gap-1">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => toggleRoomHidden(index)}
+                        title={room.hidden ? (isFr ? 'Afficher' : 'Show') : (isFr ? 'Masquer' : 'Hide')}
+                      >
+                        {room.hidden ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeRoom(room.id)}
+                      >
+                        <Trash2 className="w-4 h-4" /> 
+                      </Button>
                     </div>
-                  </ImageTooltip>
-                </div>
+                  )}
+                  <div className="lg:w-1/2 flex">
+                    <ImageTooltip imageUrl={room.image} onSave={updateRoomImage(index)}>
+                      <div className="w-full h-80 lg:h-full relative">
+                        <img
+                          src={room.image || hotelRoom}
+                          alt={getText(room.name)}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    </ImageTooltip>
+                  </div>
 
-                {/* Conteneur de contenu */}
-                <div className="lg:w-1/2 p-8 flex flex-col">
-                  <div className="flex-1">
-                    <CardHeader className="p-0 mb-6">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-4">
-                          {room.size && (
+                  {/* Conteneur de contenu */}
+                  <div className="lg:w-1/2 p-8 flex flex-col">
+                    <div className="flex-1">
+                      <CardHeader className="p-0 mb-6">
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="flex items-center gap-4">
+                            {room.size && (
+                              <Badge variant="outline" className="text-primary border-primary">
+                                <MapPin className="w-3 h-3 mr-1" />
+                                <Tooltip
+                                  frLabel={room.size}
+                                  enLabel={room.size}
+                                  onSave={() => {}}  // Size is not bilingual, but can add update
+                                >
+                                  <span>{room.size}</span>
+                                </Tooltip>
+                              </Badge>
+                            )}
                             <Badge variant="outline" className="text-primary border-primary">
-                              <MapPin className="w-3 h-3 mr-1" />
+                              <Users className="w-3 h-3 mr-1" />
                               <Tooltip
-                                frLabel={room.size}
-                                enLabel={room.size}
-                                onSave={updateRoomSize(index)}
+                                frLabel={room.guests.fr}
+                                enLabel={room.guests.en}
+                                onSave={updateRoomField(index, 'guests')}
                               >
-                                <span>{room.size}</span>
+                                <span>{getText(room.guests)}</span>
                               </Tooltip>
                             </Badge>
-                          )}
-                          <Badge variant="outline" className="text-primary border-primary">
-                            <Users className="w-3 h-3 mr-1" />
-                            <Tooltip
-                              frLabel={room.guests.fr}
-                              enLabel={room.guests.en}
-                              onSave={updateRoomField(index, 'guests')}
-                            >
-                              <span>{getText(room.guests)}</span>
-                            </Tooltip>
-                          </Badge>
+                          </div>
                         </div>
-                      </div>
-                      <CardTitle className="text-3xl font-serif text-foreground mb-2">
-                        <Tooltip
-                          frLabel={room.name.fr}
-                          enLabel={room.name.en}
-                          onSave={updateRoomField(index, 'name')}
-                        >
-                          <span>{formatAmpersand(getText(room.name))}</span>
-                        </Tooltip>
-                      </CardTitle>
-                      {room.subtitle && (
-                        <p className="text-primary font-luxury italic text-lg mb-4">
+                        <CardTitle className="text-3xl font-serif text-foreground mb-2">
                           <Tooltip
-                            frLabel={room.subtitle.fr}
-                            enLabel={room.subtitle.en}
-                            onSave={updateRoomField(index, 'subtitle')}
+                            frLabel={room.name.fr}
+                            enLabel={room.name.en}
+                            onSave={updateRoomField(index, 'name')}
                           >
-                            <span>{formatAmpersand(getText(room.subtitle))}</span>
+                            <span>{formatAmpersand(getText(room.name))}</span>
+                          </Tooltip>
+                        </CardTitle>
+                        {room.subtitle && (
+                          <p className="text-primary font-luxury italic text-lg mb-4">
+                            <Tooltip
+                              frLabel={room.subtitle.fr}
+                              enLabel={room.subtitle.en}
+                              onSave={updateRoomField(index, 'subtitle')}
+                            >
+                              <span>{formatAmpersand(getText(room.subtitle))}</span>
+                            </Tooltip>
+                          </p>
+                        )}
+                      </CardHeader>
+
+                      <CardContent className="p-0 space-y-6">
+                        <p className="text-muted-foreground leading-relaxed">
+                          <Tooltip
+                            frLabel={room.description.fr}
+                            enLabel={room.description.en}
+                            onSave={updateRoomField(index, 'description')}
+                          >
+                            <span>{getText(room.description)}</span>
                           </Tooltip>
                         </p>
-                      )}
-                    </CardHeader>
 
-                    <CardContent className="p-0 space-y-6">
-                      <p className="text-muted-foreground leading-relaxed">
-                        <Tooltip
-                          frLabel={room.description.fr}
-                          enLabel={room.description.en}
-                          onSave={updateRoomField(index, 'description')}
-                        >
-                          <span>{getText(room.description)}</span>
-                        </Tooltip>
-                      </p>
+                        {room.features && room.features.length > 0 && (
+                          <div>
+                            <h4 className="font-semibold text-foreground mb-3">
+                              <Tooltip
+                                frLabel={data.labels.features.fr}
+                                enLabel={data.labels.features.en}
+                                onSave={updateLabel('features')}
+                              >
+                                <span>{getText(data.labels.features)}</span>
+                              </Tooltip>
+                            </h4>
+                            <div className="space-y-1">
+                              {room.features.map((feature, idx) => (
+                                <div key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                                  <div className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                                  <div className="flex-1">
+                                    <Tooltip
+                                      frLabel={feature.fr}
+                                      enLabel={feature.en}
+                                      onSave={updateRoomFeature(index, idx)}
+                                    >
+                                      <span className="block">{getText(feature)}</span>
+                                    </Tooltip>
+                                  </div>
+                                  {isAdmin && (
+                                    <Button
+                                      variant="ghost"
+                                      size="sm"
+                                      onClick={() => removeRoomFeature(index, idx)}
+                                      className="h-6 w-6 p-0"
+                                    >
+                                      <Trash2 className="w-3 h-3" />
+                                    </Button>
+                                  )}
+                                </div>
+                              ))}
+                              {isAdmin && (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => addRoomFeature(index)}
+                                  className="mt-2"
+                                >
+                                  <Plus className="w-4 h-4 mr-1" />
+                                  {isFr ? 'Ajouter une caractéristique' : 'Add a feature'}
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                        )}
 
-                      {room.features && room.features.length > 0 && (
+                        {room.amenities && room.amenities.fr.length > 0 && (
+                          <div>
+                            <h4 className="font-semibold text-foreground mb-3">
+                              <Tooltip
+                                frLabel={data.labels.amenities.fr}
+                                enLabel={data.labels.amenities.en}
+                                onSave={updateLabel('amenities')}
+                              >
+                                <span>{getText(data.labels.amenities)}</span>
+                              </Tooltip>
+                            </h4>
+                            <div className="flex flex-wrap gap-3">
+                              {getAmenities(room).map((amenity, idx) => {
+                                const frAmenity = room.amenities.fr[idx];
+                                const enAmenity = room.amenities.en ? room.amenities.en[idx] : frAmenity;
+                                return (
+                                  <div key={idx} className="flex items-center gap-2 px-3 py-1 bg-card rounded-full text-sm relative">
+                                    {getAmenityIcon(amenity)}
+                                    <Tooltip
+                                      frLabel={frAmenity}
+                                      enLabel={enAmenity}
+                                      onSave={updateRoomAmenity(index, idx)}
+                                    >
+                                      <span className="text-muted-foreground">{amenity}</span>
+                                    </Tooltip>
+                                    {isAdmin && (
+                                      <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => removeRoomAmenity(index, idx)}
+                                        className="absolute -top-1 -right-1 h-4 w-4 p-0"
+                                      >
+                                        <Trash2 className="w-3 h-3" />
+                                      </Button>
+                                    )}
+                                  </div>
+                                );
+                              })}
+                              {isAdmin && (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => addRoomAmenity(index)}
+                                  className="mt-2"
+                                >
+                                  <Plus className="w-4 h-4 mr-1" />
+                                  {isFr ? 'Ajouter une commodité' : 'Add an amenity'}
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Included Services Section */}
                         <div>
                           <h4 className="font-semibold text-foreground mb-3">
                             <Tooltip
-                              frLabel={data.labels.features.fr}
-                              enLabel={data.labels.features.en}
-                              onSave={updateLabel('features')}
+                              frLabel={data.labels.includedServices.fr}
+                              enLabel={data.labels.includedServices.en}
+                              onSave={updateLabel('includedServices')}
                             >
-                              <span>{getText(data.labels.features)}</span>
+                              <span>{getText(data.labels.includedServices)}</span>
                             </Tooltip>
                           </h4>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                            {room.features.map((feature, idx) => (
-                              <div key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
-                                <div className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                                <Tooltip
-                                  frLabel={feature.fr}
-                                  enLabel={feature.en}
-                                  onSave={updateRoomFeature(index, idx)}
-                                >
-                                  <span>{getText(feature)}</span>
-                                </Tooltip>
+                          <div className="flex flex-wrap gap-3">
+                            {getIncludedServices().map((service, idx) => (
+                              <div key={idx} className="flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full text-sm border border-primary/20">
+                                {getIncludedServiceIcon(service)}
+                                <span className="text-primary font-medium">{service}</span>
                               </div>
                             ))}
                           </div>
                         </div>
-                      )}
+                      </CardContent>
+                    </div>
 
-                      {room.amenities && room.amenities.fr.length > 0 && (
-                        <div>
-                          <h4 className="font-semibold text-foreground mb-3">
-                            <Tooltip
-                              frLabel={data.labels.amenities.fr}
-                              enLabel={data.labels.amenities.en}
-                              onSave={updateLabel('amenities')}
-                            >
-                              <span>{getText(data.labels.amenities)}</span>
-                            </Tooltip>
-                          </h4>
-                          <div className="flex flex-wrap gap-3">
-                            {getAmenities(room).map((amenity, idx) => {
-                              const frAmenity = room.amenities.fr[idx];
-                              const enAmenity = room.amenities.en ? room.amenities.en[idx] : frAmenity;
-                              return (
-                                <div key={idx} className="flex items-center gap-2 px-3 py-1 bg-card rounded-full text-sm">
-                                  {getAmenityIcon(amenity)}
-                                  <Tooltip
-                                    frLabel={frAmenity}
-                                    enLabel={enAmenity}
-                                    onSave={updateRoomAmenity(index, idx)}
-                                  >
-                                    <span className="text-muted-foreground">{amenity}</span>
-                                  </Tooltip>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Included Services Section */}
-                      <div>
-                        <h4 className="font-semibold text-foreground mb-3">
-                          <Tooltip
-                            frLabel={data.labels.includedServices.fr}
-                            enLabel={data.labels.includedServices.en}
-                            onSave={updateLabel('includedServices')}
-                          >
-                            <span>{getText(data.labels.includedServices)}</span>
-                          </Tooltip>
-                        </h4>
-                        <div className="flex flex-wrap gap-3">
-                          {getIncludedServices().map((service, idx) => (
-                            <div key={idx} className="flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full text-sm border border-primary/20">
-                              {getIncludedServiceIcon(service)}
-                              <span className="text-primary font-medium">{service}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </div>
-
-                  <div className="mt-8">
-                    <Button
-                      className="w-full"
-                      data-testid={`button-book-${room.id}`}
-                    >
-                      <Tooltip
-                        frLabel={data.bookButton.fr}
-                        enLabel={data.bookButton.en}
-                        onSave={updateBookButton}
+                    <div className="mt-8">
+                      <Button
+                        className="w-full"
+                        data-testid={`button-book-${room.id}`}
                       >
-                        <span>{getText(data.bookButton)}</span>
-                      </Tooltip>
-                    </Button>
+                        <Tooltip
+                          frLabel={data.bookButton.fr}
+                          enLabel={data.bookButton.en}
+                          onSave={updateBookButton}
+                        >
+                          <span>{getText(data.bookButton)}</span>
+                        </Tooltip>
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              </Card>
-            ))}
+                </Card>
+              );
+            })}
+            {isAdmin && addRoomCard}
           </div>
         </div>
       </section>
@@ -954,34 +1218,67 @@ const Chambres = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {data.services.map((service, index) => (
-              <Card key={index} className="text-center hover-elevate">
-                <CardContent className="pt-6">
-                  <div className="text-primary mb-4 flex justify-center">
-                    {getServiceIcon(service.icon)}
-                  </div>
-                  <h3 className="text-lg font-semibold text-foreground mb-2">
-                    <Tooltip
-                      frLabel={service.title.fr}
-                      enLabel={service.title.en}
-                      onSave={updateServiceField(index, 'title')}
-                    >
-                      <span>{getText(service.title)}</span>
-                    </Tooltip>
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    <Tooltip
-                      frLabel={service.desc.fr}
-                      enLabel={service.desc.en}
-                      onSave={updateServiceField(index, 'desc')}
-                    >
-                      <span>{getText(service.desc)}</span>
-                    </Tooltip>
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
+            {data.services.map((service, index) => {
+              if (!isAdmin && service.hidden) return null;
+              return (
+                <Card key={index} className={`relative text-center hover-elevate ${service.hidden ? 'opacity-50' : ''}`}>
+                  {isAdmin && (
+                    <div className="absolute top-2 right-2 z-10 flex gap-1">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => toggleServiceHidden(index)}
+                        title={service.hidden ? (isFr ? 'Afficher' : 'Show') : (isFr ? 'Masquer' : 'Hide')}
+                      >
+                        {service.hidden ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeService(index)}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  )}
+                  <CardContent className="pt-6">
+                    <div className="text-primary mb-4 flex justify-center">
+                      {getServiceIcon(service.icon)}
+                    </div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">
+                      <Tooltip
+                        frLabel={service.title.fr}
+                        enLabel={service.title.en}
+                        onSave={updateServiceField(index, 'title')}
+                      >
+                        <span>{getText(service.title)}</span>
+                      </Tooltip>
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      <Tooltip
+                        frLabel={service.desc.fr}
+                        enLabel={service.desc.en}
+                        onSave={updateServiceField(index, 'desc')}
+                      >
+                        <span>{getText(service.desc)}</span>
+                      </Tooltip>
+                    </p>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
+          {isAdmin && (
+            <div className="flex justify-center mt-8">
+              <Button
+                variant="outline"
+                onClick={addService}
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                {isFr ? 'Ajouter un service' : 'Add a service'}
+              </Button>
+            </div>
+          )}
         </div>
       </section>
 
