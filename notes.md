@@ -1,124 +1,16 @@
-// src/data/homeData.ts
-export const homeData = {
-  title: {
-    fr: "L'Art de l'Hospitalité & du Luxe",
-    en: "The Art of Hospitality & Luxury"
-  },
-  content: {
-    fr: "Le Carlton Madagascar est bien plus qu'un hôtel 5 étoiles. C'est une invitation au voyage, une expérience unique au cœur d'Antananarivo où l'élégance française rencontre l'authenticité malgache pour créer des souvenirs inoubliables.",
-    en: "The Carlton Madagascar is much more than a 5-star hotel. It is an invitation to travel, a unique experience in the heart of Antananarivo where French elegance meets Malagasy authenticity to create unforgettable memories."
-  },
-  highlights: [
-    {
-      icon: "Sparkles",
-      title: {
-        fr: "Chambres de Luxe",
-        en: "Luxury Rooms"
-      },
-      description: {
-        fr: "Suites et chambres élégantes avec vue panoramique sur Antananarivo",
-        en: "Elegant suites and rooms with panoramic views of Antananarivo"
-      },
-      link: "/chambres",
-      linkText: {
-        fr: "Voir nos chambres",
-        en: "See our rooms"
-      },
-      image: "/uploads/Presidential_suite_bedroom_interior_7adece21.png"
-    },
-    {
-      icon: "Utensils",
-      title: {
-        fr: "Gastronomie d'Exception",
-        en: "Exceptional Gastronomy"
-      },
-      description: {
-        fr: "4 restaurants et bars offrant une cuisine raffinée dans un cadre d'exception",
-        en: "4 restaurants and bars offering refined cuisine in an exceptional setting"
-      },
-      link: "/restaurants",
-      linkText: {
-        fr: "Découvrir nos restaurants",
-        en: "Discover our restaurants"
-      },
-      image: "/uploads/Luxury_hotel_restaurant_interior_090ad235.png"
-    },
-    {
-      icon: "Calendar",
-      title: {
-        fr: "Événements & Réceptions",
-        en: "Events & Receptions"
-      },
-      description: {
-        fr: "Espaces de réception prestigieux pour vos événements d'affaires et privés",
-        en: "Prestigious reception spaces for your business and private events"
-      },
-      link: "/evenements",
-      linkText: {
-        fr: "Organiser un événement",
-        en: "Organize an event"
-      },
-      image: "/uploads/Luxury_hotel_wedding_reception_d3ca816d.png"
-    },
-    {
-      icon: "Camera",
-      title: {
-        fr: "Bien-être & Loisirs",
-        en: "Wellness & Leisure"
-      },
-      description: {
-        fr: "Piscine infinity, fitness center et installations sportives haut de gamme",
-        en: "Infinity pool, fitness center and high-end sports facilities"
-      },
-      link: "/bien-etre-loisirs",
-      linkText: {
-        fr: "Nos installations",
-        en: "Our facilities"
-      },
-      image: "/uploads/Hotel_infinity_pool_wellness_a9857557.png"
-    }
-  ],
-  cta: {
-    title: {
-      fr: "Réservez Votre Séjour d'Exception",
-      en: "Book Your Exceptional Stay"
-    },
-    description: {
-      fr: "Découvrez l'hospitalité malgache dans le cadre luxueux du Carlton Madagascar",
-      en: "Discover Malagasy hospitality in the luxurious setting of the Carlton Madagascar"
-    },
-    primaryButton: {
-      fr: "Réserver maintenant",
-      en: "Book now"
-    },
-    secondaryButton: {
-      fr: "Voir nos chambres",
-      en: "See our rooms"
-    },
-    primaryLink: "/contact",
-    secondaryLink: "/chambres"
-  },
-  parallaxImage: "/uploads/Hotel_infinity_pool_wellness_a9857557.png"
-};
-
-// src/components/Home.tsx
-import HeroSection from '@/components/HeroSection';
-import ParallaxSection from '@/components/ParallaxSection';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Star, Clock, MapPin, Utensils, Camera, Calendar, Sparkles } from 'lucide-react';
-import Footer from '@/components/Footer';
-import { Link } from 'wouter';
-import { formatAmpersand } from '@/lib/utils/formatAmpersand';
-import { homeData as initialHomeData } from '@/data/homeData';
-import wellnessImage from '@assets/generated_images/Hotel_infinity_pool_wellness_a9857557.png';
-import { useLanguage } from '@/components/context/LanguageContext';
-import { Tooltip, ImageTooltip } from '@/components/Tooltip';
+// src/components/Footer.tsx
 import { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
+import { Tooltip } from '@/components/Tooltip';
+import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin, MessageCircle } from 'lucide-react';
+import { Link } from 'wouter';
+import { footerData } from '@/data/footerData';
+import { formatAmpersand } from '@/lib/utils/formatAmpersand';
+import { useLanguage } from './context/LanguageContext';
 
-const SECTION_KEY = 'home';
+const SECTION_KEY = 'footer';
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('userToken');
@@ -129,58 +21,107 @@ const getAuthHeaders = () => {
   return headers;
 };
 
-const Home = () => {
+const Footer = () => {
   const { currentLang } = useLanguage();
-  const lang = currentLang.code.toLowerCase();
-  
-  const [data, setData] = useState(initialHomeData);
+  const langKey = currentLang.code.toLowerCase();
+  const [data, setData] = useState(footerData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
-  // Helper to split homeData into dataFr and dataEn structures
-  const splitHomeData = (mixedData: typeof initialHomeData) => {
+
+  // Helper to split footerData into dataFr and dataEn structures
+  const splitFooterData = (mixedData: typeof footerData) => {
     const dataFr = {
-      title: mixedData.title.fr,
-      content: mixedData.content.fr,
-      highlights: mixedData.highlights.map((highlight) => ({
-        icon: highlight.icon,
-        title: highlight.title.fr,
-        description: highlight.description.fr,
-        link: highlight.link,
-        linkText: highlight.linkText.fr,
-        image: highlight.image,
-      })),
-      cta: {
-        title: mixedData.cta.title.fr,
-        description: mixedData.cta.description.fr,
-        primaryButton: mixedData.cta.primaryButton.fr,
-        secondaryButton: mixedData.cta.secondaryButton.fr,
-        primaryLink: mixedData.cta.primaryLink,
-        secondaryLink: mixedData.cta.secondaryLink,
+      hotel: {
+        title: mixedData.hotel.title,
+        description: mixedData.hotel.description.fr,
+        newsletter: {
+          title: mixedData.hotel.newsletter.title.fr,
+          description: mixedData.hotel.newsletter.description.fr,
+          placeholder: mixedData.hotel.newsletter.placeholder.fr,
+          button: mixedData.hotel.newsletter.button.fr
+        }
       },
-      parallaxImage: mixedData.parallaxImage,
+      sections: mixedData.sections.map((section) => ({
+        title: section.title.fr,
+        description: section.description?.fr || undefined,
+        links: section.links.map((link) => ({
+          label: link.label.fr,
+          href: link.href
+        }))
+      })),
+      contact: {
+        address: {
+          title: mixedData.contact.address.title.fr,
+          details: mixedData.contact.address.details.fr
+        },
+        phone: {
+          title: mixedData.contact.phone.title.fr,
+          details: mixedData.contact.phone.details
+        },
+        email: {
+          title: mixedData.contact.email.title.fr,
+          details: mixedData.contact.email.details
+        }
+      },
+      bottom: {
+        copyright: mixedData.bottom.copyright.fr,
+        rating: mixedData.bottom.rating.fr,
+        follow: mixedData.bottom.follow.fr
+      },
+      social: mixedData.social.map((social) => ({
+        icon: social.icon,
+        href: social.href,
+        label: social.label.fr
+      })),
+      messenger: mixedData.messenger,
+      logos: mixedData.logos
     };
 
     const dataEn = {
-      title: mixedData.title.en,
-      content: mixedData.content.en,
-      highlights: mixedData.highlights.map((highlight) => ({
-        icon: highlight.icon,
-        title: highlight.title.en,
-        description: highlight.description.en,
-        link: highlight.link,
-        linkText: highlight.linkText.en,
-        image: highlight.image,
-      })),
-      cta: {
-        title: mixedData.cta.title.en,
-        description: mixedData.cta.description.en,
-        primaryButton: mixedData.cta.primaryButton.en,
-        secondaryButton: mixedData.cta.secondaryButton.en,
-        primaryLink: mixedData.cta.primaryLink,
-        secondaryLink: mixedData.cta.secondaryLink,
+      hotel: {
+        title: mixedData.hotel.title,
+        description: mixedData.hotel.description.en,
+        newsletter: {
+          title: mixedData.hotel.newsletter.title.en,
+          description: mixedData.hotel.newsletter.description.en,
+          placeholder: mixedData.hotel.newsletter.placeholder.en,
+          button: mixedData.hotel.newsletter.button.en
+        }
       },
-      parallaxImage: mixedData.parallaxImage,
+      sections: mixedData.sections.map((section) => ({
+        title: section.title.en,
+        description: section.description?.en || undefined,
+        links: section.links.map((link) => ({
+          label: link.label.en,
+          href: link.href
+        }))
+      })),
+      contact: {
+        address: {
+          title: mixedData.contact.address.title.en,
+          details: mixedData.contact.address.details.en
+        },
+        phone: {
+          title: mixedData.contact.phone.title.en,
+          details: mixedData.contact.phone.details
+        },
+        email: {
+          title: mixedData.contact.email.title.en,
+          details: mixedData.contact.email.details
+        }
+      },
+      bottom: {
+        copyright: mixedData.bottom.copyright.en,
+        rating: mixedData.bottom.rating.en,
+        follow: mixedData.bottom.follow.en
+      },
+      social: mixedData.social.map((social) => ({
+        icon: social.icon,
+        href: social.href,
+        label: social.label.en
+      })),
+      messenger: mixedData.messenger,
+      logos: mixedData.logos
     };
 
     return { dataFr, dataEn };
@@ -190,36 +131,64 @@ const Home = () => {
   const reconstructMixed = (dataFr: any, dataEn: any | null) => {
     if (!dataFr || typeof dataFr !== 'object') {
       console.warn('Invalid dataFr structure, falling back to default');
-      return initialHomeData;
+      return footerData;
     }
     const enFallback = dataEn || dataFr;
     const mixed = {
-      title: { fr: dataFr.title, en: enFallback.title || dataFr.title },
-      content: { fr: dataFr.content, en: enFallback.content || dataFr.content },
-      highlights: dataFr.highlights.map((highlightFr: any, i: number) => ({
-        icon: highlightFr.icon || initialHomeData.highlights[i].icon,
-        title: { fr: highlightFr.title, en: enFallback.highlights[i]?.title || highlightFr.title },
-        description: { fr: highlightFr.description, en: enFallback.highlights[i]?.description || highlightFr.description },
-        link: highlightFr.link || initialHomeData.highlights[i].link,
-        linkText: { fr: highlightFr.linkText, en: enFallback.highlights[i]?.linkText || highlightFr.linkText },
-        image: highlightFr.image || initialHomeData.highlights[i].image,
-      })),
-      cta: {
-        title: { fr: dataFr.cta?.title || initialHomeData.cta.title.fr, en: enFallback.cta?.title || dataFr.cta?.title || initialHomeData.cta.title.en },
-        description: { fr: dataFr.cta?.description || initialHomeData.cta.description.fr, en: enFallback.cta?.description || dataFr.cta?.description || initialHomeData.cta.description.en },
-        primaryButton: { fr: dataFr.cta?.primaryButton || initialHomeData.cta.primaryButton.fr, en: enFallback.cta?.primaryButton || dataFr.cta?.primaryButton || initialHomeData.cta.primaryButton.en },
-        secondaryButton: { fr: dataFr.cta?.secondaryButton || initialHomeData.cta.secondaryButton.fr, en: enFallback.cta?.secondaryButton || dataFr.cta?.secondaryButton || initialHomeData.cta.secondaryButton.en },
-        primaryLink: dataFr.cta?.primaryLink || initialHomeData.cta.primaryLink,
-        secondaryLink: dataFr.cta?.secondaryLink || initialHomeData.cta.secondaryLink,
+      hotel: {
+        title: dataFr.hotel.title,
+        description: { fr: dataFr.hotel.description, en: enFallback.hotel?.description || dataFr.hotel.description },
+        newsletter: {
+          title: { fr: dataFr.hotel.newsletter.title, en: enFallback.hotel?.newsletter?.title || dataFr.hotel.newsletter.title },
+          description: { fr: dataFr.hotel.newsletter.description, en: enFallback.hotel?.newsletter?.description || dataFr.hotel.newsletter.description },
+          placeholder: { fr: dataFr.hotel.newsletter.placeholder, en: enFallback.hotel?.newsletter?.placeholder || dataFr.hotel.newsletter.placeholder },
+          button: { fr: dataFr.hotel.newsletter.button, en: enFallback.hotel?.newsletter?.button || dataFr.hotel.newsletter.button }
+        }
       },
-      parallaxImage: dataFr.parallaxImage || initialHomeData.parallaxImage,
+      sections: dataFr.sections.map((sectionFr: any, i: number) => {
+        const sectionEn = enFallback.sections[i];
+        return {
+          title: { fr: sectionFr.title, en: sectionEn?.title || sectionFr.title },
+          description: sectionFr.description ? { fr: sectionFr.description, en: sectionEn?.description || sectionFr.description } : undefined,
+          links: sectionFr.links.map((linkFr: any, j: number) => ({
+            label: { fr: linkFr.label, en: sectionEn?.links[j]?.label || linkFr.label },
+            href: linkFr.href
+          }))
+        };
+      }),
+      contact: {
+        address: {
+          title: { fr: dataFr.contact.address.title, en: enFallback.contact?.address?.title || dataFr.contact.address.title },
+          details: { fr: dataFr.contact.address.details, en: enFallback.contact?.address?.details || dataFr.contact.address.details }
+        },
+        phone: {
+          title: { fr: dataFr.contact.phone.title, en: enFallback.contact?.phone?.title || dataFr.contact.phone.title },
+          details: dataFr.contact.phone.details
+        },
+        email: {
+          title: { fr: dataFr.contact.email.title, en: enFallback.contact?.email?.title || dataFr.contact.email.title },
+          details: dataFr.contact.email.details
+        }
+      },
+      bottom: {
+        copyright: { fr: dataFr.bottom.copyright, en: enFallback.bottom?.copyright || dataFr.bottom.copyright },
+        rating: { fr: dataFr.bottom.rating, en: enFallback.bottom?.rating || dataFr.bottom.rating },
+        follow: { fr: dataFr.bottom.follow, en: enFallback.bottom?.follow || dataFr.bottom.follow }
+      },
+      social: dataFr.social.map((socialFr: any, i: number) => ({
+        icon: socialFr.icon,
+        href: socialFr.href,
+        label: { fr: socialFr.label, en: enFallback.social[i]?.label || socialFr.label }
+      })),
+      messenger: dataFr.messenger || { href: "https://m.me/293387733865658" },
+      logos: dataFr.logos
     };
     return mixed;
   };
 
-  // Fetch home data from backend
+  // Fetch footer data from backend
   useEffect(() => {
-    const fetchHomeData = async () => {
+    const fetchFooterData = async () => {
       try {
         setLoading(true);
         setError(null);
@@ -232,7 +201,7 @@ const Home = () => {
         let section = sections.find((s: any) => s.sectionKey === SECTION_KEY);
         if (!section) {
           // Table is empty for this sectionKey, create default
-          const { dataFr, dataEn } = splitHomeData(initialHomeData);
+          const { dataFr, dataEn } = splitFooterData(footerData);
           const createResponse = await fetch('/api/globalSections', {
             method: 'POST',
             headers: { ...headers, 'Content-Type': 'application/json' },
@@ -245,7 +214,7 @@ const Home = () => {
           });
 
           if (!createResponse.ok) {
-            throw new Error('Failed to create home data');
+            throw new Error('Failed to create footer data');
           }
 
           const created = await createResponse.json();
@@ -256,22 +225,22 @@ const Home = () => {
           const fetchedData = reconstructMixed(section.dataFr, section.dataEn);
           setData(fetchedData);
         } else {
-          setData(initialHomeData);
+          setData(footerData);
         }
       } catch (err) {
-        console.error('Error fetching home data:', err);
-        setError('Failed to load home data');
+        console.error('Error fetching footer data:', err);
+        setError('Failed to load footer data');
         // Fallback to default
-        setData(initialHomeData);
+        setData(footerData);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchHomeData();
+    fetchFooterData();
   }, []);
 
-  const updateHomeSection = async (updatedMixedData: typeof initialHomeData) => {
+  const updateFooterSection = async (updatedMixedData: typeof footerData) => {
     try {
       const headers = getAuthHeaders();
       const currentSectionResponse = await fetch(`/api/globalSections?sectionKey=${SECTION_KEY}`, { headers });
@@ -283,7 +252,7 @@ const Home = () => {
 
       if (!currentSection) {
         // Should not happen after initial load, but create if missing
-        const { dataFr, dataEn } = splitHomeData(initialHomeData);
+        const { dataFr, dataEn } = splitFooterData(footerData);
         const createResponse = await fetch('/api/globalSections', {
           method: 'POST',
           headers: { ...headers, 'Content-Type': 'application/json' },
@@ -300,7 +269,7 @@ const Home = () => {
         currentSection = await createResponse.json();
       }
 
-      const { dataFr: updatedDataFr, dataEn: updatedDataEn } = splitHomeData(updatedMixedData);
+      const { dataFr: updatedDataFr, dataEn: updatedDataEn } = splitFooterData(updatedMixedData);
 
       const putResponse = await fetch(`/api/globalSections/${currentSection.id}`, {
         method: 'PUT',
@@ -312,229 +281,254 @@ const Home = () => {
       });
 
       if (!putResponse.ok) {
-        throw new Error('Failed to update home section');
+        throw new Error('Failed to update footer section');
       }
     } catch (err) {
-      console.error('Error updating home section:', err);
+      console.error('Error updating footer section:', err);
       // Revert local state on error if needed, but for simplicity, keep it
     }
   };
-  
-  const { title: rawTitle, content: rawContent, highlights: rawHighlights, cta: rawCta, parallaxImage } = data;
-  
-  const title = rawTitle[lang];
-  const content = rawContent[lang];
-  
-  const highlights = rawHighlights.map(highlight => ({
-    ...highlight,
-    title: highlight.title[lang],
-    description: highlight.description[lang],
-    linkText: highlight.linkText[lang]
-  }));
-  
-  const processedHighlights = highlights.map((highlight, index) => ({
-    ...highlight,
-    image: highlight.image || wellnessImage // Fallback if needed
-  }));
-  
-  const cta = {
-    ...rawCta,
-    title: rawCta.title[lang],
-    description: rawCta.description[lang],
-    primaryButton: rawCta.primaryButton[lang],
-    secondaryButton: rawCta.secondaryButton[lang]
+
+  const updateHotelDescription = async (newFr: string, newEn: string) => {
+    const updatedData = {
+      ...data,
+      hotel: {
+        ...data.hotel,
+        description: { fr: newFr, en: newEn }
+      }
+    };
+    setData(updatedData);
+    await updateFooterSection(updatedData);
   };
-  
-  const getHighlightIcon = (iconName: string) => {
+
+  const updateNewsletterField = (field: 'title' | 'description' | 'placeholder' | 'button') => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        hotel: {
+          ...data.hotel,
+          newsletter: {
+            ...data.hotel.newsletter,
+            [field]: { fr: newFr, en: newEn }
+          }
+        }
+      };
+      setData(updatedData);
+      await updateFooterSection(updatedData);
+    };
+  };
+
+  const updateSectionTitle = (sectionIndex: number) => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        sections: data.sections.map((section, i) =>
+          i === sectionIndex
+            ? { ...section, title: { fr: newFr, en: newEn } }
+            : section
+        )
+      };
+      setData(updatedData);
+      await updateFooterSection(updatedData);
+    };
+  };
+
+  const updateSectionDescription = (sectionIndex: number) => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        sections: data.sections.map((section, i) =>
+          i === sectionIndex
+            ? { 
+                ...section, 
+                description: { fr: newFr, en: newEn } 
+              }
+            : section
+        )
+      };
+      setData(updatedData);
+      await updateFooterSection(updatedData);
+    };
+  };
+
+  const updateLinkLabel = (sectionIndex: number, linkIndex: number) => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        sections: data.sections.map((section, i) =>
+          i === sectionIndex
+            ? {
+                ...section,
+                links: section.links.map((link, j) =>
+                  j === linkIndex
+                    ? { ...link, label: { fr: newFr, en: newEn } }
+                    : link
+                )
+              }
+            : section
+        )
+      };
+      setData(updatedData);
+      await updateFooterSection(updatedData);
+    };
+  };
+
+  const updateContactTitle = (key: keyof typeof data.contact) => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        contact: {
+          ...data.contact,
+          [key]: {
+            ...data.contact[key],
+            title: { fr: newFr, en: newEn }
+          }
+        }
+      };
+      setData(updatedData);
+      await updateFooterSection(updatedData);
+    };
+  };
+
+  const updateContactDetails = (key: keyof typeof data.contact, isBilingual: boolean) => {
+    return async (newFr: string, newEn?: string) => {
+      const updatedData = {
+        ...data,
+        contact: {
+          ...data.contact,
+          [key]: {
+            ...data.contact[key],
+            details: isBilingual
+              ? { fr: newFr, en: newEn || newFr }
+              : newFr
+          }
+        }
+      };
+      setData(updatedData);
+      await updateFooterSection(updatedData);
+    };
+  };
+
+  const updateBottomField = (field: keyof typeof data.bottom) => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        bottom: {
+          ...data.bottom,
+          [field]: { fr: newFr, en: newEn }
+        }
+      };
+      setData(updatedData);
+      await updateFooterSection(updatedData);
+    };
+  };
+
+  const updateSocialLabel = (index: number) => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        social: data.social.map((social, i) =>
+          i === index
+            ? { ...social, label: { fr: newFr, en: newEn } }
+            : social
+        )
+      };
+      setData(updatedData);
+      await updateFooterSection(updatedData);
+    };
+  };
+
+  const { hotel, sections, contact, bottom, social, messenger = { href: "https://m.me/293387733865658" }, logos } = data;
+
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Newsletter subscription submitted');
+  };
+
+  const getSocialIcon = (iconName: string) => {
     switch (iconName) {
-      case 'Sparkles': return <Sparkles className="w-8 h-8" />;
-      case 'Utensils': return <Utensils className="w-8 h-8" />;
-      case 'Calendar': return <Calendar className="w-8 h-8" />;
-      case 'Camera': return <Camera className="w-8 h-8" />;
+      case 'Facebook': return <Facebook className="w-4 h-4" />;
+      case 'Instagram': return <Instagram className="w-4 h-4" />;
+      case 'Linkedin': return <Linkedin className="w-4 h-4" />;
       default: return null;
     }
   };
 
-  const updateTitle = async (newFr: string, newEn: string) => {
-    // First, update local state
-    const updatedData = {
-      ...data,
-      title: { fr: newFr, en: newEn }
-    };
-    setData(updatedData);
-
-    // Then, update backend
-    await updateHomeSection(updatedData);
+  const getContactIcon = (key: string) => {
+    switch (key) {
+      case 'address': return <MapPin className="w-5 h-5" />;
+      case 'phone': return <Phone className="w-5 h-5" />;
+      case 'email': return <Mail className="w-5 h-5" />;
+      default: return null;
+    }
   };
 
-  const updateContent = async (newFr: string, newEn: string) => {
-    // First, update local state
-    const updatedData = {
-      ...data,
-      content: { fr: newFr, en: newEn }
-    };
-    setData(updatedData);
-
-    // Then, update backend
-    await updateHomeSection(updatedData);
-  };
-
-  const updateHighlightTitle = (index: number) => async (newFr: string, newEn: string) => {
-    // First, update local state
-    const updatedData = {
-      ...data,
-      highlights: data.highlights.map((h, i) => 
-        i === index ? { ...h, title: { fr: newFr, en: newEn } } : h
-      )
-    };
-    setData(updatedData);
-
-    // Then, update backend
-    await updateHomeSection(updatedData);
-  };
-
-  const updateHighlightDescription = (index: number) => async (newFr: string, newEn: string) => {
-    // First, update local state
-    const updatedData = {
-      ...data,
-      highlights: data.highlights.map((h, i) => 
-        i === index ? { ...h, description: { fr: newFr, en: newEn } } : h
-      )
-    };
-    setData(updatedData);
-
-    // Then, update backend
-    await updateHomeSection(updatedData);
-  };
-
-  const updateHighlightLinkText = (index: number) => async (newFr: string, newEn: string) => {
-    // First, update local state
-    const updatedData = {
-      ...data,
-      highlights: data.highlights.map((h, i) => 
-        i === index ? { ...h, linkText: { fr: newFr, en: newEn } } : h
-      )
-    };
-    setData(updatedData);
-
-    // Then, update backend
-    await updateHomeSection(updatedData);
-  };
-
-  const updateCtaTitle = async (newFr: string, newEn: string) => {
-    // First, update local state
-    const updatedData = {
-      ...data,
-      cta: { ...data.cta, title: { fr: newFr, en: newEn } }
-    };
-    setData(updatedData);
-
-    // Then, update backend
-    await updateHomeSection(updatedData);
-  };
-
-  const updateCtaDescription = async (newFr: string, newEn: string) => {
-    // First, update local state
-    const updatedData = {
-      ...data,
-      cta: { ...data.cta, description: { fr: newFr, en: newEn } }
-    };
-    setData(updatedData);
-
-    // Then, update backend
-    await updateHomeSection(updatedData);
-  };
-
-  const updateCtaPrimaryButton = async (newFr: string, newEn: string) => {
-    // First, update local state
-    const updatedData = {
-      ...data,
-      cta: { ...data.cta, primaryButton: { fr: newFr, en: newEn } }
-    };
-    setData(updatedData);
-
-    // Then, update backend
-    await updateHomeSection(updatedData);
-  };
-
-  const updateCtaSecondaryButton = async (newFr: string, newEn: string) => {
-    // First, update local state
-    const updatedData = {
-      ...data,
-      cta: { ...data.cta, secondaryButton: { fr: newFr, en: newEn } }
-    };
-    setData(updatedData);
-
-    // Then, update backend
-    await updateHomeSection(updatedData);
-  };
-
-  const updateHighlightImage = (index: number) => async (newImageUrl: string) => {
-    // First, update local state
-    const updatedData = {
-      ...data,
-      highlights: data.highlights.map((h, i) => 
-        i === index ? { ...h, image: newImageUrl } : h
-      )
-    };
-    setData(updatedData);
-
-    // Then, update backend
-    await updateHomeSection(updatedData);
-  };
-
-  const updateParallaxImage = async (newImageUrl: string) => {
-    // First, update local state
-    const updatedData = {
-      ...data,
-      parallaxImage: newImageUrl
-    };
-    setData(updatedData);
-
-    // Then, update backend
-    await updateHomeSection(updatedData);
-  };
+  const currentHotelDescription = hotel.description[langKey];
+  const currentNewsletterTitle = hotel.newsletter.title[langKey];
+  const currentNewsletterDescription = hotel.newsletter.description[langKey];
+  const currentNewsletterPlaceholder = hotel.newsletter.placeholder[langKey];
+  const currentNewsletterButton = hotel.newsletter.button[langKey];
+  const currentCopyright = bottom.copyright[langKey];
+  const currentRating = bottom.rating[langKey];
+  const currentFollow = bottom.follow[langKey];
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
-        <main>
-          <HeroSection />
-          <section className="py-20 bg-card/30">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-16">
-                <Skeleton className="h-12 w-64 mx-auto mb-6" />
-                <Skeleton className="h-1 w-24 mx-auto mb-6" />
-                <Skeleton className="h-8 w-full max-w-4xl mx-auto" />
+      <footer className="bg-sidebar border-t border-sidebar-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 animate-pulse">
+            <div className="space-y-4">
+              <div className="bg-sidebar-accent h-8 w-48 rounded" />
+              <div className="bg-sidebar-accent h-4 w-64 rounded" />
+              <div className="space-y-2">
+                <div className="bg-sidebar-accent h-4 w-32 rounded" />
+                <div className="bg-sidebar-accent h-4 w-96 rounded" />
+                <div className="flex gap-2">
+                  <div className="bg-sidebar-accent h-10 flex-1 rounded" />
+                  <div className="bg-sidebar-accent h-10 w-24 rounded" />
+                </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-                {Array.from({ length: 4 }).map((_, i) => (
-                  <div key={i} className="space-y-4">
-                    <Skeleton className="h-48 w-full" />
-                    <Skeleton className="h-6 w-3/4" />
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-10 w-full" />
-                  </div>
+            </div>
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="space-y-4">
+                <div className="bg-sidebar-accent h-5 w-32 rounded" />
+                {Array.from({ length: 4 }).map((_, j) => (
+                  <div key={j} className="bg-sidebar-accent h-4 w-24 rounded" />
                 ))}
               </div>
-            </div>
-          </section>
-          <section className="relative h-[70vh] bg-gray-900">
-            <Skeleton className="absolute inset-0" />
-          </section>
-          <section className="py-20 bg-gradient-to-r from-primary/10 to-accent/10">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-              <Skeleton className="h-12 w-80 mx-auto mb-6" />
-              <Skeleton className="h-6 w-full max-w-md mx-auto mb-8" />
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Skeleton className="h-12 w-40" />
-                <Skeleton className="h-12 w-48" />
+            ))}
+          </div>
+        </div>
+        <Separator className="bg-sidebar-border" />
+        <div className="py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="flex gap-3">
+                <div className="bg-sidebar-accent h-5 w-5 rounded" />
+                <div className="space-y-1">
+                  <div className="bg-sidebar-accent h-4 w-20 rounded" />
+                  <div className="bg-sidebar-accent h-4 w-40 rounded" />
+                </div>
               </div>
+            ))}
+          </div>
+        </div>
+        <Separator className="bg-sidebar-border" />
+        <div className="py-6 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-center gap-6 flex-wrap">
+            <div className="bg-sidebar-accent h-4 w-48 rounded" />
+            <div className="bg-sidebar-accent h-4 w-24 rounded" />
+            <div className="bg-sidebar-accent h-12 w-24 rounded" />
+            <div className="bg-sidebar-accent h-12 w-32 rounded" />
+            <div className="flex gap-4">
+              <div className="bg-sidebar-accent h-4 w-16 rounded mr-2" />
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="bg-sidebar-accent h-8 w-8 rounded" />
+              ))}
             </div>
-          </section>
-        </main>
-        <Footer />
-      </div>
+          </div>
+        </div>
+      </footer>
     );
   }
 
@@ -543,214 +537,256 @@ const Home = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <main>
-        <HeroSection />
-        
-        {/* Présentation de l'hôtel */}
-        <section className="py-20 bg-card/30">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-6">
-                <Tooltip 
-                  frLabel={data.title.fr} 
-                  enLabel={data.title.en} 
-                  onSave={updateTitle}
-                >
-                  {formatAmpersand(title)}
-                </Tooltip>
-              </h2>
-              <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
-              <div 
-                className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed prose prose-lg dark:prose-invert mx-auto"
-              >
-                <Tooltip 
-                  frLabel={data.content.fr} 
-                  enLabel={data.content.en} 
-                  onSave={updateContent}
-                >
-                  <span dangerouslySetInnerHTML={{ __html: content }} />
-                </Tooltip>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-              {processedHighlights.map((highlight, index) => (
-                <Card key={index} className="flex flex-col h-full overflow-hidden hover-elevate transition-all duration-300">
-                  <ImageTooltip imageUrl={data.highlights[index].image || wellnessImage} onSave={updateHighlightImage(index)}>
-                    <div className="relative h-48 overflow-hidden">
-                      <img 
-                        src={highlight.image} 
-                        alt={highlight.title}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                      <div className="absolute top-4 left-4">
-                        <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/20 backdrop-blur-sm rounded-full">
-                          <div className="text-primary">
-                            {getHighlightIcon(highlight.icon)}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </ImageTooltip>
-                  <CardContent className="flex-1 flex flex-col p-6">
-                    <CardTitle className="text-xl font-serif text-foreground mb-3">
-                      <Tooltip 
-                        frLabel={data.highlights[index].title.fr} 
-                        enLabel={data.highlights[index].title.en} 
-                        onSave={updateHighlightTitle(index)}
-                      >
-                        {formatAmpersand(highlight.title)}
-                      </Tooltip>
-                    </CardTitle>
-                    <p className="text-muted-foreground mb-6 leading-relaxed flex-1">
-                      <Tooltip 
-                        frLabel={data.highlights[index].description.fr} 
-                        enLabel={data.highlights[index].description.en} 
-                        onSave={updateHighlightDescription(index)}
-                      >
-                        {highlight.description}
-                      </Tooltip>
+    <>
+      <footer className="bg-sidebar border-t border-sidebar-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Main Footer Content */}
+          <div className="py-16">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+              {/* Hotel Info & Newsletter */}
+              <div className="lg:col-span-1">
+                <div className="mb-6">
+                  <h3 className="text-2xl font-serif font-bold text-sidebar-foreground mb-4">
+                    {hotel.title}
+                  </h3>
+                  <Tooltip
+                    frLabel={hotel.description.fr}
+                    enLabel={hotel.description.en}
+                    onSave={updateHotelDescription}
+                  >
+                    <p className="text-sidebar-foreground/80 mb-6">
+                      {currentHotelDescription}
                     </p>
-                    <Link href={highlight.link}>
-                      <Button variant="outline" className="w-full mt-auto">
-                        <Tooltip 
-                          frLabel={data.highlights[index].linkText.fr} 
-                          enLabel={data.highlights[index].linkText.en} 
-                          onSave={updateHighlightLinkText(index)}
+                  </Tooltip>
+                </div>
+                
+                {/* Newsletter */}
+                <div>
+                  <Tooltip
+                    frLabel={hotel.newsletter.title.fr}
+                    enLabel={hotel.newsletter.title.en}
+                    onSave={updateNewsletterField('title')}
+                  >
+                    <h4 className="font-semibold text-sidebar-foreground mb-3">
+                      {currentNewsletterTitle}
+                    </h4>
+                  </Tooltip>
+                  <Tooltip
+                    frLabel={hotel.newsletter.description.fr}
+                    enLabel={hotel.newsletter.description.en}
+                    onSave={updateNewsletterField('description')}
+                  >
+                    <p className="text-sm text-sidebar-foreground/70 mb-4">
+                      {currentNewsletterDescription}
+                    </p>
+                  </Tooltip>
+                  <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
+                    <Input 
+                      type="email" 
+                      placeholder={currentNewsletterPlaceholder}
+                      className="flex-1 bg-sidebar-accent border-sidebar-border text-sidebar-foreground"
+                      data-testid="input-newsletter"
+                    />
+                    <Button type="submit" size="sm" data-testid="button-newsletter">
+                      {currentNewsletterButton}
+                    </Button>
+                  </form>
+                </div>
+              </div>
+
+              {/* Footer Links */}
+              {sections.map((section, index) => (
+                <div key={index}>
+                  <Tooltip
+                    frLabel={section.title.fr}
+                    enLabel={section.title.en}
+                    onSave={updateSectionTitle(index)}
+                  >
+                    <h4 className="font-semibold text-sidebar-foreground mb-4">
+                      {section.title[langKey]}
+                    </h4>
+                  </Tooltip>
+                  {section.description && (
+                    <Tooltip
+                      frLabel={section.description.fr}
+                      enLabel={section.description.en}
+                      onSave={updateSectionDescription(index)}
+                    >
+                      <p className="text-sm text-sidebar-foreground/70 mb-4 whitespace-pre-line">
+                        {section.description[langKey]}
+                      </p>
+                    </Tooltip>
+                  )}
+                  <ul className="space-y-2">
+                    {section.links.map((link, linkIndex) => (
+                      <li key={linkIndex}>
+                        <Tooltip
+                          frLabel={link.label.fr}
+                          enLabel={link.label.en}
+                          onSave={updateLinkLabel(index, linkIndex)}
                         >
-                          {highlight.linkText}
+                          <Link 
+                            href={link.href}
+                            className="text-sidebar-foreground/70 hover:text-primary transition-colors text-sm"
+                            data-testid={`link-footer-${link.href.slice(1)}`}
+                          >
+                            {formatAmpersand(link.label[langKey])}
+                          </Link>
                         </Tooltip>
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </Card>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ))}
             </div>
           </div>
-        </section>
 
-        {/* Section Parallax - Bien-être */}
-        <ImageTooltip imageUrl={parallaxImage || wellnessImage} onSave={updateParallaxImage}>
-          <ParallaxSection
-            backgroundImage={parallaxImage || wellnessImage}
-            parallaxSpeed={0.5}
-            minHeight="70vh"
-            overlay={true}
-            overlayOpacity={0.4}
-            className="flex items-center"
-          >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-            </div>
-          </ParallaxSection>
-        </ImageTooltip>
+          <Separator className="bg-sidebar-border" />
 
-        {/* Call to Action final */}
-        <section className="py-20 bg-gradient-to-r from-primary/10 to-accent/10">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-6">
-              <Tooltip 
-                frLabel={data.cta.title.fr} 
-                enLabel={data.cta.title.en} 
-                onSave={updateCtaTitle}
-              >
-                {cta.title}
-              </Tooltip>
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              <Tooltip 
-                frLabel={data.cta.description.fr} 
-                enLabel={data.cta.description.en} 
-                onSave={updateCtaDescription}
-              >
-                {cta.description}
-              </Tooltip>
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href={cta.primaryLink}>
-                <Button size="lg" className="w-full sm:w-auto">
-                  <Tooltip 
-                    frLabel={data.cta.primaryButton.fr} 
-                    enLabel={data.cta.primaryButton.en} 
-                    onSave={updateCtaPrimaryButton}
-                  >
-                    {cta.primaryButton}
-                  </Tooltip>
-                </Button>
-              </Link>
-              <Link href={cta.secondaryLink}>
-                <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                  <Tooltip 
-                    frLabel={data.cta.secondaryButton.fr} 
-                    enLabel={data.cta.secondaryButton.en} 
-                    onSave={updateCtaSecondaryButton}
-                  >
-                    {cta.secondaryButton}
-                  </Tooltip>
-                </Button>
-              </Link>
+          {/* Contact Info */}
+          <div className="py-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Object.entries(contact).map(([key, info]) => {
+                const contactKey = key as keyof typeof contact;
+                const currentTitle = info.title[langKey];
+                const currentDetails = typeof info.details === 'string' 
+                  ? info.details 
+                  : info.details[langKey];
+                const isBilingualDetails = typeof info.details !== 'string';
+                return (
+                  <div key={key} className="flex items-start gap-3">
+                    <div className="flex-shrink-0">
+                      {getContactIcon(key)}
+                    </div>
+                    <div>
+                      <Tooltip
+                        frLabel={info.title.fr}
+                        enLabel={info.title.en}
+                        onSave={updateContactTitle(contactKey)}
+                      >
+                        <p className="text-sm font-medium text-sidebar-foreground mx-2">{currentTitle}</p>
+                      </Tooltip>
+                      <Tooltip
+                        frLabel={typeof info.details === 'string' ? info.details : info.details.fr}
+                        enLabel={isBilingualDetails ? info.details.en : undefined}
+                        onSave={isBilingualDetails ? updateContactDetails(contactKey, true) : undefined}
+                      >
+                        <p 
+                          className="text-sm text-sidebar-foreground/70"
+                          dangerouslySetInnerHTML={{ __html: currentDetails }}
+                        />
+                      </Tooltip>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
-        </section>
-      </main>
-      <Footer />
-    </div>
+
+          <Separator className="bg-sidebar-border" />
+
+          {/* Bottom Footer */}
+          <div className="py-6">
+            <div className="flex items-center justify-center gap-6 flex-wrap">
+              <Tooltip
+                frLabel={bottom.copyright.fr}
+                enLabel={bottom.copyright.en}
+                onSave={updateBottomField('copyright')}
+              >
+                <p className="text-sm text-sidebar-foreground/70">
+                  {currentCopyright}
+                </p>
+              </Tooltip>
+              
+              <Tooltip
+                frLabel={bottom.rating.fr}
+                enLabel={bottom.rating.en}
+                onSave={updateBottomField('rating')}
+              >
+                <span>{currentRating}</span>
+              </Tooltip>
+              
+              <Link 
+                href="https://preferredhotels.com/iprefer/enroll?enrollcode=TNRCM&hotel=TNRCM" 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                <img 
+                  src={logos.iPrefer} 
+                  alt="I Prefer Hotel Rewards"
+                  className="h-12 opacity-80 hover:opacity-100 transition-opacity"
+                  data-testid="logo-iprefer"
+                />
+              </Link>
+              
+              <Link 
+                href="https://preferredhotels.com/hotels/madagascar/hotel-carlton" 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                <img 
+                  src={logos.preferredLifestyle} 
+                  alt="Preferred Lifestyle"
+                  className="h-12 opacity-80 hover:opacity-100 transition-opacity filter invert"
+                  data-testid="logo-preferred-lifestyle"
+                />
+              </Link>
+              
+              <div className="flex items-center gap-4">
+                <Tooltip
+                  frLabel={bottom.follow.fr}
+                  enLabel={bottom.follow.en}
+                  onSave={updateBottomField('follow')}
+                >
+                  <span className="text-sm text-sidebar-foreground/70 mr-2">{currentFollow}</span>
+                </Tooltip>
+                {social.map((socialItem, index) => (
+                  <Tooltip
+                    key={index}
+                    frLabel={socialItem.label.fr}
+                    enLabel={socialItem.label.en}
+                    onSave={updateSocialLabel(index)}
+                  >
+                    <Button
+                      asChild
+                      variant="ghost"
+                      size="sm"
+                      className="w-8 h-8 p-0 text-sidebar-foreground/70 hover:text-primary"
+                      data-testid={`button-social-${socialItem.label[langKey].toLowerCase()}`}
+                    >
+                      <Link href={socialItem.href} target="_blank" rel="noopener noreferrer">
+                        {getSocialIcon(socialItem.icon)}
+                        <span className="sr-only">{socialItem.label[langKey]}</span>
+                      </Link>
+                    </Button>
+                  </Tooltip>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      {/* Floating Messenger Button */}
+      <div className="fixed bottom-6 right-6 z-50 hidden lg:block">
+        <Button
+          asChild
+          variant="outline"
+          size="lg"
+          className="rounded-full bg-sidebar-accent border-sidebar-border hover:bg-sidebar-accent/80 shadow-lg"
+        >
+          <a
+            href={messenger.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Chat with us on Messenger"
+          >
+            <MessageCircle className="w-6 h-6 stroke-yellow-500 text-sidebar-foreground" />
+          </a>
+        </Button>
+      </div>
+    </>
   );
 };
 
-export default Home;
-
-
-// CECI EST POUR JUSTE REFERENCE 
-
-// src/data/mainNavData.ts
-export const mainNavData = {
-  menus: [
-    { id: 1, translations: { fr: "Accueil", en: "Home" }, link: "/", position: 1 },
-    { id: 2, translations: { fr: "Offres Spéciales", en: "Special Offers" }, link: "/offres", position: 2 },
-    { id: 3, translations: { fr: "Séjour", en: "Stay" }, link: "/chambres", position: 3 },
-    { id: 4, translations: { fr: "Restauration", en: "Dining" }, link: "/restaurants", position: 4 },
-    { id: 5, translations: { fr: "Bien-être", en: "Wellness" }, link: "/bien-etre-loisirs", position: 5 },
-    { id: 6, translations: { fr: "Événements", en: "Events" }, link: "/evenements", position: 6 },
-    { id: 7, translations: { fr: "Découverte", en: "Discover" }, link: "/galerie", position: 7 },
-    { id: 8, translations: { fr: "Contact", en: "Contact" }, link: "/contact", position: 8 }
-  ],
-  subMenus: {
-    '/chambres': [
-      { label: { fr: 'Chambres & Suites', en: 'Rooms & Suites' }, href: '/chambres' },
-      { label: { fr: 'Services & Boutiques', en: 'Services & Shops' }, href: '/services-boutiques' }
-    ],
-    '/restaurants': [
-      { label: { fr: 'Île Rouge & la Terrasse', en: 'Île Rouge & the Terrace' }, href: '/restaurants#ile-rouge' },
-      { label: { fr: 'Le Bistrot du Carlton', en: 'The Carlton Bistro' }, href: '/restaurants#bistrot' },
-      { label: { fr: 'L\'Oasis de Tana', en: 'Tana Oasis' }, href: '/restaurants#oasis' },
-      { label: { fr: 'L\'Éclair by Carlton', en: 'Carlton Éclair' }, href: '/restaurants#eclair' }
-    ],
-    '/bien-etre-loisirs': [
-      { label: { fr: 'Piscine', en: 'Pool' }, href: '/bien-etre-loisirs#piscine' },
-      { label: { fr: 'Salle de sport', en: 'Gym' }, href: '/bien-etre-loisirs#salle-sport' },
-      { label: { fr: 'Court de tennis', en: 'Tennis Court' }, href: '/bien-etre-loisirs#tennis' },
-      { label: { fr: 'Soins holistique', en: 'Holistic Care' }, href: '/bien-etre-loisirs#soins' }
-    ],
-    '/evenements': [
-      { label: { fr: 'Mariages', en: 'Weddings' }, href: '/evenements#mariages' },
-      { label: { fr: 'Corporate', en: 'Corporate' }, href: '/evenements#corporate' },
-      { label: { fr: 'Célébrations', en: 'Celebrations' }, href: '/evenements#celebrations' },
-      { label: { fr: 'Galas & Lancements', en: 'Galas & Launches' }, href: '/evenements#galas' },
-      { label: { fr: 'Nos espaces', en: 'Our Spaces' }, href: '/evenements#salles' }
-    ],
-    '/galerie': [
-      { label: { fr: 'Galerie', en: 'Gallery' }, href: '/galerie' },
-      { label: { fr: 'Découvrir Antananarivo', en: 'Discover Antananarivo' }, href: '/decouvrir-antananarivo' }
-    ]
-  },
-  languages: [
-    { code: 'FR', flag: '🇫🇷' },
-    { code: 'EN', flag: '🇬🇧' }
-  ],
-  reserveButton: { fr: "Réservez", en: "Reserve" },
-  mobileMenuTitle: { fr: "Menu", en: "Menu" }
-};
+export default Footer;
