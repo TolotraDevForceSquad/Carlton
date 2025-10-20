@@ -756,7 +756,7 @@ const Evenements = () => {
             </table>
           </div>
 
-          <div className="mt-16 text-center">
+          {/* <div className="mt-16 text-center">
             <Card className="bg-gradient-to-r from-primary/5 to-accent/5 border-none">
               <CardContent className="p-12">
                 <h3 className="text-3xl font-serif font-bold text-foreground mb-6">
@@ -771,11 +771,11 @@ const Evenements = () => {
                   className="shadow-lg"
                   onClick={() => navigate('/contact')}
                 >
-                  👉 Demander un devis
+                  Demander un devis
                 </Button>
               </CardContent>
             </Card>
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -795,7 +795,7 @@ const Evenements = () => {
               data-testid="button-quote-events"
               onClick={() => navigate('/contact')}
             >
-              <Heart className="w-4 h-4 mr-2" />
+              {/* <Heart className="w-4 h-4 mr-2" /> */}
               Demander un devis
             </Button>
           </div>

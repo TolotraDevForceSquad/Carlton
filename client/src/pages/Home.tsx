@@ -1,11 +1,12 @@
+
+
 // src/components/Home.tsx
 import HeroSection from '@/components/HeroSection';
 import ParallaxSection from '@/components/ParallaxSection';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Star, Clock, MapPin, Utensils, Camera, Calendar, Sparkles } from 'lucide-react';
+import { Star, Clock, MapPin, Utensils, Camera, Calendar, Sparkles, Check, X } from 'lucide-react'; 
 import Footer from '@/components/Footer';
 import { Link } from 'wouter';
 import { formatAmpersand } from '@/lib/utils/formatAmpersand';
@@ -13,7 +14,7 @@ import { homeData as initialHomeData } from '@/data/homeData';
 import wellnessImage from '@assets/generated_images/Hotel_infinity_pool_wellness_a9857557.png';
 import { useLanguage } from '@/components/context/LanguageContext';
 import { Tooltip, ImageTooltip } from '@/components/Tooltip';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 const SECTION_KEY = 'home';
 
@@ -26,6 +27,82 @@ const getAuthHeaders = () => {
   return headers;
 };
 
+// Composant Modal pour l'affichage en popup
+const ImageModal = ({ isOpen, onClose, imageUrl, alt }: { 
+  isOpen: boolean; 
+  onClose: () => void; 
+  imageUrl: string; 
+  alt: string;
+}) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+      <div className="relative max-w-4xl max-h-[90vh] mx-4">
+        <button
+          onClick={onClose}
+          className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors z-10"
+        >
+          <X className="w-8 h-8" />
+        </button>
+        <img
+          src={imageUrl}
+          alt={alt}
+          className="w-full h-full object-contain max-h-[80vh] rounded-lg shadow-2xl"
+        />
+      </div>
+    </div>
+  );
+};
+
+// Composant Carousel pour Équipements & Services
+const EquipmentCarousel = ({ 
+  images, 
+  currentIndex, 
+  onIndexChange 
+}: { 
+  images: string[]; 
+  currentIndex: number; 
+  onIndexChange: (index: number) => void;
+}) => {
+  return (
+    <div className="relative h-96 lg:h-[500px] w-full overflow-hidden rounded-xl shadow-2xl">
+      {images.map((image, index) => (
+        <div
+          key={index}
+          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+            index === currentIndex ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
+          <img
+            src={image}
+            alt={`Equipment ${index + 1}`}
+            className="w-full h-full object-cover transition-transform duration-700 ease-in-out hover:scale-105"
+            loading="lazy"
+            decoding="async"
+          />
+          <div className="absolute inset-0 bg-black/20"></div>
+        </div>
+      ))}
+      
+      {/* Indicateurs de navigation */}
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+        {images.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => onIndexChange(index)}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              index === currentIndex 
+                ? 'bg-white scale-125' 
+                : 'bg-white/50 hover:bg-white/70'
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const Home = () => {
   const { currentLang } = useLanguage();
   const lang = currentLang.code.toLowerCase();
@@ -34,6 +111,45 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
+  // États pour les modales d'images
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string>('');
+  const [selectedImageAlt, setSelectedImageAlt] = useState<string>('');
+
+  // État pour le carrousel Équipements & Services
+  const [carouselIndex, setCarouselIndex] = useState(0);
+  
+  // Images pour le carrousel Équipements & Services
+  const carouselImages = [
+    "/uploads/Hotel_infinity_pool_wellness_a9857557.png",
+    "/uploads/Presidential_suite_bedroom_interior_7adece21.png",
+    "/uploads/Luxury_hotel_restaurant_interior_090ad235.png",
+    "/uploads/Luxury_hotel_wedding_reception_d3ca816d.png"
+  ];
+
+  // Gestion du carrousel automatique
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCarouselIndex((prev) => (prev + 1) % carouselImages.length);
+    }, 2000); // Change toutes les 2 secondes
+
+    return () => clearInterval(interval);
+  }, [carouselImages.length]);
+
+  // Fonction pour ouvrir la modal d'image
+  const openImageModal = useCallback((imageUrl: string, alt: string) => {
+    setSelectedImage(imageUrl);
+    setSelectedImageAlt(alt);
+    setModalOpen(true);
+  }, []);
+
+  // Fonction pour fermer la modal
+  const closeImageModal = useCallback(() => {
+    setModalOpen(false);
+    setSelectedImage('');
+    setSelectedImageAlt('');
+  }, []);
+
   // Helper to split homeData into dataFr and dataEn structures
   const splitHomeData = (mixedData: typeof initialHomeData) => {
     const dataFr = {
@@ -128,7 +244,6 @@ const Home = () => {
         }
         let section = sections.find((s: any) => s.sectionKey === SECTION_KEY);
         if (!section) {
-          // Table is empty for this sectionKey, create default
           const { dataFr, dataEn } = splitHomeData(initialHomeData);
           const createResponse = await fetch('/api/globalSections', {
             method: 'POST',
@@ -146,7 +261,7 @@ const Home = () => {
           }
 
           const created = await createResponse.json();
-          section = created; // Assume POST returns the created object
+          section = created;
         }
 
         if (section) {
@@ -158,7 +273,6 @@ const Home = () => {
       } catch (err) {
         console.error('Error fetching home data:', err);
         setError('Failed to load home data');
-        // Fallback to default
         setData(initialHomeData);
       } finally {
         setLoading(false);
@@ -179,7 +293,6 @@ const Home = () => {
       let currentSection = currentData.find((s: any) => s.sectionKey === SECTION_KEY);
 
       if (!currentSection) {
-        // Should not happen after initial load, but create if missing
         const { dataFr, dataEn } = splitHomeData(initialHomeData);
         const createResponse = await fetch('/api/globalSections', {
           method: 'POST',
@@ -213,7 +326,6 @@ const Home = () => {
       }
     } catch (err) {
       console.error('Error updating home section:', err);
-      // Revert local state on error if needed, but for simplicity, keep it
     }
   };
   
@@ -231,8 +343,15 @@ const Home = () => {
   
   const processedHighlights = highlights.map((highlight, index) => ({
     ...highlight,
-    image: highlight.image || wellnessImage // Fallback if needed
+    image: highlight.image || wellnessImage
   }));
+
+  const mainHighlights = processedHighlights.slice(0, 3);
+  const equipmentHighlight = processedHighlights[3];
+
+  const getServicesList = (description: string) => {
+      return description.split(',').map(s => s.trim()).filter(s => s.length > 0);
+  }
   
   const cta = {
     ...rawCta,
@@ -252,32 +371,26 @@ const Home = () => {
     }
   };
 
+  // Les fonctions de mise à jour restent inchangées
   const updateTitle = async (newFr: string, newEn: string) => {
-    // First, update local state
     const updatedData = {
       ...data,
       title: { fr: newFr, en: newEn }
     };
     setData(updatedData);
-
-    // Then, update backend
     await updateHomeSection(updatedData);
   };
 
   const updateContent = async (newFr: string, newEn: string) => {
-    // First, update local state
     const updatedData = {
       ...data,
       content: { fr: newFr, en: newEn }
     };
     setData(updatedData);
-
-    // Then, update backend
     await updateHomeSection(updatedData);
   };
 
   const updateHighlightTitle = (index: number) => async (newFr: string, newEn: string) => {
-    // First, update local state
     const updatedData = {
       ...data,
       highlights: data.highlights.map((h, i) => 
@@ -285,13 +398,10 @@ const Home = () => {
       )
     };
     setData(updatedData);
-
-    // Then, update backend
     await updateHomeSection(updatedData);
   };
 
   const updateHighlightDescription = (index: number) => async (newFr: string, newEn: string) => {
-    // First, update local state
     const updatedData = {
       ...data,
       highlights: data.highlights.map((h, i) => 
@@ -299,13 +409,10 @@ const Home = () => {
       )
     };
     setData(updatedData);
-
-    // Then, update backend
     await updateHomeSection(updatedData);
   };
 
   const updateHighlightLinkText = (index: number) => async (newFr: string, newEn: string) => {
-    // First, update local state
     const updatedData = {
       ...data,
       highlights: data.highlights.map((h, i) => 
@@ -313,61 +420,46 @@ const Home = () => {
       )
     };
     setData(updatedData);
-
-    // Then, update backend
     await updateHomeSection(updatedData);
   };
 
   const updateCtaTitle = async (newFr: string, newEn: string) => {
-    // First, update local state
     const updatedData = {
       ...data,
       cta: { ...data.cta, title: { fr: newFr, en: newEn } }
     };
     setData(updatedData);
-
-    // Then, update backend
     await updateHomeSection(updatedData);
   };
 
   const updateCtaDescription = async (newFr: string, newEn: string) => {
-    // First, update local state
     const updatedData = {
       ...data,
       cta: { ...data.cta, description: { fr: newFr, en: newEn } }
     };
     setData(updatedData);
-
-    // Then, update backend
     await updateHomeSection(updatedData);
   };
 
   const updateCtaPrimaryButton = async (newFr: string, newEn: string) => {
-    // First, update local state
     const updatedData = {
       ...data,
       cta: { ...data.cta, primaryButton: { fr: newFr, en: newEn } }
     };
     setData(updatedData);
-
-    // Then, update backend
     await updateHomeSection(updatedData);
   };
 
   const updateCtaSecondaryButton = async (newFr: string, newEn: string) => {
-    // First, update local state
     const updatedData = {
       ...data,
       cta: { ...data.cta, secondaryButton: { fr: newFr, en: newEn } }
     };
     setData(updatedData);
-
-    // Then, update backend
     await updateHomeSection(updatedData);
   };
 
   const updateHighlightImage = (index: number) => async (newImageUrl: string) => {
-    // First, update local state
     const updatedData = {
       ...data,
       highlights: data.highlights.map((h, i) => 
@@ -375,20 +467,15 @@ const Home = () => {
       )
     };
     setData(updatedData);
-
-    // Then, update backend
     await updateHomeSection(updatedData);
   };
 
   const updateParallaxImage = async (newImageUrl: string) => {
-    // First, update local state
     const updatedData = {
       ...data,
       parallaxImage: newImageUrl
     };
     setData(updatedData);
-
-    // Then, update backend
     await updateHomeSection(updatedData);
   };
 
@@ -471,79 +558,210 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-              {processedHighlights.map((highlight, index) => (
-                <Card key={index} className="flex flex-col h-full overflow-hidden hover-elevate transition-all duration-300">
-                  <ImageTooltip imageUrl={data.highlights[index].image || wellnessImage} onSave={updateHighlightImage(index)}>
-                    <div className="relative h-48 overflow-hidden">
-                      <img 
-                        src={highlight.image} 
-                        alt={highlight.title}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                      <div className="absolute top-4 left-4">
-                        <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/20 backdrop-blur-sm rounded-full">
-                          <div className="text-primary">
-                            {getHighlightIcon(highlight.icon)}
-                          </div>
+            {/* Highlights principaux (3 premiers) avec layouts alternés */}
+            <div className="space-y-12 mb-20">
+              {mainHighlights.map((highlight, index) => {
+                const isImageLeft = index % 2 === 0;
+                return (
+                  <div key={index} className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center bg-background p-8 rounded-xl shadow-lg">
+                    {isImageLeft ? (
+                      <>
+                        {/* Image à gauche sur desktop, en haut sur mobile */}
+                        <div className="lg:col-span-7">
+                          <ImageTooltip imageUrl={data.highlights[index].image || wellnessImage} onSave={updateHighlightImage(index)}>
+                            <div 
+                              className="relative h-64 lg:h-80 overflow-hidden cursor-pointer rounded-xl"
+                              onClick={() => openImageModal(highlight.image, highlight.title)}
+                            >
+                              <img 
+                                src={highlight.image} 
+                                alt={highlight.title}
+                                className="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-110 rounded-xl"
+                                loading="lazy"
+                                decoding="async"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                              <div className="absolute top-4 left-4">
+                                <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/20 backdrop-blur-sm rounded-full">
+                                  <div className="text-primary">
+                                    {getHighlightIcon(highlight.icon)}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </ImageTooltip>
                         </div>
-                      </div>
-                    </div>
-                  </ImageTooltip>
-                  <CardContent className="flex-1 flex flex-col p-6">
-                    <CardTitle className="text-xl font-serif text-foreground mb-3">
-                      <Tooltip 
-                        frLabel={data.highlights[index].title.fr} 
-                        enLabel={data.highlights[index].title.en} 
-                        onSave={updateHighlightTitle(index)}
-                      >
-                        {formatAmpersand(highlight.title)}
-                      </Tooltip>
-                    </CardTitle>
-                    <p className="text-muted-foreground mb-6 leading-relaxed flex-1">
-                      <Tooltip 
-                        frLabel={data.highlights[index].description.fr} 
-                        enLabel={data.highlights[index].description.en} 
-                        onSave={updateHighlightDescription(index)}
-                      >
-                        {highlight.description}
-                      </Tooltip>
-                    </p>
-                    <Link href={highlight.link}>
-                      <Button variant="outline" className="w-full mt-auto">
+                        {/* Texte à droite sur desktop, en bas sur mobile */}
+                        <div className="lg:col-span-5">
+                          <h3 className="text-3xl font-serif font-bold text-foreground mb-4">
+                            <Tooltip 
+                              frLabel={data.highlights[index].title.fr} 
+                              enLabel={data.highlights[index].title.en} 
+                              onSave={updateHighlightTitle(index)}
+                            >
+                              {formatAmpersand(highlight.title)}
+                            </Tooltip>
+                          </h3>
+                          <p className="text-muted-foreground mb-6 leading-relaxed text-lg">
+                            <Tooltip 
+                              frLabel={data.highlights[index].description.fr} 
+                              enLabel={data.highlights[index].description.en} 
+                              onSave={updateHighlightDescription(index)}
+                            >
+                              {highlight.description}
+                            </Tooltip>
+                          </p>
+                          <Link href={highlight.link}>
+                            <Button className="w-full lg:w-auto bg-yellow-500 hover:bg-yellow-600 text-black">
+                              <Tooltip 
+                                frLabel={data.highlights[index].linkText.fr} 
+                                enLabel={data.highlights[index].linkText.en} 
+                                onSave={updateHighlightLinkText(index)}
+                              >
+                                {highlight.linkText}
+                              </Tooltip>
+                            </Button>
+                          </Link>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        {/* Texte à gauche sur desktop, en haut sur mobile */}
+                        <div className="lg:col-span-5">
+                          <h3 className="text-3xl font-serif font-bold text-foreground mb-4">
+                            <Tooltip 
+                              frLabel={data.highlights[index].title.fr} 
+                              enLabel={data.highlights[index].title.en} 
+                              onSave={updateHighlightTitle(index)}
+                            >
+                              {formatAmpersand(highlight.title)}
+                            </Tooltip>
+                          </h3>
+                          <p className="text-muted-foreground mb-6 leading-relaxed text-lg">
+                            <Tooltip 
+                              frLabel={data.highlights[index].description.fr} 
+                              enLabel={data.highlights[index].description.en} 
+                              onSave={updateHighlightDescription(index)}
+                            >
+                              {highlight.description}
+                            </Tooltip>
+                          </p>
+                          <Link href={highlight.link}>
+                            <Button className="w-full lg:w-auto bg-yellow-500 hover:bg-yellow-600 text-black">
+                              <Tooltip 
+                                frLabel={data.highlights[index].linkText.fr} 
+                                enLabel={data.highlights[index].linkText.en} 
+                                onSave={updateHighlightLinkText(index)}
+                              >
+                                {highlight.linkText}
+                              </Tooltip>
+                            </Button>
+                          </Link>
+                        </div>
+                        {/* Image à droite sur desktop, en bas sur mobile */}
+                        <div className="lg:col-span-7">
+                          <ImageTooltip imageUrl={data.highlights[index].image || wellnessImage} onSave={updateHighlightImage(index)}>
+                            <div 
+                              className="relative h-64 lg:h-80 overflow-hidden cursor-pointer rounded-xl"
+                              onClick={() => openImageModal(highlight.image, highlight.title)}
+                            >
+                              <img 
+                                src={highlight.image} 
+                                alt={highlight.title}
+                                className="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-110 rounded-xl"
+                                loading="lazy"
+                                decoding="async"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                              <div className="absolute top-4 left-4">
+                                <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/20 backdrop-blur-sm rounded-full">
+                                  <div className="text-primary">
+                                    {getHighlightIcon(highlight.icon)}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </ImageTooltip>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Section Équipements & Services avec carrousel */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center bg-background p-8 rounded-xl shadow-lg">
+                {/* Colonne de la liste des services */}
+                <div className="lg:col-span-5">
+                    <h3 className="text-3xl font-serif font-bold text-foreground mb-4 flex items-center">
                         <Tooltip 
-                          frLabel={data.highlights[index].linkText.fr} 
-                          enLabel={data.highlights[index].linkText.en} 
-                          onSave={updateHighlightLinkText(index)}
+                            frLabel={data.highlights[3].title.fr} 
+                            enLabel={data.highlights[3].title.en} 
+                            onSave={updateHighlightTitle(3)}
                         >
-                          {highlight.linkText}
+                            {equipmentHighlight.title}
+                        </Tooltip>
+                    </h3>
+                    <div className="space-y-3">
+                        {getServicesList(equipmentHighlight.description).map((service, i) => (
+                            <div key={i} className="flex items-start text-lg text-muted-foreground">
+                                <Check className="w-5 h-5 text-primary mr-3 mt-1 flex-shrink-0" />
+                                <span className="flex-1">{service}</span>
+                            </div>
+                        ))}
+                    </div>
+                    <Link href={equipmentHighlight.link}>
+                      <Button className="mt-8 bg-yellow-500 hover:bg-yellow-600 text-black">
+                        <Tooltip 
+                          frLabel={data.highlights[3].linkText.fr} 
+                          enLabel={data.highlights[3].linkText.en} 
+                          onSave={updateHighlightLinkText(3)}
+                        >
+                          {equipmentHighlight.linkText}
                         </Tooltip>
                       </Button>
                     </Link>
-                  </CardContent>
-                </Card>
-              ))}
+                </div>
+                
+                {/* Colonne Carrousel */}
+                <div className="lg:col-span-7">
+                  <ImageTooltip imageUrl={carouselImages[carouselIndex]} onSave={updateHighlightImage(3)}>
+                    <div 
+                      className="cursor-pointer"
+                      onClick={() => openImageModal(carouselImages[carouselIndex], equipmentHighlight.title)}
+                    >
+                      <EquipmentCarousel 
+                        images={carouselImages}
+                        currentIndex={carouselIndex}
+                        onIndexChange={setCarouselIndex}
+                      />
+                    </div>
+                  </ImageTooltip>
+                </div>
             </div>
           </div>
         </section>
 
         {/* Section Parallax - Bien-être */}
-        <ImageTooltip imageUrl={parallaxImage || wellnessImage} onSave={updateParallaxImage}>
-          <ParallaxSection
-            backgroundImage={parallaxImage || wellnessImage}
-            parallaxSpeed={0.5}
-            minHeight="70vh"
-            overlay={true}
-            overlayOpacity={0.4}
-            className="flex items-center"
-          >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-            </div>
-          </ParallaxSection>
-        </ImageTooltip>
+        <div 
+          className="cursor-pointer"
+          onClick={() => openImageModal(parallaxImage || wellnessImage, "Hôtel Carlton Madagascar")}
+        >
+          <ImageTooltip imageUrl={parallaxImage || wellnessImage} onSave={updateParallaxImage}>
+            <ParallaxSection
+              backgroundImage={parallaxImage || wellnessImage}
+              parallaxSpeed={0.5}
+              minHeight="70vh"
+              overlay={true}
+              overlayOpacity={0.4}
+              className="flex items-center"
+            >
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+              </div>
+            </ParallaxSection>
+          </ImageTooltip>
+        </div>
 
         {/* Call to Action final */}
         <section className="py-20 bg-gradient-to-r from-primary/10 to-accent/10">
@@ -568,7 +786,7 @@ const Home = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href={cta.primaryLink}>
-                <Button size="lg" className="w-full sm:w-auto">
+                <Button size="lg" className="w-full sm:w-auto bg-yellow-500 hover:bg-yellow-600 text-black">
                   <Tooltip 
                     frLabel={data.cta.primaryButton.fr} 
                     enLabel={data.cta.primaryButton.en} 
@@ -579,7 +797,7 @@ const Home = () => {
                 </Button>
               </Link>
               <Link href={cta.secondaryLink}>
-                <Button variant="outline" size="lg" className="w-full sm:w-auto">
+                <Button variant="outline" size="lg" className="w-full sm:w-auto border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black">
                   <Tooltip 
                     frLabel={data.cta.secondaryButton.fr} 
                     enLabel={data.cta.secondaryButton.en} 
@@ -593,6 +811,15 @@ const Home = () => {
           </div>
         </section>
       </main>
+
+      {/* Modal pour l'affichage des images en plein écran */}
+      <ImageModal 
+        isOpen={modalOpen}
+        onClose={closeImageModal}
+        imageUrl={selectedImage}
+        alt={selectedImageAlt}
+      />
+
       <Footer />
     </div>
   );

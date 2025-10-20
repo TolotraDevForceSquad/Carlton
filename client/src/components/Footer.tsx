@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { Tooltip } from '@/components/Tooltip';
-import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Twitter, Linkedin } from 'lucide-react';
+import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin, MessageCircle } from 'lucide-react';
 import { Link } from 'wouter';
 import { footerData } from '@/data/footerData';
 import { formatAmpersand } from '@/lib/utils/formatAmpersand';
@@ -43,6 +43,7 @@ const Footer = () => {
       },
       sections: mixedData.sections.map((section) => ({
         title: section.title.fr,
+        description: section.description?.fr || undefined,
         links: section.links.map((link) => ({
           label: link.label.fr,
           href: link.href
@@ -60,10 +61,6 @@ const Footer = () => {
         email: {
           title: mixedData.contact.email.title.fr,
           details: mixedData.contact.email.details
-        },
-        reception: {
-          title: mixedData.contact.reception.title.fr,
-          details: mixedData.contact.reception.details.fr
         }
       },
       bottom: {
@@ -76,6 +73,7 @@ const Footer = () => {
         href: social.href,
         label: social.label.fr
       })),
+      messenger: mixedData.messenger,
       logos: mixedData.logos
     };
 
@@ -92,6 +90,7 @@ const Footer = () => {
       },
       sections: mixedData.sections.map((section) => ({
         title: section.title.en,
+        description: section.description?.en || undefined,
         links: section.links.map((link) => ({
           label: link.label.en,
           href: link.href
@@ -109,10 +108,6 @@ const Footer = () => {
         email: {
           title: mixedData.contact.email.title.en,
           details: mixedData.contact.email.details
-        },
-        reception: {
-          title: mixedData.contact.reception.title.en,
-          details: mixedData.contact.reception.details.en
         }
       },
       bottom: {
@@ -125,6 +120,7 @@ const Footer = () => {
         href: social.href,
         label: social.label.en
       })),
+      messenger: mixedData.messenger,
       logos: mixedData.logos
     };
 
@@ -149,13 +145,17 @@ const Footer = () => {
           button: { fr: dataFr.hotel.newsletter.button, en: enFallback.hotel?.newsletter?.button || dataFr.hotel.newsletter.button }
         }
       },
-      sections: dataFr.sections.map((sectionFr: any, i: number) => ({
-        title: { fr: sectionFr.title, en: enFallback.sections[i]?.title || sectionFr.title },
-        links: sectionFr.links.map((linkFr: any, j: number) => ({
-          label: { fr: linkFr.label, en: enFallback.sections[i]?.links[j]?.label || linkFr.label },
-          href: linkFr.href
-        }))
-      })),
+      sections: dataFr.sections.map((sectionFr: any, i: number) => {
+        const sectionEn = enFallback.sections[i];
+        return {
+          title: { fr: sectionFr.title, en: sectionEn?.title || sectionFr.title },
+          description: sectionFr.description ? { fr: sectionFr.description, en: sectionEn?.description || sectionFr.description } : undefined,
+          links: sectionFr.links.map((linkFr: any, j: number) => ({
+            label: { fr: linkFr.label, en: sectionEn?.links[j]?.label || linkFr.label },
+            href: linkFr.href
+          }))
+        };
+      }),
       contact: {
         address: {
           title: { fr: dataFr.contact.address.title, en: enFallback.contact?.address?.title || dataFr.contact.address.title },
@@ -168,10 +168,6 @@ const Footer = () => {
         email: {
           title: { fr: dataFr.contact.email.title, en: enFallback.contact?.email?.title || dataFr.contact.email.title },
           details: dataFr.contact.email.details
-        },
-        reception: {
-          title: { fr: dataFr.contact.reception.title, en: enFallback.contact?.reception?.title || dataFr.contact.reception.title },
-          details: { fr: dataFr.contact.reception.details, en: enFallback.contact?.reception?.details || dataFr.contact.reception.details }
         }
       },
       bottom: {
@@ -184,6 +180,7 @@ const Footer = () => {
         href: socialFr.href,
         label: { fr: socialFr.label, en: enFallback.social[i]?.label || socialFr.label }
       })),
+      messenger: dataFr.messenger,
       logos: dataFr.logos
     };
     return mixed;
@@ -336,6 +333,24 @@ const Footer = () => {
     };
   };
 
+  const updateSectionDescription = (sectionIndex: number) => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        sections: data.sections.map((section, i) =>
+          i === sectionIndex
+            ? {
+              ...section,
+              description: { fr: newFr, en: newEn }
+            }
+            : section
+        )
+      };
+      setData(updatedData);
+      await updateFooterSection(updatedData);
+    };
+  };
+
   const updateLinkLabel = (sectionIndex: number, linkIndex: number) => {
     return async (newFr: string, newEn: string) => {
       const updatedData = {
@@ -343,13 +358,13 @@ const Footer = () => {
         sections: data.sections.map((section, i) =>
           i === sectionIndex
             ? {
-                ...section,
-                links: section.links.map((link, j) =>
-                  j === linkIndex
-                    ? { ...link, label: { fr: newFr, en: newEn } }
-                    : link
-                )
-              }
+              ...section,
+              links: section.links.map((link, j) =>
+                j === linkIndex
+                  ? { ...link, label: { fr: newFr, en: newEn } }
+                  : link
+              )
+            }
             : section
         )
       };
@@ -423,7 +438,7 @@ const Footer = () => {
     };
   };
 
-  const { hotel, sections, contact, bottom, social, logos } = data;
+  const { hotel, sections, contact, bottom, social, messenger, logos } = data;
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -434,7 +449,6 @@ const Footer = () => {
     switch (iconName) {
       case 'Facebook': return <Facebook className="w-4 h-4" />;
       case 'Instagram': return <Instagram className="w-4 h-4" />;
-      case 'Twitter': return <Twitter className="w-4 h-4" />;
       case 'Linkedin': return <Linkedin className="w-4 h-4" />;
       default: return null;
     }
@@ -445,7 +459,6 @@ const Footer = () => {
       case 'address': return <MapPin className="w-5 h-5" />;
       case 'phone': return <Phone className="w-5 h-5" />;
       case 'email': return <Mail className="w-5 h-5" />;
-      case 'reception': return <Clock className="w-5 h-5" />;
       default: return null;
     }
   };
@@ -488,8 +501,8 @@ const Footer = () => {
         </div>
         <Separator className="bg-sidebar-border" />
         <div className="py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {Array.from({ length: 4 }).map((_, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Array.from({ length: 3 }).map((_, i) => (
               <div key={i} className="flex gap-3">
                 <div className="bg-sidebar-accent h-5 w-5 rounded" />
                 <div className="space-y-1">
@@ -509,7 +522,7 @@ const Footer = () => {
             <div className="bg-sidebar-accent h-12 w-32 rounded" />
             <div className="flex gap-4">
               <div className="bg-sidebar-accent h-4 w-16 rounded mr-2" />
-              {Array.from({ length: 4 }).map((_, i) => (
+              {Array.from({ length: 3 }).map((_, i) => (
                 <div key={i} className="bg-sidebar-accent h-8 w-8 rounded" />
               ))}
             </div>
@@ -524,208 +537,258 @@ const Footer = () => {
   }
 
   return (
-    <footer className="bg-sidebar border-t border-sidebar-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Main Footer Content */}
-        <div className="py-16">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            {/* Hotel Info & Newsletter */}
-            <div className="lg:col-span-1">
-              <div className="mb-6">
-                <h3 className="text-2xl font-serif font-bold text-sidebar-foreground mb-4">
-                  {hotel.title}
-                </h3>
-                <Tooltip
-                  frLabel={hotel.description.fr}
-                  enLabel={hotel.description.en}
-                  onSave={updateHotelDescription}
-                >
-                  <p className="text-sidebar-foreground/80 mb-6">
-                    {currentHotelDescription}
-                  </p>
-                </Tooltip>
-              </div>
-              
-              {/* Newsletter */}
-              <div>
-                <Tooltip
-                  frLabel={hotel.newsletter.title.fr}
-                  enLabel={hotel.newsletter.title.en}
-                  onSave={updateNewsletterField('title')}
-                >
-                  <h4 className="font-semibold text-sidebar-foreground mb-3">
-                    {currentNewsletterTitle}
-                  </h4>
-                </Tooltip>
-                <Tooltip
-                  frLabel={hotel.newsletter.description.fr}
-                  enLabel={hotel.newsletter.description.en}
-                  onSave={updateNewsletterField('description')}
-                >
-                  <p className="text-sm text-sidebar-foreground/70 mb-4">
-                    {currentNewsletterDescription}
-                  </p>
-                </Tooltip>
-                <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
-                  <Input 
-                    type="email" 
-                    placeholder={currentNewsletterPlaceholder}
-                    className="flex-1 bg-sidebar-accent border-sidebar-border text-sidebar-foreground"
-                    data-testid="input-newsletter"
-                  />
-                  <Button type="submit" size="sm" data-testid="button-newsletter">
-                    {currentNewsletterButton}
-                  </Button>
-                </form>
-              </div>
-            </div>
-
-            {/* Footer Links */}
-            {sections.map((section, index) => (
-              <div key={index}>
-                <Tooltip
-                  frLabel={section.title.fr}
-                  enLabel={section.title.en}
-                  onSave={updateSectionTitle(index)}
-                >
-                  <h4 className="font-semibold text-sidebar-foreground mb-4">
-                    {section.title[langKey]}
-                  </h4>
-                </Tooltip>
-                <ul className="space-y-2">
-                  {section.links.map((link, linkIndex) => (
-                    <li key={linkIndex}>
-                      <Tooltip
-                        frLabel={link.label.fr}
-                        enLabel={link.label.en}
-                        onSave={updateLinkLabel(index, linkIndex)}
-                      >
-                        <Link 
-                          href={link.href}
-                          className="text-sidebar-foreground/70 hover:text-primary transition-colors text-sm"
-                          data-testid={`link-footer-${link.href.slice(1)}`}
-                        >
-                          {formatAmpersand(link.label[langKey])}
-                        </Link>
-                      </Tooltip>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <Separator className="bg-sidebar-border" />
-
-        {/* Contact Info */}
-        <div className="py-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {Object.entries(contact).map(([key, info]) => {
-              const contactKey = key as keyof typeof contact;
-              const currentTitle = info.title[langKey];
-              const currentDetails = typeof info.details === 'string' 
-                ? info.details 
-                : info.details[langKey];
-              const isBilingualDetails = typeof info.details !== 'string';
-              return (
-                <div key={key} className="flex items-start gap-3">
-                  <div className="flex-shrink-0">
-                    {getContactIcon(key)}
-                  </div>
-                  <div>
-                    <Tooltip
-                      frLabel={info.title.fr}
-                      enLabel={info.title.en}
-                      onSave={updateContactTitle(contactKey)}
-                    >
-                      <p className="text-sm font-medium text-sidebar-foreground mx-2">{currentTitle}</p>
-                    </Tooltip>
-                    <Tooltip
-                      frLabel={typeof info.details === 'string' ? info.details : info.details.fr}
-                      enLabel={isBilingualDetails ? info.details.en : undefined}
-                      onSave={isBilingualDetails ? updateContactDetails(contactKey, true) : undefined}
-                    >
-                      <p 
-                        className="text-sm text-sidebar-foreground/70"
-                        dangerouslySetInnerHTML={{ __html: currentDetails }}
-                      />
-                    </Tooltip>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        <Separator className="bg-sidebar-border" />
-
-        {/* Bottom Footer */}
-        <div className="py-6">
-          <div className="flex items-center justify-center gap-6 flex-wrap">
-            <Tooltip
-              frLabel={bottom.copyright.fr}
-              enLabel={bottom.copyright.en}
-              onSave={updateBottomField('copyright')}
-            >
-              <p className="text-sm text-sidebar-foreground/70">
-                {currentCopyright}
-              </p>
-            </Tooltip>
-            
-            <Tooltip
-              frLabel={bottom.rating.fr}
-              enLabel={bottom.rating.en}
-              onSave={updateBottomField('rating')}
-            >
-              <span>{currentRating}</span>
-            </Tooltip>
-            
-            <img 
-              src={logos.iPrefer} 
-              alt="I Prefer Hotel Rewards"
-              className="h-12 opacity-80 hover:opacity-100 transition-opacity"
-              data-testid="logo-iprefer"
-            />
-            
-            <img 
-              src={logos.preferredLifestyle} 
-              alt="Preferred Lifestyle"
-              className="h-12 opacity-80 hover:opacity-100 transition-opacity filter invert"
-              data-testid="logo-preferred-lifestyle"
-            />
-            
-            <div className="flex items-center gap-4">
-              <Tooltip
-                frLabel={bottom.follow.fr}
-                enLabel={bottom.follow.en}
-                onSave={updateBottomField('follow')}
-              >
-                <span className="text-sm text-sidebar-foreground/70 mr-2">{currentFollow}</span>
-              </Tooltip>
-              {social.map((socialItem, index) => (
-                <Tooltip
-                  key={index}
-                  frLabel={socialItem.label.fr}
-                  enLabel={socialItem.label.en}
-                  onSave={updateSocialLabel(index)}
-                >
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="w-8 h-8 p-0 text-sidebar-foreground/70 hover:text-primary"
-                    data-testid={`button-social-${socialItem.label[langKey].toLowerCase()}`}
+    <>
+      <footer className="bg-sidebar border-t border-sidebar-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Main Footer Content */}
+          <div className="py-16">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+              {/* Hotel Info & Newsletter */}
+              <div className="lg:col-span-1">
+                <div className="mb-6">
+                  <h3 className="text-2xl font-serif font-bold text-sidebar-foreground mb-4">
+                    {hotel.title}
+                  </h3>
+                  <Tooltip
+                    frLabel={hotel.description.fr}
+                    enLabel={hotel.description.en}
+                    onSave={updateHotelDescription}
                   >
-                    {getSocialIcon(socialItem.icon)}
-                    <span className="sr-only">{socialItem.label[langKey]}</span>
-                  </Button>
-                </Tooltip>
+                    <p className="text-sidebar-foreground/80 mb-6">
+                      {currentHotelDescription}
+                    </p>
+                  </Tooltip>
+                </div>
+
+                {/* Newsletter */}
+                <div>
+                  <Tooltip
+                    frLabel={hotel.newsletter.title.fr}
+                    enLabel={hotel.newsletter.title.en}
+                    onSave={updateNewsletterField('title')}
+                  >
+                    <h4 className="font-semibold text-sidebar-foreground mb-3">
+                      {currentNewsletterTitle}
+                    </h4>
+                  </Tooltip>
+                  <Tooltip
+                    frLabel={hotel.newsletter.description.fr}
+                    enLabel={hotel.newsletter.description.en}
+                    onSave={updateNewsletterField('description')}
+                  >
+                    <p className="text-sm text-sidebar-foreground/70 mb-4">
+                      {currentNewsletterDescription}
+                    </p>
+                  </Tooltip>
+                  <form onSubmit={handleNewsletterSubmit} className="flex gap-2">
+                    <Input
+                      type="email"
+                      placeholder={currentNewsletterPlaceholder}
+                      className="flex-1 bg-sidebar-accent border-sidebar-border text-sidebar-foreground"
+                      data-testid="input-newsletter"
+                    />
+                    <Button type="submit" size="sm" data-testid="button-newsletter">
+                      {currentNewsletterButton}
+                    </Button>
+                  </form>
+                </div>
+              </div>
+
+              {/* Footer Links */}
+              {sections.map((section, index) => (
+                <div key={index}>
+                  <Tooltip
+                    frLabel={section.title.fr}
+                    enLabel={section.title.en}
+                    onSave={updateSectionTitle(index)}
+                  >
+                    <h4 className="font-semibold text-sidebar-foreground mb-4">
+                      {section.title[langKey]}
+                    </h4>
+                  </Tooltip>
+                  {section.description && (
+                    <Tooltip
+                      frLabel={section.description.fr}
+                      enLabel={section.description.en}
+                      onSave={updateSectionDescription(index)}
+                    >
+                      <p className="text-sm text-sidebar-foreground/70 mb-4 whitespace-pre-line">
+                        {section.description[langKey]}
+                      </p>
+                    </Tooltip>
+                  )}
+                  <ul className="space-y-2">
+                    {section.links.map((link, linkIndex) => (
+                      <li key={linkIndex}>
+                        <Tooltip
+                          frLabel={link.label.fr}
+                          enLabel={link.label.en}
+                          onSave={updateLinkLabel(index, linkIndex)}
+                        >
+                          <Link
+                            href={link.href}
+                            className="text-sidebar-foreground/70 hover:text-primary transition-colors text-sm"
+                            data-testid={`link-footer-${link.href.slice(1)}`}
+                          >
+                            {formatAmpersand(link.label[langKey])}
+                          </Link>
+                        </Tooltip>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ))}
             </div>
           </div>
+
+          <Separator className="bg-sidebar-border" />
+
+          {/* Contact Info */}
+          <div className="py-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Object.entries(contact).map(([key, info]) => {
+                const contactKey = key as keyof typeof contact;
+                const currentTitle = info.title[langKey];
+                const currentDetails = typeof info.details === 'string'
+                  ? info.details
+                  : info.details[langKey];
+                const isBilingualDetails = typeof info.details !== 'string';
+                return (
+                  <div key={key} className="flex items-start gap-3">
+                    <div className="flex-shrink-0">
+                      {getContactIcon(key)}
+                    </div>
+                    <div>
+                      <Tooltip
+                        frLabel={info.title.fr}
+                        enLabel={info.title.en}
+                        onSave={updateContactTitle(contactKey)}
+                      >
+                        <p className="text-sm font-medium text-sidebar-foreground mx-2">{currentTitle}</p>
+                      </Tooltip>
+                      <Tooltip
+                        frLabel={typeof info.details === 'string' ? info.details : info.details.fr}
+                        enLabel={isBilingualDetails ? info.details.en : undefined}
+                        onSave={isBilingualDetails ? updateContactDetails(contactKey, true) : undefined}
+                      >
+                        <p
+                          className="text-sm text-sidebar-foreground/70"
+                          dangerouslySetInnerHTML={{ __html: currentDetails }}
+                        />
+                      </Tooltip>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <Separator className="bg-sidebar-border" />
+
+          {/* Bottom Footer */}
+          <div className="py-6">
+            <div className="flex items-center justify-center gap-6 flex-wrap">
+              <Tooltip
+                frLabel={bottom.copyright.fr}
+                enLabel={bottom.copyright.en}
+                onSave={updateBottomField('copyright')}
+              >
+                <p className="text-sm text-sidebar-foreground/70">
+                  {currentCopyright}
+                </p>
+              </Tooltip>
+
+              <Tooltip
+                frLabel={bottom.rating.fr}
+                enLabel={bottom.rating.en}
+                onSave={updateBottomField('rating')}
+              >
+                <span>{currentRating}</span>
+              </Tooltip>
+
+              <Link
+                href="https://preferredhotels.com/iprefer/enroll?enrollcode=TNRCM&hotel=TNRCM"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src={logos.iPrefer}
+                  alt="I Prefer Hotel Rewards"
+                  className="h-12 opacity-80 hover:opacity-100 transition-opacity"
+                  data-testid="logo-iprefer"
+                />
+              </Link>
+
+              <Link
+                href="https://preferredhotels.com/hotels/madagascar/hotel-carlton"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src={logos.preferredLifestyle}
+                  alt="Preferred Lifestyle"
+                  className="h-12 opacity-80 hover:opacity-100 transition-opacity filter invert"
+                  data-testid="logo-preferred-lifestyle"
+                />
+              </Link>
+
+              <div className="flex items-center gap-4">
+                <Tooltip
+                  frLabel={bottom.follow.fr}
+                  enLabel={bottom.follow.en}
+                  onSave={updateBottomField('follow')}
+                >
+                  <span className="text-sm text-sidebar-foreground/70 mr-2">{currentFollow}</span>
+                </Tooltip>
+                {social.map((socialItem, index) => (
+                  <Tooltip
+                    key={index}
+                    frLabel={socialItem.label.fr}
+                    enLabel={socialItem.label.en}
+                    onSave={updateSocialLabel(index)}
+                  >
+                    <Button
+                      asChild
+                      variant="ghost"
+                      size="sm"
+                      className="w-8 h-8 p-0 text-sidebar-foreground/70 hover:text-primary"
+                      data-testid={`button-social-${socialItem.label[langKey].toLowerCase()}`}
+                    >
+                      <Link href={socialItem.href} target="_blank" rel="noopener noreferrer">
+                        {getSocialIcon(socialItem.icon)}
+                        <span className="sr-only">{socialItem.label[langKey]}</span>
+                      </Link>
+                    </Button>
+                  </Tooltip>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
+      </footer>
+
+      {/* Floating Messenger Button */}
+      <div className="fixed bottom-6 right-6 z-50 hidden lg:block">
+        <Button
+          asChild
+          variant="outline"
+          size="icon"
+          // Gardons le bouton à w-16 h-16 ou ajustez-le si vous voulez un bouton encore plus grand
+          className="w-16 h-16 rounded-full bg-sidebar-accent border-sidebar-border hover:bg-sidebar-accent/80 shadow-lg p-2"
+        >
+          <a
+            href={messenger.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Chat with us on Messenger"
+          >
+            {/* J'agrandis l'icône à w-10 h-10 et j'ajoute strokeWidth pour un trait plus épais */}
+            {/* Si votre composant MessageCircle ne supporte pas strokeWidth, cette prop sera ignorée. */}
+            <MessageCircle className="w-10 h-10 stroke-yellow-500 text-sidebar-foreground" strokeWidth={2.5} />
+          </a>
+        </Button>
       </div>
-    </footer>
+    </>
   );
 };
 

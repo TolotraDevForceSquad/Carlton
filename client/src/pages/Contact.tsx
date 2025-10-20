@@ -5,7 +5,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Phone, Mail, MapPin, Clock, Car, Plane, Users, Calendar, MessageCircle, Send, ShoppingBag, ExternalLink } from 'lucide-react';
+import { Phone, Mail, MapPin, Car, Plane, Calendar, MessageCircle, Send, ShoppingBag, ExternalLink, MapPin as MapPinIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -112,18 +112,6 @@ const splitContactData = (mixedData: typeof contactData) => {
     },
     practicalInfo: {
       title: mixedData.practicalInfo.title.fr,
-      arrival: {
-        title: mixedData.practicalInfo.arrival.title.fr,
-        details: mixedData.practicalInfo.arrival.details.map((d) => d.fr),
-      },
-      airport: {
-        title: mixedData.practicalInfo.airport.title.fr,
-        details: mixedData.practicalInfo.airport.details.map((d) => d.fr),
-      },
-      languages: {
-        title: mixedData.practicalInfo.languages.title.fr,
-        list: mixedData.practicalInfo.languages.list.map((l) => l.fr),
-      },
       location: {
         title: mixedData.practicalInfo.location.title.fr,
         subtitle: mixedData.practicalInfo.location.subtitle.fr,
@@ -211,18 +199,6 @@ const splitContactData = (mixedData: typeof contactData) => {
     },
     practicalInfo: {
       title: mixedData.practicalInfo.title.en,
-      arrival: {
-        title: mixedData.practicalInfo.arrival.title.en,
-        details: mixedData.practicalInfo.arrival.details.map((d) => d.en),
-      },
-      airport: {
-        title: mixedData.practicalInfo.airport.title.en,
-        details: mixedData.practicalInfo.airport.details.map((d) => d.en),
-      },
-      languages: {
-        title: mixedData.practicalInfo.languages.title.en,
-        list: mixedData.practicalInfo.languages.list.map((l) => l.en),
-      },
       location: {
         title: mixedData.practicalInfo.location.title.en,
         subtitle: mixedData.practicalInfo.location.subtitle.en,
@@ -325,18 +301,6 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
     subtitle: { fr: dataFr.services.subtitle, en: enFallback.services.subtitle },
     list: servicesList,
   };
-  const arrivalDetails = dataFr.practicalInfo.arrival.details.map((dFr: string, j: number) => ({
-    fr: dFr,
-    en: enFallback.practicalInfo.arrival.details[j],
-  }));
-  const airportDetails = dataFr.practicalInfo.airport.details.map((dFr: string, j: number) => ({
-    fr: dFr,
-    en: enFallback.practicalInfo.airport.details[j],
-  }));
-  const languagesList = dataFr.practicalInfo.languages.list.map((lFr: string, j: number) => ({
-    fr: lFr,
-    en: enFallback.practicalInfo.languages.list[j],
-  }));
   const location = {
     title: { fr: dataFr.practicalInfo.location.title, en: enFallback.practicalInfo.location.title },
     subtitle: { fr: dataFr.practicalInfo.location.subtitle, en: enFallback.practicalInfo.location.subtitle },
@@ -348,18 +312,6 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
   };
   const practicalInfo = {
     title: { fr: dataFr.practicalInfo.title, en: enFallback.practicalInfo.title },
-    arrival: {
-      title: { fr: dataFr.practicalInfo.arrival.title, en: enFallback.practicalInfo.arrival.title },
-      details: arrivalDetails,
-    },
-    airport: {
-      title: { fr: dataFr.practicalInfo.airport.title, en: enFallback.practicalInfo.airport.title },
-      details: airportDetails,
-    },
-    languages: {
-      title: { fr: dataFr.practicalInfo.languages.title, en: enFallback.practicalInfo.languages.title },
-      list: languagesList,
-    },
     location,
   };
   const onlineReviews = {
@@ -419,12 +371,11 @@ const Contact = () => {
     Phone,
     Mail,
     MapPin,
-    Clock,
   } as const;
 
   const serviceIcons = {
     Calendar,
-    Users,
+    ShoppingBag,
     Plane,
     Car,
   } as const;
@@ -675,129 +626,6 @@ const Contact = () => {
     [data, updateContactSection]
   );
 
-  const updatePracticalInfoTitle = useCallback(
-    async (newFr: string, newEn: string) => {
-      const updatedData = {
-        ...data,
-        practicalInfo: { ...data.practicalInfo, title: { fr: newFr, en: newEn } },
-      };
-      setData(updatedData);
-      await updateContactSection(updatedData);
-    },
-    [data, updateContactSection]
-  );
-
-  const updateArrivalTitle = useCallback(
-    async (newFr: string, newEn: string) => {
-      const updatedData = {
-        ...data,
-        practicalInfo: {
-          ...data.practicalInfo,
-          arrival: { ...data.practicalInfo.arrival, title: { fr: newFr, en: newEn } },
-        },
-      };
-      setData(updatedData);
-      await updateContactSection(updatedData);
-    },
-    [data, updateContactSection]
-  );
-
-  const updateArrivalDetails = useCallback(
-    async (newFr: string, newEn: string) => {
-      const detailsFr = newFr.split('\n').map((s) => s.trim()).filter(Boolean);
-      const detailsEn = newEn.split('\n').map((s) => s.trim()).filter(Boolean);
-      const maxLen = Math.max(detailsFr.length, detailsEn.length);
-      const newDetails = Array.from({ length: maxLen }, (_, j) => ({
-        fr: detailsFr[j] || '',
-        en: detailsEn[j] || '',
-      }));
-      const updatedData = {
-        ...data,
-        practicalInfo: {
-          ...data.practicalInfo,
-          arrival: { ...data.practicalInfo.arrival, details: newDetails },
-        },
-      };
-      setData(updatedData);
-      await updateContactSection(updatedData);
-    },
-    [data, updateContactSection]
-  );
-
-  const updateAirportTitle = useCallback(
-    async (newFr: string, newEn: string) => {
-      const updatedData = {
-        ...data,
-        practicalInfo: {
-          ...data.practicalInfo,
-          airport: { ...data.practicalInfo.airport, title: { fr: newFr, en: newEn } },
-        },
-      };
-      setData(updatedData);
-      await updateContactSection(updatedData);
-    },
-    [data, updateContactSection]
-  );
-
-  const updateAirportDetails = useCallback(
-    async (newFr: string, newEn: string) => {
-      const detailsFr = newFr.split('\n').map((s) => s.trim()).filter(Boolean);
-      const detailsEn = newEn.split('\n').map((s) => s.trim()).filter(Boolean);
-      const maxLen = Math.max(detailsFr.length, detailsEn.length);
-      const newDetails = Array.from({ length: maxLen }, (_, j) => ({
-        fr: detailsFr[j] || '',
-        en: detailsEn[j] || '',
-      }));
-      const updatedData = {
-        ...data,
-        practicalInfo: {
-          ...data.practicalInfo,
-          airport: { ...data.practicalInfo.airport, details: newDetails },
-        },
-      };
-      setData(updatedData);
-      await updateContactSection(updatedData);
-    },
-    [data, updateContactSection]
-  );
-
-  const updateLanguagesTitle = useCallback(
-    async (newFr: string, newEn: string) => {
-      const updatedData = {
-        ...data,
-        practicalInfo: {
-          ...data.practicalInfo,
-          languages: { ...data.practicalInfo.languages, title: { fr: newFr, en: newEn } },
-        },
-      };
-      setData(updatedData);
-      await updateContactSection(updatedData);
-    },
-    [data, updateContactSection]
-  );
-
-  const updateLanguagesList = useCallback(
-    async (newFr: string, newEn: string) => {
-      const listFr = newFr.split(',').map((s) => s.trim()).filter(Boolean);
-      const listEn = newEn.split(',').map((s) => s.trim()).filter(Boolean);
-      const maxLen = Math.max(listFr.length, listEn.length);
-      const newList = Array.from({ length: maxLen }, (_, j) => ({
-        fr: listFr[j] || '',
-        en: listEn[j] || '',
-      }));
-      const updatedData = {
-        ...data,
-        practicalInfo: {
-          ...data.practicalInfo,
-          languages: { ...data.practicalInfo.languages, list: newList },
-        },
-      };
-      setData(updatedData);
-      await updateContactSection(updatedData);
-    },
-    [data, updateContactSection]
-  );
-
   const updateLocationTitle = useCallback(
     async (newFr: string, newEn: string) => {
       const updatedData = {
@@ -1009,14 +837,14 @@ const Contact = () => {
       {/* Contact Information */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
             {data.contactInfo.map((info, index) => {
               const IconComponent = contactIcons[info.icon as keyof typeof contactIcons];
               const detailsTextFr = info.details.map((d) => d.fr).join('\n');
               const detailsTextEn = info.details.map((d) => d.en).join('\n');
               return (
-                <Card key={index} className="text-center hover-elevate">
-                  <CardContent className="pt-6">
+                <Card key={index} className="text-center hover-elevate flex flex-col">
+                  <CardContent className="pt-6 flex flex-col flex-1">
                     <div className="text-primary mb-4 flex justify-center">
                       <IconComponent className="w-6 h-6" />
                     </div>
@@ -1024,7 +852,7 @@ const Contact = () => {
                       <h3 className="text-lg font-semibold text-foreground mb-3">{info.title[langKey]}</h3>
                     </Tooltip>
                     <Tooltip frLabel={detailsTextFr} enLabel={detailsTextEn} onSave={updateContactInfoDetails(index)}>
-                      <div className="space-y-1 mb-4">
+                      <div className="space-y-1 flex-1">
                         {info.details.map((detail, idx) => (
                           <p key={idx} className="text-muted-foreground text-sm">
                             {detail[langKey]}
@@ -1032,7 +860,7 @@ const Contact = () => {
                         ))}
                       </div>
                     </Tooltip>
-                    <Button variant="outline" size="sm" data-testid={`button-contact-${index}`}>
+                    <Button  variant="outline" size="sm" className="mt-auto mt-4" data-testid={`button-contact-${index}`}>
                       <Tooltip frLabel={info.action.fr} enLabel={info.action.en} onSave={updateContactInfoAction(index)}>
                         <span>{info.action[langKey]}</span>
                       </Tooltip>
@@ -1346,111 +1174,6 @@ const Contact = () => {
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader>
-                  <Tooltip frLabel={data.practicalInfo.title.fr} enLabel={data.practicalInfo.title.en} onSave={updatePracticalInfoTitle}>
-                    <CardTitle className="text-xl font-serif text-foreground">{data.practicalInfo.title[langKey]}</CardTitle>
-                  </Tooltip>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <Tooltip frLabel={data.practicalInfo.arrival.title.fr} enLabel={data.practicalInfo.arrival.title.en} onSave={updateArrivalTitle}>
-                      <h4 className="font-semibold text-foreground mb-2">{formatAmpersand(data.practicalInfo.arrival.title[langKey])}</h4>
-                    </Tooltip>
-                    <Tooltip
-                      frLabel={data.practicalInfo.arrival.details.map((d) => d.fr).join('\n')}
-                      enLabel={data.practicalInfo.arrival.details.map((d) => d.en).join('\n')}
-                      onSave={updateArrivalDetails}
-                    >
-                      <div className="space-y-1 text-sm text-muted-foreground">
-                        {data.practicalInfo.arrival.details.map((detail, idx) => (
-                          <p key={idx}>• {detail[langKey]}</p>
-                        ))}
-                      </div>
-                    </Tooltip>
-                  </div>
-                  <div>
-                    <Tooltip frLabel={data.practicalInfo.airport.title.fr} enLabel={data.practicalInfo.airport.title.en} onSave={updateAirportTitle}>
-                      <h4 className="font-semibold text-foreground mb-2">{data.practicalInfo.airport.title[langKey]}</h4>
-                    </Tooltip>
-                    <Tooltip
-                      frLabel={data.practicalInfo.airport.details.map((d) => d.fr).join('\n')}
-                      enLabel={data.practicalInfo.airport.details.map((d) => d.en).join('\n')}
-                      onSave={updateAirportDetails}
-                    >
-                      <div className="space-y-1 text-sm text-muted-foreground">
-                        {data.practicalInfo.airport.details.map((detail, idx) => (
-                          <p key={idx}>• {detail[langKey]}</p>
-                        ))}
-                      </div>
-                    </Tooltip>
-                  </div>
-                  <div>
-                    <Tooltip frLabel={data.practicalInfo.languages.title.fr} enLabel={data.practicalInfo.languages.title.en} onSave={updateLanguagesTitle}>
-                      <h4 className="font-semibold text-foreground mb-2">{data.practicalInfo.languages.title[langKey]}</h4>
-                    </Tooltip>
-                    <Tooltip
-                      frLabel={data.practicalInfo.languages.list.map((l) => l.fr).join(', ')}
-                      enLabel={data.practicalInfo.languages.list.map((l) => l.en).join(', ')}
-                      onSave={updateLanguagesList}
-                    >
-                      <div className="flex flex-wrap gap-2">
-                        {data.practicalInfo.languages.list.map((langObj, i) => (
-                          <Badge key={i} variant="secondary">
-                            {langObj[langKey]}
-                          </Badge>
-                        ))}
-                      </div>
-                    </Tooltip>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Online Reviews */}
-              <Card>
-                <CardHeader>
-                  <Tooltip frLabel={data.onlineReviews.title.fr} enLabel={data.onlineReviews.title.en} onSave={updateOnlineReviewsTitle}>
-                    <CardTitle className="text-xl font-serif text-foreground">{data.onlineReviews.title[langKey]}</CardTitle>
-                  </Tooltip>
-                  <Tooltip frLabel={data.onlineReviews.subtitle.fr} enLabel={data.onlineReviews.subtitle.en} onSave={updateOnlineReviewsSubtitle}>
-                    <p className="text-muted-foreground">{data.onlineReviews.subtitle[langKey]}</p>
-                  </Tooltip>
-                </CardHeader>
-                <CardContent className="text-center space-y-4">
-                  <Tooltip frLabel={data.onlineReviews.callToAction.fr} enLabel={data.onlineReviews.callToAction.en} onSave={updateOnlineReviewsCallToAction}>
-                    <p className="text-lg font-semibold text-foreground">{data.onlineReviews.callToAction[langKey]}</p>
-                  </Tooltip>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <Button variant="outline" asChild size="lg">
-                      <a href="https://g.page/r/CWQgJ2tAtguBEAE/review" target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="w-4 h-4 mr-2" />
-                        Google
-                      </a>
-                    </Button>
-                    <Button variant="outline" asChild size="lg">
-                      <a
-                        href="https://www.tripadvisor.com/UserReviewEdit-g293809-d300675-Hotel_Carlton_Madagascar-Antananarivo_Antananarivo_Province.html"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <ExternalLink className="w-4 h-4 mr-2" />
-                        Tripadvisor
-                      </a>
-                    </Button>
-                    <Button variant="outline" asChild size="lg">
-                      <a
-                        href="https://www.tripadvisor.fr/Hotel_Review-g293809-d300675-Reviews-Hotel_Carlton_Madagascar-Antananarivo_Antananarivo_Province.html?m=19905"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <ExternalLink className="w-4 h-4 mr-2" />
-                        Booking
-                      </a>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-
               {/* Hotel Location Map */}
               <Card>
                 <CardHeader>
@@ -1464,7 +1187,7 @@ const Contact = () => {
                 <CardContent>
                   <div className="space-y-4">
                     <div className="flex items-start gap-3 mb-4">
-                      <MapPin className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                      <MapPinIcon className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                       <div>
                         <Tooltip
                           frLabel={data.practicalInfo.location.addressTitle.fr}
@@ -1507,7 +1230,7 @@ const Contact = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          <MapPin className="w-4 h-4 mr-2" />
+                          <MapPinIcon className="w-4 h-4 mr-2" />
                           <Tooltip
                             frLabel={data.practicalInfo.location.directionsButton.fr}
                             enLabel={data.practicalInfo.location.directionsButton.en}
@@ -1518,6 +1241,51 @@ const Contact = () => {
                         </a>
                       </Button>
                     </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Online Reviews */}
+              <Card>
+                <CardHeader>
+                  <Tooltip frLabel={data.onlineReviews.title.fr} enLabel={data.onlineReviews.title.en} onSave={updateOnlineReviewsTitle}>
+                    <CardTitle className="text-xl font-serif text-foreground">{data.onlineReviews.title[langKey]}</CardTitle>
+                  </Tooltip>
+                  <Tooltip frLabel={data.onlineReviews.subtitle.fr} enLabel={data.onlineReviews.subtitle.en} onSave={updateOnlineReviewsSubtitle}>
+                    <p className="text-muted-foreground">{data.onlineReviews.subtitle[langKey]}</p>
+                  </Tooltip>
+                </CardHeader>
+                <CardContent className="text-center space-y-4">
+                  <Tooltip frLabel={data.onlineReviews.callToAction.fr} enLabel={data.onlineReviews.callToAction.en} onSave={updateOnlineReviewsCallToAction}>
+                    <p className="text-lg font-semibold text-foreground">{data.onlineReviews.callToAction[langKey]}</p>
+                  </Tooltip>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <Button variant="outline" asChild size="lg">
+                      <a href="https://g.page/r/CWQgJ2tAtguBEAE/review" target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        Google
+                      </a>
+                    </Button>
+                    <Button variant="outline" asChild size="lg">
+                      <a
+                        href="https://www.tripadvisor.com/UserReviewEdit-g293809-d300675-Hotel_Carlton_Madagascar-Antananarivo_Antananarivo_Province.html"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        Tripadvisor
+                      </a>
+                    </Button>
+                    <Button variant="outline" asChild size="lg">
+                      <a
+                        href="https://www.booking.com/reviews/mg/hotel/carlton-madagascar.html"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        Booking
+                      </a>
+                    </Button>
                   </div>
                 </CardContent>
               </Card>

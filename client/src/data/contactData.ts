@@ -6,8 +6,8 @@ export const contactData = {
       en: "Contact Us"
     },
     description: {
-      fr: "Notre équipe est à votre écoute pour répondre à toutes vos questions et vous accompagner",
-      en: "Our team is here to answer all your questions and assist you"
+      fr: "Notre équipe est à votre écoute pour répondre à vos questions et vous assister.",
+      en: "Our team is here to answer your questions and assist you."
     }
   },
   contactInfo: [
@@ -21,10 +21,6 @@ export const contactData = {
         {
           fr: "+261 20 22 260 60",
           en: "+261 20 22 260 60"
-        },
-        {
-          fr: "Disponible 24h/24",
-          en: "Available 24/7"
         }
       ],
       action: {
@@ -42,10 +38,6 @@ export const contactData = {
         {
           fr: "contact@carlton.mg",
           en: "contact@carlton.mg"
-        },
-        {
-          fr: "Réponse sous 2h",
-          en: "Response within 2h"
         }
       ],
       action: {
@@ -72,27 +64,6 @@ export const contactData = {
       action: {
         fr: "Voir sur la carte",
         en: "View on map"
-      }
-    },
-    {
-      icon: "Clock",
-      title: {
-        fr: "Horaires",
-        en: "Hours"
-      },
-      details: [
-        {
-          fr: "Réception 24h/24",
-          en: "Reception 24/7"
-        },
-        {
-          fr: "Conciergerie toujours disponible",
-          en: "Concierge always available"
-        }
-      ],
-      action: {
-        fr: "Plus d'infos",
-        en: "More info"
       }
     }
   ],
@@ -262,14 +233,14 @@ export const contactData = {
       },
       {
         title: {
-          fr: "Conciergerie",
-          en: "Concierge"
+          fr: "Galerie Marchande",
+          en: "Shopping Gallery"
         },
         description: {
-          fr: "Excursions, transports, conseils",
-          en: "Excursions, transportation, advice"
+          fr: "Services et boutiques de luxe",
+          en: "Luxury services and boutiques"
         },
-        icon: "Users"
+        icon: "ShoppingBag"
       },
       {
         title: {
@@ -277,8 +248,8 @@ export const contactData = {
           en: "Airport Transfers"
         },
         description: {
-          fr: "Service de navette premium",
-          en: "Premium shuttle service"
+          fr: "Navette premium, voiture privée, transfert VIP",
+          en: "Premium shuttle, private car, VIP transfer"
         },
         icon: "Plane"
       },
@@ -288,8 +259,8 @@ export const contactData = {
           en: "Parking"
         },
         description: {
-          fr: "Service de parking sécurisé",
-          en: "Secure parking service"
+          fr: "Parking sécurisé",
+          en: "Secure parking"
         },
         icon: "Car"
       }
@@ -299,58 +270,6 @@ export const contactData = {
     title: {
       fr: "Informations Pratiques",
       en: "Practical Information"
-    },
-    arrival: {
-      title: {
-        fr: "Arrivée & Départ",
-        en: "Arrival & Departure"
-      },
-      details: [
-        {
-          fr: "Check-in : 15h00",
-          en: "Check-in: 3:00 PM"
-        },
-        {
-          fr: "Check-out : 12h00",
-          en: "Check-out: 12:00 PM"
-        },
-        {
-          fr: "Early check-in/late check-out sur demande",
-          en: "Early check-in/late check-out on request"
-        }
-      ]
-    },
-    airport: {
-      title: {
-        fr: "Aéroport",
-        en: "Airport"
-      },
-      details: [
-        {
-          fr: "Distance : 30 minutes en voiture",
-          en: "Distance: 30 minutes by car"
-        },
-        {
-          fr: "Navette privée disponible",
-          en: "Private shuttle available"
-        },
-        {
-          fr: "Service de transfert VIP",
-          en: "VIP transfer service"
-        }
-      ]
-    },
-    languages: {
-      title: {
-        fr: "Langues parlées",
-        en: "Languages Spoken"
-      },
-      list: [
-        { fr: "Français", en: "French" },
-        { fr: "Anglais", en: "English" },
-        { fr: "Malgache", en: "Malagasy" },
-        { fr: "Italien", en: "Italian" }
-      ]
     },
     location: {
       title: {

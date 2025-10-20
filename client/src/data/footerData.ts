@@ -3,8 +3,8 @@ export const footerData = {
   hotel: {
     title: "Carlton Madagascar",
     description: {
-      fr: "L'art de vivre à la française au cœur d'Antananarivo. Un hôtel 5 étoiles où luxe et raffinement créent une expérience inoubliable.",
-      en: "The art of French living in the heart of Antananarivo. A 5-star hotel where luxury and refinement create an unforgettable experience."
+      fr: "Découvrez l'art de l’hospitalité malgache dans notre établissement unique où tradition, luxe et raffinement se conjuguent pour créer des souvenirs mémorables.",
+      en: "Discover the art of Malagasy hospitality in our unique establishment where tradition, luxury, and refinement combine to create memorable memories."
     },
     newsletter: {
       title: {
@@ -32,22 +32,25 @@ export const footerData = {
         en: "The Hotel"
       },
       links: [
-        { label: { fr: "À propos", en: "About" }, href: "/about" },
-        { label: { fr: "Histoire", en: "History" }, href: "/history" },
-        { label: { fr: "Récompenses", en: "Awards" }, href: "/awards" },
-        { label: { fr: "Emplois", en: "Careers" }, href: "/careers" }
+        { label: { fr: "Accueil", en: "Home" }, href: "/" },
+        { label: { fr: "Offres spéciales", en: "Special Offers" }, href: "/offres-speciales" },
+        { label: { fr: "Chambres & Suites", en: "Rooms & Suites" }, href: "/chambres" },
+        { label: { fr: "Restaurants & Bars", en: "Restaurants & Bars" }, href: "/restaurants" },
+        { label: { fr: "Bien-être", en: "Wellness" }, href: "/bien-etre" },
+        { label: { fr: "Evènements & Réceptions", en: "Events & Receptions" }, href: "/evenements" }
       ]
     },
     {
       title: {
-        fr: "Services",
-        en: "Services"
+        fr: "Recrutement",
+        en: "Careers"
+      },
+      description: {
+        fr: "Vous avez à cœur de faire carrière dans les métiers de l’hôtellerie ? \nFaites partie d’une équipe passionnée par l’excellence.",
+        en: "Do you have a passion for a career in the hospitality industry? \nJoin a team dedicated to excellence."
       },
       links: [
-        { label: { fr: "Chambres & Suites", en: "Rooms & Suites" }, href: "/chambres" },
-        { label: { fr: "Restaurants", en: "Restaurants" }, href: "/restaurants" },
-        { label: { fr: "Spa & Bien-être", en: "Spa & Wellness" }, href: "/spa" },
-        { label: { fr: "Événements", en: "Events" }, href: "/evenements" }
+        { label: { fr: "Rejoignez-nous", en: "Join us" }, href: "mailto:contact@carlton.mg?subject=Candidature" }
       ]
     },
     {
@@ -56,10 +59,8 @@ export const footerData = {
         en: "Information"
       },
       links: [
-        { label: { fr: "Conditions générales", en: "Terms and Conditions" }, href: "/terms" },
         { label: { fr: "Politique de confidentialité", en: "Privacy Policy" }, href: "/privacy" },
-        { label: { fr: "Plan du site", en: "Sitemap" }, href: "/sitemap" },
-        { label: { fr: "FAQ", en: "FAQ" }, href: "/faq" }
+        { label: { fr: "Plan du site", en: "Sitemap" }, href: "/sitemap" }
       ]
     }
   ],
@@ -70,8 +71,8 @@ export const footerData = {
         en: "Address"
       },
       details: {
-        fr: "Rue Pierre Stibbe Anosy<br />101 Antananarivo, Madagascar",
-        en: "Rue Pierre Stibbe Anosy<br />101 Antananarivo, Madagascar"
+        fr: "Rue Pierre Stibbe Anosy<br />Po BOX 959 - Antananarivo 101 - Madagascar",
+        en: "Rue Pierre Stibbe Anosy<br />Po BOX 959 - Antananarivo 101 - Madagascar"
       }
     },
     phone: {
@@ -87,16 +88,6 @@ export const footerData = {
         en: "Email"
       },
       details: "contact@carlton.mg"
-    },
-    reception: {
-      title: {
-        fr: "Réception",
-        en: "Reception"
-      },
-      details: {
-        fr: "24h/24 - 7j/7",
-        en: "24/7"
-      }
     }
   },
   bottom: {
@@ -114,11 +105,13 @@ export const footerData = {
     }
   },
   social: [
-    { icon: "Facebook", href: "#", label: { fr: "Facebook", en: "Facebook" } },
-    { icon: "Instagram", href: "#", label: { fr: "Instagram", en: "Instagram" } },
-    { icon: "Twitter", href: "#", label: { fr: "Twitter", en: "Twitter" } },
-    { icon: "Linkedin", href: "#", label: { fr: "LinkedIn", en: "LinkedIn" } }
+    { icon: "Facebook", href: "https://www.facebook.com/HotelCarltonMadagascar", label: { fr: "Facebook", en: "Facebook" } },
+    { icon: "Instagram", href: "https://www.instagram.com/hotel_carlton_madagascar/", label: { fr: "Instagram", en: "Instagram" } },
+    { icon: "Linkedin", href: "https://www.linkedin.com/company/carlton-madagascar/", label: { fr: "LinkedIn", en: "LinkedIn" } }
   ],
+  messenger: {
+    href: "https://m.me/293387733865658"
+  },
   logos: {
     iPrefer: "/uploads/I Prefer_logo_white_H_LARGE_1758205962584.png",
     preferredLifestyle: "/uploads/Preferred Lifestyle LOGO LARGE_black_1758205962584.png"
