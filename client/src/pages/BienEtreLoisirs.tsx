@@ -266,21 +266,56 @@ const BienEtreLoisirs = () => {
     fetchData();
   }, []);
 
-  // Scroll handling
+  // SOLUTION COMPLÈTE : Gestion du défilement pour tous les cas
   useEffect(() => {
-    const hash = window.location.hash;
-    if (hash) {
-      const element = document.getElementById(hash.substring(1));
-      if (element) {
-        setTimeout(() => {
-          element.scrollIntoView({ 
-            behavior: 'smooth',
-            block: 'start'
-          });
+    let scrollTimeout: NodeJS.Timeout;
+
+    const handleScrollToHash = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash && !loading) {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          const element = document.getElementById(hash);
+          if (element) {
+            element.scrollIntoView({ 
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
         }, 100);
       }
-    }
-  }, [location]);
+    };
+
+    // 1. Écouter les changements de hash (navigation depuis d'autres pages)
+    window.addEventListener('hashchange', handleScrollToHash);
+    
+    // 2. Vérifier au chargement initial
+    handleScrollToHash();
+
+    // 3. Intercepter les clics sur les liens d'ancres MÊME sur la page actuelle
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const link = target.closest('a');
+      
+      if (link && link.hash) {
+        const hash = link.hash.replace('#', '');
+        if (hash && window.location.pathname === '/bien-etre-loisirs') {
+          e.preventDefault();
+          // Mettre à jour l'URL sans recharger
+          window.history.pushState(null, '', link.hash);
+          handleScrollToHash();
+        }
+      }
+    };
+
+    document.addEventListener('click', handleAnchorClick);
+
+    return () => {
+      window.removeEventListener('hashchange', handleScrollToHash);
+      document.removeEventListener('click', handleAnchorClick);
+      clearTimeout(scrollTimeout);
+    };
+  }, [loading]);
 
   const updateSection = async (updatedMixedData: typeof data) => {
     try {
@@ -326,6 +361,25 @@ const BienEtreLoisirs = () => {
       }
     } catch (err) {
       console.error('Error updating section:', err);
+    }
+  };
+
+  // Fonction utilitaire pour gérer les clics sur les boutons de navigation
+  const handleFacilityNavigation = (sectionId: string) => {
+    if (window.location.pathname === '/bien-etre-loisirs') {
+      // Si déjà sur la page, on utilise le défilement direct
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+        // Mettre à jour l'URL sans recharger
+        window.history.pushState(null, '', `#${sectionId}`);
+      }
+    } else {
+      // Sinon, navigation normale
+      navigate(`/bien-etre-loisirs#${sectionId}`);
     }
   };
 
@@ -890,6 +944,14 @@ const BienEtreLoisirs = () => {
                   {getText(hero.description)}
                 </p>
               </Tooltip>
+              <div className="mt-8">
+                <button 
+                  onClick={() => handleFacilityNavigation('piscine')}
+                  className="bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors shadow-lg"
+                >
+                  {isFr ? 'Découvrir nos installations' : 'Discover our facilities'}
+                </button>
+              </div>
             </div>
           </ParallaxSection>
         </ImageTooltip>
@@ -939,7 +1001,7 @@ const BienEtreLoisirs = () => {
             {facilities.map((facility, index) => {
               if (!isAdmin && facility.hidden) return null;
               const sectionId = facility.name.fr === 'Piscine' ? 'piscine' :
-                                facility.name.fr === 'Fitness' ? 'fitness' :
+                                facility.name.fr === 'Fitness' ? 'salle-sport' :
                                 facility.name.fr === 'Tennis' ? 'tennis' : 'soins';
               const direction = index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse';
               return (
@@ -1033,6 +1095,9 @@ const BienEtreLoisirs = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           {(facility.features.length > 0 || isAdmin) && (
                             <div>
+                              {facility.features.length > 0 && !isAdmin && (
+                                <h4 className="font-semibold text-foreground mb-3">{getText(headers.equipments)}</h4>
+                              )}
                               {isAdmin && (
                                 <Tooltip
                                   frLabel={headers.equipments.fr}
@@ -1084,6 +1149,9 @@ const BienEtreLoisirs = () => {
                           
                           {(facility.services.length > 0 || isAdmin) && (
                             <div>
+                              {facility.services.length > 0 && !isAdmin && (
+                                <h4 className="font-semibold text-foreground mb-3">{getText(headers.services)}</h4>
+                              )}
                               {isAdmin && (
                                 <Tooltip
                                   frLabel={headers.services.fr}

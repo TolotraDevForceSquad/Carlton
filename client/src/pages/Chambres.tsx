@@ -1108,7 +1108,6 @@ const Chambres = () => {
                           src={room.image || hotelRoom}
                           alt={getText(room.name)}
                           className="w-full h-full object-cover transition-transform duration-300 hover:scale-105 cursor-pointer"
-                          onClick={(e) => e.stopPropagation()} // Prevent bubbling if needed
                         />
                       </div>
                     </ImageTooltip>

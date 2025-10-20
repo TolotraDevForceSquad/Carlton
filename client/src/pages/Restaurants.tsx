@@ -164,6 +164,34 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
   };
 };
 
+interface TextFormatterProps {
+  text: any;
+  className?: string;
+}
+
+const TextFormatter: React.FC<TextFormatterProps> = ({ text, className }) => {
+  let displayText: string;
+  if (typeof text === 'string') {
+    displayText = text;
+  } else if (typeof text === 'number') {
+    displayText = text.toString();
+  } else {
+    displayText = String(text || '');
+  }
+
+  const parts = displayText.split('(-)').filter(part => part.trim().length > 0);
+  if (parts.length === 1) {
+    return <span className={className}>{formatAmpersand(displayText)}</span>;
+  }
+  return (
+    <div className={`space-y-2 ${className || ''}`}>
+      {parts.map((part, i) => (
+        <p key={i} className="leading-relaxed">{formatAmpersand(part.trim())}</p>
+      ))}
+    </div>
+  );
+};
+
 const Restaurants = () => {
   const { currentLang } = useLanguage();
   const langKey = currentLang.code.toLowerCase();
@@ -171,6 +199,7 @@ const Restaurants = () => {
   const [data, setData] = useState(() => reconstructMixed(splitRestaurantData(restaurantPageData).dataFr, splitRestaurantData(restaurantPageData).dataEn));
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const isAdmin = !!localStorage.getItem('userToken');
 
   // Fetch restaurants data from backend
@@ -226,58 +255,56 @@ const Restaurants = () => {
     fetchRestaurantsData();
   }, []);
 
-  // Gestion du défilement automatique pour les ancres (fix pour clics internes)
+  // SOLUTION COMPLÈTE : Gestion du défilement pour tous les cas
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash;
-      if (hash) {
-        const element = document.getElementById(hash.substring(1));
-        if (element) {
-          setTimeout(() => {
+    let scrollTimeout: NodeJS.Timeout;
+
+    const handleScrollToHash = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash && !loading) {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          const element = document.getElementById(hash);
+          if (element) {
             element.scrollIntoView({ 
               behavior: 'smooth',
               block: 'start'
             });
-          }, 100); // Petit délai pour laisser le DOM s'ajuster
+          }
+        }, 100);
+      }
+    };
+
+    // 1. Écouter les changements de hash (navigation depuis d'autres pages)
+    window.addEventListener('hashchange', handleScrollToHash);
+    
+    // 2. Vérifier au chargement initial
+    handleScrollToHash();
+
+    // 3. Intercepter les clics sur les liens d'ancres MÊME sur la page actuelle
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const link = target.closest('a');
+      
+      if (link && link.hash) {
+        const hash = link.hash.replace('#', '');
+        if (hash && window.location.pathname === '/restaurants') {
+          e.preventDefault();
+          // Mettre à jour l'URL sans recharger
+          window.history.pushState(null, '', link.hash);
+          handleScrollToHash();
         }
       }
     };
 
-    // Appel initial au chargement de la page
-    handleHashChange();
-
-    // Écoute les changements de hash (pour clics internes sur la même page)
-    window.addEventListener('hashchange', handleHashChange);
-
-    // Écoute aussi les changements de location Wouter (pour arrivées externes)
-    const handleLocationChange = () => {
-      const hash = window.location.hash;
-      if (hash) {
-        handleHashChange();
-      }
-    };
+    document.addEventListener('click', handleAnchorClick);
 
     return () => {
-      window.removeEventListener('hashchange', handleHashChange);
-      // Pas besoin de cleanup pour Wouter, car c'est géré par le router
+      window.removeEventListener('hashchange', handleScrollToHash);
+      document.removeEventListener('click', handleAnchorClick);
+      clearTimeout(scrollTimeout);
     };
-  }, []); // Pas de dépendance à location ici, pour éviter les boucles
-
-  // Ancien useEffect conservé pour compatibilité (mais redondant maintenant)
-  useEffect(() => {
-    const hash = window.location.hash;
-    if (hash) {
-      const element = document.getElementById(hash.substring(1));
-      if (element) {
-        setTimeout(() => {
-          element.scrollIntoView({ 
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }, 100);
-      }
-    }
-  }, [location]);
+  }, [loading]);
 
   const updateRestaurantsSection = async (updatedMixedData: typeof data) => {
     try {
@@ -593,21 +620,31 @@ const Restaurants = () => {
     await updateRestaurantsSection(updatedData);
   };
 
-  // Fonction pour le défilement personnalisé
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }
+  const openImagePopup = (imageUrl: string) => {
+    setSelectedImage(imageUrl);
   };
 
-  // Fonction pour naviguer avec hash
-  const navigateWithHash = (sectionId: string) => {
-    navigate(`/restaurants#${sectionId}`);
-    // Le défilement sera géré par le useEffect
+  const closeImagePopup = () => {
+    setSelectedImage(null);
+  };
+
+  // Fonction utilitaire pour gérer les clics sur les boutons de navigation
+  const handleRestaurantNavigation = (sectionId: string) => {
+    if (window.location.pathname === '/restaurants') {
+      // Si déjà sur la page restaurants, on utilise le défilement direct
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+        // Mettre à jour l'URL sans recharger
+        window.history.pushState(null, '', `#${sectionId}`);
+      }
+    } else {
+      // Sinon, navigation normale
+      navigate(`/restaurants#${sectionId}`);
+    }
   };
 
   const addRestaurantCard = (
@@ -744,7 +781,7 @@ const Restaurants = () => {
               onSave={updateHeroField('title')}
             >
               <h1 className="text-6xl md:text-7xl font-serif font-bold mb-8 drop-shadow-lg">
-                {formatAmpersand(getText(hero.title))}
+                <TextFormatter text={getText(hero.title)} />
               </h1>
             </Tooltip>
             <div className="w-32 h-1 bg-primary mx-auto mb-8"></div>
@@ -753,9 +790,9 @@ const Restaurants = () => {
               enLabel={hero.description.en}
               onSave={updateHeroField('description')}
             >
-              <p className="text-2xl md:text-3xl max-w-4xl mx-auto leading-relaxed drop-shadow-lg mb-12">
-                {getText(hero.description)}
-              </p>
+              <div className="text-2xl md:text-3xl max-w-4xl mx-auto leading-relaxed drop-shadow-lg mb-12 text-white">
+                <TextFormatter text={getText(hero.description)} className="drop-shadow-lg" />
+              </div>
             </Tooltip>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
               {hero.stats.map((stat, index) => (
@@ -773,7 +810,9 @@ const Restaurants = () => {
                             enLabel={stat.number.en}
                             onSave={updateHeroStat(index, 'number')}
                           >
-                            <div className="block">{getText(stat.number)}</div>
+                            <div className="block">
+                              <TextFormatter text={getText(stat.number)} />
+                            </div>
                           </Tooltip>
                         </>
                       );
@@ -784,14 +823,16 @@ const Restaurants = () => {
                     enLabel={stat.label.en}
                     onSave={updateHeroStat(index, 'label')}
                   >
-                    <div className="text-lg">{getText(stat.label)}</div>
+                    <div className="text-lg">
+                      <TextFormatter text={getText(stat.label)} />
+                    </div>
                   </Tooltip>
                 </div>
               ))}
             </div>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <button 
-                onClick={() => navigateWithHash('bistrot')}
+                onClick={() => handleRestaurantNavigation('bistrot')}
                 className="bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors shadow-lg"
               >
                 <Tooltip
@@ -799,7 +840,9 @@ const Restaurants = () => {
                   enLabel={hero.buttonTexts.primary.en}
                   onSave={updateHeroButton('primary')}
                 >
-                  <span>{getText(hero.buttonTexts.primary)}</span>
+                  <span>
+                    <TextFormatter text={getText(hero.buttonTexts.primary)} />
+                  </span>
                 </Tooltip>
               </button>
               <button 
@@ -811,7 +854,9 @@ const Restaurants = () => {
                   enLabel={hero.buttonTexts.secondary.en}
                   onSave={updateHeroButton('secondary')}
                 >
-                  <span>{getText(hero.buttonTexts.secondary)}</span>
+                  <span>
+                    <TextFormatter text={getText(hero.buttonTexts.secondary)} />
+                  </span>
                 </Tooltip>
               </button>
             </div>
@@ -835,6 +880,27 @@ const Restaurants = () => {
           </div>
         )}
       </div>
+
+      {/* Image Popup Modal */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
+          onClick={closeImagePopup}
+        >
+          <button 
+            className="absolute top-4 right-4 text-white text-2xl z-10"
+            onClick={closeImagePopup}
+          >
+            ×
+          </button>
+          <img 
+            src={selectedImage} 
+            alt="Image en grand format" 
+            className="max-w-full max-h-full object-contain cursor-zoom-out"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
 
       {/* Restaurants Details */}
       <section className="py-20">
@@ -877,11 +943,14 @@ const Restaurants = () => {
                       imageUrl={restaurant.image}
                       onSave={updateRestaurantImage(index)}
                     >
-                      <div className="w-full h-80 lg:h-full relative">
+                      <div 
+                        className="w-full h-80 lg:h-full relative cursor-pointer overflow-hidden"
+                        onClick={() => openImagePopup(restaurant.image)}
+                      >
                         <img 
                           src={restaurant.image} 
                           alt={getText(restaurant.name)}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105 cursor-pointer"
                         />
                       </div>
                     </ImageTooltip>
@@ -897,7 +966,7 @@ const Restaurants = () => {
                             onSave={updateRestaurantField(index, 'type')}
                           >
                             <Badge variant="outline" className="text-primary border-primary">
-                              {getText(restaurant.type)}
+                              <TextFormatter text={getText(restaurant.type)} />
                             </Badge>
                           </Tooltip>
                         </div>
@@ -907,7 +976,7 @@ const Restaurants = () => {
                           onSave={updateRestaurantField(index, 'name')}
                         >
                           <CardTitle className="text-3xl font-serif text-foreground mb-3">
-                            {formatAmpersand(getText(restaurant.name))}
+                            <TextFormatter text={getText(restaurant.name)} />
                           </CardTitle>
                         </Tooltip>
                         <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-4">
@@ -918,7 +987,9 @@ const Restaurants = () => {
                               enLabel={restaurant.hours.en}
                               onSave={updateRestaurantField(index, 'hours')}
                             >
-                              <span>{getText(restaurant.hours)}</span>
+                              <span>
+                                <TextFormatter text={getText(restaurant.hours)} />
+                              </span>
                             </Tooltip>
                           </div>
                           <div className="flex items-center gap-1">
@@ -928,7 +999,9 @@ const Restaurants = () => {
                               enLabel={restaurant.capacity.en}
                               onSave={updateRestaurantField(index, 'capacity')}
                             >
-                              <span>{getText(restaurant.capacity)}</span>
+                              <span>
+                                <TextFormatter text={getText(restaurant.capacity)} />
+                              </span>
                             </Tooltip>
                           </div>
                         </div>
@@ -940,9 +1013,9 @@ const Restaurants = () => {
                           enLabel={restaurant.description.en}
                           onSave={updateRestaurantField(index, 'description')}
                         >
-                          <p className="text-muted-foreground leading-relaxed">
-                            {getText(restaurant.description)}
-                          </p>
+                          <div className="text-muted-foreground leading-relaxed">
+                            <TextFormatter text={getText(restaurant.description)} />
+                          </div>
                         </Tooltip>
                         
                         <Tooltip
@@ -950,9 +1023,9 @@ const Restaurants = () => {
                           enLabel={restaurant.detailedDescription.en}
                           onSave={updateRestaurantField(index, 'detailedDescription')}
                         >
-                          <p className="text-muted-foreground leading-relaxed text-sm">
-                            {getText(restaurant.detailedDescription)}
-                          </p>
+                          <div className="text-muted-foreground leading-relaxed text-sm">
+                            <TextFormatter text={getText(restaurant.detailedDescription)} />
+                          </div>
                         </Tooltip>
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -971,7 +1044,9 @@ const Restaurants = () => {
                                       enLabel={specialty.en}
                                       onSave={updateRestaurantSpecialty(index, sIndex)}
                                     >
-                                      <span className="block">{getText(specialty)}</span>
+                                      <span className="block">
+                                        <TextFormatter text={getText(specialty)} className="block" />
+                                      </span>
                                     </Tooltip>
                                   </div>
                                   {isAdmin && (
@@ -1015,7 +1090,9 @@ const Restaurants = () => {
                                       enLabel={feature.en}
                                       onSave={updateRestaurantFeature(index, fIndex)}
                                     >
-                                      <span className="block">{getText(feature)}</span>
+                                      <span className="block">
+                                        <TextFormatter text={getText(feature)} className="block" />
+                                      </span>
                                     </Tooltip>
                                   </div>
                                   {isAdmin && (
@@ -1053,7 +1130,9 @@ const Restaurants = () => {
                               enLabel={restaurant.dressCode.en}
                               onSave={updateRestaurantField(index, 'dressCode')}
                             >
-                              <span className="ml-1">{getText(restaurant.dressCode)}</span>
+                              <span className="ml-1">
+                                <TextFormatter text={getText(restaurant.dressCode)} />
+                              </span>
                             </Tooltip>
                           </p>
                         </div>
@@ -1077,7 +1156,7 @@ const Restaurants = () => {
             onSave={updateCtaField('title')}
           >
             <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-foreground">
-              {getText(cta.title)}
+              <TextFormatter text={getText(cta.title)} />
             </h2>
           </Tooltip>
           <Tooltip
@@ -1085,9 +1164,9 @@ const Restaurants = () => {
             enLabel={cta.description.en}
             onSave={updateCtaField('description')}
           >
-            <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-              {getText(cta.description)}
-            </p>
+            <div className="text-xl text-muted-foreground mb-8 leading-relaxed">
+              <TextFormatter text={getText(cta.description)} />
+            </div>
           </Tooltip>
           <button 
             onClick={() => navigate('/contact')}
@@ -1098,7 +1177,9 @@ const Restaurants = () => {
               enLabel={cta.buttonText.en}
               onSave={updateCtaField('buttonText')}
             >
-              <span>{getText(cta.buttonText)}</span>
+              <span>
+                <TextFormatter text={getText(cta.buttonText)} />
+              </span>
             </Tooltip>
           </button>
         </div>

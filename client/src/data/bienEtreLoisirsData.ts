@@ -110,7 +110,7 @@ export const bienEtreLoisirsData = {
     {
       id: 1,
       title: { fr: 'Massage holistique – 1h', en: 'Holistic massage – 1h' },
-      duration: { fr: '1 heures', en: '1 heures' },
+      duration: { fr: '1h', en: '1h' },
       description: {
         fr: 'Vivez l’expérience d’un soin énergétique singulier, associant les vertus des huiles essentielles et ayurvédiques. Un rituel thérapeutique sur mesure qui rééquilibre les énergies, soulage les tensions et nourrit le corps en profondeur.',
         en: 'Experience a unique energetic treatment, combining the benefits of essential and Ayurvedic oils. A bespoke therapeutic ritual that rebalances energies, relieves tension, and nourishes the body deeply.'
@@ -121,7 +121,7 @@ export const bienEtreLoisirsData = {
     {
       id: 2,
       title: { fr: 'Massage avec pierres chaudes – 1h', en: 'Hot stone massage – 1h' },
-      duration: { fr: '1 heures', en: '1 heures' },
+      duration: { fr: '1h', en: '1h' },
       description: {
         fr: 'Offrez-vous un massage du dos et des jambes à l’huile chaude, enrichi par l’utilisation de pierres semi-précieuses aux vertus énergétiques. Une expérience sensorielle unique pour relâcher les tensions et réharmoniser le corps.',
         en: 'Treat yourself to a back and leg massage with hot oil, enriched by the use of semi-precious stones with energetic virtues. A unique sensory experience to release tension and reharmonize the body.'
@@ -132,7 +132,7 @@ export const bienEtreLoisirsData = {
     {
       id: 3,
       title: { fr: 'Massage relaxant – 1h', en: 'Relaxing massage – 1h' },
-      duration: { fr: '1 heures', en: '1 heures' },
+      duration: { fr: '1h', en: '1h' },
       description: {
         fr: 'Lâchez prise dès la première minute. Ce soin allie gestes enveloppants et huiles essentielles apaisante pour éliminer le stress, détendre le corps et revitaliser l’esprit. Un vrai moment de bien-être à s’offrir ou à offrir.',
         en: 'Let go from the first minute. This treatment combines enveloping gestures and soothing essential oils to eliminate stress, relax the body, and revitalize the mind. A true moment of wellness to treat yourself or give.'
@@ -144,7 +144,7 @@ export const bienEtreLoisirsData = {
   cta: {
     title: { fr: 'Votre oasis de détente au cœur d\'Antananarivo', en: 'Your oasis of relaxation in the heart of Antananarivo' },
     description: {
-      fr: 'Profitez de nos installations de loisirs et de bien-être ouvertes tous les jours. Nos équipes sont à votre disposition pour personnaliser votre expérience.',
+      fr: 'Faites une pause bien méritée, nous vous accueillons tous les jours. Nos équipes sont à votre disposition pour personnaliser votre expérience.',
       en: 'Enjoy our leisure and wellness facilities open every day. Our teams are at your disposal to personalize your experience.'
     },
     buttonText: { fr: 'Réserver votre séjour', en: 'Book your stay' }

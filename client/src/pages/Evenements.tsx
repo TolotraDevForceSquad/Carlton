@@ -1,18 +1,94 @@
+import { useState, useEffect } from 'react';
+import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Users, Calendar, Clock, MapPin, Star, Utensils, Music, Camera, Heart, GraduationCap, Theater, Martini, Layout } from 'lucide-react';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 import Footer from '@/components/Footer';
 import eventImage from '@assets/generated_images/Fine_dining_restaurant_1275a5b9.png';
 import { formatAmpersand } from '@/lib/utils/formatAmpersand';
 
 const Evenements = () => {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [location, navigate] = useLocation();
+
+  // SOLUTION COMPLÈTE : Gestion du défilement pour tous les cas
+  useEffect(() => {
+    let scrollTimeout: NodeJS.Timeout;
+
+    const handleScrollToHash = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          const element = document.getElementById(hash);
+          if (element) {
+            element.scrollIntoView({ 
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        }, 100);
+      }
+    };
+
+    // 1. Écouter les changements de hash (navigation depuis d'autres pages)
+    window.addEventListener('hashchange', handleScrollToHash);
+    
+    // 2. Vérifier au chargement initial
+    handleScrollToHash();
+
+    // 3. Intercepter les clics sur les liens d'ancres MÊME sur la page actuelle
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const link = target.closest('a');
+      
+      if (link && link.hash) {
+        const hash = link.hash.replace('#', '');
+        if (hash && window.location.pathname === '/evenements') {
+          e.preventDefault();
+          // Mettre à jour l'URL sans recharger
+          window.history.pushState(null, '', link.hash);
+          handleScrollToHash();
+        }
+      }
+    };
+
+    document.addEventListener('click', handleAnchorClick);
+
+    return () => {
+      window.removeEventListener('hashchange', handleScrollToHash);
+      document.removeEventListener('click', handleAnchorClick);
+      clearTimeout(scrollTimeout);
+    };
+  }, []);
+
+  // Fonction utilitaire pour gérer les clics sur les boutons de navigation
+  const handleEventNavigation = (sectionId: string) => {
+    if (window.location.pathname === '/evenements') {
+      // Si déjà sur la page, on utilise le défilement direct
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+        // Mettre à jour l'URL sans recharger
+        window.history.pushState(null, '', `#${sectionId}`);
+      }
+    } else {
+      // Sinon, navigation normale
+      navigate(`/evenements#${sectionId}`);
+    }
+  };
+
   const eventTypes = [
     {
       id: 1,
       name: "Évènements Corporate",
       type: "Excellence professionnelle",
-      description: "Organisez vos réunions, ateliers, séminaires, conférences et événements d'entreprise dans nos espaces modulables équipés des dernières technologies. Un service impeccable pour des réunions réussies.",
+      description: "Organisez vos réunions, ateliers, séminaires, conférences et événements d'entreprise dans nos espaces modulables équipés des dernières technologies. Notre équipe expérimentée vous assiste de la planification à la coordination le jour de l'événement.",
       image: eventImage,
       hours: "Demi-journée à plusieurs jours",
       capacity: "10 - 500 participants",
@@ -20,68 +96,67 @@ const Evenements = () => {
         "Salles modulables",
         "Sonorisation et vidéoprojecteur",
         "Connexion Wi-Fi haut débit",
-        "Service de restauration sur mesure"
+        "Restauration sur mesure"
       ],
-      services: ["Support technique", "Restauration d'affaires", "Hébergement groupe"]
+      services: []
     },
     {
       id: 2,
       name: "Réceptions & Galas",
       type: "Événements d'exception",
-      description: "Pour vos réceptions officielles, cérémonies et galas, nous offrons un cadre prestigieux et un service haut de gamme nécessaires à votre succès.",
+      description: "Pour vos réceptions officielles, cérémonies et soirées de gala, nous offrons un cadre unique et un service haut de gamme à la hauteur de vos exigences. Nos salles spacieuses et modulables s'adaptent à tous les formats d'événements dans une atmosphère sobre et distinguée. \n\nNotre offre traiteur met à l'honneur une cuisine de qualité. Chaque prestation est personnalisable selon vos attentes, avec des mets soigneusement élaborés, une présentation élégante et un service discret et professionnel.",
       image: eventImage,
       hours: "Soirée ou journée complète",
       capacity: "50 - 500 invités",
       features: [
-        "Scénographie personnalisée",
-        "Éclairage professionnel",
-        "Sonorisation complète",
-        "Service de sécurité",
-        "Vestiaire et accueil VIP",
-        "Buffets ou dîners assis",
-        "Bar à cocktails premium"
+        "Salles modulables",
+        "Connexion Wi-Fi haut débit",
+        "Equipement, décoration et restauration sur mesure"
       ],
-      services: ["Scénographie premium", "Services VIP", "Communication événementielle"]
+      services: []
     },
     {
       id: 3,
-      name: "Mariages de Prestige",
+      name: "Mariages de prestige",
       type: "Votre jour le plus beau",
-      description: "Célébrez votre union dans un cadre d'exception avec nos services de mariage sur mesure. Du cocktail de réception au dîner de gala, chaque détail est pensé pour créer des souvenirs inoubliables.",
+      description: "Offrez à votre mariage un écrin de prestige au cœur de la ville. Nos salles de réception vous accueillent dans un lieu élégant, raffiné et spacieux parfait pour célébrer l'un des plus beaux jours de votre vie. \n\nDu cocktail au banquet, chaque proposition est pensée sur mesure, avec des produits minutieusement sélectionnés, une présentation soignée et une cuisine alliant finesse et générosité.\n\nNotre équipe dédiée vous accompagne avec professionnalisme et discrétion, de la préparation jusqu'au jour J, pour faire de votre évènement un moment harmonieux.",
       image: eventImage,
       hours: "Journée complète ou weekend",
       capacity: "20 - 200 invités",
       features: [
-        "Coordinateur de mariage dédié",
-        "Choix de lieux de cérémonie",
-        "Menu gastronomique personnalisé",
-        "Décoration florale incluse",
-        "Suite nuptiale offerte",
-        "Photographe professionnel disponible",
-        "Service traiteur haut de gamme",
-        "Orchestre ou DJ au choix"
+        "Salles modulables",
+        "Connexion Wi-Fi haut débit",
+        "Equipement, décoration et restauration sur mesure"
       ],
-      services: ["Planning personnalisé", "Coordination jour J", "Services premium"]
+      services: []
     },
     {
       id: 4,
       name: "Anniversaires & Célébrations",
       type: "Moments précieux",
-      description: "Anniversaires marquants, jubilés, célébrations familiales... Nous créons des événements intimes ou grandioses selon vos envies, avec une attention particulière aux détails.",
+      description: "Anniversaires marquants, jubilés, fêtes de famille ou célébrations privées… Accueillez vos proches dans un cadre à la fois chic et convivial à la hauteur de l'événement, nos espaces s'ajustent à la taille et au style de votre réception. Nous créons des événements intimes ou grandioses selon vos envies, avec une attention particulière aux détails.",
       image: eventImage,
       hours: "3 heures à 2 jours",
       capacity: "15 - 150 invités",
       features: [
-        "Planification personnalisée",
-        "Menus thématiques",
-        "Décoration sur mesure",
-        "Animation musicale",
-        "Service de photographie",
-        "Gâteau d'anniversaire inclus",
-        "Cocktails de bienvenue",
-        "Souvenirs personnalisés"
+        "Salles modulables",
+        "Connexion Wi-Fi haut débit",
+        "Equipement, décoration et restauration sur mesure"
       ],
-      services: ["Décoration personnalisée", "Animation sur mesure", "Photographie souvenir"]
+      services: []
+    },
+    {
+      id: 5,
+      name: "Service Traiteur",
+      type: "Le savoir-faire au cœur de vos évènements",
+      description: "Faites confiance à notre équipe traiteur expérimentée, engagée à faire de chaque événement un moment unique. Que ce soit pour un mariage, un anniversaire, une réception privée ou un événement professionnel, nous vous accompagnons à chaque étape avec professionnalisme et savoir-faire.\n\nNous proposons une cuisine raffinée qui mêle savoir-faire et originalité. Cocktails, buffets, menus personnalisés : tout est pensé pour s'adapter à vos envies et au format de votre réception.\n\nDotés d'un équipement complet et moderne, nous assurons une prestation fluide. De la mise en place au service, chaque détail est pris en charge pour vous garantir une expérience sans stress et parfaitement maîtrisée.\n\nParce que chaque événement est unique, notre équipe reste à votre écoute pour créer une offre sur mesure, qui répond à vos attentes, à votre budget et à vos exigences.",
+      image: eventImage,
+      hours: "Sur mesure",
+      capacity: "Adapté à l'événement",
+      features: [
+        "Équipements & services sur mesure"
+      ],
+      services: []
     }
   ];
 
@@ -290,8 +365,60 @@ const Evenements = () => {
     }
   ];
 
+  const venueGroups = [
+    {
+      id: 1,
+      title: "La salle RAVINALA",
+      desc: "est une grande salle plénière et multifonctionnelle, modulable en 2 parties (Ravinala A et Ravinala B). Elle est parfaitement conçue pour accueillir les évènements d'envergure jusqu'à 500 personnes, qu'il s'agisse de conférences professionnelles ou de célébrations privées telles que les mariages.",
+      subVenues: ['RAVINALA', 'RAVINALA A', 'RAVINALA B'],
+      image: eventImage
+    },
+    {
+      id: 2,
+      title: "Les salles ROI ET REINE",
+      desc: "peuvent être utilisées en annexe ou pour les ateliers en travaux de groupe.",
+      subVenues: ['ROI', 'REINE'],
+      image: eventImage
+    },
+    {
+      id: 3,
+      title: "L'EXECUTIVE BOARDROOM",
+      desc: "est le cadre idéal pour les réunions confidentielles, et s'adapte aisément en salle complémentaire ou annexe pour les événements de plus grande ampleur.",
+      subVenues: ['EXECUTIVE BOARDROOM'],
+      image: eventImage
+    },
+    {
+      id: 4,
+      title: "Le TOIT DE TANA",
+      desc: "est un espace polyvalent et spacieux, bénéficiant d'un bel éclairage naturel, grâce à ses grandes baies vitrées. Située au 15ème étage, il offre une vue panoramique imprenable sur la ville, créant un décor à la fois élégant et inspirant. Avec son cachet unique et son atmosphère d'exception, c'est le lieu incontournable pour sublimer vos événements, qu'ils soient professionnels ou privés.",
+      subVenues: ['TOIT DE TANA'],
+      image: eventImage
+    },
+    {
+      id: 5,
+      title: "La TERRASSE AILE DROITE",
+      desc: "allie confort, luminosité et flexibilité. Elle offre un environnement raffiné et accueillant, parfait pour vos réceptions, célébrations et événements sur mesure.",
+      subVenues: ['LA TERRASSE AILE DROITE'],
+      image: eventImage
+    },
+    {
+      id: 6,
+      title: "Les salles VALIHA A & VALIHA B",
+      desc: "conviennent pour les réunions et ateliers en petit groupe et peuvent également servir de salles annexes selon vos besoins logistiques.",
+      subVenues: ['VALIHA A', 'VALIHA B'],
+      image: eventImage
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-background">
+      <style>
+        {`
+          html {
+            scroll-behavior: smooth;
+          }
+        `}
+      </style>
       
       {/* Hero Section */}
       <section className="pt-20 bg-gradient-to-r from-background to-card/50">
@@ -338,6 +465,40 @@ const Evenements = () => {
               <div className="text-sm text-muted-foreground">Support dédié</div>
             </div>
           </div>
+
+          {/* Navigation Buttons */}
+          <div className="flex flex-wrap justify-center gap-4 mt-12">
+            <button 
+              onClick={() => handleEventNavigation('mariages')}
+              className="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors shadow-lg"
+            >
+              Mariages
+            </button>
+            <button 
+              onClick={() => handleEventNavigation('corporate')}
+              className="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors shadow-lg"
+            >
+              Événements Corporate
+            </button>
+            <button 
+              onClick={() => handleEventNavigation('galas')}
+              className="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors shadow-lg"
+            >
+              Galas & Réceptions
+            </button>
+            <button 
+              onClick={() => handleEventNavigation('celebrations')}
+              className="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors shadow-lg"
+            >
+              Célébrations
+            </button>
+            <button 
+              onClick={() => handleEventNavigation('salles')}
+              className="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors shadow-lg"
+            >
+              Nos Espaces
+            </button>
+          </div>
         </div>
       </section>
 
@@ -358,8 +519,9 @@ const Evenements = () => {
               let sectionId = '';
               if (event.name === 'Évènements Corporate') sectionId = 'corporate';
               else if (event.name === 'Réceptions & Galas') sectionId = 'galas';
-              else if (event.name === 'Mariages de Prestige') sectionId = 'mariages';
+              else if (event.name === 'Mariages de prestige') sectionId = 'mariages';
               else if (event.name === 'Anniversaires & Célébrations') sectionId = 'celebrations';
+              else if (event.name === 'Service Traiteur') sectionId = 'traiteur';
               
               return (
                 <Card 
@@ -370,11 +532,12 @@ const Evenements = () => {
                   } flex flex-col lg:flex`}
                   data-testid={`card-event-${event.id}`}
                 >
-                  <div className="lg:w-1/2">
+                  <div className="lg:w-1/2 relative overflow-hidden">
                     <img 
                       src={event.image} 
                       alt={event.name}
-                      className="w-full h-80 lg:h-full object-cover"
+                      className="w-full h-80 lg:h-full object-cover transition-transform duration-300 hover:scale-105 cursor-pointer"
+                      onClick={() => setSelectedImage(event.image)}
                       data-testid={`image-event-${event.id}`}
                     />
                   </div>
@@ -386,10 +549,12 @@ const Evenements = () => {
                           <Badge variant="outline" className="text-primary border-primary" data-testid={`badge-type-${event.id}`}>
                             {formatAmpersand(event.type)}
                           </Badge>
-                          <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                            <Users className="w-4 h-4" />
-                            <span>{event.capacity}</span>
-                          </div>
+                          {event.capacity && (
+                            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                              <Users className="w-4 h-4" />
+                              <span>{event.capacity}</span>
+                            </div>
+                          )}
                         </div>
                         <CardTitle className="text-3xl font-serif text-foreground mb-3" data-testid={`title-event-${event.id}`}>
                           {formatAmpersand(event.name)}
@@ -397,7 +562,7 @@ const Evenements = () => {
                       </CardHeader>
                       
                       <CardContent className="p-0 space-y-6">
-                        <p className="text-muted-foreground leading-relaxed" data-testid={`description-event-${event.id}`}>
+                        <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap" data-testid={`description-event-${event.id}`}>
                           {event.description}
                         </p>
                         
@@ -414,28 +579,35 @@ const Evenements = () => {
                             </div>
                           </div>
                           
-                          <div>
-                            <h4 className="font-semibold text-foreground mb-3">Services inclus :</h4>
-                            <div className="space-y-2">
-                              {event.services.map((service, idx) => (
-                                <div key={idx} className="flex items-start gap-2 text-sm text-muted-foreground" data-testid={`service-${event.id}-${idx}`}>
-                                  <Star className="w-3 h-3 text-primary mt-1 flex-shrink-0" />
-                                  <span>{service}</span>
-                                </div>
-                              ))}
+                          {event.services.length > 0 && (
+                            <div>
+                              <h4 className="font-semibold text-foreground mb-3">Services inclus :</h4>
+                              <div className="space-y-2">
+                                {event.services.map((service, idx) => (
+                                  <div key={idx} className="flex items-start gap-2 text-sm text-muted-foreground" data-testid={`service-${event.id}-${idx}`}>
+                                    <Star className="w-3 h-3 text-primary mt-1 flex-shrink-0" />
+                                    <span>{service}</span>
+                                  </div>
+                                ))}
+                              </div>
                             </div>
-                          </div>
+                          )}
                         </div>
 
-                        <div className="flex items-center justify-between pt-4">
-                          <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                            <Clock className="w-4 h-4" />
-                            <span>{event.hours}</span>
+                        {event.hours && (
+                          <div className="flex items-center justify-between pt-4">
+                            <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                              <Clock className="w-4 h-4" />
+                              <span>{event.hours}</span>
+                            </div>
+                            <Button 
+                              size="sm"
+                              onClick={() => navigate('/contact')}
+                            >
+                              Organiser cet événement
+                            </Button>
                           </div>
-                          <Button size="sm">
-                            Organiser cet événement
-                          </Button>
-                        </div>
+                        )}
                       </CardContent>
                     </div>
                   </div>
@@ -445,6 +617,17 @@ const Evenements = () => {
           </div>
         </div>
       </section>
+
+      {/* Image Modal */}
+      <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
+        <DialogContent className="max-w-4xl max-h-[90vh] p-0 m-0">
+          <img 
+            src={selectedImage!} 
+            alt="Événement"
+            className="w-full h-full object-contain"
+          />
+        </DialogContent>
+      </Dialog>
 
       {/* Services Section */}
       <section className="py-20 bg-card/30">
@@ -486,12 +669,49 @@ const Evenements = () => {
               Nos Espaces
             </h2>
             <p className="text-lg text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-              Découvrez nos espaces modulables, adaptés à tous types d'événements. De la petite réunion à la grande réception.
+              Carlton Madagascar dispose de plusieurs espaces dédiés aux évènements. Grâce à leur modularité, nos salles s'adaptent à tous types de configurations et d'occasions pour vous garantir un cadre fonctionnel, élégant et convivial. Découvrez nos espaces modulables, adaptés à tous types d'événements. De la petite réunion à la grande réception.
             </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            {venueGroups.map((group) => (
+              <Card
+                key={group.id}
+                className="overflow-hidden hover-elevate transition-all duration-300 flex flex-col"
+              >
+                <div className="w-full relative overflow-hidden">
+                  <img
+                    src={group.image}
+                    alt={group.title}
+                    className="w-full h-80 object-cover transition-transform duration-300 hover:scale-105 cursor-pointer"
+                    onClick={() => setSelectedImage(group.image)}
+                  />
+                </div>
+                <div className="p-8">
+                  <div className="space-y-4">
+                    <CardTitle className="text-2xl font-serif font-bold text-foreground">
+                      {group.title}
+                    </CardTitle>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {group.desc}
+                    </p>
+                    {group.subVenues.length > 1 && (
+                      <div className="flex flex-wrap gap-2">
+                        {group.subVenues.map((subVenue) => (
+                          <Badge key={subVenue} variant="secondary" className="text-xs">
+                            {subVenue}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </Card>
+            ))}
           </div>
           
           {/* Tableau des Espaces */}
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto mb-16">
             <table className="w-full border-collapse border border-border/50 bg-card">
               <thead>
                 <tr className="bg-primary/5">
@@ -546,10 +766,12 @@ const Evenements = () => {
                   Nos équipes peuvent aménager et configurer nos espaces selon vos besoins spécifiques. 
                   Contactez-nous pour discuter de votre projet unique.
                 </p>
-                <Button size="lg" className="shadow-lg" asChild>
-                  <a href="#contact">
-                    👉 Demander un devis
-                  </a>
+                <Button 
+                  size="lg" 
+                  className="shadow-lg"
+                  onClick={() => navigate('/contact')}
+                >
+                  👉 Demander un devis
                 </Button>
               </CardContent>
             </Card>
@@ -561,13 +783,18 @@ const Evenements = () => {
       <section className="py-16 bg-gradient-to-r from-primary/10 to-accent/10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-serif font-bold text-foreground mb-4">
-            Planifions Votre Événement
+            Besoin d'organiser un évènement ?
           </h2>
-          <p className="text-lg text-muted-foreground mb-8">
-            Notre équipe dédiée aux événements vous accompagne de la conception à la réalisation
+          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Notre équipe est à votre disposition pour concevoir une offre personnalisée.
+            Contactez-nous pour discuter de votre projet.
           </p>
           <div className="flex justify-center">
-            <Button size="lg" data-testid="button-quote-events">
+            <Button 
+              size="lg" 
+              data-testid="button-quote-events"
+              onClick={() => navigate('/contact')}
+            >
               <Heart className="w-4 h-4 mr-2" />
               Demander un devis
             </Button>

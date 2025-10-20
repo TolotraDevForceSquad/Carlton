@@ -35,7 +35,7 @@ const HeroSection = () => {
   const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
 
   // Configuration du carousel
-  const AUTO_PLAY_INTERVAL = 5000; // 5 secondes entre chaque slide
+  const AUTO_PLAY_INTERVAL = 3000; // 5 secondes entre chaque slide
   const TRANSITION_DURATION = 700; // Durée de la transition en ms
 
   // Helper to split heroSectionData into dataFr and dataEn structures

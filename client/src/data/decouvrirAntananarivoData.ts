@@ -439,12 +439,12 @@ export const decouvrirAntananarivoPageData = {
   },
   cta: {
     title: {
-      fr: "Explorez Madagascar depuis le Carlton",
-      en: "Explore Madagascar from the Carlton"
+      fr: "Prêt à explorer Antananarivo ?",
+      en: "Ready to explore Antananarivo?"
     },
     description: {
-      fr: "Réservez votre séjour au Carlton Madagascar et découvrez les trésors de la capitale et de l'île continent",
-      en: "Book your stay at Carlton Madagascar and discover the treasures of the capital and the continent island"
+      fr: "Offrez-vous une expérience unique",
+      en: "Treat yourself to a unique experience"
     },
     buttonText: {
       fr: "Réserver votre séjour",
