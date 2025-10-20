@@ -21,8 +21,8 @@ export const chambresData = {
         en: "24 m² – Panoramic View or Queen's Palace & Lake Anosy View"
       },
       description: {
-        fr: "Un lit King Size ou deux lits jumeaux. Nos chambres Executive, allient espace, confort et fonctionnalité pour un séjour des plus agréables. Avec une décoration chaleureuse et un agencement soigné, elles offrent un cadre reposant propice à la détente. Profitez de la vue dégagée sur la ville, qui ajoute une note d’évasion à votre expérience.",
-        en: "One King Size bed or two twin beds. Our Executive Rooms combine space, comfort, and functionality for the most pleasant stay. With warm decoration and careful layout, they offer a relaxing setting conducive to rest. Enjoy the unobstructed city view, adding a touch of escape to your experience."
+        fr: "Un lit King Size ou deux lits jumeaux. (-) Nos chambres Executive, allient espace, confort et fonctionnalité pour un séjour des plus agréables. Avec une décoration chaleureuse et un agencement soigné, elles offrent un cadre reposant propice à la détente. Profitez de la vue dégagée sur la ville, qui ajoute une note d’évasion à votre expérience.",
+        en: "One King Size bed or two twin beds. (-) Our Executive Rooms combine space, comfort, and functionality for the most pleasant stay. With warm decoration and careful layout, they offer a relaxing setting conducive to rest. Enjoy the unobstructed city view, adding a touch of escape to your experience."
       },
       image: "/uploads/Luxury_suite_interior_386342fd.png",
       size: "24 m²",
@@ -68,8 +68,8 @@ export const chambresData = {
         en: "24 m² – Panoramic View or Queen's Palace & Lake Anosy View"
       },
       description: {
-        fr: "Un lit King Size ou deux lits jumeaux. Situées aux étages supérieurs, les chambres Premium offrent une atmosphère paisible avec un point de vue imprenable sur le panorama urbain. Dotées d’équipements complets, bénéficiez d’un cadre confortable et intime pour un séjour parfait que ce soit pour le travail ou la détente.",
-        en: "One King Size bed or two twin beds. Located on the upper floors, Premium Rooms offer a peaceful atmosphere with an unbeatable view of the urban panorama. Equipped with complete amenities, enjoy a comfortable and intimate setting for a perfect stay, whether for work or relaxation."
+        fr: "Un lit King Size ou deux lits jumeaux. (-) Situées aux étages supérieurs, les chambres Premium offrent une atmosphère paisible avec un point de vue imprenable sur le panorama urbain. Dotées d’équipements complets, bénéficiez d’un cadre confortable et intime pour un séjour parfait que ce soit pour le travail ou la détente.",
+        en: "One King Size bed or two twin beds. (-) Located on the upper floors, Premium Rooms offer a peaceful atmosphere with an unbeatable view of the urban panorama. Equipped with complete amenities, enjoy a comfortable and intimate setting for a perfect stay, whether for work or relaxation."
       },
       image: "/uploads/Luxury_suite_interior_386342fd.png",
       size: "24 m²",
@@ -115,8 +115,8 @@ export const chambresData = {
         en: "48 m² – Panoramic View or Queen's Palace & Lake Anosy View"
       },
       description: {
-        fr: "Une chambre avec un lit King Size et un salon séparé. Localisées dans les étages élevés, nos Club Suites comprennent une chambre avec un grand lit et un salon séparé. Un espace entièrement équipé, idéal pour un séjour parfait entre détente et travail, dans un confort optimal.",
-        en: "One bedroom with a King Size bed and a separate living room. Located on the upper floors, our Club Suites feature a bedroom with a large bed and a separate living room. A fully equipped space, ideal for a perfect stay between relaxation and work, in optimal comfort."
+        fr: "Une chambre avec un lit King Size et un salon séparé. (-) Localisées dans les étages élevés, nos Club Suites comprennent une chambre avec un grand lit et un salon séparé. Un espace entièrement équipé, idéal pour un séjour parfait entre détente et travail, dans un confort optimal.",
+        en: "One bedroom with a King Size bed and a separate living room. (-) Located on the upper floors, our Club Suites feature a bedroom with a large bed and a separate living room. A fully equipped space, ideal for a perfect stay between relaxation and work, in optimal comfort."
       },
       image: "/uploads/Luxury_suite_interior_386342fd.png",
       size: "48 m²",
@@ -162,8 +162,8 @@ export const chambresData = {
         en: "72 m² – Panoramic View or Queen's Palace & Lake Anosy View"
       },
       description: {
-        fr: "Une chambre avec un lit King Size, une chambre avec deux lits simples et un salon séparé. La Family Suite, lumineuse et généreusement agencée est parfaitement conçue pour un séjour familial en toute sérénité. Elle se compose d’une chambre principale dotée d’un grand lit et d’une seconde chambre avec deux lits simples, parfaite pour les enfants ou les amis. Un salon indépendant permet à chacun de profiter d’un moment de détente dans une atmosphère chaleureuse et accueillante. Cette suite permet à toute la famille de se sentir comme à la maison.",
-        en: "One room with a King Size bed, one room with two single beds and a separate living room. The Family Suite, bright and generously laid out, is perfectly designed for a family stay in complete serenity. It consists of a main bedroom equipped with a large bed and a second bedroom with two single beds, perfect for children or friends. An independent living room allows everyone to enjoy a moment of relaxation in a warm and welcoming atmosphere. This suite allows the whole family to feel at home."
+        fr: "Une chambre avec un lit King Size, une chambre avec deux lits simples et un salon séparé. (-) La Family Suite, lumineuse et généreusement agencée est parfaitement conçue pour un séjour familial en toute sérénité. Elle se compose d’une chambre principale dotée d’un grand lit et d’une seconde chambre avec deux lits simples, parfaite pour les enfants ou les amis. Un salon indépendant permet à chacun de profiter d’un moment de détente dans une atmosphère chaleureuse et accueillante. Cette suite permet à toute la famille de se sentir comme à la maison.",
+        en: "One room with a King Size bed, one room with two single beds and a separate living room. (-) The Family Suite, bright and generously laid out, is perfectly designed for a family stay in complete serenity. It consists of a main bedroom equipped with a large bed and a second bedroom with two single beds, perfect for children or friends. An independent living room allows everyone to enjoy a moment of relaxation in a warm and welcoming atmosphere. This suite allows the whole family to feel at home."
       },
       image: "/uploads/Luxury_suite_interior_386342fd.png",
       size: "72 m²",
@@ -248,12 +248,12 @@ export const chambresData = {
     {
       id: 6,
       name: {
-        fr: "Suite Présidentielle - Vue sur le Palais de la Reine & lac Anosy",
-        en: "Presidential Suite – Queen's Palace & Lake Anosy View"
+        fr: "Suite Présidentielle",
+        en: "Presidential Suite"
       },
       subtitle: {
-        fr: "96 m²- Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
-        en: "96 m² – Panoramic View or Queen's Palace & Lake Anosy View"
+        fr: "96 m²- Vue sur le Palais de la Reine & le lac Anosy",
+        en: "96 m² – View of the Queen’s Palace & Lake Anosy"
       },
       description: {
         fr: "Appartement comprenant une chambre spacieuse avec un lit Super King Size et un salon confortable. Nos Suites Présidentielles sont nichées dans les étages les plus élevés, en surplomb de la ville, vous offrant une perspective unique sur la plaine d’Antananarivo. Elles se composent d’une grande chambre et d’un salon spacieux avec une table à manger et une kitchenette. Inondées de lumière et empreintes de calme, les Suites Présidentielles offrent un cadre exceptionnel pour un séjour tout en confort et en sérénité.",

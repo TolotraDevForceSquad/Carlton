@@ -10,7 +10,6 @@ import {
   Wifi,
   Car,
   Coffee,
-  Bath,
   Tv,
   Wind,
   Waves,  // For pool
@@ -21,12 +20,19 @@ import {
   Briefcase,
   Phone,       // For telephone
   Lock,        // For safe
-  ShoppingBag,
   EyeOff,
-  Trash2, // For minibar
+  Trash2, // For delete
   Eye,
-  UtensilsCrossed, // For iron/ironing board
-  Plus
+  Plus,
+  // New imports for amenities icons
+  Wine,
+  CupSoda,
+  Droplet,
+  Shirt,
+  ShowerHead,
+  Square,
+  Footprints,
+  Gift
 } from 'lucide-react';
 import { Tooltip, ImageTooltip } from '@/components/Tooltip';
 import Footer from '@/components/Footer';
@@ -205,6 +211,34 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
   };
 };
 
+interface TextFormatterProps {
+  text: any;
+  className?: string;
+}
+
+const TextFormatter: React.FC<TextFormatterProps> = ({ text, className }) => {
+  let displayText: string;
+  if (typeof text === 'string') {
+    displayText = text;
+  } else if (typeof text === 'number') {
+    displayText = text.toString();
+  } else {
+    displayText = String(text || '');
+  }
+
+  const parts = displayText.split('(-)').filter(part => part.trim().length > 0);
+  if (parts.length === 1) {
+    return <span className={className}>{formatAmpersand(displayText)}</span>;
+  }
+  return (
+    <div className={`space-y-2 ${className || ''}`}>
+      {parts.map((part, i) => (
+        <p key={i} className="leading-relaxed">{formatAmpersand(part.trim())}</p>
+      ))}
+    </div>
+  );
+};
+
 const Chambres = () => {
   const { currentLang } = useLanguage();
   const lang = currentLang.code.toLowerCase();
@@ -217,6 +251,7 @@ const Chambres = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const isAdmin = !!localStorage.getItem('userToken');
 
   // Fetch chambres data from backend
@@ -319,9 +354,14 @@ const Chambres = () => {
     }
   };
 
-  const getText = (textObj: { fr: string; en: string } | string) => {
+  const getText = (textObj: any): string => {
     if (typeof textObj === 'string') return textObj;
-    return textObj[lang] || textObj.fr;
+    if (typeof textObj === 'number') return textObj.toString();
+    const langText = textObj?.[lang];
+    if (typeof langText === 'string') return langText;
+    const frText = textObj?.fr;
+    if (typeof frText === 'string') return frText;
+    return '';
   };
 
   const updateHeroTitle = async (newFr: string, newEn: string) => {
@@ -680,37 +720,57 @@ const Chambres = () => {
   };
 
   const getAmenityIcon = (amenity: string) => {
-    if (amenity.includes('Wifi') || amenity.includes('WiFi')) {
+    const lower = amenity.toLowerCase();
+    if (lower.includes('wifi') || lower.includes('wi-fi')) {
       return <Wifi className="w-4 h-4" />;
     }
-    if (amenity.includes('Climatisation') || amenity.includes('Air Conditioning')) {
+    if (lower.includes('climat') || lower.includes('air conditioning')) {
       return <Wind className="w-4 h-4" />;
     }
-    if (amenity.includes('TV') || amenity.includes('Cable TV')) {
+    if (lower.includes('tv') || lower.includes('télé')) {
       return <Tv className="w-4 h-4" />;
     }
-    if (amenity.includes('Téléphone') || amenity.includes('Telephone')) {
+    if (lower.includes('téléphone') || lower.includes('phone')) {
       return <Phone className="w-4 h-4" />;
     }
-    if (amenity.includes('Coffre-fort') || amenity.includes('Safe')) {
+    if (lower.includes('coffre') || lower.includes('safe')) {
       return <Lock className="w-4 h-4" />;
     }
-    if (amenity.includes('Minibar')) {
-      return <ShoppingBag className="w-4 h-4" />;
+    if (lower.includes('minibar')) {
+      return <Wine className="w-4 h-4" />;
     }
-    if (amenity.includes('thé') || amenity.includes('café') || amenity.includes('Tea') || amenity.includes('Coffee')) {
+    if (lower.includes('café') || lower.includes('coffee') || lower.includes('expresso')) {
       return <Coffee className="w-4 h-4" />;
     }
-    if (amenity.includes('Fer') || amenity.includes('Iron')) {
-      return <UtensilsCrossed className="w-4 h-4" />;
+    if (lower.includes('thé') || lower.includes('tea')) {
+      return <CupSoda className="w-4 h-4" />;
     }
-    if (amenity.includes('Salle de bain') || amenity.includes('Bathroom')) {
-      return <Bath className="w-4 h-4" />;
+    if (lower.includes('eau') || lower.includes('water') || lower.includes('minérale')) {
+      return <Droplet className="w-4 h-4" />;
     }
-    if (amenity.includes('Sèche-cheveux') || amenity.includes('Hairdryer')) {
+    if (lower.includes('fer') || lower.includes('iron')) {
+      return <Shirt className="w-4 h-4" />;
+    }
+    if (lower.includes('salle de bain') || lower.includes('bathroom') || lower.includes('salles de bain')) {
+      return <ShowerHead className="w-4 h-4" />;
+    }
+    if (lower.includes('miroir') || lower.includes('mirror')) {
+      return <Square className="w-4 h-4" />;
+    }
+    if (lower.includes('sèche') || lower.includes('hairdryer')) {
       return <Wind className="w-4 h-4" />;
     }
-    return <Tv className="w-4 h-4" />;
+    if (lower.includes('peignoir') || lower.includes('bathrobe') || lower.includes('dressing')) {
+      return <Shirt className="w-4 h-4" />;
+    }
+    if (lower.includes('pantoufles') || lower.includes('slippers')) {
+      return <Footprints className="w-4 h-4" />;
+    }
+    if (lower.includes('courtoisie') || lower.includes('toiletries') || lower.includes('articles')) {
+      return <Gift className="w-4 h-4" />;
+    }
+    // Default fallback
+    return <Coffee className="w-4 h-4" />;
   };
 
   const getIncludedServiceIcon = (service: string) => {
@@ -758,6 +818,14 @@ const Chambres = () => {
       </CardContent>
     </Card>
   );
+
+  const openImagePopup = (imageUrl: string) => {
+    setSelectedImage(imageUrl);
+  };
+
+  const closeImagePopup = () => {
+    setSelectedImage(null);
+  };
 
   if (loading) {
     return (
@@ -888,19 +956,19 @@ const Chambres = () => {
                   enLabel={data.heroTitle.en}
                   onSave={updateHeroTitle}
                 >
-                  <span>{formatAmpersand(getText(data.heroTitle))}</span>
+                  <TextFormatter text={getText(data.heroTitle)} />
                 </Tooltip>
               </h1>
               <div className="w-32 h-1 bg-primary mx-auto mb-8"></div>
-              <p className="text-2xl md:text-3xl max-w-4xl mx-auto leading-relaxed drop-shadow-lg mb-12">
+              <div className="text-2xl md:text-3xl max-w-4xl mx-auto leading-relaxed drop-shadow-lg mb-12 text-white">
                 <Tooltip
                   frLabel={data.heroSubtitle.fr}
                   enLabel={data.heroSubtitle.en}
                   onSave={updateHeroSubtitle}
                 >
-                  <span>{getText(data.heroSubtitle)}</span>
+                  <TextFormatter text={getText(data.heroSubtitle)} className="drop-shadow-lg" />
                 </Tooltip>
-              </p>
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                 <div className="text-center">
                   <div className="text-4xl font-bold text-primary mb-2">
@@ -918,7 +986,7 @@ const Chambres = () => {
                       enLabel={data.statsLabels.total.en}
                       onSave={updateStatsLabel('total')}
                     >
-                      <span>{getText(data.statsLabels.total)}</span>
+                      <TextFormatter text={getText(data.statsLabels.total)} />
                     </Tooltip>
                   </div>
                 </div>
@@ -938,7 +1006,7 @@ const Chambres = () => {
                       enLabel={data.statsLabels.categories.en}
                       onSave={updateStatsLabel('categories')}
                     >
-                      <span>{getText(data.statsLabels.categories)}</span>
+                      <TextFormatter text={getText(data.statsLabels.categories)} />
                     </Tooltip>
                   </div>
                 </div>
@@ -958,7 +1026,7 @@ const Chambres = () => {
                       enLabel={data.statsLabels.max.en}
                       onSave={updateStatsLabel('max')}
                     >
-                      <span>{getText(data.statsLabels.max)}</span>
+                      <TextFormatter text={getText(data.statsLabels.max)} />
                     </Tooltip>
                   </div>
                 </div>
@@ -969,13 +1037,34 @@ const Chambres = () => {
                   enLabel={data.buttonText.en}
                   onSave={updateButtonText}
                 >
-                  <span>{getText(data.buttonText)}</span>
+                  <TextFormatter text={getText(data.buttonText)} />
                 </Tooltip>
               </Button>
             </div>
           </div>
         </ParallaxSection>
       </ImageTooltip>
+
+      {/* Image Popup Modal */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
+          onClick={closeImagePopup}
+        >
+          <button 
+            className="absolute top-4 right-4 text-white text-2xl z-10"
+            onClick={closeImagePopup}
+          >
+            ×
+          </button>
+          <img 
+            src={selectedImage} 
+            alt="Image en grand format" 
+            className="max-w-full max-h-full object-contain cursor-zoom-out"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
 
       {/* Rooms Showcase */}
       <section className="py-20">
@@ -1011,11 +1100,15 @@ const Chambres = () => {
                   )}
                   <div className="lg:w-1/2 flex">
                     <ImageTooltip imageUrl={room.image} onSave={updateRoomImage(index)}>
-                      <div className="w-full h-80 lg:h-full relative">
+                      <div 
+                        className="w-full h-80 lg:h-full relative cursor-pointer overflow-hidden"
+                        onClick={() => openImagePopup(room.image || hotelRoom)}
+                      >
                         <img
                           src={room.image || hotelRoom}
                           alt={getText(room.name)}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105 cursor-pointer"
+                          onClick={(e) => e.stopPropagation()} // Prevent bubbling if needed
                         />
                       </div>
                     </ImageTooltip>
@@ -1046,7 +1139,7 @@ const Chambres = () => {
                                 enLabel={room.guests.en}
                                 onSave={updateRoomField(index, 'guests')}
                               >
-                                <span>{getText(room.guests)}</span>
+                                <TextFormatter text={getText(room.guests)} />
                               </Tooltip>
                             </Badge>
                           </div>
@@ -1057,7 +1150,7 @@ const Chambres = () => {
                             enLabel={room.name.en}
                             onSave={updateRoomField(index, 'name')}
                           >
-                            <span>{formatAmpersand(getText(room.name))}</span>
+                            <TextFormatter text={getText(room.name)} />
                           </Tooltip>
                         </CardTitle>
                         {room.subtitle && (
@@ -1067,22 +1160,22 @@ const Chambres = () => {
                               enLabel={room.subtitle.en}
                               onSave={updateRoomField(index, 'subtitle')}
                             >
-                              <span>{formatAmpersand(getText(room.subtitle))}</span>
+                              <TextFormatter text={getText(room.subtitle)} />
                             </Tooltip>
                           </p>
                         )}
                       </CardHeader>
 
                       <CardContent className="p-0 space-y-6">
-                        <p className="text-muted-foreground leading-relaxed">
+                        <div className="text-muted-foreground leading-relaxed">
                           <Tooltip
                             frLabel={room.description.fr}
                             enLabel={room.description.en}
                             onSave={updateRoomField(index, 'description')}
                           >
-                            <span>{getText(room.description)}</span>
+                            <TextFormatter text={getText(room.description)} />
                           </Tooltip>
-                        </p>
+                        </div>
 
                         {room.features && room.features.length > 0 && (
                           <div>
@@ -1092,7 +1185,7 @@ const Chambres = () => {
                                 enLabel={data.labels.features.en}
                                 onSave={updateLabel('features')}
                               >
-                                <span>{getText(data.labels.features)}</span>
+                                <TextFormatter text={getText(data.labels.features)} />
                               </Tooltip>
                             </h4>
                             <div className="space-y-1">
@@ -1105,7 +1198,7 @@ const Chambres = () => {
                                       enLabel={feature.en}
                                       onSave={updateRoomFeature(index, idx)}
                                     >
-                                      <span className="block">{getText(feature)}</span>
+                                      <TextFormatter text={getText(feature)} className="block" />
                                     </Tooltip>
                                   </div>
                                   {isAdmin && (
@@ -1143,7 +1236,7 @@ const Chambres = () => {
                                 enLabel={data.labels.amenities.en}
                                 onSave={updateLabel('amenities')}
                               >
-                                <span>{getText(data.labels.amenities)}</span>
+                                <TextFormatter text={getText(data.labels.amenities)} />
                               </Tooltip>
                             </h4>
                             <div className="flex flex-wrap gap-3">
@@ -1158,7 +1251,7 @@ const Chambres = () => {
                                       enLabel={enAmenity}
                                       onSave={updateRoomAmenity(index, idx)}
                                     >
-                                      <span className="text-muted-foreground">{amenity}</span>
+                                      <TextFormatter text={amenity} className="text-muted-foreground" />
                                     </Tooltip>
                                     {isAdmin && (
                                       <Button
@@ -1196,7 +1289,7 @@ const Chambres = () => {
                               enLabel={data.labels.includedServices.en}
                               onSave={updateLabel('includedServices')}
                             >
-                              <span>{getText(data.labels.includedServices)}</span>
+                              <TextFormatter text={getText(data.labels.includedServices)} />
                             </Tooltip>
                           </h4>
                           <div className="flex flex-wrap gap-3">
@@ -1221,7 +1314,7 @@ const Chambres = () => {
                           enLabel={data.bookButton.en}
                           onSave={updateBookButton}
                         >
-                          <span>{getText(data.bookButton)}</span>
+                          <TextFormatter text={getText(data.bookButton)} />
                         </Tooltip>
                       </Button>
                     </div>
@@ -1244,18 +1337,18 @@ const Chambres = () => {
                 enLabel={data.servicesTitle.en}
                 onSave={updateServicesTitle}
               >
-                <span>{getText(data.servicesTitle)}</span>
+                <TextFormatter text={getText(data.servicesTitle)} />
               </Tooltip>
             </h2>
-            <p className="text-lg text-muted-foreground">
+            <div className="text-lg text-muted-foreground">
               <Tooltip
                 frLabel={data.servicesDescription.fr}
                 enLabel={data.servicesDescription.en}
                 onSave={updateServicesDescription}
               >
-                <span>{getText(data.servicesDescription)}</span>
+                <TextFormatter text={getText(data.servicesDescription)} />
               </Tooltip>
-            </p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -1292,18 +1385,18 @@ const Chambres = () => {
                         enLabel={service.title.en}
                         onSave={updateServiceField(index, 'title')}
                       >
-                        <span>{getText(service.title)}</span>
+                        <TextFormatter text={getText(service.title)} />
                       </Tooltip>
                     </h3>
-                    <p className="text-sm text-muted-foreground">
+                    <div className="text-sm text-muted-foreground">
                       <Tooltip
                         frLabel={service.desc.fr}
                         enLabel={service.desc.en}
                         onSave={updateServiceField(index, 'desc')}
                       >
-                        <span>{getText(service.desc)}</span>
+                        <TextFormatter text={getText(service.desc)} />
                       </Tooltip>
-                    </p>
+                    </div>
                   </CardContent>
                 </Card>
               );
@@ -1332,18 +1425,18 @@ const Chambres = () => {
               enLabel={data.cta.title.en}
               onSave={updateCtaTitle}
             >
-              <span>{getText(data.cta.title)}</span>
+              <TextFormatter text={getText(data.cta.title)} />
             </Tooltip>
           </h2>
-          <p className="text-xl text-muted-foreground mb-8">
+          <div className="text-xl text-muted-foreground mb-8">
             <Tooltip
               frLabel={data.cta.text.fr}
               enLabel={data.cta.text.en}
               onSave={updateCtaText}
             >
-              <span>{getText(data.cta.text)}</span>
+              <TextFormatter text={getText(data.cta.text)} />
             </Tooltip>
-          </p>
+          </div>
           <Button size="lg" asChild>
             <a href="/page-de-reservation-synxis" className="text-lg">
               <Tooltip
@@ -1351,7 +1444,7 @@ const Chambres = () => {
                 enLabel={data.cta.button.en}
                 onSave={updateCtaButton}
               >
-                <span>{getText(data.cta.button)}</span>
+                <TextFormatter text={getText(data.cta.button)} />
               </Tooltip>
             </a>
           </Button>
