@@ -1,4 +1,3 @@
-// src/pages/Restaurants.tsx
 import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
@@ -227,7 +226,44 @@ const Restaurants = () => {
     fetchRestaurantsData();
   }, []);
 
-  // Gestion du défilement automatique pour les ancres
+  // Gestion du défilement automatique pour les ancres (fix pour clics internes)
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const element = document.getElementById(hash.substring(1));
+        if (element) {
+          setTimeout(() => {
+            element.scrollIntoView({ 
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }, 100); // Petit délai pour laisser le DOM s'ajuster
+        }
+      }
+    };
+
+    // Appel initial au chargement de la page
+    handleHashChange();
+
+    // Écoute les changements de hash (pour clics internes sur la même page)
+    window.addEventListener('hashchange', handleHashChange);
+
+    // Écoute aussi les changements de location Wouter (pour arrivées externes)
+    const handleLocationChange = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        handleHashChange();
+      }
+    };
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+      // Pas besoin de cleanup pour Wouter, car c'est géré par le router
+    };
+  }, []); // Pas de dépendance à location ici, pour éviter les boucles
+
+  // Ancien useEffect conservé pour compatibilité (mais redondant maintenant)
   useEffect(() => {
     const hash = window.location.hash;
     if (hash) {

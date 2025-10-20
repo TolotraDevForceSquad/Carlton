@@ -88,6 +88,11 @@ const splitChambresData = (mixedData: typeof chambresData) => {
     buttonText: mixedData.buttonText.fr,
     bookButton: mixedData.bookButton.fr,
     includedServices: mixedData.includedServices.fr,
+    cta: {
+      title: mixedData.cta.title.fr,
+      text: mixedData.cta.text.fr,
+      button: mixedData.cta.button.fr,
+    },
   };
 
   const dataEn = {
@@ -128,6 +133,11 @@ const splitChambresData = (mixedData: typeof chambresData) => {
     buttonText: mixedData.buttonText.en,
     bookButton: mixedData.bookButton.en,
     includedServices: mixedData.includedServices.en,
+    cta: {
+      title: mixedData.cta.title.en,
+      text: mixedData.cta.text.en,
+      button: mixedData.cta.button.en,
+    },
   };
 
   return { dataFr, dataEn };
@@ -187,6 +197,11 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
     buttonText: { fr: dataFr.buttonText, en: enFallback.buttonText || dataFr.buttonText },
     bookButton: { fr: dataFr.bookButton, en: enFallback.bookButton || dataFr.bookButton },
     includedServices: { fr: dataFr.includedServices, en: enFallback.includedServices || dataFr.includedServices },
+    cta: {
+      title: { fr: dataFr.cta.title, en: enFallback.cta.title || dataFr.cta.title },
+      text: { fr: dataFr.cta.text, en: enFallback.cta.text || dataFr.cta.text },
+      button: { fr: dataFr.cta.button, en: enFallback.cta.button || dataFr.cta.button },
+    },
   };
 };
 
@@ -425,6 +440,24 @@ const Chambres = () => {
 
   const updateBookButton = async (newFr: string, newEn: string) => {
     const updatedData = { ...data, bookButton: { fr: newFr, en: newEn } };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const updateCtaTitle = async (newFr: string, newEn: string) => {
+    const updatedData = { ...data, cta: { ...data.cta, title: { fr: newFr, en: newEn } } };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const updateCtaText = async (newFr: string, newEn: string) => {
+    const updatedData = { ...data, cta: { ...data.cta, text: { fr: newFr, en: newEn } } };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const updateCtaButton = async (newFr: string, newEn: string) => {
+    const updatedData = { ...data, cta: { ...data.cta, button: { fr: newFr, en: newEn } } };
     setData(updatedData);
     await updateChambresSection(updatedData);
   };
@@ -684,10 +717,10 @@ const Chambres = () => {
     if (service.includes('Piscine') || service.includes('Pool')) {
       return <Waves className="w-4 h-4" />;  // Waves for pool
     }
-    if (service.includes('Salle de sport') || service.includes('Gym')) {
+    if (service.includes('Fitness') || service.includes('Gym') || service.includes('Salle de sport')) {
       return <Dumbbell className="w-4 h-4" />;
     }
-    if (service.includes('Court de tennis') || service.includes('Tennis Court')) {
+    if (service.includes('Tennis') || service.includes('Court de tennis') || service.includes('Tennis Court')) {
       return <Activity className="w-4 h-4" />;
     }
     if (service.includes('Parking')) {
@@ -812,6 +845,14 @@ const Chambres = () => {
                 <div className="h-12 w-48 bg-gray-300 rounded" />
               </div>
             )}
+          </div>
+        </section>
+        {/* CTA Skeleton */}
+        <section className="py-20 bg-primary/5">
+          <div className="max-w-7xl mx-auto px-4 text-center space-y-4 animate-pulse">
+            <div className="h-10 w-80 bg-gray-300 rounded mx-auto" />
+            <div className="h-6 w-64 bg-gray-300 rounded mx-auto" />
+            <div className="h-12 w-48 bg-gray-300 rounded mx-auto" />
           </div>
         </section>
         <Footer />
@@ -1279,6 +1320,41 @@ const Chambres = () => {
               </Button>
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Call to Action Section */}
+      <section className="py-20 bg-primary/5">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-serif font-bold mb-4">
+            <Tooltip
+              frLabel={data.cta.title.fr}
+              enLabel={data.cta.title.en}
+              onSave={updateCtaTitle}
+            >
+              <span>{getText(data.cta.title)}</span>
+            </Tooltip>
+          </h2>
+          <p className="text-xl text-muted-foreground mb-8">
+            <Tooltip
+              frLabel={data.cta.text.fr}
+              enLabel={data.cta.text.en}
+              onSave={updateCtaText}
+            >
+              <span>{getText(data.cta.text)}</span>
+            </Tooltip>
+          </p>
+          <Button size="lg" asChild>
+            <a href="/page-de-reservation-synxis" className="text-lg">
+              <Tooltip
+                frLabel={data.cta.button.fr}
+                enLabel={data.cta.button.en}
+                onSave={updateCtaButton}
+              >
+                <span>{getText(data.cta.button)}</span>
+              </Tooltip>
+            </a>
+          </Button>
         </div>
       </section>
 

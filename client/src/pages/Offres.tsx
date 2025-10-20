@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Star, Calendar, Clock, Sparkles, Users, Gift, Plus, Trash2, Eye, EyeOff, ForkKnife, Martini, HeartPulse, Music, Coffee, Wine } from 'lucide-react';
+import { Star, Calendar, Clock, Sparkles, Users, Gift, Plus, Trash2, Eye, EyeOff, ForkKnife, Martini, HeartPulse, Music, Coffee, Wine, X, Phone } from 'lucide-react';
 import { Tooltip, ImageTooltip } from '@/components/Tooltip';
 import Footer from '@/components/Footer';
 import { offresPageData } from '@/data/offresData';
@@ -25,13 +25,14 @@ const splitOffresData = (mixedData: typeof offresPageData) => {
   const mixedDataWithExtras = {
     ...mixedData,
     seasonalSection: mixedData.seasonalSection || {
-      title: { fr: "Événements Spéciaux", en: "Special Events" },
+      title: { fr: "Rendez-vous Festifs", en: "Festive Appointments" },
       description: {
         fr: "",
         en: ""
       },
       show: true,
     },
+    seasonalOffers: mixedData.seasonalOffers || [],
   };
 
   const dataFr = {
@@ -127,7 +128,7 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
   }
   const enFallback = dataEn || dataFr;
   const defaultSeasonal = {
-    title: { fr: "Événements Spéciaux", en: "Special Events" },
+    title: { fr: "Rendez-vous Festifs", en: "Festive Appointments" },
     description: {
       fr: "",
       en: ""
@@ -192,6 +193,29 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
   };
 };
 
+// Image Modal Component
+const ImageModal = ({ imageUrl, onClose }: { imageUrl: string; onClose: () => void }) => {
+  if (!imageUrl) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4">
+      <div className="relative max-w-4xl max-h-full w-full h-full flex items-center justify-center">
+        <button
+          onClick={onClose}
+          className="absolute -top-4 -right-4 text-white hover:text-gray-300 text-2xl z-10 rounded-full bg-black/50 w-12 h-12 flex items-center justify-center"
+        >
+          <X className="w-6 h-6" />
+        </button>
+        <img
+          src={imageUrl}
+          alt="Enlarged view"
+          className="max-w-full max-h-full object-contain"
+        />
+      </div>
+    </div>
+  );
+};
+
 const Offres = () => {
   const { currentLang } = useLanguage();
   const langKey = currentLang.code.toLowerCase();
@@ -199,6 +223,7 @@ const Offres = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [forceShow, setForceShow] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const isAdmin = !!localStorage.getItem('userToken');
 
   // Fetch offres data from backend
@@ -937,30 +962,37 @@ const Offres = () => {
                       </div>
                     </div>
 
-                    {/* Photo frame for offer */}
-                    <ImageTooltip
-                      imageUrl={offer.image}
-                      onSave={updateOfferImage(index)}
-                    >
-                      {offer.image ? (
-                        <img
-                          src={offer.image}
-                          alt={`Photo de ${getText(offer.title)}`}
-                          className="w-full h-48 object-cover rounded-lg border-2 border-primary/20 mt-4"
-                        />
-                      ) : (
-                        <div className="w-full h-48 bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg border-2 border-primary/20 flex items-center justify-center">
-                          <div className="text-center p-4">
-                            <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                              <Gift className="w-8 h-8 text-primary" />
+                    {/* Photo frame for offer - 1080x1080 square with zoom effect */}
+                    <div className="relative mt-4 overflow-hidden rounded-lg border-2 border-primary/20 group cursor-pointer">
+                      <ImageTooltip
+                        imageUrl={offer.image}
+                        onSave={updateOfferImage(index)}
+                      >
+                        <div
+                          onClick={() => setSelectedImage(offer.image)}
+                          className="relative"
+                        >
+                          {offer.image ? (
+                            <img
+                              src={offer.image}
+                              alt={`Photo de ${getText(offer.title)}`}
+                              className="w-full aspect-square object-cover transition-transform duration-300 group-hover:scale-110"
+                            />
+                          ) : (
+                            <div className="w-full aspect-square bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg border-2 border-primary/20 flex items-center justify-center">
+                              <div className="text-center p-4">
+                                <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                                  <Gift className="w-8 h-8 text-primary" />
+                                </div>
+                                <p className="text-sm text-muted-foreground font-medium">
+                                  Photo de l'offre {getText(offer.title)}
+                                </p>
+                              </div>
                             </div>
-                            <p className="text-sm text-muted-foreground font-medium">
-                              Photo de l'offre {getText(offer.title)}
-                            </p>
-                          </div>
+                          )}
                         </div>
-                      )}
-                    </ImageTooltip>
+                      </ImageTooltip>
+                    </div>
                   </CardContent>
                 </Card>
               );
@@ -970,8 +1002,8 @@ const Offres = () => {
         </div>
       </section>
 
-      {/* Seasonal Offers */}
-      {seasonalSection.show || forceShow ? (
+      {/* Seasonal Offers - Hide section if no visible offers and not admin */}
+      {(seasonalSection.show && (seasonalOffers.length > 0 || isAdmin)) || forceShow ? (
         <section className="py-20 bg-card/30">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12 relative">
@@ -1099,30 +1131,37 @@ const Offres = () => {
                         </Tooltip>
                       </div>
 
-                      {/* Photo frame for seasonal offer */}
-                      <ImageTooltip
-                        imageUrl={offer.image}
-                        onSave={updateSeasonalImage(index)}
-                      >
-                        {offer.image ? (
-                          <img
-                            src={offer.image}
-                            alt={`Photo de ${getText(offer.title)}`}
-                            className="w-full h-48 object-cover rounded-lg border-2 border-primary/20 mt-4"
-                          />
-                        ) : (
-                          <div className="w-full h-48 bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg border-2 border-primary/20 flex items-center justify-center">
-                            <div className="text-center p-4">
-                              <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                                <Gift className="w-8 h-8 text-primary" />
+                      {/* Photo frame for seasonal offer - 1080x1080 square with zoom effect */}
+                      <div className="relative mt-4 overflow-hidden rounded-lg border-2 border-primary/20 group cursor-pointer">
+                        <ImageTooltip
+                          imageUrl={offer.image}
+                          onSave={updateSeasonalImage(index)}
+                        >
+                          <div
+                            onClick={() => setSelectedImage(offer.image)}
+                            className="relative"
+                          >
+                            {offer.image ? (
+                              <img
+                                src={offer.image}
+                                alt={`Photo de ${getText(offer.title)}`}
+                                className="w-full aspect-square object-cover transition-transform duration-300 group-hover:scale-110"
+                              />
+                            ) : (
+                              <div className="w-full aspect-square bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg border-2 border-primary/20 flex items-center justify-center">
+                                <div className="text-center p-4">
+                                  <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                                    <Gift className="w-8 h-8 text-primary" />
+                                  </div>
+                                  <p className="text-sm text-muted-foreground font-medium">
+                                    Photo de l'événement {getText(offer.title)}
+                                  </p>
+                                </div>
                               </div>
-                              <p className="text-sm text-muted-foreground font-medium">
-                                Photo de l'événement {getText(offer.title)}
-                              </p>
-                            </div>
+                            )}
                           </div>
-                        )}
-                      </ImageTooltip>
+                        </ImageTooltip>
+                      </div>
                     </CardContent>
                   </Card>
                 );
@@ -1174,8 +1213,8 @@ const Offres = () => {
             </p>
           </Tooltip>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" data-testid="button-contact-concierge">
-              <Users className="w-4 h-4 mr-2" />
+            <Button size="lg" variant="default" data-testid="button-reserve">
+              <Phone className="w-4 h-4 mr-2" />
               <Tooltip
                 frLabel={ctaButtons.primary.fr}
                 enLabel={ctaButtons.primary.en}
@@ -1187,6 +1226,11 @@ const Offres = () => {
           </div>
         </div>
       </section>
+
+      {/* Image Modal */}
+      {selectedImage && (
+        <ImageModal imageUrl={selectedImage} onClose={() => setSelectedImage(null)} />
+      )}
 
       <Footer />
     </div>

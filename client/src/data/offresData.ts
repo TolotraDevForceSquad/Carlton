@@ -15,10 +15,10 @@ export const offresPageData = {
     en: "This offer includes :"
   },
   seasonalSection: {
-    title: { fr: "Événements Spéciaux", en: "Special Events" },
+    title: { fr: "Rendez-vous Festifs", en: "Festive Appointments" },
     description: {
-      fr: "",
-      en: ""
+      fr: "Plongez dans l'effervescence de nos événements spéciaux, où gastronomie, musique et convivialité se mêlent pour des moments inoubliables.",
+      en: "Dive into the excitement of our special events, where gastronomy, music, and conviviality blend for unforgettable moments."
     },
     show: true,
   },
@@ -30,11 +30,11 @@ export const offresPageData = {
         en: "Business Lunch"
       },
       subtitle: {
-        fr: "Menu déjeuner à 2 ou 3 services au choix",
+        fr: "Déjeuner Menu à 2 ou 3 services au choix",
         en: "Lunch menu with 2 or 3 courses to choose"
       },
       description: {
-        fr: "Un déjeuner en 2 ou 3 plats selon vos envies. Concocté avec soin pour s’adapter à votre emploi du temps, il est servi dans un rythme fluide, sans compromis sur la qualité. Une formule parfaite pour votre pause déjeuner ou une rencontre professionnelle.",
+        fr: "Un déjeuner menu en 2 ou 3 plats selon vos envies. Concocté avec soin pour s’adapter à votre emploi du temps, il est servi dans un rythme fluide, sans compromis sur la qualité. Une formule parfaite pour votre pause déjeuner ou une rencontre professionnelle.",
         en: "A lunch menu in 2 or 3 dishes according to your wishes. Carefully prepared to fit your schedule, served at a smooth pace without compromising on quality. The perfect formula for your lunch break or a professional meeting."
       },
       duration: {
@@ -87,12 +87,8 @@ export const offresPageData = {
       },
       features: [
         {
-          fr: "28 000 Ariary",
-          en: "28,000 Ariary"
-        },
-        {
-          fr: "Assiettes d’amuse-bouches salés au choix, variés et savoureux",
-          en: "Plates of savory amuse-bouches to choose from, varied and tasty"
+          fr: "Prix : 28 000 Ariary",
+          en: "Price: 28,000 Ariary"
         }
       ],
       validUntil: {
@@ -127,8 +123,8 @@ export const offresPageData = {
       },
       features: [
         {
-          fr: "50 000 Ariary avec petit-déjeuner",
-          en: "50,000 Ariary with breakfast"
+          fr: "50 000 Ar avec petit-déjeuner",
+          en: "50,000 Ar with breakfast"
         },
         {
           fr: "Séance de yoga d’une heure",
@@ -147,48 +143,48 @@ export const offresPageData = {
   seasonalOffers: [
     {
       title: {
-        fr: "Soirée Jazz",
-        en: "Jazz Evening"
+        fr: "Soirée Jazz Enchantée",
+        en: "Enchanted Jazz Evening"
       },
       period: {
-        fr: "Chaque vendredi",
-        en: "Every Friday"
+        fr: "Chaque vendredi soir",
+        en: "Every Friday evening"
       },
       description: {
-        fr: "Ambiance musicale exceptionnelle avec nos musiciens jazz dans le cadre élégant du Bistrot du Carlton",
-        en: "Exceptional musical atmosphere with our jazz musicians in the elegant setting of the Bistrot du Carlton"
+        fr: "Laissez-vous emporter par les mélodies envoûtantes du jazz live dans l'atmosphère feutrée du Bistrot du Carlton. Accompagné de cocktails signature et d'assiettes raffinées, c'est l'occasion idéale pour une soirée sophistiquée entre collègues ou amoureux de la musique.",
+        en: "Let yourself be carried away by the enchanting melodies of live jazz in the intimate atmosphere of the Carlton's Bistrot. Paired with signature cocktails and refined plates, it's the perfect opportunity for a sophisticated evening with colleagues or music lovers."
       },
       image: '/uploads/Env.png',
       hidden: false
     },
     {
       title: {
-        fr: "Brunch Dominical",
-        en: "Sunday Brunch"
+        fr: "Brunch Tropical Dominical",
+        en: "Tropical Sunday Brunch"
       },
       period: {
-        fr: "Tous les dimanches",
-        en: "Every Sunday"
+        fr: "Tous les dimanches de 11h à 15h",
+        en: "Every Sunday from 11am to 3pm"
       },
       description: {
-        fr: "Un buffet gastronomique exceptionnel alliant saveurs françaises et spécialités malgaches",
-        en: "An exceptional gastronomic buffet combining French flavors and Malagasy specialties"
+        fr: "Un festin dominical aux saveurs exotiques de Madagascar fusionnées avec la finesse française. Buffets à volonté avec fruits frais, fruits de mer, pâtisseries artisanales et animations musicales pour une pause gourmande en famille ou entre amis.",
+        en: "A Sunday feast blending Madagascar's exotic flavors with French finesse. All-you-can-eat buffets featuring fresh fruits, seafood, artisanal pastries, and live music for a indulgent family or friends gathering."
       },
       image: '/uploads/Env.png',
       hidden: false
     },
     {
       title: {
-        fr: "Soirée Dégustation",
-        en: "Tasting Evening"
+        fr: "Nuit des Étoiles et Vins",
+        en: "Stars and Wines Night"
       },
       period: {
         fr: "Premier samedi du mois",
         en: "First Saturday of the month"
       },
       description: {
-        fr: "Découvrez notre sélection de vins et spiritueux accompagnés de mets raffinés",
-        en: "Discover our selection of wines and spirits accompanied by refined dishes"
+        fr: "Sous un ciel étoilé, découvrez une sélection exclusive de vins malgaches et internationaux, harmonisés avec des accords mets d'exception. Dégustations guidées par nos sommeliers, dans le cadre enchanteur des jardins du Carlton.",
+        en: "Under a starry sky, discover an exclusive selection of Malagasy and international wines, paired with exceptional food matches. Guided tastings by our sommeliers, in the enchanting setting of the Carlton's gardens."
       },
       image: '/uploads/Env.png',
       hidden: false
@@ -196,21 +192,21 @@ export const offresPageData = {
   ],
   cta: {
     title: {
-      fr: "Besoin d'une offre sur mesure ?",
-      en: "Need a custom offer?"
+      fr: "Et si vous preniez du temps pour vous ?",
+      en: "What if you took some time for yourself?"
     },
     description: {
-      fr: "Notre équipe de conciergerie est à votre disposition pour créer un séjour parfaitement adapté à vos envies",
-      en: "Our concierge team is at your disposal to create a stay perfectly tailored to your desires"
+      fr: "Laissez-vous tenter par un moment au Carlton Madagascar",
+      en: "Let yourself be tempted by a moment at Carlton Madagascar"
     },
     buttonTexts: {
       primary: {
-        fr: "Contacter notre conciergerie",
-        en: "Contact our concierge"
+        fr: "Réserver au +261 20 22 260 60",
+        en: "Book at +261 20 22 260 60"
       },
       secondary: {
-        fr: "Demander un rappel",
-        en: "Request a callback"
+        fr: "",
+        en: ""
       }
     }
   }
