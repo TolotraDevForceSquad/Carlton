@@ -5,8 +5,32 @@ export const homeData = {
     en: "The Art of Hospitality & Luxury" // Titre inchangé mais conservé
   },
   content: {
-    fr: "Vivez une expérience singulière au Carlton Madagascar, membre de Preferred Hotels and Resorts, reconnu à travers le monde pour ses établissements hôteliers d’excellence. ",
-    en: "Live a unique experience at Carlton Madagascar, a member of Preferred Hotels and Resorts, recognized worldwide for its establishments of excellence. "
+    fr: `Vivez une expérience singulière au Carlton Madagascar, membre de Preferred Hotels and Resorts, reconnu à travers le monde pour ses établissements hôteliers d’excellence.
+
+Niché dans le cœur culturel de la ville, l’hôtel vous immerge dans un cadre magnifique avec une vue imprenable sur le Palais de la Reine et le Lac Anosy.
+
+Carlton Madagascar offre une expérience inédite à travers une harmonie parfaite d’histoire, de confort et de prestige. Quel que soit le motif de votre voyage, notre équipe dédiée s’engage à vous offrir un service personnalisé, répondant à toutes vos attentes.
+
+En tant que membre certifié de Preferred Hotels and Resorts, nous garantissons les standards les plus élevés pour faire de votre visite à Antananarivo un moment mémorable.
+
+Réservez votre séjour au Carlton Madagascar et laissez-nous vous accompagner dans la création de souvenirs précieux dans un lieu véritablement unique.`,
+    en: `Live a unique experience at Carlton Madagascar, a member of Preferred Hotels and Resorts, recognized worldwide for its establishments of excellence.
+
+Nestled in the cultural heart of the city, the hotel immerses you in a magnificent setting with an unobstructed view of the Queen's Palace and Lake Anosy.
+
+Carlton Madagascar offers an unprecedented experience through a perfect harmony of history, comfort, and prestige. Whatever the purpose of your trip, our dedicated team is committed to providing you with personalized service, meeting all your expectations.
+
+As a certified member of Preferred Hotels and Resorts, we guarantee the highest standards to make your visit to Antananarivo a memorable moment.
+
+Book your stay at Carlton Madagascar and let us accompany you in creating precious memories in a truly unique place.`
+  },
+  contentShort: {
+    fr: `Vivez une expérience singulière au Carlton Madagascar, membre de Preferred Hotels and Resorts, reconnu à travers le monde pour ses établissements hôteliers d’excellence.
+
+Niché dans le cœur culturel de la ville, l’hôtel vous immerge dans un cadre magnifique avec une vue imprenable sur le Palais de la Reine et le Lac Anosy.`,
+    en: `Live a unique experience at Carlton Madagascar, a member of Preferred Hotels and Resorts, recognized worldwide for its establishments of excellence.
+
+Nestled in the cultural heart of the city, the hotel immerses you in a magnificent setting with an unobstructed view of the Queen's Palace and Lake Anosy.`
   },
   highlights: [
     {

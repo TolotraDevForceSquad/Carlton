@@ -1,12 +1,10 @@
-
-
 // src/components/Home.tsx
 import HeroSection from '@/components/HeroSection';
 import ParallaxSection from '@/components/ParallaxSection';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Star, Clock, MapPin, Utensils, Camera, Calendar, Sparkles, Check, X } from 'lucide-react'; 
+import { Star, Clock, MapPin, Utensils, Camera, Calendar, Sparkles, Check, X, ChevronDown, ChevronUp } from 'lucide-react'; 
 import Footer from '@/components/Footer';
 import { Link } from 'wouter';
 import { formatAmpersand } from '@/lib/utils/formatAmpersand';
@@ -111,6 +109,9 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
+  // État pour l'expansion du contenu
+  const [isContentExpanded, setIsContentExpanded] = useState(false);
+  
   // États pour les modales d'images
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string>('');
@@ -155,6 +156,7 @@ const Home = () => {
     const dataFr = {
       title: mixedData.title.fr,
       content: mixedData.content.fr,
+      contentShort: mixedData.contentShort.fr,
       highlights: mixedData.highlights.map((highlight) => ({
         icon: highlight.icon,
         title: highlight.title.fr,
@@ -177,6 +179,7 @@ const Home = () => {
     const dataEn = {
       title: mixedData.title.en,
       content: mixedData.content.en,
+      contentShort: mixedData.contentShort.en,
       highlights: mixedData.highlights.map((highlight) => ({
         icon: highlight.icon,
         title: highlight.title.en,
@@ -209,6 +212,7 @@ const Home = () => {
     const mixed = {
       title: { fr: dataFr.title, en: enFallback.title || dataFr.title },
       content: { fr: dataFr.content, en: enFallback.content || dataFr.content },
+      contentShort: { fr: dataFr.contentShort, en: enFallback.contentShort || dataFr.contentShort },
       highlights: dataFr.highlights.map((highlightFr: any, i: number) => ({
         icon: highlightFr.icon || initialHomeData.highlights[i].icon,
         title: { fr: highlightFr.title, en: enFallback.highlights[i]?.title || highlightFr.title },
@@ -329,10 +333,13 @@ const Home = () => {
     }
   };
   
-  const { title: rawTitle, content: rawContent, highlights: rawHighlights, cta: rawCta, parallaxImage } = data;
+  const { title: rawTitle, content: rawContent, contentShort: rawContentShort, highlights: rawHighlights, cta: rawCta, parallaxImage } = data;
   
   const title = rawTitle[lang];
-  const content = rawContent[lang];
+  const fullContent = rawContent[lang];
+  const shortContent = rawContentShort[lang];
+  const displayedContent = isContentExpanded ? fullContent : shortContent;
+  const showExpandButton = fullContent.trim() !== shortContent.trim();
   
   const highlights = rawHighlights.map(highlight => ({
     ...highlight,
@@ -371,6 +378,21 @@ const Home = () => {
     }
   };
 
+  const toggleContentExpansion = () => {
+    setIsContentExpanded(!isContentExpanded);
+  };
+
+  const buttonText = lang === 'fr' 
+    ? (isContentExpanded ? 'Lire moins' : 'Lire plus') 
+    : (isContentExpanded ? 'Read less' : 'Read more');
+  const ChevronIcon = isContentExpanded ? ChevronUp : ChevronDown;
+
+  const contentParagraphs = displayedContent.split('\n\n').map((para, i) => (
+    <p key={i} className="mb-6 last:mb-0">
+      {para}
+    </p>
+  ));
+
   // Les fonctions de mise à jour restent inchangées
   const updateTitle = async (newFr: string, newEn: string) => {
     const updatedData = {
@@ -385,6 +407,15 @@ const Home = () => {
     const updatedData = {
       ...data,
       content: { fr: newFr, en: newEn }
+    };
+    setData(updatedData);
+    await updateHomeSection(updatedData);
+  };
+
+  const updateContentShort = async (newFr: string, newEn: string) => {
+    const updatedData = {
+      ...data,
+      contentShort: { fr: newFr, en: newEn }
     };
     setData(updatedData);
     await updateHomeSection(updatedData);
@@ -545,16 +576,50 @@ const Home = () => {
                 </Tooltip>
               </h2>
               <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
-              <div 
-                className="text-xl text-muted-foreground max-w-4xl mx-auto leading-relaxed prose prose-lg dark:prose-invert mx-auto"
-              >
-                <Tooltip 
-                  frLabel={data.content.fr} 
-                  enLabel={data.content.en} 
-                  onSave={updateContent}
-                >
-                  <span dangerouslySetInnerHTML={{ __html: content }} />
-                </Tooltip>
+              <div className="max-w-4xl mx-auto">
+                {showExpandButton ? (
+                  isContentExpanded ? (
+                    <Tooltip 
+                      frLabel={data.content.fr} 
+                      enLabel={data.content.en} 
+                      onSave={updateContent}
+                    >
+                      <div className="text-xl text-muted-foreground leading-relaxed prose prose-lg dark:prose-invert space-y-4 mb-8">
+                        {contentParagraphs}
+                      </div>
+                    </Tooltip>
+                  ) : (
+                    <Tooltip 
+                      frLabel={data.contentShort.fr} 
+                      enLabel={data.contentShort.en} 
+                      onSave={updateContentShort}
+                    >
+                      <div className="text-xl text-muted-foreground leading-relaxed prose prose-lg dark:prose-invert space-y-4 mb-8">
+                        {contentParagraphs}
+                      </div>
+                    </Tooltip>
+                  )
+                ) : (
+                  <Tooltip 
+                    frLabel={data.content.fr} 
+                    enLabel={data.content.en} 
+                    onSave={updateContent}
+                  >
+                    <div className="text-xl text-muted-foreground leading-relaxed prose prose-lg dark:prose-invert space-y-4 mb-8">
+                      {contentParagraphs}
+                    </div>
+                  </Tooltip>
+                )}
+                {showExpandButton && (
+                  <div className="text-center mt-8">
+                    <button
+                      onClick={toggleContentExpansion}
+                      className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-medium text-sm"
+                    >
+                      {buttonText} <ChevronIcon className="w-4 h-4 ml-1" />
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
 
