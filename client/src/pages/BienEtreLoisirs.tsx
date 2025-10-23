@@ -4,7 +4,7 @@ import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Clock, Star, Sparkles, Heart, Plus, Trash2, Eye, EyeOff, Image as ImageIcon } from 'lucide-react';
+import { Clock, Star, Sparkles, Heart, Plus, Trash2, Eye, EyeOff, Image as ImageIcon, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Tooltip, ImageTooltip } from '@/components/Tooltip';
 import Footer from '@/components/Footer';
 import ParallaxSection from '@/components/ParallaxSection';
@@ -54,7 +54,7 @@ const splitBienEtreLoisirsData = (mixedData: typeof bienEtreLoisirsData) => {
       name: facility.name.fr,
       type: facility.type.fr,
       description: facility.description.fr,
-      image: facility.image,
+      images: facility.images,
       hours: facility.hours.fr,
       features: facility.features.map((feature) => feature.fr),
       services: facility.services.map((service) => service.fr),
@@ -104,7 +104,7 @@ const splitBienEtreLoisirsData = (mixedData: typeof bienEtreLoisirsData) => {
       name: facility.name.en,
       type: facility.type.en,
       description: facility.description.en,
-      image: facility.image,
+      images: facility.images,
       hours: facility.hours.en,
       features: facility.features.map((feature) => feature.en),
       services: facility.services.map((service) => service.en),
@@ -166,7 +166,7 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
         name: { fr: facilityFr.name, en: facilityEn.name },
         type: { fr: facilityFr.type, en: facilityEn.type },
         description: { fr: facilityFr.description, en: facilityEn.description },
-        image: facilityFr.image,
+        images: facilityFr.images,
         hours: { fr: facilityFr.hours, en: facilityEn.hours },
         features: facilityFr.features.map((fFr: string, j: number) => ({
           fr: fFr,
@@ -199,6 +199,314 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
       buttonText: { fr: dataFr.cta.buttonText, en: enFallback.cta.buttonText }
     }
   };
+};
+
+interface FacilityProps {
+  facility: any;
+  index: number;
+  isAdmin: boolean;
+  isFr: boolean;
+  getText: (textObj: { fr: string; en: string }) => string;
+  headers: any;
+  addTexts: any;
+  updateFacilityField: (index: number, field: 'name' | 'type' | 'description' | 'hours') => (newFr: string, newEn: string) => Promise<void>;
+  updateFacilityFeature: (facilityIndex: number, featureIndex: number) => (newFr: string, newEn: string) => Promise<void>;
+  addFacilityFeature: (facilityIndex: number) => Promise<void>;
+  removeFacilityFeature: (facilityIndex: number, featureIndex: number) => Promise<void>;
+  updateFacilityService: (facilityIndex: number, serviceIndex: number) => (newFr: string, newEn: string) => Promise<void>;
+  addFacilityService: (facilityIndex: number) => Promise<void>;
+  removeFacilityService: (facilityIndex: number, serviceIndex: number) => Promise<void>;
+  toggleFacilityHidden: (index: number) => Promise<void>;
+  removeFacility: (id: number) => Promise<void>;
+  updateHeaderField: (field: 'equipments' | 'services' | 'highlights') => (newFr: string, newEn: string) => Promise<void>;
+  updateFacilityImage: (index: number, imgIndex: number) => (newUrl: string) => Promise<void>;
+}
+
+const FacilityCard: React.FC<FacilityProps> = ({
+  facility,
+  index,
+  isAdmin,
+  isFr,
+  getText,
+  headers,
+  addTexts,
+  updateFacilityField,
+  updateFacilityFeature,
+  addFacilityFeature,
+  removeFacilityFeature,
+  updateFacilityService,
+  addFacilityService,
+  removeFacilityService,
+  toggleFacilityHidden,
+  removeFacility,
+  updateHeaderField,
+  updateFacilityImage
+}) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev === 0 ? facility.images.length - 1 : prev - 1));
+  };
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev === facility.images.length - 1 ? 0 : prev + 1));
+  };
+
+  const goToSlide = (slideIndex: number) => {
+    setCurrentIndex(slideIndex);
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 5000); // Auto-advance every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [facility.images.length]);
+
+  if (facility.images.length === 0) return null;
+
+  const sectionId = facility.name.fr === 'Piscine' ? 'piscine' :
+                    facility.name.fr === 'Fitness' ? 'salle-sport' :
+                    facility.name.fr === 'Tennis' ? 'tennis' : 'soins';
+  const direction = index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse';
+
+  return (
+    <Card 
+      id={sectionId}
+      className={`relative overflow-hidden hover-elevate transition-all duration-300 ${direction} flex flex-col lg:flex ${facility.hidden ? 'opacity-50' : ''}`}
+      data-testid={`card-facility-${facility.id}`}
+    >
+      {isAdmin && (
+        <div className="absolute top-2 right-2 z-10 flex gap-1">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => toggleFacilityHidden(index)}
+            title={facility.hidden ? (isFr ? 'Afficher' : 'Show') : (isFr ? 'Masquer' : 'Hide')}
+          >
+            {facility.hidden ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => removeFacility(facility.id)}
+          >
+            <Trash2 className="w-4 h-4" />
+          </Button>
+        </div>
+      )}
+      <div className="lg:w-1/2 relative">
+        <div className="relative w-full h-[300px] lg:h-full overflow-hidden rounded-lg">
+          <img 
+            src={facility.images[currentIndex]} 
+            alt={`${getText(facility.name)} - Image ${currentIndex + 1}`}
+            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
+            data-testid={`image-facility-${facility.id}-${currentIndex}`}
+          />
+          <button
+            onClick={prevSlide}
+            className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors z-10"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <button
+            onClick={nextSlide}
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors z-10"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-1 z-10">
+            {facility.images.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => goToSlide(i)}
+                className={`w-2 h-2 rounded-full transition-colors ${
+                  i === currentIndex ? 'bg-white' : 'bg-white/50'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+        {isAdmin && (
+          <div className="absolute top-2 left-2 z-10 flex flex-col gap-1 bg-background/90 p-2 rounded">
+            {facility.images.map((imgUrl, imgIndex) => (
+              <ImageTooltip
+                key={imgIndex}
+                imageUrl={imgUrl}
+                onSave={updateFacilityImage(index, imgIndex)}
+              >
+                <Button variant="ghost" size="sm" className="h-6 px-2">
+                  <ImageIcon className="w-3 h-3 mr-1" />
+                  Edit {imgIndex + 1}
+                </Button>
+              </ImageTooltip>
+            ))}
+          </div>
+        )}
+      </div>
+      
+      <div className="lg:w-1/2 p-8 flex flex-col justify-between">
+        <div>
+          <CardHeader className="p-0 mb-6">
+            <div className="flex items-center justify-between mb-4">
+              <Tooltip
+                frLabel={facility.type.fr}
+                enLabel={facility.type.en}
+                onSave={updateFacilityField(index, 'type')}
+              >
+                <Badge variant="outline" className="text-primary border-primary" data-testid={`badge-type-${facility.id}`}>
+                  {getText(facility.type)}
+                </Badge>
+              </Tooltip>
+              {facility.hours && (
+                <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                  <Tooltip
+                    frLabel={facility.hours.fr}
+                    enLabel={facility.hours.en}
+                    onSave={updateFacilityField(index, 'hours')}
+                  >
+                    <span>{getText(facility.hours)}</span>
+                  </Tooltip>
+                </div>
+              )}
+            </div>
+            <Tooltip
+              frLabel={facility.name.fr}
+              enLabel={facility.name.en}
+              onSave={updateFacilityField(index, 'name')}
+            >
+              <CardTitle className="text-3xl font-serif text-foreground mb-3" data-testid={`title-facility-${facility.id}`}>
+                {formatAmpersand(getText(facility.name))}
+              </CardTitle>
+            </Tooltip>
+          </CardHeader>
+          
+          <CardContent className="p-0 space-y-6">
+            <Tooltip
+              frLabel={facility.description.fr}
+              enLabel={facility.description.en}
+              onSave={updateFacilityField(index, 'description')}
+            >
+              <p className="text-muted-foreground leading-relaxed" data-testid={`description-facility-${facility.id}`}>
+                {getText(facility.description)}
+              </p>
+            </Tooltip>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {(facility.features.length > 0 || isAdmin) && (
+                <div>
+                  {facility.features.length > 0 && !isAdmin && (
+                    <h4 className="font-semibold text-foreground mb-3">{getText(headers.equipments)}</h4>
+                  )}
+                  {isAdmin && (
+                    <Tooltip
+                      frLabel={headers.equipments.fr}
+                      enLabel={headers.equipments.en}
+                      onSave={updateHeaderField('equipments')}
+                    >
+                      <h4 className="font-semibold text-foreground mb-3">{getText(headers.equipments)}</h4>
+                    </Tooltip>
+                  )}
+                  <div className="space-y-2">
+                    {facility.features.map((feature: any, fIndex: number) => (
+                      <div key={fIndex} className="flex items-start gap-2 text-sm text-muted-foreground" data-testid={`feature-${facility.id}-${fIndex}`}>
+                        <div className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                        <div className="flex-1">
+                          <Tooltip
+                            frLabel={feature.fr}
+                            enLabel={feature.en}
+                            onSave={updateFacilityFeature(index, fIndex)}
+                          >
+                            <span>{getText(feature)}</span>
+                          </Tooltip>
+                        </div>
+                        {isAdmin && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => removeFacilityFeature(index, fIndex)}
+                            className="h-6 w-6 p-0"
+                          >
+                            <Trash2 className="w-3 h-3" />
+                          </Button>
+                        )}
+                      </div>
+                    ))}
+                    {isAdmin && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => addFacilityFeature(index)}
+                        className="mt-2"
+                      >
+                        <Plus className="w-4 h-4 mr-1" />
+                        {getText(addTexts.action)}
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              )}
+              
+              {(facility.services.length > 0 || isAdmin) && (
+                <div>
+                  {facility.services.length > 0 && !isAdmin && (
+                    <h4 className="font-semibold text-foreground mb-3">{getText(headers.services)}</h4>
+                  )}
+                  {isAdmin && (
+                    <Tooltip
+                      frLabel={headers.services.fr}
+                      enLabel={headers.services.en}
+                      onSave={updateHeaderField('services')}
+                    >
+                      <h4 className="font-semibold text-foreground mb-3">{getText(headers.services)}</h4>
+                    </Tooltip>
+                  )}
+                  <div className="space-y-2">
+                    {facility.services.map((service: any, sIndex: number) => (
+                      <div key={sIndex} className="flex items-start gap-2 text-sm text-muted-foreground" data-testid={`service-${facility.id}-${sIndex}`}>
+                        <Star className="w-3 h-3 text-primary mt-1 flex-shrink-0" />
+                        <div className="flex-1">
+                          <Tooltip
+                            frLabel={service.fr}
+                            enLabel={service.en}
+                            onSave={updateFacilityService(index, sIndex)}
+                          >
+                            <span>{getText(service)}</span>
+                          </Tooltip>
+                        </div>
+                        {isAdmin && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => removeFacilityService(index, sIndex)}
+                            className="h-6 w-6 p-0"
+                          >
+                            <Trash2 className="w-3 h-3" />
+                          </Button>
+                        )}
+                      </div>
+                    ))}
+                    {isAdmin && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => addFacilityService(index)}
+                        className="mt-2"
+                      >
+                        <Plus className="w-4 h-4 mr-1" />
+                        {getText(addTexts.action)}
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </div>
+      </div>
+    </Card>
+  );
 };
 
 const BienEtreLoisirs = () => {
@@ -595,11 +903,18 @@ const BienEtreLoisirs = () => {
     await updateSection(updatedData);
   };
 
-  const updateFacilityImage = (index: number) => {
+  const updateFacilityImage = (index: number, imgIndex: number) => {
     return async (newUrl: string) => {
       const updatedData = {
         ...data,
-        facilities: data.facilities.map((facility, i) => (i === index ? { ...facility, image: newUrl } : facility)),
+        facilities: data.facilities.map((facility, i) => 
+          i === index 
+            ? { 
+                ...facility, 
+                images: facility.images.map((url, j) => j === imgIndex ? newUrl : url) 
+              } 
+            : facility
+        ),
       };
       setData(updatedData);
       await updateSection(updatedData);
@@ -614,6 +929,7 @@ const BienEtreLoisirs = () => {
         ...data.facilities[0],
         id: maxId + 1,
         name: { fr: 'Nouvelle Installation', en: 'New Facility' },
+        images: ['/uploads/Bien_Etre_OK_cover à confirmer/default.jpg'],
         hidden: false,
       };
     } else {
@@ -622,7 +938,7 @@ const BienEtreLoisirs = () => {
         name: { fr: 'Nouvelle Installation', en: 'New Facility' },
         type: { fr: 'Type', en: 'Type' },
         description: { fr: 'Description.', en: 'Description.' },
-        image: '/uploads/generated_images/Spa_wellness_facilities_3dba6f04.png',
+        images: ['/uploads/Bien_Etre_OK_cover à confirmer/default.jpg'],
         hours: { fr: '', en: '' },
         features: [{ fr: 'Caractéristique 1', en: 'Feature 1' }],
         services: [{ fr: 'Service 1', en: 'Service 1' }],
@@ -815,7 +1131,7 @@ const BienEtreLoisirs = () => {
     return (
       <div className="min-h-screen bg-background">
         <ParallaxSection
-          backgroundImage={data.hero.backgroundImage || "/uploads/generated_images/Spa_wellness_facilities_3dba6f04.png"}
+          backgroundImage={data.hero.backgroundImage || "/uploads/Bien_Etre_OK_cover à confirmer/Cover_01.jpg"}
           parallaxSpeed={0.3}
           minHeight="100vh"
           overlay={true}
@@ -1000,211 +1316,28 @@ const BienEtreLoisirs = () => {
           <div className="space-y-16">
             {facilities.map((facility, index) => {
               if (!isAdmin && facility.hidden) return null;
-              const sectionId = facility.name.fr === 'Piscine' ? 'piscine' :
-                                facility.name.fr === 'Fitness' ? 'salle-sport' :
-                                facility.name.fr === 'Tennis' ? 'tennis' : 'soins';
-              const direction = index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse';
               return (
-                <Card 
-                  key={facility.id} 
-                  id={sectionId}
-                  className={`relative overflow-hidden hover-elevate transition-all duration-300 ${direction} flex flex-col lg:flex ${facility.hidden ? 'opacity-50' : ''}`}
-                  data-testid={`card-facility-${facility.id}`}
-                >
-                  {isAdmin && (
-                    <div className="absolute top-2 right-2 z-10 flex gap-1">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => toggleFacilityHidden(index)}
-                        title={facility.hidden ? (isFr ? 'Afficher' : 'Show') : (isFr ? 'Masquer' : 'Hide')}
-                      >
-                        {facility.hidden ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => removeFacility(facility.id)}
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  )}
-                  <div className="lg:w-1/2 relative">
-                    <ImageTooltip
-                      imageUrl={facility.image}
-                      onSave={updateFacilityImage(index)}
-                    >
-                      <img 
-                        src={facility.image} 
-                        alt={getText(facility.name)}
-                        className="w-full h-[300px] lg:h-full object-cover !important"
-                        data-testid={`image-facility-${facility.id}`}
-                      />
-                    </ImageTooltip>
-                  </div>
-                  
-                  <div className="lg:w-1/2 p-8 flex flex-col justify-between">
-                    <div>
-                      <CardHeader className="p-0 mb-6">
-                        <div className="flex items-center justify-between mb-4">
-                          <Tooltip
-                            frLabel={facility.type.fr}
-                            enLabel={facility.type.en}
-                            onSave={updateFacilityField(index, 'type')}
-                          >
-                            <Badge variant="outline" className="text-primary border-primary" data-testid={`badge-type-${facility.id}`}>
-                              {getText(facility.type)}
-                            </Badge>
-                          </Tooltip>
-                          {facility.hours && (
-                            <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                              {/* <Clock className="w-4 h-4" /> */}
-                              <Tooltip
-                                frLabel={facility.hours.fr}
-                                enLabel={facility.hours.en}
-                                onSave={updateFacilityField(index, 'hours')}
-                              >
-                                <span>{getText(facility.hours)}</span>
-                              </Tooltip>
-                            </div>
-                          )}
-                        </div>
-                        <Tooltip
-                          frLabel={facility.name.fr}
-                          enLabel={facility.name.en}
-                          onSave={updateFacilityField(index, 'name')}
-                        >
-                          <CardTitle className="text-3xl font-serif text-foreground mb-3" data-testid={`title-facility-${facility.id}`}>
-                            {formatAmpersand(getText(facility.name))}
-                          </CardTitle>
-                        </Tooltip>
-                      </CardHeader>
-                      
-                      <CardContent className="p-0 space-y-6">
-                        <Tooltip
-                          frLabel={facility.description.fr}
-                          enLabel={facility.description.en}
-                          onSave={updateFacilityField(index, 'description')}
-                        >
-                          <p className="text-muted-foreground leading-relaxed" data-testid={`description-facility-${facility.id}`}>
-                            {getText(facility.description)}
-                          </p>
-                        </Tooltip>
-                        
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          {(facility.features.length > 0 || isAdmin) && (
-                            <div>
-                              {facility.features.length > 0 && !isAdmin && (
-                                <h4 className="font-semibold text-foreground mb-3">{getText(headers.equipments)}</h4>
-                              )}
-                              {isAdmin && (
-                                <Tooltip
-                                  frLabel={headers.equipments.fr}
-                                  enLabel={headers.equipments.en}
-                                  onSave={updateHeaderField('equipments')}
-                                >
-                                  <h4 className="font-semibold text-foreground mb-3">{getText(headers.equipments)}</h4>
-                                </Tooltip>
-                              )}
-                              <div className="space-y-2">
-                                {facility.features.map((feature, fIndex) => (
-                                  <div key={fIndex} className="flex items-start gap-2 text-sm text-muted-foreground" data-testid={`feature-${facility.id}-${fIndex}`}>
-                                    <div className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                                    <div className="flex-1">
-                                      <Tooltip
-                                        frLabel={feature.fr}
-                                        enLabel={feature.en}
-                                        onSave={updateFacilityFeature(index, fIndex)}
-                                      >
-                                        <span>{getText(feature)}</span>
-                                      </Tooltip>
-                                    </div>
-                                    {isAdmin && (
-                                      <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        onClick={() => removeFacilityFeature(index, fIndex)}
-                                        className="h-6 w-6 p-0"
-                                      >
-                                        <Trash2 className="w-3 h-3" />
-                                      </Button>
-                                    )}
-                                  </div>
-                                ))}
-                                {isAdmin && (
-                                  <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => addFacilityFeature(index)}
-                                    className="mt-2"
-                                  >
-                                    <Plus className="w-4 h-4 mr-1" />
-                                    {getText(addTexts.action)}
-                                  </Button>
-                                )}
-                              </div>
-                            </div>
-                          )}
-                          
-                          {(facility.services.length > 0 || isAdmin) && (
-                            <div>
-                              {facility.services.length > 0 && !isAdmin && (
-                                <h4 className="font-semibold text-foreground mb-3">{getText(headers.services)}</h4>
-                              )}
-                              {isAdmin && (
-                                <Tooltip
-                                  frLabel={headers.services.fr}
-                                  enLabel={headers.services.en}
-                                  onSave={updateHeaderField('services')}
-                                >
-                                  <h4 className="font-semibold text-foreground mb-3">{getText(headers.services)}</h4>
-                                </Tooltip>
-                              )}
-                              <div className="space-y-2">
-                                {facility.services.map((service, sIndex) => (
-                                  <div key={sIndex} className="flex items-start gap-2 text-sm text-muted-foreground" data-testid={`service-${facility.id}-${sIndex}`}>
-                                    <Star className="w-3 h-3 text-primary mt-1 flex-shrink-0" />
-                                    <div className="flex-1">
-                                      <Tooltip
-                                        frLabel={service.fr}
-                                        enLabel={service.en}
-                                        onSave={updateFacilityService(index, sIndex)}
-                                      >
-                                        <span>{getText(service)}</span>
-                                      </Tooltip>
-                                    </div>
-                                    {isAdmin && (
-                                      <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        onClick={() => removeFacilityService(index, sIndex)}
-                                        className="h-6 w-6 p-0"
-                                      >
-                                        <Trash2 className="w-3 h-3" />
-                                      </Button>
-                                    )}
-                                  </div>
-                                ))}
-                                {isAdmin && (
-                                  <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => addFacilityService(index)}
-                                    className="mt-2"
-                                  >
-                                    <Plus className="w-4 h-4 mr-1" />
-                                    {getText(addTexts.action)}
-                                  </Button>
-                                )}
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </CardContent>
-                    </div>
-                  </div>
-                </Card>
+                <FacilityCard
+                  key={facility.id}
+                  facility={facility}
+                  index={index}
+                  isAdmin={isAdmin}
+                  isFr={isFr}
+                  getText={getText}
+                  headers={headers}
+                  addTexts={addTexts}
+                  updateFacilityField={updateFacilityField}
+                  updateFacilityFeature={updateFacilityFeature}
+                  addFacilityFeature={addFacilityFeature}
+                  removeFacilityFeature={removeFacilityFeature}
+                  updateFacilityService={updateFacilityService}
+                  addFacilityService={addFacilityService}
+                  removeFacilityService={removeFacilityService}
+                  toggleFacilityHidden={toggleFacilityHidden}
+                  removeFacility={removeFacility}
+                  updateHeaderField={updateHeaderField}
+                  updateFacilityImage={updateFacilityImage}
+                />
               );
             })}
             {isAdmin && addFacilityCard}
@@ -1302,7 +1435,7 @@ const BienEtreLoisirs = () => {
                           <h4 className="font-semibold text-foreground mb-2">{getText(headers.highlights)}</h4>
                         </Tooltip>
                         <div className="space-y-1">
-                          {program.highlights.map((highlight, hIndex) => (
+                          {program.highlights.map((highlight: any, hIndex: number) => (
                             <div key={hIndex} className="flex items-start gap-2 text-sm text-muted-foreground" data-testid={`highlight-${program.id}-${hIndex}`}>
                               <div className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0"></div>
                               <div className="flex-1">

@@ -6,7 +6,7 @@ export const bienEtreLoisirsData = {
       fr: 'Évadez-vous dans notre univers de bien-être alliant détente, sport et soins holistiques au cœur de Madagascar pour une expérience de ressourcement totale',
       en: 'Escape into our world of wellness combining relaxation, sports, and holistic treatments in the heart of Madagascar for a total rejuvenation experience'
     },
-    backgroundImage: '/uploads/Spa_wellness_facilities_3dba6f04.png'
+    backgroundImage: '/uploads/Cover_01.jpg'
   },
   facilitiesSection: {
     title: { fr: 'Nos Installations', en: 'Our Facilities' },
@@ -35,7 +35,11 @@ export const bienEtreLoisirsData = {
         fr: 'Plongez dans notre grande piscine extérieure de 25 mètres, soigneusement maintenue, installée dans un lieu calme et discret au cœur de l\'hôtel. Un véritable havre de paix, loin du tumulte urbain, idéal pour se détendre en famille ou entre amis. À deux pas, notre restaurant et notre bar complètent l’expérience pour des moments de convivialité et de plaisir partagé.',
         en: 'Dive into our large 25-meter outdoor pool, meticulously maintained, located in a calm and discreet setting in the heart of the hotel. A true haven of peace, away from the urban hustle, ideal for relaxing with family or friends. Just steps away, our restaurant and bar complete the experience for moments of conviviality and shared pleasure.'
       },
-      image: '/uploads/Spa_wellness_facilities_3dba6f04.png',
+      images: [
+        '/uploads/Bien_Etre_OK_cover à confirmer/Piscine_01.JPG',
+        '/uploads/Bien_Etre_OK_cover à confirmer/Piscine_02.jpg',
+        '/uploads/Bien_Etre_OK_cover à confirmer/Piscine_03.jpg'
+      ],
       hours: { fr: '', en: '' },
       features: [
         { fr: 'Bassin pour enfants', en: 'Children\'s pool' },
@@ -57,7 +61,12 @@ export const bienEtreLoisirsData = {
         fr: 'Équipée d’appareils TechnoGym dernière génération, notre salle de sport vous offre une expérience complète et personnalisée. Quel que soit votre niveau, profitez d’un matériel varié et performant pour allier bien-être et performance dans un cadre serein et soigné. Accès privilégié réservé aux hôtes.',
         en: 'Equipped with the latest TechnoGym machines, our gym offers a complete and personalized experience. Whatever your level, enjoy varied and high-performance equipment to combine wellness and performance in a serene and cared-for setting. Privileged access reserved for guests.'
       },
-      image: '/uploads/Spa_wellness_facilities_3dba6f04.png',
+      images: [
+        '/uploads/Bien_Etre_OK_cover à confirmer/Fitness_01.jpg',
+        '/uploads/Bien_Etre_OK_cover à confirmer/Fitness_02.jpg',
+        '/uploads/Bien_Etre_OK_cover à confirmer/Fitness_03.jpg',
+        '/uploads/Bien_Etre_OK_cover à confirmer/Fitness_04.jpg'
+      ],
       hours: { fr: '', en: '' },
       features: [
         { fr: 'Équipements Technogym dernière génération', en: 'Latest generation TechnoGym equipment' },
@@ -78,7 +87,11 @@ export const bienEtreLoisirsData = {
         fr: 'Notre court de tennis en terre battue est accessible sur réservation. Raquettes et balles sont mises à votre disposition et un service de coaching privé peut être organisé sur demande. Pour prolonger le plaisir, des séances en soirée sont possibles, grâce à un éclairage spécialement conçu pour jouer dans des conditions idéales. Que vous soyez amateur ou joueur confirmé, vivez l’expérience tennis dans un environnement paisible et exclusif, niché au sein de l\'hôtel.',
         en: 'Our clay tennis court is available by reservation. Rackets and balls are provided, and private coaching can be arranged on request. To extend the pleasure, evening sessions are possible, thanks to lighting specially designed for playing in ideal conditions. Whether you are an amateur or a seasoned player, live the tennis experience in a peaceful and exclusive environment, nestled within the hotel.'
       },
-      image: '/uploads/Spa_wellness_facilities_3dba6f04.png',
+      images: [
+        '/uploads/Bien_Etre_OK_cover à confirmer/Tennis_01.jpg',
+        '/uploads/Bien_Etre_OK_cover à confirmer/Tennis_02.jpg',
+        '/uploads/Bien_Etre_OK_cover à confirmer/Tennis_03.jpg'
+      ],
       hours: { fr: '', en: '' },
       features: [
         { fr: 'Location de matériels', en: 'Equipment rental' },
@@ -99,7 +112,9 @@ export const bienEtreLoisirsData = {
         fr: 'En collaboration avec Holistic Universal, l’hôtel vous invite à découvrir des soins thérapeutiques et énergétiques aux bienfaits profonds.',
         en: 'In collaboration with Holistic Universal, the hotel invites you to discover therapeutic and energetic treatments with deep benefits.'
       },
-      image: '/uploads/Spa_wellness_facilities_3dba6f04.png',
+      images: [
+        '/uploads/Bien_Etre_OK_cover à confirmer/Holistic_01.jpg'
+      ],
       hours: { fr: '', en: '' },
       features: [],
       services: [],

@@ -17,8 +17,8 @@ export const chambresData = {
         en: "Executive Room"
       },
       subtitle: {
-        fr: "24 m²- Vue Panoramique ou Vue sur le Palais de la Reine & le lac Anosy",
-        en: "24 m² – Panoramic View or Queen's Palace & Lake Anosy View"
+        fr: "Vue Panoramique ou Vue sur le Palais de la Reine & le lac Anosy",
+        en: "Panoramic View or Queen's Palace & Lake Anosy View"
       },
       description: {
         fr: "Un lit King Size ou deux lits jumeaux. (-) Nos chambres Executive, allient espace, confort et fonctionnalité pour un séjour des plus agréables. Avec une décoration chaleureuse et un agencement soigné, elles offrent un cadre reposant propice à la détente. Profitez de la vue dégagée sur la ville, qui ajoute une note d’évasion à votre expérience.",
@@ -64,8 +64,8 @@ export const chambresData = {
         en: "Premium Room"
       },
       subtitle: {
-        fr: "24 m²- Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
-        en: "24 m² – Panoramic View or Queen's Palace & Lake Anosy View"
+        fr: "Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
+        en: "Panoramic View or Queen's Palace & Lake Anosy View"
       },
       description: {
         fr: "Un lit King Size ou deux lits jumeaux. (-) Situées aux étages supérieurs, les chambres Premium offrent une atmosphère paisible avec un point de vue imprenable sur le panorama urbain. Dotées d’équipements complets, bénéficiez d’un cadre confortable et intime pour un séjour parfait que ce soit pour le travail ou la détente.",
@@ -111,8 +111,8 @@ export const chambresData = {
         en: "Club Suite"
       },
       subtitle: {
-        fr: "48 m²- Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
-        en: "48 m² – Panoramic View or Queen's Palace & Lake Anosy View"
+        fr: "Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
+        en: "Panoramic View or Queen's Palace & Lake Anosy View"
       },
       description: {
         fr: "Une chambre avec un lit King Size et un salon séparé. (-) Localisées dans les étages élevés, nos Club Suites comprennent une chambre avec un grand lit et un salon séparé. Un espace entièrement équipé, idéal pour un séjour parfait entre détente et travail, dans un confort optimal.",
@@ -158,8 +158,8 @@ export const chambresData = {
         en: "Family Suite"
       },
       subtitle: {
-        fr: "72 m²- Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
-        en: "72 m² – Panoramic View or Queen's Palace & Lake Anosy View"
+        fr: "Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
+        en: "Panoramic View or Queen's Palace & Lake Anosy View"
       },
       description: {
         fr: "Une chambre avec un lit King Size, une chambre avec deux lits simples et un salon séparé. (-) La Family Suite, lumineuse et généreusement agencée est parfaitement conçue pour un séjour familial en toute sérénité. Elle se compose d’une chambre principale dotée d’un grand lit et d’une seconde chambre avec deux lits simples, parfaite pour les enfants ou les amis. Un salon indépendant permet à chacun de profiter d’un moment de détente dans une atmosphère chaleureuse et accueillante. Cette suite permet à toute la famille de se sentir comme à la maison.",
@@ -205,8 +205,8 @@ export const chambresData = {
         en: "Suite"
       },
       subtitle: {
-        fr: "72 m²- Vue sur le Palais de la Reine & le lac Anosy",
-        en: "72 m² – Queen's Palace & Lake Anosy View"
+        fr: "Vue sur le Palais de la Reine & le lac Anosy",
+        en: "Queen's Palace & Lake Anosy View"
       },
       description: {
         fr: "Une chambre avec un lit King Size et un large salon séparé. Installées en hauteur, nos Suites offrent un équilibre parfait entre bien-être, style et praticité, dans un espace généreux et lumineux. Elle comprend une grande chambre avec un lit King Size et un vaste salon séparé avec kitchenette pour se détendre ou travailler en toute tranquillité. Le salon accueillant, les équipements et commodités offerts assurent un séjour réussi. Un cadre luxueux pour se sentir bien, dès les premiers instants.",

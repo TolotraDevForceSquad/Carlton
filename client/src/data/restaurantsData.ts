@@ -1,7 +1,7 @@
 // src/data/restaurantData.ts
 export const restaurantPageData = {
   hero: {
-    backgroundImage: '/uploads/Fine_dining_restaurant_1275a5b9.png',
+    backgroundImage: '/uploads/Restaurants & Bars_OK/Cover.jpg',
     title: {
       fr: "Restaurants & Bars",
       en: "Restaurants & Bars"
@@ -50,7 +50,13 @@ export const restaurantPageData = {
         fr: "Ici, les plats sont préparés avec des produits frais et de saison pour des recettes généreuses et riches en goût. Vous retrouverez des incontournables comme la terrine de foie gras, la salade César, le magret de canard, ou encore des classiques revisités tels que les spaghetti carbonara, le club sandwich, le hamburger maison ou le fish & chips croustillant. Et bien sûr, les desserts comme la crème brûlée ou la mousse au chocolat. Pour compléter le tout, des options végétariens sont disponibles pour régaler tous les appétits. (-) Ouvert du matin jusqu'en soirée, avec terrasse en plein air, c'est l'endroit parfait pour un café, un déjeuner de travail ou un dîner décontracté entre amis.",
         en: "Here, the dishes are homemade, prepared with fresh and seasonal products for generous and flavorful recipes. You'll find essentials like foie gras terrine, Caesar salad, duck breast, or revisited classics such as spaghetti carbonara, club sandwich, homemade hamburger or crispy fish & chips. And of course, desserts like crème brûlée or chocolate mousse. To complete it all, vegetarian options are available to delight all appetites. (-) Open from morning to evening, with an outdoor terrace, it's the perfect place for a coffee, a business lunch or a casual dinner with friends."
       },
-      image: '/uploads/Fine_dining_restaurant_1275a5b9.png',
+      images: [
+        '/uploads/Restaurants & Bars_OK/Bistrot_01.jpg',
+        '/uploads/Restaurants & Bars_OK/Bistrot_02.jpg',
+        '/uploads/Restaurants & Bars_OK/Bistrot_03.jpg',
+        '/uploads/Restaurants & Bars_OK/Bistrot_04.jpg',
+        '/uploads/Restaurants & Bars_OK/Bistrot_05.JPG'
+      ],
       rating: 4,
       priceRange: { fr: "€€€", en: "€€€" },
       hours: { fr: "Bar : 06h30 à 23h00 | Restaurant : 11h00 à 23h00", en: "Bar: 6:30am to 11pm | Restaurant: 11am to 11pm" },
@@ -89,7 +95,11 @@ export const restaurantPageData = {
         fr: "Les spécialités malgaches côtoient des plats internationaux, pour une expérience culinaire variée et raffinée, mêlant traditions locales et saveurs du monde. (-) De larges baies vitrées baignent la salle de lumière naturelle et offrent une vue apaisante sur la piscine et le jardin. C'est dans cette atmosphère chaleureuse que le petit-déjeuner est servi en buffet ou à la carte. Au fil des saisons, le restaurant devient un lieu de retrouvaille privilégié pour célébrer les moments forts de l'année : les fêtes des mères, des pères, Pâques, Noël, Nouvel an ... Famille et proches se retrouvent autour de menus spéciaux ou de buffets généreux et hauts en saveurs, dans une ambiance conviviale et festive.",
         en: "Malagasy specialties mingle with international dishes, for a varied and refined culinary experience, blending local traditions and world flavors. (-) Large bay windows bathe the room in natural light and offer a soothing view of the pool and garden. It is in this warm atmosphere that breakfast is served as a buffet or à la carte. Through the seasons, the restaurant becomes a privileged meeting place to celebrate the highlights of the year: Mother's Day, Father's Day, Easter, Christmas, New Year... Family and loved ones gather around special menus or generous and flavorful buffets, in a convivial and festive atmosphere."
       },
-      image: '/uploads/Luxury_hotel_restaurant_interior_090ad235.png',
+      images: [
+        '/uploads/Restaurants & Bars_OK/Ile rouge_01.jpg',
+        '/uploads/Restaurants & Bars_OK/Ile rouge_02.jpg',
+        '/uploads/Restaurants & Bars_OK/Ile rouge_03.jpg'
+      ],
       rating: 5,
       priceRange: { fr: "€€€€", en: "€€€€" },
       hours: { fr: "Petit-déjeuner : 06h30 à 10h30 | Déjeuner : 12h00 à 15h00 | Dîner : 19h00 à 23h00", en: "Breakfast: 6:30am to 10:30am | Lunch: 12pm to 3pm | Dinner: 7pm to 11pm" },
@@ -123,7 +133,11 @@ export const restaurantPageData = {
         fr: "Offrez-vous un moment suspendu pour déguster des plats généreux et variés, soigneusement préparés avec des ingrédients de qualité. Salades gourmandes, grillades savoureuses et desserts irrésistibles composent une carte qui éveille les sens. L'endroit idéal pour un déjeuner d'affaires ou simplement se faire plaisir autour d'un bon repas. (-) Notre bar vous invite à prolonger l'expérience dans un esprit tout aussi relaxant. Laissez-vous surprendre par une sélection de cocktails originaux, frais et délicieux, pensés pour accompagner vos instants de détente jusqu'à la fin de la journée. Une parenthèse pour s'offrir une pause dans un cadre verdoyant.",
         en: "Treat yourself to a suspended moment to savor generous and varied dishes, carefully prepared with quality ingredients. Gourmet salads, savory grills and irresistible desserts make up a menu that awakens the senses. The ideal place for a business lunch or simply to treat yourself to a good meal. (-) Our bar invites you to extend the experience in an equally relaxing spirit. Let yourself be surprised by a selection of original, fresh and delicious cocktails, designed to accompany your moments of relaxation until the end of the day. A break to treat yourself in a green setting."
       },
-      image: '/uploads/Luxury_hotel_restaurant_interior_090ad235.png',
+      images: [
+        '/uploads/Restaurants & Bars_OK/Oasis_01.jpg',
+        '/uploads/Restaurants & Bars_OK/Oasis_02.jpg',
+        '/uploads/Restaurants & Bars_OK/Oasis_03.jpg'
+      ],
       rating: 4,
       priceRange: { fr: "€€€", en: "€€€" },
       hours: { fr: "Bar : à partir de 8h00 | Restaurant (hiver) : 11h00 à 17h00 | Restaurant (été) : 11h00 à 18h00", en: "Bar: from 8am | Restaurant (winter): 11am to 5pm | Restaurant (summer): 11am to 6pm" },
@@ -158,7 +172,11 @@ export const restaurantPageData = {
         fr: "Chaque jour, notre équipe passionnée prépare avec soin des produits faits maison, frais et savoureux : pains variés à la croûte dorée, viennoiseries fondantes, gâteaux et entremets délicats, sans oublier sandwiches gourmands, snacks savoureux, glaces rafraîchissantes, boissons chaudes réconfortantes et salades de fruits fraîches. (-) Ici, l'ambiance est conviviale et chaleureuse, un lieu où les amateurs de douceurs se sentent comme chez eux, accueillis par une équipe souriante et attentive, toujours prête à partager un moment de plaisir et de gourmandise.",
         en: "Every day, our passionate team carefully prepares homemade, fresh and tasty products: varied breads with golden crusts, melting pastries, delicate cakes and entremets, not forgetting gourmet sandwiches, tasty snacks, refreshing ice creams, comforting hot drinks and fresh fruit salads. (-) Here, the atmosphere is convivial and warm, a place where sweet lovers feel at home, welcomed by a smiling and attentive team, always ready to share a moment of pleasure and indulgence."
       },
-      image: '/uploads/Luxury_hotel_restaurant_interior_090ad235.png',
+      images: [
+        '/uploads/Restaurants & Bars_OK/Eclair_01.jpg',
+        '/uploads/Restaurants & Bars_OK/Eclair_02.jpg',
+        '/uploads/Restaurants & Bars_OK/Eclair_03.jpg'
+      ],
       rating: 5,
       priceRange: { fr: "€€", en: "€€" },
       hours: { fr: "De 06h30 à 18h30", en: "From 6:30am to 6:30pm" },

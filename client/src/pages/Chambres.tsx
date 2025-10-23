@@ -935,6 +935,9 @@ const Chambres = () => {
   const getAmenities = (room: any) => room.amenities[lang] || room.amenities.fr;
   const getIncludedServices = () => data.includedServices[lang] || data.includedServices.fr;
 
+  // Vérifier si la chambre nécessite un format rectangulaire large (h < w)
+  const isWideImageRoom = (roomId: number) => [1, 2, 3].includes(roomId);
+
   return (
     <div className="min-h-screen bg-background">
 
@@ -1072,6 +1075,7 @@ const Chambres = () => {
           <div className="space-y-16">
             {data.rooms.map((room, index) => {
               if (!isAdmin && room.hidden) return null;
+              const isWide = isWideImageRoom(room.id);
               return (
                 <Card
                   key={room.id}
@@ -1101,7 +1105,7 @@ const Chambres = () => {
                   <div className="lg:w-1/2 flex">
                     <ImageTooltip imageUrl={room.image} onSave={updateRoomImage(index)}>
                       <div 
-                        className="w-full h-80 lg:h-full relative cursor-pointer overflow-hidden"
+                        className={`w-full relative cursor-pointer overflow-hidden ${isWide ? 'aspect-[4/3] h-auto' : 'h-80 lg:h-full'}`}
                         onClick={() => openImagePopup(room.image || hotelRoom)}
                       >
                         <img
@@ -1114,13 +1118,13 @@ const Chambres = () => {
                   </div>
 
                   {/* Conteneur de contenu */}
-                  <div className="lg:w-1/2 p-8 flex flex-col">
+                  <div className={`lg:w-1/2 p-8 flex flex-col ${isWide ? 'justify-center' : ''}`}>
                     <div className="flex-1">
                       <CardHeader className="p-0 mb-6">
                         <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center gap-4">
                             {room.size && (
-                              <Badge variant="outline" className="text-primary border-primary">
+                              <Badge variant="outline" className="text-primary border-primary text-xl">
                                 <MapPin className="w-3 h-3 mr-1" />
                                 <Tooltip
                                   frLabel={room.size}
@@ -1131,7 +1135,7 @@ const Chambres = () => {
                                 </Tooltip>
                               </Badge>
                             )}
-                            <Badge variant="outline" className="text-primary border-primary">
+                            <Badge variant="outline" className="text-primary border-primary text-xl">
                               <Users className="w-3 h-3 mr-1" />
                               <Tooltip
                                 frLabel={room.guests.fr}
@@ -1153,7 +1157,7 @@ const Chambres = () => {
                           </Tooltip>
                         </CardTitle>
                         {room.subtitle && (
-                          <p className="text-primary font-luxury italic text-lg mb-4">
+                          <p className="text-primary font-luxury italic text-2xl mb-4">
                             <Tooltip
                               frLabel={room.subtitle.fr}
                               enLabel={room.subtitle.en}

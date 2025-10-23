@@ -48,7 +48,7 @@ Nestled in the cultural heart of the city, the hotel immerses you in a magnifice
         fr: "En savoir plus",
         en: "Learn more"
       },
-      image: "/uploads/Presidential_suite_bedroom_interior_7adece21.png" // Image existante
+      image: "/uploads/Chambre.JPG"
     },
     {
       icon: "Utensils", // Restaurants & Bars
@@ -57,15 +57,15 @@ Nestled in the cultural heart of the city, the hotel immerses you in a magnifice
         en: "Restaurants & Bars"
       },
       description: {
-        fr: "Trois restaurants et bars, trois ambiances — en salle, en terrasse ou en plein air dans un cadre verdoyant — pour vous faire vivre une expérience culinaire unique qui allie cuisine internationale et saveurs malgaches en sublimant la fraîcheur et l’authenticité des produits locaux. Et, une pâtisserie-boulangerie qui propose chaque jour des produits frais, authentiques et gourmands. Une adresse incontournable pour les amateurs de bon goût.",
-        en: "Three restaurants and bars, three atmospheres — indoors, on the terrace, or outdoors in a green setting — to provide a unique culinary experience that combines international cuisine and Malagasy flavors, enhancing the freshness and authenticity of local products. Plus, a pastry-bakery that offers fresh, authentic, and gourmet products every day. An essential address for those with good taste."
+        fr: "Trois restaurants et bars, trois ambiances — en salle, en terrasse ou en plein air dans un cadre verdoyant — pour vous faire vivre une expérience culinaire unique qui allie cuisine internationale et saveurs malgaches en sublimant la fraîcheur et l’authenticité des produits locaux. (-) Une pâtisserie-boulangerie qui propose chaque jour des produits frais, authentiques et gourmands. Une adresse incontournable pour les amateurs de bon goût.",
+        en: "Three restaurants and bars, three atmospheres — indoors, on the terrace, or outdoors in a green setting — to provide a unique culinary experience that combines international cuisine and Malagasy flavors, enhancing the freshness and authenticity of local products. (-) Plus, a pastry-bakery that offers fresh, authentic, and gourmet products every day. An essential address for those with good taste."
       },
       link: "/restaurants",
       linkText: {
         fr: "En savoir plus",
         en: "Learn more"
       },
-      image: "/uploads/Luxury_hotel_restaurant_interior_090ad235.png" // Image existante
+      image: "/uploads/Restaurant.jpg"
     },
     {
       icon: "Calendar", // Événements & Réceptions
@@ -82,7 +82,7 @@ Nestled in the cultural heart of the city, the hotel immerses you in a magnifice
         fr: "En savoir plus",
         en: "Learn more"
       },
-      image: "/uploads/Luxury_hotel_wedding_reception_d3ca816d.png" // Image existante
+      image: "/uploads/Evènements.jpg"
     },
     {
       icon: "Camera", // Équipements & Services - L'endroit idéal pour le carrousel
@@ -99,7 +99,7 @@ Nestled in the cultural heart of the city, the hotel immerses you in a magnifice
         fr: "Voir nos installations",
         en: "View our facilities"
       },
-      image: "/uploads/Hotel_infinity_pool_wellness_a9857557.png" // Image existante
+      image: "/uploads/Hotel_infinity_pool_wellness_a9857557.png"
     }
   ],
   cta: {
@@ -119,8 +119,8 @@ Nestled in the cultural heart of the city, the hotel immerses you in a magnifice
       fr: "Voir nos chambres",
       en: "See our rooms"
     },
-    primaryLink: "/contact", // L'utilisateur a mentionné "page de réservation Synxis", je garde le lien de contact comme dans l'initial, mais l'idéal serait un lien de réservation direct.
-    secondaryLink: "/chambres" // Page Chambres & Suites
+    primaryLink: "/contact",
+    secondaryLink: "/chambres"
   },
-  parallaxImage: "/uploads/Hotel_infinity_pool_wellness_a9857557.png" // Image existante
+  parallaxImage: "/uploads/Hotel_infinity_pool_wellness_a9857557.png"
 };

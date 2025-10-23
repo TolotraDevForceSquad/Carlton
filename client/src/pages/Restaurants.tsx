@@ -3,7 +3,7 @@ import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Clock, MapPin, Star, Sparkles, Utensils, Plus, Trash2, Eye, EyeOff, Image as ImageIcon } from 'lucide-react';
+import { Clock, MapPin, Star, Sparkles, Utensils, Plus, Trash2, Eye, EyeOff, Image as ImageIcon, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Tooltip, ImageTooltip } from '@/components/Tooltip';
 import Footer from '@/components/Footer';
 import ParallaxSection from '@/components/ParallaxSection';
@@ -45,7 +45,7 @@ const splitRestaurantData = (mixedData: typeof restaurantPageData) => {
       type: restaurant.type.fr,
       description: restaurant.description.fr,
       detailedDescription: restaurant.detailedDescription.fr,
-      image: restaurant.image || '/uploads/Restaurant.png',
+      images: restaurant.images || ['/uploads/Restaurant.png'],
       rating: restaurant.rating,
       priceRange: restaurant.priceRange.fr,
       hours: restaurant.hours.fr,
@@ -84,7 +84,7 @@ const splitRestaurantData = (mixedData: typeof restaurantPageData) => {
       type: restaurant.type.en,
       description: restaurant.description.en,
       detailedDescription: restaurant.detailedDescription.en,
-      image: restaurant.image || '/uploads/Restaurant.png',
+      images: restaurant.images || ['/uploads/Restaurant.png'],
       rating: restaurant.rating,
       priceRange: restaurant.priceRange.en,
       hours: restaurant.hours.en,
@@ -138,7 +138,7 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
         type: { fr: restaurantFr.type, en: restaurantEn.type },
         description: { fr: restaurantFr.description, en: restaurantEn.description },
         detailedDescription: { fr: restaurantFr.detailedDescription, en: restaurantEn.detailedDescription },
-        image: restaurantFr.image || '/uploads/Restaurant.png',
+        images: restaurantFr.images || ['/uploads/Restaurant.png'],
         rating: restaurantFr.rating,
         priceRange: { fr: restaurantFr.priceRange, en: restaurantEn.priceRange },
         hours: { fr: restaurantFr.hours, en: restaurantEn.hours },
@@ -188,6 +188,77 @@ const TextFormatter: React.FC<TextFormatterProps> = ({ text, className }) => {
       {parts.map((part, i) => (
         <p key={i} className="leading-relaxed">{formatAmpersand(part.trim())}</p>
       ))}
+    </div>
+  );
+};
+
+interface RestaurantCarouselProps {
+  images: string[];
+  onImageClick: (imageUrl: string) => void;
+  className?: string;
+}
+
+const RestaurantCarousel: React.FC<RestaurantCarouselProps> = ({ images, onImageClick, className }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const goToPrev = () => {
+    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
+
+  const goToIndex = (index: number) => {
+    setCurrentIndex(index);
+  };
+
+  if (images.length === 0) return null;
+
+  return (
+    <div className={`relative w-full h-80 lg:h-full overflow-hidden rounded-lg cursor-pointer ${className || ''}`}>
+      <img
+        src={images[currentIndex]}
+        alt="Restaurant image"
+        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+        onClick={() => onImageClick(images[currentIndex])}
+      />
+      {images.length > 1 && (
+        <>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              goToPrev();
+            }}
+            className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              goToNext();
+            }}
+            className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+            {images.map((_, index) => (
+              <button
+                key={index}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goToIndex(index);
+                }}
+                className={`w-3 h-3 rounded-full transition-colors ${
+                  index === currentIndex ? 'bg-white' : 'bg-white/50'
+                }`}
+              />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };
@@ -434,6 +505,17 @@ const Restaurants = () => {
     };
   };
 
+  const updateRestaurantImages = (index: number) => {
+    return async (newImages: string[]) => {
+      const updatedData = {
+        ...data,
+        restaurants: data.restaurants.map((restaurant, i) => (i === index ? { ...restaurant, images: newImages } : restaurant)),
+      };
+      setData(updatedData);
+      await updateRestaurantsSection(updatedData);
+    };
+  };
+
   const updateRestaurantSpecialty = (restaurantIndex: number, specialtyIndex: number) => {
     return async (newFr: string, newEn: string) => {
       const updatedData = {
@@ -549,17 +631,6 @@ const Restaurants = () => {
     await updateRestaurantsSection(updatedData);
   };
 
-  const updateRestaurantImage = (index: number) => {
-    return async (newUrl: string) => {
-      const updatedData = {
-        ...data,
-        restaurants: data.restaurants.map((restaurant, i) => (i === index ? { ...restaurant, image: newUrl } : restaurant)),
-      };
-      setData(updatedData);
-      await updateRestaurantsSection(updatedData);
-    };
-  };
-
   const updateCtaField = (field: 'title' | 'description' | 'buttonText') => {
     return async (newFr: string, newEn: string) => {
       const updatedData = {
@@ -582,6 +653,7 @@ const Restaurants = () => {
         ...data.restaurants[0],
         id: maxId + 1,
         name: { fr: "Nouveau Restaurant", en: "New Restaurant" },
+        images: ['/uploads/Restaurant.png'],
         hidden: false,
       };
     } else {
@@ -591,7 +663,7 @@ const Restaurants = () => {
         type: { fr: "Type de restaurant", en: "Restaurant Type" },
         description: { fr: "Description du restaurant.", en: "Restaurant description." },
         detailedDescription: { fr: "Description détaillée.", en: "Detailed description." },
-        image: '/uploads/Restaurant.png',
+        images: ['/uploads/Restaurant.png'],
         rating: 4,
         priceRange: { fr: "€€€", en: "€€€" },
         hours: { fr: "Horaires", en: "Hours" },
@@ -938,21 +1010,21 @@ const Restaurants = () => {
                       </Button>
                     </div>
                   )}
-                  <div className="lg:w-1/2 flex">
+                  <div className="lg:w-1/2 flex relative">
                     <ImageTooltip
-                      imageUrl={restaurant.image}
-                      onSave={updateRestaurantImage(index)}
+                      imageUrl={restaurant.images[0] || '/uploads/Restaurant.png'}
+                      onSave={(newUrl) => updateRestaurantImages(index)([newUrl, ...restaurant.images.slice(1)])}
                     >
-                      <div 
-                        className="w-full h-80 lg:h-full relative cursor-pointer overflow-hidden"
-                        onClick={() => openImagePopup(restaurant.image)}
-                      >
-                        <img 
-                          src={restaurant.image} 
-                          alt={getText(restaurant.name)}
-                          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105 cursor-pointer"
-                        />
+                      <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                        <Button variant="ghost" size="sm" className="bg-background/80">
+                          <ImageIcon className="w-4 h-4" />
+                          {isFr ? 'Éditer images' : 'Edit images'}
+                        </Button>
                       </div>
+                      <RestaurantCarousel
+                        images={restaurant.images}
+                        onImageClick={openImagePopup}
+                      />
                     </ImageTooltip>
                   </div>
                   
@@ -1169,7 +1241,7 @@ const Restaurants = () => {
             </div>
           </Tooltip>
           <button 
-            onClick={() => navigate('/contact')}
+            onClick={() => navigate(cta.buttonLink || '/contact')}
             className="bg-primary text-primary-foreground px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary/90 transition-colors shadow-lg"
           >
             <Tooltip

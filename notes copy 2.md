@@ -1,136 +1,19 @@
-// src/data/offresData.ts
-export const offresPageData = {
-  hero: {
-    title: { fr: 'Offres Exclusives', en: 'Exclusive Offers' },
-    description: {
-      fr: 'Découvrez nos promotions et événements spéciaux pour un séjour inoubliable au Carlton Madagascar',
-      en: 'Discover our promotions and special events for an unforgettable stay at Carlton Madagascar'
-    },
-    image: '/uploads/Offre.png'
-  },
-  offerFeaturesTitle: { fr: 'Ce qui est inclus :', en: 'What\'s included :' },
-  offers: [
-    {
-      id: 1,
-      title: { fr: 'Menu d\'affaires à 64 000 Ar', en: 'Business Menu at 64,000 Ar' },
-      subtitle: { fr: 'Déjeuner d\'affaires', en: 'Business Lunch' },
-      description: {
-        fr: 'Un menu raffiné à 2 ou 3 services au choix, conçu pour les professionnels en déplacement. Profitez d\'un cadre élégant et discret pour vos rendez-vous d\'affaires, avec un service attentionné qui allie efficacité et raffinement culinaire malgache-français.',
-        en: 'A refined 2 or 3-course menu to choose from, designed for professionals on the move. Enjoy an elegant and discreet setting for your business meetings, with attentive service that combines efficiency and Malagasy-French culinary refinement.'
-      },
-      duration: { fr: 'Du lundi au vendredi de 12h à 14h', en: 'Monday to Friday from 12pm to 2pm' },
-      category: { fr: 'Déjeuner d\'affaires', en: 'Business Lunch' },
-      features: [
-        { fr: 'Menu à 2 ou 3 services au choix', en: '2 or 3-course menu to choose from' },
-        { fr: 'Prix : 64 000 Ariary', en: 'Price: 64,000 Ariary' },
-        { fr: 'Boissons non alcoolisées incluses', en: 'Non-alcoholic beverages included' }
-      ],
-      validUntil: { fr: '', en: '' },
-      highlight: null,
-      image: '/uploads/Offre.png',
-      hidden: false
-    },
-    {
-      id: 2,
-      title: { fr: 'Happy Hour au Bistrot', en: 'Happy Hour at the Bistro' },
-      subtitle: { fr: 'Apéritif convivial', en: 'Convivial Aperitif' },
-      description: {
-        fr: 'Profitez d\'une sélection de cocktails et tapas à prix doux dans l\'ambiance chaleureuse du Bistrot du Carlton. De saveurs locales audacieuses, variées et savoureuses, à partager—ou pas. Parfait pour décompresser en fin de journée, seul ou entre amis, après une longue journée. Un moment simple, indulgent et bien mérité de plaisir.',
-        en: 'Enjoy a selection of cocktails and tapas at soft prices in the warm atmosphere of the Carlton\'s Bistro. From bold, varied and tasty local flavors, to share—or not. Perfect for unwinding at the end of the day, whether alone or with friends, after a long day. A simple, indulgent, and well-deserved moment of pleasure.'
-      },
-      duration: {
-        fr: 'Du lundi au vendredi à partir de 17h à 19h',
-        en: 'Monday to Friday from 5pm to 7pm'
-      },
-      category: { fr: 'Apéritif', en: 'Aperitif' },
-      features: [
-        { fr: 'Prix : 28 000 Ariary', en: 'Price: 28,000 Ariary' }
-      ],
-      validUntil: { fr: '', en: '' },
-      highlight: null,
-      image: '/uploads/Offre.png',
-      hidden: false
-    },
-    {
-      id: 3,
-      title: { fr: 'Yoga', en: 'Yoga' },
-      subtitle: { fr: 'Tous les samedis à 8h', en: 'Every Saturday at 8am' },
-      description: {
-        fr: 'Commencez votre week-end en douceur avec une séance de yoga d’une heure, un rituel parfait pour relâcher la pression du quotidien et retrouver l’équilibre. Un petit-déjeuner est offert à la fin de séance pour prolonger cette pause de bien-être.',
-        en: 'Start your weekend gently with a one-hour yoga session, a perfect ritual to release daily stress and regain balance. A breakfast is offered at the end of the session to extend this wellness break.'
-      },
-      duration: { fr: 'Tous les samedis à 8h', en: 'Every Saturday at 8am' },
-      category: { fr: 'Bien-être', en: 'Wellness' },
-      features: [
-        { fr: '50 000 Ar avec petit-déjeuner', en: '50,000 Ar with breakfast' },
-        { fr: 'Séance de yoga d’une heure', en: 'One-hour yoga session' }
-      ],
-      validUntil: { fr: '', en: '' },
-      highlight: null,
-      image: '/uploads/Offre.png',
-      hidden: false
-    }
-  ],
-  seasonalSection: {
-    title: { fr: 'Rendez-vous Festifs', en: 'Festive Appointments' },
-    description: { fr: '', en: '' },
-    show: true
-  },
-  seasonalOffers: [
-    {
-      title: { fr: 'Soirée Jazz Enchantée', en: 'Enchanted Jazz Evening' },
-      period: { fr: 'Chaque vendredi soir', en: 'Every Friday evening' },
-      description: {
-        fr: 'Laissez-vous emporter par les mélodies envoûtantes du jazz live dans l\'atmosphère feutrée du Bistrot du Carlton. Accompagné de cocktails signature et d\'assiettes raffinées, c\'est l\'occasion idéale pour une soirée sophistiquée entre collègues ou amoureux de la musique.',
-        en: 'Let yourself be carried away by the enchanting melodies of live jazz in the intimate atmosphere of the Carlton\'s Bistrot. Paired with signature cocktails and refined plates, it\'s the perfect opportunity for a sophisticated evening with colleagues or music lovers.'
-      },
-      image: '/uploads/Env.png',
-      hidden: false
-    },
-    {
-      title: { fr: 'Brunch Tropical Dominical', en: 'Tropical Sunday Brunch' },
-      period: { fr: 'Tous les dimanches de 11h à 15h', en: 'Every Sunday from 11am to 3pm' },
-      description: {
-        fr: 'Un festin dominical aux saveurs exotiques de Madagascar fusionnées avec la finesse française. Buffets à volonté avec fruits frais, fruits de mer, pâtisseries artisanales et animations musicales pour une pause gourmande en famille ou entre amis.',
-        en: 'A Sunday feast blending Madagascar\'s exotic flavors with French finesse. All-you-can-eat buffets featuring fresh fruits, seafood, artisanal pastries, and live music for a indulgent family or friends gathering.'
-      },
-      image: '/uploads/Env.png',
-      hidden: false
-    },
-    {
-      title: { fr: 'Nuit des Étoiles et Vins', en: 'Stars and Wines Night' },
-      period: { fr: 'Premier samedi du mois', en: 'First Saturday of the month' },
-      description: {
-        fr: 'Sous un ciel étoilé, découvrez une sélection exclusive de vins malgaches et internationaux, harmonisés avec des accords mets d\'exception. Dégustations guidées par nos sommeliers, dans le cadre enchanteur des jardins du Carlton.',
-        en: 'Under a starry sky, discover an exclusive selection of Malagasy and international wines, paired with exceptional food matches. Guided tastings by our sommeliers, in the enchanting setting of the Carlton\'s gardens.'
-      },
-      image: '/uploads/Env.png',
-      hidden: false
-    }
-  ],
-  cta: {
-    title: { fr: 'Et si vous preniez du temps pour vous ?', en: 'What if you took some time for yourself?' },
-    description: { fr: 'Laissez-vous tenter par un moment au Carlton Madagascar', en: 'Let yourself be tempted by a moment at Carlton Madagascar' },
-    buttonTexts: {
-      primary: { fr: 'Réserver au +261 20 22 260 60', en: 'Book at +261 20 22 260 60' },
-      secondary: { fr: '', en: '' }
-    }
-  }
-};
 
-// src/pages/Offres.tsx
+
 import { useState, useEffect } from 'react';
+import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Star, Calendar, Clock, Sparkles, Users, Gift, Plus, Trash2, Eye, EyeOff, ForkKnife, Martini, HeartPulse, Music, Coffee, Wine, X, Phone, Edit3 } from 'lucide-react';
+import { Clock, MapPin, Star, Sparkles, Utensils, Plus, Trash2, Eye, EyeOff, Image as ImageIcon, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Tooltip, ImageTooltip } from '@/components/Tooltip';
 import Footer from '@/components/Footer';
 import ParallaxSection from '@/components/ParallaxSection';
-import { offresPageData } from '@/data/offresData';
+import { restaurantPageData } from '@/data/restaurantsData';
 import { useLanguage } from '@/components/context/LanguageContext';
+import { formatAmpersand } from '@/lib/utils/formatAmpersand';
 
-const SECTION_KEY = 'offres';
+const SECTION_KEY = 'restaurants';
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('userToken');
@@ -141,103 +24,84 @@ const getAuthHeaders = () => {
   return headers;
 };
 
-// Helper to split offresPageData into dataFr and dataEn structures
-const splitOffresData = (mixedData: typeof offresPageData) => {
-  const mixedDataWithExtras = {
-    ...mixedData,
-    seasonalSection: mixedData.seasonalSection || {
-      title: { fr: "Rendez-vous Festifs", en: "Festive Appointments" },
-      description: {
-        fr: "",
-        en: ""
-      },
-      show: true,
-    },
-    seasonalOffers: mixedData.seasonalOffers || [],
-  };
-
+// Helper to split restaurantPageData into dataFr and dataEn structures
+const splitRestaurantData = (mixedData: typeof restaurantPageData) => {
   const dataFr = {
-    seasonalSection: {
-      title: mixedDataWithExtras.seasonalSection.title.fr,
-      description: mixedDataWithExtras.seasonalSection.description.fr,
-      show: mixedDataWithExtras.seasonalSection.show,
-    },
     hero: {
-      title: mixedDataWithExtras.hero.title.fr,
-      description: mixedDataWithExtras.hero.description.fr,
-      image: mixedDataWithExtras.hero.image || '/uploads/Offre.png',
+      backgroundImage: mixedData.hero.backgroundImage,
+      title: mixedData.hero.title.fr,
+      description: mixedData.hero.description.fr,
+      stats: mixedData.hero.stats.map(stat => ({
+        number: stat.number.fr,
+        label: stat.label.fr,
+        icon: stat.icon
+      })),
+      buttonTexts: {
+        primary: mixedData.hero.buttonTexts.primary.fr,
+        secondary: mixedData.hero.buttonTexts.secondary.fr
+      }
     },
-    offerFeaturesTitle: mixedDataWithExtras.offerFeaturesTitle.fr,
-    offers: mixedDataWithExtras.offers.map((offer) => ({
-      id: offer.id,
-      title: offer.title.fr,
-      subtitle: offer.subtitle.fr,
-      description: offer.description.fr,
-      duration: offer.duration.fr,
-      category: offer.category.fr,
-      features: offer.features.map((feature) => feature.fr),
-      validUntil: offer.validUntil.fr,
-      highlight: offer.highlight ? offer.highlight.fr : null,
-      image: offer.image || '/uploads/Offre.png',
-      hidden: offer.hidden || false,
-    })),
-    seasonalOffers: mixedDataWithExtras.seasonalOffers.map((so) => ({
-      title: so.title.fr,
-      period: so.period.fr,
-      description: so.description.fr,
-      image: so.image || '/uploads/Env.png',
-      hidden: so.hidden || false,
+    restaurants: mixedData.restaurants.map((restaurant) => ({
+      id: restaurant.id,
+      name: restaurant.name.fr,
+      type: restaurant.type.fr,
+      description: restaurant.description.fr,
+      detailedDescription: restaurant.detailedDescription.fr,
+      images: restaurant.images || ['/uploads/Restaurant.png'],
+      rating: restaurant.rating,
+      priceRange: restaurant.priceRange.fr,
+      hours: restaurant.hours.fr,
+      capacity: restaurant.capacity.fr,
+      reservationRequired: restaurant.reservationRequired,
+      dressCode: restaurant.dressCode.fr,
+      specialties: restaurant.specialties.map((spec) => spec.fr),
+      features: restaurant.features.map((feature) => feature.fr),
+      hidden: restaurant.hidden || false
     })),
     cta: {
-      title: mixedDataWithExtras.cta.title.fr,
-      description: mixedDataWithExtras.cta.description.fr,
-      buttonTexts: {
-        primary: mixedDataWithExtras.cta.buttonTexts.primary.fr,
-        secondary: mixedDataWithExtras.cta.buttonTexts.secondary.fr,
-      },
-    },
+      title: mixedData.cta.title.fr,
+      description: mixedData.cta.description.fr,
+      buttonText: mixedData.cta.buttonText.fr
+    }
   };
 
   const dataEn = {
-    seasonalSection: {
-      title: mixedDataWithExtras.seasonalSection.title.en,
-      description: mixedDataWithExtras.seasonalSection.description.en,
-      show: mixedDataWithExtras.seasonalSection.show,
-    },
     hero: {
-      title: mixedDataWithExtras.hero.title.en,
-      description: mixedDataWithExtras.hero.description.en,
-      image: mixedDataWithExtras.hero.image || '/uploads/Offre.png',
+      backgroundImage: mixedData.hero.backgroundImage,
+      title: mixedData.hero.title.en,
+      description: mixedData.hero.description.en,
+      stats: mixedData.hero.stats.map(stat => ({
+        number: stat.number.en,
+        label: stat.label.en,
+        icon: stat.icon
+      })),
+      buttonTexts: {
+        primary: mixedData.hero.buttonTexts.primary.en,
+        secondary: mixedData.hero.buttonTexts.secondary.en
+      }
     },
-    offerFeaturesTitle: mixedDataWithExtras.offerFeaturesTitle.en,
-    offers: mixedDataWithExtras.offers.map((offer) => ({
-      id: offer.id,
-      title: offer.title.en,
-      subtitle: offer.subtitle.en,
-      description: offer.description.en,
-      duration: offer.duration.en,
-      category: offer.category.en,
-      features: offer.features.map((feature) => feature.en),
-      validUntil: offer.validUntil.en,
-      highlight: offer.highlight ? offer.highlight.en : null,
-      image: offer.image || '/uploads/Offre.png',
-      hidden: offer.hidden || false,
-    })),
-    seasonalOffers: mixedDataWithExtras.seasonalOffers.map((so) => ({
-      title: so.title.en,
-      period: so.period.en,
-      description: so.description.en,
-      image: so.image || '/uploads/Env.png',
-      hidden: so.hidden || false,
+    restaurants: mixedData.restaurants.map((restaurant) => ({
+      id: restaurant.id,
+      name: restaurant.name.en,
+      type: restaurant.type.en,
+      description: restaurant.description.en,
+      detailedDescription: restaurant.detailedDescription.en,
+      images: restaurant.images || ['/uploads/Restaurant.png'],
+      rating: restaurant.rating,
+      priceRange: restaurant.priceRange.en,
+      hours: restaurant.hours.en,
+      capacity: restaurant.capacity.en,
+      reservationRequired: restaurant.reservationRequired,
+      dressCode: restaurant.dressCode.en,
+      specialties: restaurant.specialties.map((spec) => spec.en),
+      features: restaurant.features.map((feature) => feature.en),
+      hidden: restaurant.hidden || false
     })),
     cta: {
-      title: mixedDataWithExtras.cta.title.en,
-      description: mixedDataWithExtras.cta.description.en,
-      buttonTexts: {
-        primary: mixedDataWithExtras.cta.buttonTexts.primary.en,
-        secondary: mixedDataWithExtras.cta.buttonTexts.secondary.en,
-      },
-    },
+      title: mixedData.cta.title.en,
+      description: mixedData.cta.description.en,
+      buttonText: mixedData.cta.buttonText.en
+    }
   };
 
   return { dataFr, dataEn };
@@ -247,118 +111,186 @@ const splitOffresData = (mixedData: typeof offresPageData) => {
 const reconstructMixed = (dataFr: any, dataEn: any | null) => {
   if (!dataFr || typeof dataFr !== 'object') {
     console.warn('Invalid dataFr structure, falling back to default');
-    return offresPageData;
+    return restaurantPageData;
   }
   const enFallback = dataEn || dataFr;
-  const defaultSeasonal = {
-    title: { fr: "Rendez-vous Festifs", en: "Festive Appointments" },
-    description: {
-      fr: "",
-      en: ""
-    },
-    show: true,
-  };
   return {
-    seasonalSection: dataFr.seasonalSection
-      ? {
-        title: { fr: dataFr.seasonalSection.title, en: enFallback.seasonalSection?.title || defaultSeasonal.title.en },
-        description: { fr: dataFr.seasonalSection.description, en: enFallback.seasonalSection?.description || defaultSeasonal.description.en },
-        show: dataFr.seasonalSection.show !== undefined ? dataFr.seasonalSection.show : true,
-      }
-      : defaultSeasonal,
     hero: {
+      backgroundImage: dataFr.hero.backgroundImage,
       title: { fr: dataFr.hero.title, en: enFallback.hero.title },
       description: { fr: dataFr.hero.description, en: enFallback.hero.description },
-      image: dataFr.hero.image || '/uploads/Offre.png',
+      stats: dataFr.hero.stats.map((statFr: any, i: number) => {
+        const statEn = enFallback.hero.stats[i] || statFr;
+        return {
+          number: { fr: statFr.number, en: statEn.number },
+          label: { fr: statFr.label, en: statEn.label },
+          icon: statFr.icon
+        };
+      }),
+      buttonTexts: {
+        primary: { fr: dataFr.hero.buttonTexts.primary, en: enFallback.hero.buttonTexts.primary },
+        secondary: { fr: dataFr.hero.buttonTexts.secondary, en: enFallback.hero.buttonTexts.secondary }
+      }
     },
-    offerFeaturesTitle: {
-      fr: dataFr.offerFeaturesTitle,
-      en: enFallback.offerFeaturesTitle
-    },
-    offers: dataFr.offers.map((offerFr: any, i: number) => {
-      const offerEn = enFallback.offers[i] || offerFr;
+    restaurants: dataFr.restaurants.map((restaurantFr: any, i: number) => {
+      const restaurantEn = enFallback.restaurants[i] || restaurantFr;
       return {
-        id: offerFr.id,
-        title: { fr: offerFr.title, en: offerEn.title },
-        subtitle: { fr: offerFr.subtitle, en: offerEn.subtitle },
-        description: { fr: offerFr.description, en: offerEn.description },
-        duration: { fr: offerFr.duration, en: offerEn.duration },
-        category: { fr: offerFr.category, en: offerEn.category },
-        features: offerFr.features.map((fFr: string, j: number) => ({
-          fr: fFr,
-          en: offerEn.features[j] || fFr,
+        id: restaurantFr.id,
+        name: { fr: restaurantFr.name, en: restaurantEn.name },
+        type: { fr: restaurantFr.type, en: restaurantEn.type },
+        description: { fr: restaurantFr.description, en: restaurantEn.description },
+        detailedDescription: { fr: restaurantFr.detailedDescription, en: restaurantEn.detailedDescription },
+        images: restaurantFr.images || ['/uploads/Restaurant.png'],
+        rating: restaurantFr.rating,
+        priceRange: { fr: restaurantFr.priceRange, en: restaurantEn.priceRange },
+        hours: { fr: restaurantFr.hours, en: restaurantEn.hours },
+        capacity: { fr: restaurantFr.capacity, en: restaurantEn.capacity },
+        reservationRequired: restaurantFr.reservationRequired,
+        dressCode: { fr: restaurantFr.dressCode, en: restaurantEn.dressCode },
+        specialties: restaurantFr.specialties.map((sFr: string, j: number) => ({
+          fr: sFr,
+          en: restaurantEn.specialties[j] || sFr
         })),
-        validUntil: { fr: offerFr.validUntil, en: offerEn.validUntil },
-        highlight: offerFr.highlight
-          ? { fr: offerFr.highlight, en: offerEn.highlight || offerFr.highlight }
-          : null,
-        image: offerFr.image || '/uploads/Offre.png',
-        hidden: offerFr.hidden !== undefined ? offerFr.hidden : (offerEn.hidden || false),
-      };
-    }),
-    seasonalOffers: dataFr.seasonalOffers.map((soFr: any, i: number) => {
-      const soEn = enFallback.seasonalOffers[i] || soFr;
-      return {
-        title: { fr: soFr.title, en: soEn.title },
-        period: { fr: soFr.period, en: soEn.period },
-        description: { fr: soFr.description, en: soEn.description },
-        image: soFr.image || '/uploads/Env.png',
-        hidden: soFr.hidden !== undefined ? soFr.hidden : (soEn.hidden || false),
+        features: restaurantFr.features.map((fFr: string, j: number) => ({
+          fr: fFr,
+          en: restaurantEn.features[j] || fFr
+        })),
+        hidden: restaurantFr.hidden !== undefined ? restaurantFr.hidden : (restaurantEn.hidden || false)
       };
     }),
     cta: {
       title: { fr: dataFr.cta.title, en: enFallback.cta.title },
       description: { fr: dataFr.cta.description, en: enFallback.cta.description },
-      buttonTexts: {
-        primary: { fr: dataFr.cta.buttonTexts.primary, en: enFallback.cta.buttonTexts.primary },
-        secondary: { fr: dataFr.cta.buttonTexts.secondary, en: enFallback.cta.buttonTexts.secondary },
-      },
-    },
+      buttonText: { fr: dataFr.cta.buttonText, en: enFallback.cta.buttonText }
+    }
   };
 };
 
-// Image Modal Component
-const ImageModal = ({ imageUrl, onClose }: { imageUrl: string; onClose: () => void }) => {
-  if (!imageUrl) return null;
+interface TextFormatterProps {
+  text: any;
+  className?: string;
+}
 
-  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
+const TextFormatter: React.FC<TextFormatterProps> = ({ text, className }) => {
+  let displayText: string;
+  if (typeof text === 'string') {
+    displayText = text;
+  } else if (typeof text === 'number') {
+    displayText = text.toString();
+  } else {
+    displayText = String(text || '');
+  }
 
+  const parts = displayText.split('(-)').filter(part => part.trim().length > 0);
+  if (parts.length === 1) {
+    return <span className={className}>{formatAmpersand(displayText)}</span>;
+  }
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4" onClick={handleOverlayClick}>
-      <div className="relative max-w-4xl max-h-full w-full h-full flex items-center justify-center">
-        <button
-          onClick={onClose}
-          className="absolute -top-4 -right-4 text-white hover:text-gray-300 text-2xl z-10 rounded-full bg-black/50 w-12 h-12 flex items-center justify-center"
-        >
-          <X className="w-6 h-6" />
-        </button>
-        <img
-          src={imageUrl}
-          alt="Enlarged view"
-          className="max-w-full max-h-full object-contain"
-        />
-      </div>
+    <div className={`space-y-2 ${className || ''}`}>
+      {parts.map((part, i) => (
+        <p key={i} className="leading-relaxed">{formatAmpersand(part.trim())}</p>
+      ))}
     </div>
   );
 };
 
-const Offres = () => {
+// Carousel Component
+interface CarouselProps {
+  images: string[];
+  onImageChange?: (imageUrl: string) => void;
+  isAdmin?: boolean;
+}
+
+const Carousel: React.FC<CarouselProps> = ({ images, onImageChange, isAdmin = false }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const nextImage = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+  };
+
+  const prevImage = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+  };
+
+  const goToImage = (index: number) => {
+    setCurrentIndex(index);
+  };
+
+  if (!images || images.length === 0) {
+    return (
+      <div className="w-full h-80 bg-muted flex items-center justify-center">
+        <p className="text-muted-foreground">Aucune image disponible</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative w-full h-80 lg:h-full overflow-hidden group">
+      {/* Main Image */}
+      <div className="w-full h-full">
+        <img 
+          src={images[currentIndex]} 
+          alt={`Image ${currentIndex + 1}`}
+          className="w-full h-full object-cover transition-transform duration-500"
+        />
+      </div>
+
+      {/* Navigation Arrows */}
+      {images.length > 1 && (
+        <>
+          <button
+            onClick={prevImage}
+            className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <button
+            onClick={nextImage}
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </>
+      )}
+
+      {/* Image Indicators */}
+      {images.length > 1 && (
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+          {images.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => goToImage(index)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                index === currentIndex ? 'bg-white' : 'bg-white/50'
+              }`}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Image Counter */}
+      {images.length > 1 && (
+        <div className="absolute top-4 right-4 bg-black/50 text-white px-2 py-1 rounded text-sm">
+          {currentIndex + 1} / {images.length}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const Restaurants = () => {
   const { currentLang } = useLanguage();
   const langKey = currentLang.code.toLowerCase();
-  const [data, setData] = useState(() => reconstructMixed(splitOffresData(offresPageData).dataFr, splitOffresData(offresPageData).dataEn));
+  const [location, navigate] = useLocation();
+  const [data, setData] = useState(() => reconstructMixed(splitRestaurantData(restaurantPageData).dataFr, splitRestaurantData(restaurantPageData).dataEn));
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [forceShow, setForceShow] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const isAdmin = !!localStorage.getItem('userToken');
 
-  // Fetch offres data from backend
+  // Fetch restaurants data from backend
   useEffect(() => {
-    const fetchOffresData = async () => {
+    const fetchRestaurantsData = async () => {
       try {
         setLoading(true);
         setError(null);
@@ -371,7 +303,7 @@ const Offres = () => {
         let section = sections.find((s: any) => s.sectionKey === SECTION_KEY);
         if (!section) {
           // Table is empty for this sectionKey, create default
-          const { dataFr, dataEn } = splitOffresData(offresPageData);
+          const { dataFr, dataEn } = splitRestaurantData(restaurantPageData);
           const createResponse = await fetch('/api/globalSections', {
             method: 'POST',
             headers: { ...headers, 'Content-Type': 'application/json' },
@@ -384,7 +316,7 @@ const Offres = () => {
           });
 
           if (!createResponse.ok) {
-            throw new Error('Failed to create offres data');
+            throw new Error('Failed to create restaurants data');
           }
 
           const created = await createResponse.json();
@@ -395,21 +327,72 @@ const Offres = () => {
           const fetchedData = reconstructMixed(section.dataFr, section.dataEn);
           setData(fetchedData);
         } else {
-          setData(() => reconstructMixed(splitOffresData(offresPageData).dataFr, splitOffresData(offresPageData).dataEn));
+          setData(() => reconstructMixed(splitRestaurantData(restaurantPageData).dataFr, splitRestaurantData(restaurantPageData).dataEn));
         }
       } catch (err) {
-        console.error('Error fetching offres data:', err);
-        setError('Failed to load offres data');
-        setData(() => reconstructMixed(splitOffresData(offresPageData).dataFr, splitOffresData(offresPageData).dataEn));
+        console.error('Error fetching restaurants data:', err);
+        setError('Failed to load restaurants data');
+        setData(() => reconstructMixed(splitRestaurantData(restaurantPageData).dataFr, splitRestaurantData(restaurantPageData).dataEn));
       } finally {
         setLoading(false);
       }
     };
 
-    fetchOffresData();
+    fetchRestaurantsData();
   }, []);
 
-  const updateOffresSection = async (updatedMixedData: typeof data) => {
+  // SOLUTION COMPLÈTE : Gestion du défilement pour tous les cas
+  useEffect(() => {
+    let scrollTimeout: NodeJS.Timeout;
+
+    const handleScrollToHash = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash && !loading) {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          const element = document.getElementById(hash);
+          if (element) {
+            element.scrollIntoView({ 
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        }, 100);
+      }
+    };
+
+    // 1. Écouter les changements de hash (navigation depuis d'autres pages)
+    window.addEventListener('hashchange', handleScrollToHash);
+    
+    // 2. Vérifier au chargement initial
+    handleScrollToHash();
+
+    // 3. Intercepter les clics sur les liens d'ancres MÊME sur la page actuelle
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const link = target.closest('a');
+      
+      if (link && link.hash) {
+        const hash = link.hash.replace('#', '');
+        if (hash && window.location.pathname === '/restaurants') {
+          e.preventDefault();
+          // Mettre à jour l'URL sans recharger
+          window.history.pushState(null, '', link.hash);
+          handleScrollToHash();
+        }
+      }
+    };
+
+    document.addEventListener('click', handleAnchorClick);
+
+    return () => {
+      window.removeEventListener('hashchange', handleScrollToHash);
+      document.removeEventListener('click', handleAnchorClick);
+      clearTimeout(scrollTimeout);
+    };
+  }, [loading]);
+
+  const updateRestaurantsSection = async (updatedMixedData: typeof data) => {
     try {
       const headers = getAuthHeaders();
       let currentSectionResponse = await fetch(`/api/globalSections?sectionKey=${SECTION_KEY}`, { headers });
@@ -420,7 +403,7 @@ const Offres = () => {
       let currentSection = currentData.find((s: any) => s.sectionKey === SECTION_KEY);
 
       if (!currentSection) {
-        const { dataFr, dataEn } = splitOffresData(offresPageData);
+        const { dataFr, dataEn } = splitRestaurantData(restaurantPageData);
         const createResponse = await fetch('/api/globalSections', {
           method: 'POST',
           headers: { ...headers, 'Content-Type': 'application/json' },
@@ -437,7 +420,7 @@ const Offres = () => {
         currentSection = await createResponse.json();
       }
 
-      const { dataFr: updatedDataFr, dataEn: updatedDataEn } = splitOffresData(updatedMixedData);
+      const { dataFr: updatedDataFr, dataEn: updatedDataEn } = splitRestaurantData(updatedMixedData);
 
       const putResponse = await fetch(`/api/globalSections/${currentSection.id}`, {
         method: 'PUT',
@@ -449,10 +432,10 @@ const Offres = () => {
       });
 
       if (!putResponse.ok) {
-        throw new Error('Failed to update offres section');
+        throw new Error('Failed to update restaurants section');
       }
     } catch (err) {
-      console.error('Error updating offres section:', err);
+      console.error('Error updating restaurants section:', err);
     }
   };
 
@@ -468,964 +451,675 @@ const Offres = () => {
         },
       };
       setData(updatedData);
-      await updateOffresSection(updatedData);
+      await updateRestaurantsSection(updatedData);
     };
   };
 
-  const updateHeroImage = async (newUrl: string) => {
+  const updateHeroBackgroundImage = async (newUrl: string) => {
     const updatedData = {
       ...data,
       hero: {
         ...data.hero,
-        image: newUrl,
+        backgroundImage: newUrl,
       },
     };
     setData(updatedData);
-    await updateOffresSection(updatedData);
+    await updateRestaurantsSection(updatedData);
   };
 
-  const updateOfferFeaturesTitle = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      offerFeaturesTitle: { fr: newFr, en: newEn },
-    };
-    setData(updatedData);
-    await updateOffresSection(updatedData);
-  };
-
-  const updateOfferField = (index: number, field: 'title' | 'subtitle' | 'description' | 'duration' | 'category' | 'validUntil' | 'highlight') => {
+  const updateHeroStat = (statIndex: number, statField: 'number' | 'label') => {
     return async (newFr: string, newEn: string) => {
-      const updatedData = {
-        ...data,
-        offers: data.offers.map((offer, i) =>
-          i === index
-            ? { ...offer, [field]: { fr: newFr, en: newEn } }
-            : offer
-        ),
+      const updatedStats = [...data.hero.stats];
+      updatedStats[statIndex] = {
+        ...updatedStats[statIndex],
+        [statField]: { fr: newFr, en: newEn },
       };
-      setData(updatedData);
-      await updateOffresSection(updatedData);
-    };
-  };
-
-  const updateOfferFeature = (offerIndex: number, featureIndex: number) => {
-    return async (newFr: string, newEn: string) => {
       const updatedData = {
         ...data,
-        offers: data.offers.map((offer, i) =>
-          i === offerIndex
-            ? {
-              ...offer,
-              features: offer.features.map((feature, j) =>
-                j === featureIndex ? { fr: newFr, en: newEn } : feature
-              ),
-            }
-            : offer
-        ),
-      };
-      setData(updatedData);
-      await updateOffresSection(updatedData);
-    };
-  };
-
-  const addOfferFeature = async (offerIndex: number) => {
-    const updatedData = {
-      ...data,
-      offers: data.offers.map((offer, i) =>
-        i === offerIndex
-          ? {
-            ...offer,
-            features: [...offer.features, { fr: "Exemple d'offre", en: "Example offer" }],
-          }
-          : offer
-      ),
-    };
-    setData(updatedData);
-    await updateOffresSection(updatedData);
-  };
-
-  const removeOfferFeature = async (offerIndex: number, featureIndex: number) => {
-    const updatedData = {
-      ...data,
-      offers: data.offers.map((offer, i) =>
-        i === offerIndex
-          ? {
-            ...offer,
-            features: offer.features.filter((_, j) => j !== featureIndex),
-          }
-          : offer
-      ),
-    };
-    setData(updatedData);
-    await updateOffresSection(updatedData);
-  };
-
-  const toggleOfferHidden = async (index: number) => {
-    const updatedData = {
-      ...data,
-      offers: data.offers.map((offer, i) =>
-        i === index ? { ...offer, hidden: !offer.hidden } : offer
-      ),
-    };
-    setData(updatedData);
-    await updateOffresSection(updatedData);
-  };
-
-  const updateOfferImage = (index: number) => {
-    return async (newUrl: string) => {
-      const updatedData = {
-        ...data,
-        offers: data.offers.map((offer, i) => (i === index ? { ...offer, image: newUrl } : offer)),
-      };
-      setData(updatedData);
-      await updateOffresSection(updatedData);
-    };
-  };
-
-  const updateSeasonalField = (index: number, field: 'title' | 'period' | 'description') => {
-    return async (newFr: string, newEn: string) => {
-      const updatedData = {
-        ...data,
-        seasonalOffers: data.seasonalOffers.map((so, i) =>
-          i === index
-            ? { ...so, [field]: { fr: newFr, en: newEn } }
-            : so
-        ),
-      };
-      setData(updatedData);
-      await updateOffresSection(updatedData);
-    };
-  };
-
-  const toggleSeasonalHidden = async (index: number) => {
-    const updatedData = {
-      ...data,
-      seasonalOffers: data.seasonalOffers.map((so, i) =>
-        i === index ? { ...so, hidden: !so.hidden } : so
-      ),
-    };
-    setData(updatedData);
-    await updateOffresSection(updatedData);
-  };
-
-  const updateSeasonalImage = (index: number) => {
-    return async (newUrl: string) => {
-      const updatedData = {
-        ...data,
-        seasonalOffers: data.seasonalOffers.map((so, i) => (i === index ? { ...so, image: newUrl } : so)),
-      };
-      setData(updatedData);
-      await updateOffresSection(updatedData);
-    };
-  };
-
-  const toggleSeasonalVisibility = async () => {
-    const newShow = !data.seasonalSection.show;
-    const updatedData = {
-      ...data,
-      seasonalSection: {
-        ...data.seasonalSection,
-        show: newShow,
-      },
-    };
-    setData(updatedData);
-    if (!newShow) setForceShow(false);
-    await updateOffresSection(updatedData);
-  };
-
-  const updateSeasonalSectionField = (field: 'title' | 'description') => {
-    return async (newFr: string, newEn: string) => {
-      const updatedData = {
-        ...data,
-        seasonalSection: {
-          ...data.seasonalSection,
-          [field]: { fr: newFr, en: newEn },
+        hero: {
+          ...data.hero,
+          stats: updatedStats,
         },
       };
       setData(updatedData);
-      await updateOffresSection(updatedData);
+      await updateRestaurantsSection(updatedData);
     };
   };
 
-  const updateCtaField = (field: 'title' | 'description') => {
+  const updateHeroButtonText = (buttonType: 'primary' | 'secondary') => {
     return async (newFr: string, newEn: string) => {
       const updatedData = {
         ...data,
-        cta: {
-          ...data.cta,
-          [field]: { fr: newFr, en: newEn },
-        },
-      };
-      setData(updatedData);
-      await updateOffresSection(updatedData);
-    };
-  };
-
-  const updateCtaButton = (buttonKey: 'primary' | 'secondary') => {
-    return async (newFr: string, newEn: string) => {
-      const updatedData = {
-        ...data,
-        cta: {
-          ...data.cta,
+        hero: {
+          ...data.hero,
           buttonTexts: {
-            ...data.cta.buttonTexts,
-            [buttonKey]: { fr: newFr, en: newEn },
+            ...data.hero.buttonTexts,
+            [buttonType]: { fr: newFr, en: newEn },
           },
         },
       };
       setData(updatedData);
-      await updateOffresSection(updatedData);
+      await updateRestaurantsSection(updatedData);
     };
   };
 
-  const addOffer = async () => {
-    let newOffer;
-    if (data.offers.length > 0) {
-      const maxId = Math.max(...data.offers.map((o: any) => o.id));
-      newOffer = {
-        ...data.offers[0],
-        id: maxId + 1,
-        title: { fr: "Nouvelle Offre", en: "New Offer" },
-        hidden: false,
+  const updateRestaurantField = (restaurantId: number, field: string) => {
+    return async (newFr: string, newEn: string) => {
+      const updatedRestaurants = data.restaurants.map((restaurant) => {
+        if (restaurant.id === restaurantId) {
+          return {
+            ...restaurant,
+            [field]: { fr: newFr, en: newEn },
+          };
+        }
+        return restaurant;
+      });
+      const updatedData = { ...data, restaurants: updatedRestaurants };
+      setData(updatedData);
+      await updateRestaurantsSection(updatedData);
+    };
+  };
+
+  const updateRestaurantHours = (restaurantId: number) => {
+    return async (newFr: string, newEn: string) => {
+      const updatedRestaurants = data.restaurants.map((restaurant) => {
+        if (restaurant.id === restaurantId) {
+          return {
+            ...restaurant,
+            hours: { fr: newFr, en: newEn },
+          };
+        }
+        return restaurant;
+      });
+      const updatedData = { ...data, restaurants: updatedRestaurants };
+      setData(updatedData);
+      await updateRestaurantsSection(updatedData);
+    };
+  };
+
+  const updateRestaurantCapacity = (restaurantId: number) => {
+    return async (newFr: string, newEn: string) => {
+      const updatedRestaurants = data.restaurants.map((restaurant) => {
+        if (restaurant.id === restaurantId) {
+          return {
+            ...restaurant,
+            capacity: { fr: newFr, en: newEn },
+          };
+        }
+        return restaurant;
+      });
+      const updatedData = { ...data, restaurants: updatedRestaurants };
+      setData(updatedData);
+      await updateRestaurantsSection(updatedData);
+    };
+  };
+
+  const updateRestaurantPriceRange = (restaurantId: number) => {
+    return async (newFr: string, newEn: string) => {
+      const updatedRestaurants = data.restaurants.map((restaurant) => {
+        if (restaurant.id === restaurantId) {
+          return {
+            ...restaurant,
+            priceRange: { fr: newFr, en: newEn },
+          };
+        }
+        return restaurant;
+      });
+      const updatedData = { ...data, restaurants: updatedRestaurants };
+      setData(updatedData);
+      await updateRestaurantsSection(updatedData);
+    };
+  };
+
+  const updateRestaurantSpecialties = (restaurantId: number, specialtyIndex: number) => {
+    return async (newFr: string, newEn: string) => {
+      const updatedRestaurants = data.restaurants.map((restaurant) => {
+        if (restaurant.id === restaurantId) {
+          const updatedSpecialties = [...restaurant.specialties];
+          updatedSpecialties[specialtyIndex] = { fr: newFr, en: newEn };
+          return { ...restaurant, specialties: updatedSpecialties };
+        }
+        return restaurant;
+      });
+      const updatedData = { ...data, restaurants: updatedRestaurants };
+      setData(updatedData);
+      await updateRestaurantsSection(updatedData);
+    };
+  };
+
+  const addRestaurantSpecialty = async (restaurantId: number) => {
+    const updatedRestaurants = data.restaurants.map((restaurant) => {
+      if (restaurant.id === restaurantId) {
+        const newSpecialty = { fr: 'Nouvelle spécialité', en: 'New specialty' };
+        return { ...restaurant, specialties: [...restaurant.specialties, newSpecialty] };
+      }
+      return restaurant;
+    });
+    const updatedData = { ...data, restaurants: updatedRestaurants };
+    setData(updatedData);
+    await updateRestaurantsSection(updatedData);
+  };
+
+  const removeRestaurantSpecialty = async (restaurantId: number, specialtyIndex: number) => {
+    const updatedRestaurants = data.restaurants.map((restaurant) => {
+      if (restaurant.id === restaurantId) {
+        const updatedSpecialties = restaurant.specialties.filter((_, index) => index !== specialtyIndex);
+        return { ...restaurant, specialties: updatedSpecialties };
+      }
+      return restaurant;
+    });
+    const updatedData = { ...data, restaurants: updatedRestaurants };
+    setData(updatedData);
+    await updateRestaurantsSection(updatedData);
+  };
+
+  const updateRestaurantFeatures = (restaurantId: number, featureIndex: number) => {
+    return async (newFr: string, newEn: string) => {
+      const updatedRestaurants = data.restaurants.map((restaurant) => {
+        if (restaurant.id === restaurantId) {
+          const updatedFeatures = [...restaurant.features];
+          updatedFeatures[featureIndex] = { fr: newFr, en: newEn };
+          return { ...restaurant, features: updatedFeatures };
+        }
+        return restaurant;
+      });
+      const updatedData = { ...data, restaurants: updatedRestaurants };
+      setData(updatedData);
+      await updateRestaurantsSection(updatedData);
+    };
+  };
+
+  const addRestaurantFeature = async (restaurantId: number) => {
+    const updatedRestaurants = data.restaurants.map((restaurant) => {
+      if (restaurant.id === restaurantId) {
+        const newFeature = { fr: 'Nouvelle caractéristique', en: 'New feature' };
+        return { ...restaurant, features: [...restaurant.features, newFeature] };
+      }
+      return restaurant;
+    });
+    const updatedData = { ...data, restaurants: updatedRestaurants };
+    setData(updatedData);
+    await updateRestaurantsSection(updatedData);
+  };
+
+  const removeRestaurantFeature = async (restaurantId: number, featureIndex: number) => {
+    const updatedRestaurants = data.restaurants.map((restaurant) => {
+      if (restaurant.id === restaurantId) {
+        const updatedFeatures = restaurant.features.filter((_, index) => index !== featureIndex);
+        return { ...restaurant, features: updatedFeatures };
+      }
+      return restaurant;
+    });
+    const updatedData = { ...data, restaurants: updatedRestaurants };
+    setData(updatedData);
+    await updateRestaurantsSection(updatedData);
+  };
+
+  const toggleRestaurantHidden = async (restaurantId: number) => {
+    const updatedRestaurants = data.restaurants.map((restaurant) => {
+      if (restaurant.id === restaurantId) {
+        return { ...restaurant, hidden: !restaurant.hidden };
+      }
+      return restaurant;
+    });
+    const updatedData = { ...data, restaurants: updatedRestaurants };
+    setData(updatedData);
+    await updateRestaurantsSection(updatedData);
+  };
+
+  const updateRestaurantImages = async (restaurantId: number, newImages: string[]) => {
+    const updatedRestaurants = data.restaurants.map((restaurant) => {
+      if (restaurant.id === restaurantId) {
+        return { ...restaurant, images: newImages };
+      }
+      return restaurant;
+    });
+    const updatedData = { ...data, restaurants: updatedRestaurants };
+    setData(updatedData);
+    await updateRestaurantsSection(updatedData);
+  };
+
+  const updateCtaField = (field: 'title' | 'description' | 'buttonText') => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        cta: {
+          ...data.cta,
+          [field]: { fr: newFr, en: newEn },
+        },
       };
-    } else {
-      newOffer = {
-        id: 1,
-        title: { fr: "Nouvelle Offre", en: "New Offer" },
-        subtitle: { fr: "Pour les gourmands", en: "For foodies" },
-        description: { fr: "Description de l'offre.", en: "Offer description." },
-        duration: { fr: "Du lundi au vendredi", en: "Monday to Friday" },
-        category: { fr: "Gastronomie", en: "Gastronomy" },
-        features: [
-          { fr: "Caractéristique 1 à 64 000 Ar", en: "Feature 1 at 64,000 Ar" },
-          { fr: "Caractéristique 2", en: "Feature 2" },
-        ],
-        validUntil: { fr: "", en: "" },
-        highlight: null,
-        image: '/uploads/Offre.png',
-        hidden: false,
-      };
-    }
+      setData(updatedData);
+      await updateRestaurantsSection(updatedData);
+    };
+  };
+
+  const updateCtaLink = async (newLink: string) => {
     const updatedData = {
       ...data,
-      offers: [...data.offers, newOffer],
+      cta: {
+        ...data.cta,
+        buttonLink: newLink,
+      },
     };
     setData(updatedData);
-    await updateOffresSection(updatedData);
-  };
-
-  const removeOffer = async (id: number) => {
-    const updatedData = {
-      ...data,
-      offers: data.offers.filter((offer) => offer.id !== id),
-    };
-    setData(updatedData);
-    await updateOffresSection(updatedData);
-  };
-
-  const addSeasonal = async () => {
-    let newSeasonal;
-    if (data.seasonalOffers.length > 0) {
-      newSeasonal = {
-        ...data.seasonalOffers[0],
-        title: { fr: "Nouvel Événement", en: "New Event" },
-        hidden: false,
-      };
-    } else {
-      newSeasonal = {
-        title: { fr: "Nouvel Événement", en: "New Event" },
-        period: { fr: "Tous les ...", en: "Every ..." },
-        description: { fr: "Description par défaut.", en: "Default description." },
-        image: '/uploads/Env.png',
-        hidden: false,
-      };
-    }
-    const updatedData = {
-      ...data,
-      seasonalOffers: [...data.seasonalOffers, newSeasonal],
-    };
-    setData(updatedData);
-    await updateOffresSection(updatedData);
-  };
-
-  const removeSeasonal = async (index: number) => {
-    const updatedData = {
-      ...data,
-      seasonalOffers: data.seasonalOffers.filter((_, i) => i !== index),
-    };
-    setData(updatedData);
-    await updateOffresSection(updatedData);
-  };
-
-  const getCategoryIcon = (category: string) => {
-    const icons: { [key: string]: React.ComponentType<{ className?: string }> } = {
-      'Déjeuner d\'affaires': ForkKnife,
-      'Business Lunch': ForkKnife,
-      'Apéritif': Martini,
-      'Aperitif': Martini,
-      'Bien-être': HeartPulse,
-      'Wellness': HeartPulse,
-    };
-    return icons[category] || Star;
-  };
-
-  const getSeasonalIcon = (title: string) => {
-    const icons: { [key: string]: React.ComponentType<{ className?: string }> } = {
-      'Soirée Jazz': Music,
-      'Jazz Evening': Music,
-      'Brunch Dominical': Coffee,
-      'Sunday Brunch': Coffee,
-      'Soirée Dégustation': Wine,
-      'Tasting Evening': Wine,
-    };
-    return icons[title] || Sparkles;
-  };
-
-  const addOfferText = {
-    fr: 'Ajouter une nouvelle offre',
-    en: 'Add a new offer'
-  };
-
-  const addSeasonalText = {
-    fr: 'Ajouter un nouvel événement',
-    en: 'Add a new event'
+    await updateRestaurantsSection(updatedData);
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
-        <ParallaxSection
-          backgroundImage="/uploads/Offre.png"
-          parallaxSpeed={0.3}
-          minHeight="80vh"
-          overlay={true}
-          overlayOpacity={0.5}
-          className="flex items-center pt-20"
-        >
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white animate-pulse">
-            <div className="h-20 w-full bg-muted/20 mb-8" />
-            <div className="h-8 w-96 bg-muted/20 mx-auto mb-8" />
-            <div className="h-12 w-80 bg-muted/20 mx-auto mb-12" />
-          </div>
-        </ParallaxSection>
-        <section className="py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="space-y-16">
-              {[1,2,3].map((i) => (
-                <div key={i} className="flex flex-col lg:flex animate-pulse">
-                  <div className="lg:w-1/2">
-                    <div className="w-full h-80 lg:h-full bg-muted rounded-lg" />
-                  </div>
-                  <div className="lg:w-1/2 p-8 space-y-6">
-                    <div className="h-4 w-32 bg-muted mb-4" />
-                    <div className="h-6 w-64 bg-muted mb-3" />
-                    <div className="flex flex-wrap gap-4">
-                      <div className="h-4 w-48 bg-muted" />
-                      <div className="h-4 w-32 bg-muted" />
-                    </div>
-                    <div className="h-20 w-full bg-muted mb-6" />
-                    <div className="space-y-2">
-                      <div className="h-4 w-24 bg-muted" />
-                      {[1,2,3].map((j) => <div key={j} className="h-3 w-full bg-muted" />)}
-                    </div>
-                  </div>
-                </div>
-              ))}
-              {isAdmin && (
-                <div className="flex justify-center">
-                  <div className="h-64 w-full max-w-md bg-muted rounded-lg" />
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
-        <section className="py-20 bg-primary/5">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="space-y-16">
-              {[1,2,3].map((i) => (
-                <div key={i} className="flex flex-col lg:flex animate-pulse">
-                  <div className="lg:w-1/2">
-                    <div className="w-full h-80 lg:h-full bg-muted rounded-lg" />
-                  </div>
-                  <div className="lg:w-1/2 p-8 space-y-6">
-                    <div className="h-4 w-32 bg-muted mb-4" />
-                    <div className="h-6 w-64 bg-muted mb-3" />
-                    <div className="h-20 w-full bg-muted mb-6" />
-                  </div>
-                </div>
-              ))}
-              {isAdmin && (
-                <div className="flex justify-center">
-                  <div className="h-64 w-full max-w-md bg-muted rounded-lg" />
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
-        <section className="py-16 bg-gradient-to-r from-primary/10 to-accent/10">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-pulse">
-            <div className="h-12 w-64 bg-muted mx-auto mb-6" />
-            <div className="h-6 w-80 bg-muted mx-auto mb-8" />
-            <div className="h-12 w-48 bg-muted mx-auto" />
-          </div>
-        </section>
-        <Footer />
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
       </div>
     );
   }
 
   if (error) {
-    console.warn(error);
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-destructive mb-4">Erreur</h2>
+          <p className="text-muted-foreground">{error}</p>
+        </div>
+      </div>
+    );
   }
-
-  const { hero, offers, seasonalOffers, seasonalSection, cta, offerFeaturesTitle } = data;
-  const ctaButtons = cta.buttonTexts;
-
-  const hiddenSectionTexts = {
-    title: { fr: 'Section masquée', en: 'Section hidden' },
-    description: {
-      fr: 'Cette section est cachée pour les visiteurs. Cliquez pour l\'afficher temporairement et éditer.',
-      en: 'This section is hidden from visitors. Click to temporarily show and edit.'
-    },
-    button: { fr: 'Afficher pour édition', en: 'Show for editing' }
-  }
-
-  const addOfferCard = (
-    <Card className="border-2 border-dashed border-muted-foreground hover:border-primary transition-colors flex flex-col">
-      <CardContent className="flex flex-col items-center justify-center h-full p-8 text-center">
-        <Button
-          variant="outline"
-          size="lg"
-          onClick={addOffer}
-          className="mb-4 rounded-full w-16 h-16 p-0"
-        >
-          <Plus className="w-6 h-6" />
-        </Button>
-        <p className="text-muted-foreground">
-          {getText(addOfferText)}
-        </p>
-      </CardContent>
-    </Card>
-  );
-
-  const addSeasonalCard = (
-    <Card className="border-2 border-dashed border-muted-foreground hover:border-primary transition-colors flex flex-col">
-      <CardContent className="flex flex-col items-center justify-center h-full p-8 text-center">
-        <Button
-          variant="outline"
-          size="lg"
-          onClick={addSeasonal}
-          className="mb-4 rounded-full w-16 h-16 p-0"
-        >
-          <Plus className="w-6 h-6" />
-        </Button>
-        <p className="text-muted-foreground">
-          {getText(addSeasonalText)}
-        </p>
-      </CardContent>
-    </Card>
-  );
-
-  const isFr = currentLang.code === 'fr';
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section with Parallax */}
-      <div className="relative">
-        <ImageTooltip
-          imageUrl={hero.image}
-          onSave={updateHeroImage}
-        >
-          <ParallaxSection
-            backgroundImage={hero.image}
-            parallaxSpeed={0.3}
-            minHeight="80vh"
-            overlay={true}
-            overlayOpacity={0.5}
-            className="flex items-center pt-20"
-          >
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-              <Tooltip
-                frLabel={hero.title.fr}
-                enLabel={hero.title.en}
-                onSave={updateHeroField('title')}
-              >
-                <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6 drop-shadow-lg">
-                  {getText(hero.title)}
-                </h1>
-              </Tooltip>
-              <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
-              <Tooltip
-                frLabel={hero.description.fr}
-                enLabel={hero.description.en}
-                onSave={updateHeroField('description')}
-              >
-                <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                  {getText(hero.description)}
-                </p>
-              </Tooltip>
-            </div>
-          </ParallaxSection>
-        </ImageTooltip>
-        {isAdmin && (
-          <div className="absolute top-4 left-4 z-50">
-            <ImageTooltip
-              imageUrl={hero.image}
-              onSave={updateHeroImage}
-            >
-              <Button
-                variant="ghost"
-                size="sm"
-                className="bg-background/80 backdrop-blur-sm text-foreground border border-border/50 hover:bg-background"
-              >
-                <Edit3 className="w-4 h-4 mr-1" />
-                {isFr ? 'Éditer fond' : 'Edit bg'}
-              </Button>
-            </ImageTooltip>
-          </div>
-        )}
-      </div>
-
-      {/* Main Offers Section */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-16">
-            {offers.map((offer, index) => {
-              if (!isAdmin && offer.hidden) return null;
-              const direction = index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse';
-              const CategoryIcon = getCategoryIcon(getText(offer.category));
-              return (
-                <Card 
-                  key={offer.id} 
-                  className={`relative overflow-hidden hover-elevate transition-all duration-300 ${direction} flex flex-col lg:flex ${offer.hidden ? 'opacity-50' : ''}`}
-                  data-testid={`card-offer-${offer.id}`}
-                >
-                  {isAdmin && (
-                    <div className="absolute top-2 right-2 z-10 flex gap-1">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => toggleOfferHidden(index)}
-                        title={offer.hidden ? (isFr ? 'Afficher' : 'Show') : (isFr ? 'Masquer' : 'Hide')}
-                      >
-                        {offer.hidden ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => removeOffer(offer.id)}
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  )}
-                  <div className="lg:w-1/2 relative">
-                    <ImageTooltip
-                      imageUrl={offer.image}
-                      onSave={updateOfferImage(index)}
-                    >
-                      <div 
-                        onClick={() => offer.image && setSelectedImage(offer.image)}
-                        className={`w-full h-[300px] lg:h-full object-cover cursor-pointer ${!offer.image ? 'flex items-center justify-center bg-gradient-to-r from-primary/10 to-accent/10' : ''}`}
-                      >
-                        {offer.image ? (
-                          <img 
-                            src={offer.image} 
-                            alt={getText(offer.title)}
-                            className="w-full h-full object-cover transition-transform duration-300"
-                            data-testid={`image-offer-${offer.id}`}
-                          />
-                        ) : (
-                          <div className="text-center p-4">
-                            <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                              <Gift className="w-8 h-8 text-primary" />
-                            </div>
-                            <p className="text-sm text-muted-foreground font-medium">
-                              {isFr ? 'Photo de l\'offre' : 'Offer photo'}
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                    </ImageTooltip>
-                  </div>
-                  
-                  <div className="lg:w-1/2 p-8 flex flex-col justify-center">
-                    <div>
-                      <CardHeader className="p-0 mb-6">
-                        <div className="flex items-center justify-between mb-4">
-                          <Tooltip
-                            frLabel={offer.category.fr}
-                            enLabel={offer.category.en}
-                            onSave={updateOfferField(index, 'category')}
-                          >
-                            <Badge variant="outline" className="text-xl text-primary border-primary px-4 py-2" data-testid={`badge-category-${offer.id}`}>
-                              <CategoryIcon className="w-5 h-5 mr-2" />
-                              {getText(offer.category)}
-                            </Badge>
-                          </Tooltip>
-                          {offer.highlight && (
-                            <Tooltip
-                              frLabel={offer.highlight.fr}
-                              enLabel={offer.highlight.en}
-                              onSave={updateOfferField(index, 'highlight')}
-                            >
-                              <Badge className="bg-accent text-accent-foreground text-lg px-3 py-1.5">
-                                {getText(offer.highlight)}
-                              </Badge>
-                            </Tooltip>
-                          )}
-                        </div>
-                        <Tooltip
-                          frLabel={offer.title.fr}
-                          enLabel={offer.title.en}
-                          onSave={updateOfferField(index, 'title')}
-                        >
-                          <CardTitle className="text-3xl font-serif text-foreground mb-3" data-testid={`title-offer-${offer.id}`}>
-                            {getText(offer.title)}
-                          </CardTitle>
-                        </Tooltip>
-                        <Tooltip
-                          frLabel={offer.subtitle.fr}
-                          enLabel={offer.subtitle.en}
-                          onSave={updateOfferField(index, 'subtitle')}
-                        >
-                          <p className="text-primary font-luxury italic text-xl" data-testid={`subtitle-offer-${offer.id}`}>
-                            {getText(offer.subtitle)}
-                          </p>
-                        </Tooltip>
-                      </CardHeader>
-                      
-                      <CardContent className="p-0 space-y-6">
-                        <Tooltip
-                          frLabel={offer.description.fr}
-                          enLabel={offer.description.en}
-                          onSave={updateOfferField(index, 'description')}
-                        >
-                          <p className="text-muted-foreground leading-relaxed text-justify" data-testid={`description-offer-${offer.id}`}>
-                            {getText(offer.description)}
-                          </p>
-                        </Tooltip>
-                        
-                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                          <div className="flex items-center gap-1">
-                            <Clock className="w-4 h-4" />
-                            <Tooltip
-                              frLabel={offer.duration.fr}
-                              enLabel={offer.duration.en}
-                              onSave={updateOfferField(index, 'duration')}
-                            >
-                              <span>{getText(offer.duration)}</span>
-                            </Tooltip>
-                          </div>
-                          {offer.validUntil && getText(offer.validUntil) && (
-                            <div className="flex items-center gap-1">
-                              <Calendar className="w-4 h-4" />
-                              <Tooltip
-                                frLabel={offer.validUntil.fr}
-                                enLabel={offer.validUntil.en}
-                                onSave={updateOfferField(index, 'validUntil')}
-                              >
-                                <span>{getText(offer.validUntil)}</span>
-                              </Tooltip>
-                            </div>
-                          )}
-                        </div>
-                        
-                        <div>
-                          <Tooltip
-                            frLabel={offerFeaturesTitle.fr}
-                            enLabel={offerFeaturesTitle.en}
-                            onSave={updateOfferFeaturesTitle}
-                          >
-                            <h4 className="font-semibold text-foreground mb-3">{getText(offerFeaturesTitle)}</h4>
-                          </Tooltip>
-                          <div className="space-y-2">
-                            {offer.features.map((feature, fIndex) => (
-                              <div key={fIndex} className="flex items-start gap-2 text-sm text-muted-foreground" data-testid={`feature-${offer.id}-${fIndex}`}>
-                                <div className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                                <div className="flex-1">
-                                  <Tooltip
-                                    frLabel={feature.fr}
-                                    enLabel={feature.en}
-                                    onSave={updateOfferFeature(index, fIndex)}
-                                  >
-                                    <span className="text-justify">{getText(feature)}</span>
-                                  </Tooltip>
-                                </div>
-                                {isAdmin && (
-                                  <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() => removeOfferFeature(index, fIndex)}
-                                    className="h-6 w-6 p-0"
-                                  >
-                                    <Trash2 className="w-3 h-3" />
-                                  </Button>
-                                )}
-                              </div>
-                            ))}
-                            {isAdmin && (
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => addOfferFeature(index)}
-                                className="mt-2"
-                              >
-                                <Plus className="w-4 h-4 mr-1" />
-                                {isFr ? 'Ajouter une caractéristique' : 'Add feature'}
-                              </Button>
-                            )}
-                          </div>
-                        </div>
-                      </CardContent>
-                    </div>
-                  </div>
-                </Card>
-              );
-            })}
-            {isAdmin && addOfferCard}
-          </div>
+      {/* Hero Section */}
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src={data.hero.backgroundImage}
+            alt="Restaurants & Bars"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/50"></div>
         </div>
-      </section>
-
-      {/* Seasonal Offers Section */}
-      {(seasonalSection.show && (seasonalOffers.length > 0 || isAdmin)) || forceShow ? (
-        <section className="py-20 bg-primary/5">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16 relative">
-              {isAdmin && (
-                <div className="absolute right-4 top-0 flex gap-2">
-                  {seasonalSection.show ? (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={toggleSeasonalVisibility}
-                      title={isFr ? 'Masquer pour le public' : 'Hide for public'}
-                    >
-                      <EyeOff className="w-4 h-4" />
-                      <span className="sr-only">{isFr ? 'Masquer' : 'Hide'}</span>
-                    </Button>
-                  ) : forceShow ? (
-                    <div className="flex gap-1">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setForceShow(false)}
-                        title={isFr ? 'Masquer l\'aperçu' : 'Hide preview'}
-                      >
-                        <EyeOff className="w-4 h-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={async () => {
-                          const updatedData = {
-                            ...data,
-                            seasonalSection: {
-                              ...data.seasonalSection,
-                              show: true,
-                            },
-                          };
-                          setData(updatedData);
-                          setForceShow(false);
-                          await updateOffresSection(updatedData);
-                        }}
-                        title={isFr ? 'Rendre visible' : 'Make visible'}
-                      >
-                        <Eye className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  ) : null}
-                </div>
-              )}
+        
+        <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            {isAdmin ? (
               <Tooltip
-                frLabel={seasonalSection.title.fr}
-                enLabel={seasonalSection.title.en}
-                onSave={updateSeasonalSectionField('title')}
-              >
-                <h2 className="text-4xl font-serif font-bold text-foreground mb-4">
-                  {getText(seasonalSection.title)}
-                </h2>
-              </Tooltip>
+                content={getText(data.hero.title)}
+                onSave={updateHeroField('title')}
+                isAdmin={isAdmin}
+              />
+            ) : (
+              getText(data.hero.title)
+            )}
+          </h1>
+          <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+            {isAdmin ? (
               <Tooltip
-                frLabel={seasonalSection.description.fr}
-                enLabel={seasonalSection.description.en}
-                onSave={updateSeasonalSectionField('description')}
-              >
-                <p className="text-lg text-muted-foreground">
-                  {getText(seasonalSection.description)}
-                </p>
-              </Tooltip>
-            </div>
-            
-            <div className="space-y-16">
-              {seasonalOffers.map((offer, index) => {
-                if (!isAdmin && offer.hidden) return null;
-                const direction = index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse';
-                const SeasonalIcon = getSeasonalIcon(getText(offer.title));
-                return (
-                  <Card 
-                    key={index} 
-                    className={`relative overflow-hidden hover-elevate transition-all duration-300 ${direction} flex flex-col lg:flex ${offer.hidden ? 'opacity-50' : ''}`}
-                  >
-                    {isAdmin && (
-                      <div className="absolute top-2 right-2 z-10 flex gap-1">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => toggleSeasonalHidden(index)}
-                          title={offer.hidden ? (isFr ? 'Afficher' : 'Show') : (isFr ? 'Masquer' : 'Hide')}
-                        >
-                          {offer.hidden ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => removeSeasonal(index)}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    )}
-                    <div className="lg:w-1/2 relative">
-                      <ImageTooltip
-                        imageUrl={offer.image}
-                        onSave={updateSeasonalImage(index)}
-                      >
-                        <div 
-                          onClick={() => offer.image && setSelectedImage(offer.image)}
-                          className={`w-full h-[300px] lg:h-full object-cover cursor-pointer ${!offer.image ? 'flex items-center justify-center bg-gradient-to-r from-primary/10 to-accent/10' : ''}`}
-                        >
-                          {offer.image ? (
-                            <img 
-                              src={offer.image} 
-                              alt={getText(offer.title)}
-                              className="w-full h-full object-cover transition-transform duration-300"
-                            />
-                          ) : (
-                            <div className="text-center p-4">
-                              <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                                <Gift className="w-8 h-8 text-primary" />
-                              </div>
-                              <p className="text-sm text-muted-foreground font-medium">
-                                {isFr ? 'Photo de l\'événement' : 'Event photo'}
-                              </p>
-                            </div>
-                          )}
-                        </div>
-                      </ImageTooltip>
-                    </div>
-                    
-                    <div className="lg:w-1/2 p-8 flex flex-col justify-center">
-                      <div>
-                        <CardHeader className="p-0 mb-6">
-                          <div className="flex items-center justify-between mb-4">
-                          </div>
-                          <Tooltip
-                            frLabel={offer.title.fr}
-                            enLabel={offer.title.en}
-                            onSave={updateSeasonalField(index, 'title')}
-                          >
-                            <CardTitle className="text-3xl font-serif text-foreground mb-3">
-                              {getText(offer.title)}
-                            </CardTitle>
-                          </Tooltip>
-                          <Tooltip
-                            frLabel={offer.period.fr}
-                            enLabel={offer.period.en}
-                            onSave={updateSeasonalField(index, 'period')}
-                          >
-                            <p className="text-primary font-luxury italic text-xl">
-                              {getText(offer.period)}
-                            </p>
-                          </Tooltip>
-                        </CardHeader>
-                        
-                        <CardContent className="p-0 space-y-6">
-                          <Tooltip
-                            frLabel={offer.description.fr}
-                            enLabel={offer.description.en}
-                            onSave={updateSeasonalField(index, 'description')}
-                          >
-                            <p className="text-muted-foreground leading-relaxed text-justify">
-                              {getText(offer.description)}
-                            </p>
-                          </Tooltip>
-                        </CardContent>
-                      </div>
-                    </div>
-                  </Card>
-                );
-              })}
-              {isAdmin && addSeasonalCard}
-            </div>
-          </div>
-        </section>
-      ) : isAdmin ? (
-        <section className="py-20 bg-primary/5">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center py-20">
-              <Card className="max-w-md mx-auto">
-                <CardHeader className="text-center">
-                  <EyeOff className="w-8 h-8 mx-auto text-muted-foreground mb-4" />
-                  <CardTitle className="text-2xl">{getText(hiddenSectionTexts.title)}</CardTitle>
-                  <p className="text-muted-foreground">{getText(hiddenSectionTexts.description)}</p>
-                </CardHeader>
-                <CardContent>
-                  <Button onClick={() => setForceShow(true)} className="w-full">
-                    {getText(hiddenSectionTexts.button)}
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-      ) : null}
-
-      {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-primary/10 to-accent/10">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Tooltip
-            frLabel={cta.title.fr}
-            enLabel={cta.title.en}
-            onSave={updateCtaField('title')}
-          >
-            <h2 className="text-3xl font-serif font-bold text-foreground mb-4">
-              {getText(cta.title)}
-            </h2>
-          </Tooltip>
-          <Tooltip
-            frLabel={cta.description.fr}
-            enLabel={cta.description.en}
-            onSave={updateCtaField('description')}
-          >
-            <p className="text-lg text-muted-foreground mb-8">
-              {getText(cta.description)}
-            </p>
-          </Tooltip>
+                content={getText(data.hero.description)}
+                onSave={updateHeroField('description')}
+                isAdmin={isAdmin}
+                multiline
+              />
+            ) : (
+              <TextFormatter text={getText(data.hero.description)} />
+            )}
+          </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="default" data-testid="button-reserve">
-              <Phone className="w-4 h-4 mr-2" />
-              <Tooltip
-                frLabel={ctaButtons.primary.fr}
-                enLabel={ctaButtons.primary.en}
-                onSave={updateCtaButton('primary')}
-              >
-                <span>{getText(ctaButtons.primary)}</span>
-              </Tooltip>
+            <Button 
+              size="lg" 
+              className="bg-primary hover:bg-primary/90 text-white"
+              onClick={() => navigate('#restaurants-list')}
+            >
+              {getText(data.hero.buttonTexts.primary)}
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="border-white text-white hover:bg-white/10"
+              onClick={() => navigate('/contact')}
+            >
+              {getText(data.hero.buttonTexts.secondary)}
             </Button>
           </div>
         </div>
+
+        {/* Stats Section */}
+        <div className="absolute bottom-0 left-0 right-0 bg-black/30 backdrop-blur-sm py-8">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {data.hero.stats.map((stat, index) => (
+                <div key={index} className="text-center text-white">
+                  <div className="text-2xl md:text-3xl font-bold mb-2">
+                    {isAdmin ? (
+                      <Tooltip
+                        content={getText(stat.number)}
+                        onSave={updateHeroStat(index, 'number')}
+                        isAdmin={isAdmin}
+                      />
+                    ) : (
+                      getText(stat.number)
+                    )}
+                  </div>
+                  <div className="text-sm md:text-base">
+                    {isAdmin ? (
+                      <Tooltip
+                        content={getText(stat.label)}
+                        onSave={updateHeroStat(index, 'label')}
+                        isAdmin={isAdmin}
+                      />
+                    ) : (
+                      getText(stat.label)
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
 
-      {/* Image Modal */}
-      {selectedImage && (
-        <ImageModal imageUrl={selectedImage} onClose={() => setSelectedImage(null)} />
-      )}
+      {/* Restaurants List */}
+      <section id="restaurants-list" className="py-20 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="space-y-16">
+            {data.restaurants
+              .filter(restaurant => !restaurant.hidden)
+              .map((restaurant, index) => (
+                <div 
+                  key={restaurant.id} 
+                  id={`restaurant-${restaurant.id}`}
+                  className={`flex flex-col lg:flex-row gap-8 items-center ${
+                    index % 2 === 1 ? 'lg:flex-row-reverse' : ''
+                  }`}
+                >
+                  {/* Image Section with Carousel */}
+                  <div className="lg:w-1/2 w-full">
+                    <div className="rounded-lg overflow-hidden shadow-2xl h-80 lg:h-full">
+                      <Carousel 
+                        images={restaurant.images} 
+                        isAdmin={isAdmin}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Content Section */}
+                  <div className="lg:w-1/2 w-full space-y-6">
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <h2 className="text-3xl font-bold text-foreground">
+                          {isAdmin ? (
+                            <Tooltip
+                              content={getText(restaurant.name)}
+                              onSave={updateRestaurantField(restaurant.id, 'name')}
+                              isAdmin={isAdmin}
+                            />
+                          ) : (
+                            getText(restaurant.name)
+                          )}
+                        </h2>
+                        {isAdmin && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => toggleRestaurantHidden(restaurant.id)}
+                            className="flex items-center gap-2"
+                          >
+                            {restaurant.hidden ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                            {restaurant.hidden ? 'Afficher' : 'Masquer'}
+                          </Button>
+                        )}
+                      </div>
+                      
+                      <p className="text-lg text-muted-foreground italic">
+                        {isAdmin ? (
+                          <Tooltip
+                            content={getText(restaurant.type)}
+                            onSave={updateRestaurantField(restaurant.id, 'type')}
+                            isAdmin={isAdmin}
+                          />
+                        ) : (
+                          getText(restaurant.type)
+                        )}
+                      </p>
+
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-1">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              className={`w-4 h-4 ${
+                                i < restaurant.rating
+                                  ? 'text-yellow-400 fill-current'
+                                  : 'text-gray-300'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                        <Badge variant="secondary" className="text-sm">
+                          {isAdmin ? (
+                            <Tooltip
+                              content={getText(restaurant.priceRange)}
+                              onSave={updateRestaurantPriceRange(restaurant.id)}
+                              isAdmin={isAdmin}
+                            />
+                          ) : (
+                            getText(restaurant.priceRange)
+                          )}
+                        </Badge>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <p className="text-foreground leading-relaxed">
+                        {isAdmin ? (
+                          <Tooltip
+                            content={getText(restaurant.description)}
+                            onSave={updateRestaurantField(restaurant.id, 'description')}
+                            isAdmin={isAdmin}
+                            multiline
+                          />
+                        ) : (
+                          <TextFormatter text={getText(restaurant.description)} />
+                        )}
+                      </p>
+
+                      <p className="text-muted-foreground leading-relaxed">
+                        {isAdmin ? (
+                          <Tooltip
+                            content={getText(restaurant.detailedDescription)}
+                            onSave={updateRestaurantField(restaurant.id, 'detailedDescription')}
+                            isAdmin={isAdmin}
+                            multiline
+                          />
+                        ) : (
+                          <TextFormatter text={getText(restaurant.detailedDescription)} />
+                        )}
+                      </p>
+                    </div>
+
+                    {/* Restaurant Details */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+                      <div className="flex items-center gap-3">
+                        <Clock className="w-5 h-5 text-primary" />
+                        <span className="text-sm">
+                          {isAdmin ? (
+                            <Tooltip
+                              content={getText(restaurant.hours)}
+                              onSave={updateRestaurantHours(restaurant.id)}
+                              isAdmin={isAdmin}
+                              multiline
+                            />
+                          ) : (
+                            getText(restaurant.hours)
+                          )}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <MapPin className="w-5 h-5 text-primary" />
+                        <span className="text-sm">
+                          {isAdmin ? (
+                            <Tooltip
+                              content={getText(restaurant.capacity)}
+                              onSave={updateRestaurantCapacity(restaurant.id)}
+                              isAdmin={isAdmin}
+                            />
+                          ) : (
+                            getText(restaurant.capacity)
+                          )}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Specialties */}
+                    <div className="pt-4">
+                      <h4 className="font-semibold text-foreground mb-3">
+                        {currentLang.code === 'fr' ? 'Spécialités' : 'Specialties'}
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {restaurant.specialties.map((specialty, specIndex) => (
+                          <Badge key={specIndex} variant="outline" className="text-sm">
+                            {isAdmin ? (
+                              <div className="flex items-center gap-1">
+                                <Tooltip
+                                  content={getText(specialty)}
+                                  onSave={updateRestaurantSpecialties(restaurant.id, specIndex)}
+                                  isAdmin={isAdmin}
+                                />
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-4 w-4 p-0 text-destructive hover:text-destructive/80"
+                                  onClick={() => removeRestaurantSpecialty(restaurant.id, specIndex)}
+                                >
+                                  <Trash2 className="w-3 h-3" />
+                                </Button>
+                              </div>
+                            ) : (
+                              getText(specialty)
+                            )}
+                          </Badge>
+                        ))}
+                        {isAdmin && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => addRestaurantSpecialty(restaurant.id)}
+                            className="flex items-center gap-1"
+                          >
+                            <Plus className="w-4 h-4" />
+                            Ajouter
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Features */}
+                    <div className="pt-4">
+                      <h4 className="font-semibold text-foreground mb-3">
+                        {currentLang.code === 'fr' ? 'Caractéristiques' : 'Features'}
+                      </h4>
+                      <ul className="space-y-2">
+                        {restaurant.features.map((feature, featureIndex) => (
+                          <li key={featureIndex} className="flex items-center gap-2 text-sm">
+                            <Sparkles className="w-4 h-4 text-primary" />
+                            {isAdmin ? (
+                              <div className="flex items-center gap-1">
+                                <Tooltip
+                                  content={getText(feature)}
+                                  onSave={updateRestaurantFeatures(restaurant.id, featureIndex)}
+                                  isAdmin={isAdmin}
+                                />
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-4 w-4 p-0 text-destructive hover:text-destructive/80"
+                                  onClick={() => removeRestaurantFeature(restaurant.id, featureIndex)}
+                                >
+                                  <Trash2 className="w-3 h-3" />
+                                </Button>
+                              </div>
+                            ) : (
+                              getText(feature)
+                            )}
+                          </li>
+                        ))}
+                        {isAdmin && (
+                          <li>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => addRestaurantFeature(restaurant.id)}
+                              className="flex items-center gap-1"
+                            >
+                              <Plus className="w-4 h-4" />
+                              Ajouter
+                            </Button>
+                          </li>
+                        )}
+                      </ul>
+                    </div>
+
+                    {restaurant.reservationRequired && (
+                      <div className="pt-4">
+                        <Badge variant="default" className="bg-primary text-primary-foreground">
+                          {currentLang.code === 'fr' ? 'Réservation recommandée' : 'Reservation recommended'}
+                        </Badge>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <ParallaxSection
+        backgroundImage="/uploads/cta-bg.jpg"
+        className="py-20"
+      >
+        <div className="container mx-auto px-4 text-center text-white">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            {isAdmin ? (
+              <Tooltip
+                content={getText(data.cta.title)}
+                onSave={updateCtaField('title')}
+                isAdmin={isAdmin}
+              />
+            ) : (
+              getText(data.cta.title)
+            )}
+          </h2>
+          <p className="text-xl mb-8 max-w-2xl mx-auto">
+            {isAdmin ? (
+              <Tooltip
+                content={getText(data.cta.description)}
+                onSave={updateCtaField('description')}
+                isAdmin={isAdmin}
+                multiline
+              />
+            ) : (
+              getText(data.cta.description)
+            )}
+          </p>
+          <Button 
+            size="lg" 
+            className="bg-primary hover:bg-primary/90 text-white"
+            onClick={() => navigate(data.cta.buttonLink || '/offres-speciales')}
+          >
+            {isAdmin ? (
+              <Tooltip
+                content={getText(data.cta.buttonText)}
+                onSave={updateCtaField('buttonText')}
+                isAdmin={isAdmin}
+              />
+            ) : (
+              getText(data.cta.buttonText)
+            )}
+          </Button>
+        </div>
+      </ParallaxSection>
 
       <Footer />
     </div>
   );
 };
 
-export default Offres;
+export default Restaurants;

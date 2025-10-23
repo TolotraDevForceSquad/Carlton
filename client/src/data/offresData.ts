@@ -67,7 +67,8 @@ export const offresPageData = {
       duration: { fr: 'Tous les samedis à 8h', en: 'Every Saturday at 8am' },
       category: { fr: 'Bien-être', en: 'Wellness' },
       features: [
-        { fr: '50.000 Ar avec petit-déjeuner', en: '50,000 Ar with breakfast' }
+        { fr: 'Une séance de yoga d\'une heure et un petit-déjeuner', en: 'A one-hour yoga session and a complimentary breakfast' },
+        { fr: '50.000 Ar', en: '50,000 Ar' },
       ],
       validUntil: { fr: '', en: '' },
       highlight: null,
