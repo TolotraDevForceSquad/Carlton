@@ -1,19 +1,324 @@
+// src/data/chambresData.ts
+export const chambresData = {
+  heroTitle: {
+    fr: "Chambres & Suites",
+    en: "Rooms & Suites"
+  },
+  heroSubtitle: {
+    fr: "Chambres et suites élégantes avec vue imprenable sur le Palais de la Reine et le lac Anosy",
+    en: "Elegant rooms and suites with breathtaking views of the Queen's Palace and Lake Anosy"
+  },
+  heroImage: "/uploads/Presidential_suite_bedroom_interior_7adece21.png",
+  rooms: [
+    {
+      id: 1,
+      name: {
+        fr: "Chambre Executive",
+        en: "Executive Room"
+      },
+      subtitle: {
+        fr: "Vue Panoramique ou Vue sur le Palais de la Reine & le lac Anosy",
+        en: "Panoramic View or Queen's Palace & Lake Anosy View"
+      },
+      description: {
+        fr: "Un lit King Size ou deux lits jumeaux. (-) Nos chambres Executive, allient espace, confort et fonctionnalité pour un séjour des plus agréables. Avec une décoration chaleureuse et un agencement soigné, elles offrent un cadre reposant propice à la détente. Profitez de la vue dégagée sur la ville, qui ajoute une note d’évasion à votre expérience.",
+        en: "One King Size bed or two twin beds. (-) Our Executive Rooms combine space, comfort, and functionality for the most pleasant stay. With warm decoration and careful layout, they offer a relaxing setting conducive to rest. Enjoy the unobstructed city view, adding a touch of escape to your experience."
+      },
+      image: "/uploads/Luxury_suite_interior_386342fd.png",
+      size: "24 m²",
+      guests: {
+        fr: "2 personnes",
+        en: "2 people"
+      },
+      amenities: {
+        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé et café avec eau minérale", "Wifi haut débit", "Salle de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
+        en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Tea and coffee service with mineral water", "High-speed WiFi", "Luxury marble bathroom", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
+      }
+    },
+    {
+      id: 2,
+      name: {
+        fr: "Chambre Premium",
+        en: "Premium Room"
+      },
+      subtitle: {
+        fr: "Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
+        en: "Panoramic View or Queen's Palace & Lake Anosy View"
+      },
+      description: {
+        fr: "Un lit King Size ou deux lits jumeaux. (-) Situées aux étages supérieurs, les chambres Premium offrent une atmosphère paisible avec un point de vue imprenable sur le panorama urbain. Dotées d’équipements complets, bénéficiez d’un cadre confortable et intime pour un séjour parfait que ce soit pour le travail ou la détente.",
+        en: "One King Size bed or two twin beds. (-) Located on the upper floors, Premium Rooms offer a peaceful atmosphere with an unbeatable view of the urban panorama. Equipped with complete amenities, enjoy a comfortable and intimate setting for a perfect stay, whether for work or relaxation."
+      },
+      image: "/uploads/Luxury_suite_interior_386342fd.png",
+      size: "24 m²",
+      guests: {
+        fr: "2 personnes",
+        en: "2 people"
+      },
+      amenities: {
+        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé", "Machine à expresso", "Eau minérale", "Wifi haut débit", "Fer et table à repasser", "Salle de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
+        en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Tea service", "Espresso machine", "Mineral water", "High-speed WiFi", "Iron and ironing board", "Luxury marble bathroom", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
+      }
+    },
+    {
+      id: 3,
+      name: {
+        fr: "Club Suite",
+        en: "Club Suite"
+      },
+      subtitle: {
+        fr: "Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
+        en: "Panoramic View or Queen's Palace & Lake Anosy View"
+      },
+      description: {
+        fr: "Une chambre avec un lit King Size et un salon séparé. (-) Localisées dans les étages élevés, nos Club Suites comprennent une chambre avec un grand lit et un salon séparé. Un espace entièrement équipé, idéal pour un séjour parfait entre détente et travail, dans un confort optimal.",
+        en: "One bedroom with a King Size bed and a separate living room. (-) Located on the upper floors, our Club Suites feature a bedroom with a large bed and a separate living room. A fully equipped space, ideal for a perfect stay between relaxation and work, in optimal comfort."
+      },
+      image: "/uploads/Luxury_suite_interior_386342fd.png",
+      size: "48 m²",
+      guests: {
+        fr: "2 personnes",
+        en: "2 people"
+      },
+      amenities: {
+        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé", "Machine à expresso", "Eau minérale", "Wifi haut débit", "Fer et table à repasser", "02 salles de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
+        en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Tea service", "Espresso machine", "Mineral water", "High-speed WiFi", "Iron and ironing board", "2 luxury marble bathrooms", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
+      }
+    },
+    {
+      id: 4,
+      name: {
+        fr: "Family Suite",
+        en: "Family Suite"
+      },
+      subtitle: {
+        fr: "Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
+        en: "Panoramic View or Queen's Palace & Lake Anosy View"
+      },
+      description: {
+        fr: "Une chambre avec un lit King Size, une chambre avec deux lits simples et un salon séparé. (-) La Family Suite, lumineuse et généreusement agencée est parfaitement conçue pour un séjour familial en toute sérénité. Elle se compose d’une chambre principale dotée d’un grand lit et d’une seconde chambre avec deux lits simples, parfaite pour les enfants ou les amis. Un salon indépendant permet à chacun de profiter d’un moment de détente dans une atmosphère chaleureuse et accueillante. Cette suite permet à toute la famille de se sentir comme à la maison.",
+        en: "One room with a King Size bed, one room with two single beds and a separate living room. (-) The Family Suite, bright and generously laid out, is perfectly designed for a family stay in complete serenity. It consists of a main bedroom equipped with a large bed and a second bedroom with two single beds, perfect for children or friends. An independent living room allows everyone to enjoy a moment of relaxation in a warm and welcoming atmosphere. This suite allows the whole family to feel at home."
+      },
+      image: "/uploads/Luxury_suite_interior_386342fd.png",
+      size: "72 m²",
+      guests: {
+        fr: "4 personnes",
+        en: "4 people"
+      },
+      amenities: {
+        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé", "Machine à expresso", "Eau minérale", "Wifi haut débit", "Fer et table à repasser", "02 Salles de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
+        en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Tea service", "Espresso machine", "Mineral water", "High-speed WiFi", "Iron and ironing board", "2 luxury marble bathrooms", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
+      }
+    },
+    {
+      id: 5,
+      name: {
+        fr: "Suite",
+        en: "Suite"
+      },
+      subtitle: {
+        fr: "Vue sur le Palais de la Reine & le lac Anosy",
+        en: "Queen's Palace & Lake Anosy View"
+      },
+      description: {
+        fr: "Une chambre avec un lit King Size et un large salon séparé. Installées en hauteur, nos Suites offrent un équilibre parfait entre bien-être, style et praticité, dans un espace généreux et lumineux. Elle comprend une grande chambre avec un lit King Size et un vaste salon séparé avec kitchenette pour se détendre ou travailler en toute tranquillité. Le salon accueillant, les équipements et commodités offerts assurent un séjour réussi. Un cadre luxueux pour se sentir bien, dès les premiers instants.",
+        en: "One room with a King Size bed and a wide separate living room. Installed at height, our Suites offer a perfect balance between well-being, style, and practicality, in a generous and bright space. It includes a large bedroom with a King Size bed and a vast separate living room with kitchenette to relax or work in complete tranquility. The welcoming living room, the equipment and amenities offered ensure a successful stay. A luxurious setting to feel good, from the first moments."
+      },
+      image: "/uploads/Luxury_suite_interior_386342fd.png",
+      size: "72 m²",
+      guests: {
+        fr: "2 personnes",
+        en: "2 people"
+      },
+      amenities: {
+        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé", "Machine à expresso", "Eau minérale", "Wifi haut débit", "Fer et table à repasser", "02 salles de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
+        en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Tea service", "Espresso machine", "Mineral water", "High-speed WiFi", "Iron and ironing board", "2 luxury marble bathrooms", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
+      }
+    },
+    {
+      id: 6,
+      name: {
+        fr: "Suite Présidentielle",
+        en: "Presidential Suite"
+      },
+      subtitle: {
+        fr: "96 m²- Vue sur le Palais de la Reine & le lac Anosy",
+        en: "96 m² – View of the Queen’s Palace & Lake Anosy"
+      },
+      description: {
+        fr: "Appartement comprenant une chambre spacieuse avec un lit Super King Size et un salon confortable. Nos Suites Présidentielles sont nichées dans les étages les plus élevés, en surplomb de la ville, vous offrant une perspective unique sur la plaine d’Antananarivo. Elles se composent d’une grande chambre et d’un salon spacieux avec une table à manger et une kitchenette. Inondées de lumière et empreintes de calme, les Suites Présidentielles offrent un cadre exceptionnel pour un séjour tout en confort et en sérénité.",
+        en: "Apartment including a spacious bedroom with a Super King Size bed and a comfortable living room. Our Presidential Suites are nestled on the highest floors, overlooking the city, offering you a unique perspective on the Antananarivo plain. They consist of a large bedroom and a spacious living room with a dining table and kitchenette. Flooded with light and imbued with calm, the Presidential Suites offer an exceptional setting for a stay full of comfort and serenity."
+      },
+      image: "/uploads/Presidential_suite_bedroom_interior_7adece21.png",
+      size: "96 m²",
+      guests: {
+        fr: "2 personnes",
+        en: "2 people"
+      },
+      amenities: {
+        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé et café individuel avec eau minérale", "Wifi haut débit", "Dressing séparé", "Fer et table à repasser", "Salles de bain de luxe en marbre (2 ou 3)", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
+        en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Individual tea and coffee service with mineral water", "High-speed WiFi", "Separate dressing room", "Iron and ironing board", "Luxury marble bathrooms (2 or 3)", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
+      }
+    }
+  ],
+  stats: {
+    totalRooms: 171,
+    categories: 6,
+    maxSize: "96 m²"
+  },
+  statsLabels: {
+    total: {
+      fr: "Chambres & Suites",
+      en: "Rooms & Suites"
+    },
+    categories: {
+      fr: "Catégories de standing",
+      en: "Categories of standing"
+    },
+    max: {
+      fr: "Suite Présidentielle",
+      en: "Presidential Suite"
+    }
+  },
+  labels: {
+    amenities: {
+      fr: "Équipements :",
+      en: "Amenities:"
+    },
+    includedServices: {
+      fr: "Services :",
+      en: "Services:"
+    }
+  },
+  servicesTitle: {
+    fr: "Services",
+    en: "Services"
+  },
+  servicesDescription: {
+    fr: "Profitez de nos services supplémentaires pour un séjour encore plus personnalisé",
+    en: "Enjoy our additional services for an even more personalized stay"
+  },
+  services: [
+    { 
+      icon: "Coffee", 
+      title: {
+        fr: "Room Service",
+        en: "Room Service"
+      }, 
+      desc: {
+        fr: "Service en chambre disponible 24h/24",
+        en: "24/7 room service available"
+      } 
+    },
+    { 
+      icon: "Scissors", 
+      title: {
+        fr: "Service de blanchisserie",
+        en: "Laundry Service"
+      }, 
+      desc: {
+        fr: "Service de nettoyage à sec et repassage",
+        en: "Dry cleaning and ironing service"
+      } 
+    },
+    { 
+      icon: "Briefcase", 
+      title: {
+        fr: "Business Corner",
+        en: "Business Corner"
+      }, 
+      desc: {
+        fr: "Espace de travail équipé",
+        en: "Equipped workspace"
+      } 
+    },
+    { 
+      icon: "Plane", 
+      title: {
+        fr: "Transferts Aéroport",
+        en: "Airport Transfers"
+      }, 
+      desc: {
+        fr: "Navette aéroport-hôtel",
+        en: "Airport-hotel shuttle"
+      } 
+    }
+  ],
+  buttonText: {
+    fr: "Découvrir nos hébergements",
+    en: "Discover our accommodations"
+  },
+  bookButton: {
+    fr: "Réserver votre séjour",
+    en: "Book your stay"
+  },
+  includedServices: {
+    fr: ["Wifi Haut débit", "Piscine", "Fitness", "Tennis", "Parking"],
+    en: ["High-speed WiFi", "Pool", "Fitness", "Tennis", "Parking"]
+  },
+  cta: {
+    title: {
+      fr: "Un voyage à Antananarivo ?",
+      en: "A trip to Antananarivo?"
+    },
+    text: {
+      fr: "Vivez-le pleinement avec nous",
+      en: "Live it fully with us"
+    },
+    button: {
+      fr: "Réserver votre séjour",
+      en: "Book your stay"
+    }
+  }
+};
 
 
+// src/components/Chambres.tsx
 import { useState, useEffect } from 'react';
-import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Clock, MapPin, Star, Sparkles, Utensils, Plus, Trash2, Eye, EyeOff, Image as ImageIcon, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
+import {
+  MapPin,
+  Users,
+  Wifi,
+  Car,
+  Coffee,
+  Tv,
+  Wind,
+  Waves,  // For pool
+  Dumbbell,
+  Activity,  // Alternative for tennis court (sports activity)
+  Plane,
+  WashingMachine,
+  Briefcase,
+  Phone,       // For telephone
+  Lock,        // For safe
+  EyeOff,
+  Trash2, // For delete
+  Eye,
+  Plus,
+  // New imports for amenities icons
+  Wine,
+  CupSoda,
+  Droplet,
+  Shirt,
+  ShowerHead,
+  Square,
+  Footprints,
+  Gift
+} from 'lucide-react';
 import { Tooltip, ImageTooltip } from '@/components/Tooltip';
 import Footer from '@/components/Footer';
 import ParallaxSection from '@/components/ParallaxSection';
-import { restaurantPageData } from '@/data/restaurantsData';
-import { useLanguage } from '@/components/context/LanguageContext';
 import { formatAmpersand } from '@/lib/utils/formatAmpersand';
+import { chambresData } from '@/data/chambresData';
+import { useLanguage } from '@/components/context/LanguageContext';
+import hotelRoom from '@assets/generated_images/Luxury_suite_interior_386342fd.png';
+import suiteImage from '@assets/generated_images/Presidential_suite_bedroom_interior_7adece21.png';
 
-const SECTION_KEY = 'restaurants';
+const SECTION_KEY = 'chambres';
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('userToken');
@@ -24,84 +329,92 @@ const getAuthHeaders = () => {
   return headers;
 };
 
-// Helper to split restaurantPageData into dataFr and dataEn structures
-const splitRestaurantData = (mixedData: typeof restaurantPageData) => {
+// Helper to split chambresData into dataFr and dataEn structures
+const splitChambresData = (mixedData: typeof chambresData) => {
   const dataFr = {
-    hero: {
-      backgroundImage: mixedData.hero.backgroundImage,
-      title: mixedData.hero.title.fr,
-      description: mixedData.hero.description.fr,
-      stats: mixedData.hero.stats.map(stat => ({
-        number: stat.number.fr,
-        label: stat.label.fr,
-        icon: stat.icon
-      })),
-      buttonTexts: {
-        primary: mixedData.hero.buttonTexts.primary.fr,
-        secondary: mixedData.hero.buttonTexts.secondary.fr
-      }
-    },
-    restaurants: mixedData.restaurants.map((restaurant) => ({
-      id: restaurant.id,
-      name: restaurant.name.fr,
-      type: restaurant.type.fr,
-      description: restaurant.description.fr,
-      detailedDescription: restaurant.detailedDescription.fr,
-      images: restaurant.images || ['/uploads/Restaurant.png'],
-      rating: restaurant.rating,
-      priceRange: restaurant.priceRange.fr,
-      hours: restaurant.hours.fr,
-      capacity: restaurant.capacity.fr,
-      reservationRequired: restaurant.reservationRequired,
-      dressCode: restaurant.dressCode.fr,
-      specialties: restaurant.specialties.map((spec) => spec.fr),
-      features: restaurant.features.map((feature) => feature.fr),
-      hidden: restaurant.hidden || false
+    heroTitle: mixedData.heroTitle.fr,
+    heroSubtitle: mixedData.heroSubtitle.fr,
+    heroImage: mixedData.heroImage,
+    rooms: mixedData.rooms.map((room) => ({
+      id: room.id,
+      name: room.name.fr,
+      subtitle: room.subtitle.fr,
+      description: room.description.fr,
+      size: room.size,
+      guests: room.guests.fr,
+      amenities: room.amenities.fr,
+      image: room.image,
+      hidden: room.hidden || false,
     })),
+    stats: mixedData.stats,
+    statsLabels: {
+      total: mixedData.statsLabels.total.fr,
+      categories: mixedData.statsLabels.categories.fr,
+      max: mixedData.statsLabels.max.fr,
+    },
+    labels: {
+      amenities: mixedData.labels.amenities.fr,
+      includedServices: mixedData.labels.includedServices.fr,
+    },
+    servicesTitle: mixedData.servicesTitle.fr,
+    servicesDescription: mixedData.servicesDescription.fr,
+    services: mixedData.services.map((service) => ({
+      icon: service.icon,
+      title: service.title.fr,
+      desc: service.desc.fr,
+      hidden: service.hidden || false,
+    })),
+    buttonText: mixedData.buttonText.fr,
+    bookButton: mixedData.bookButton.fr,
+    includedServices: mixedData.includedServices.fr,
     cta: {
       title: mixedData.cta.title.fr,
-      description: mixedData.cta.description.fr,
-      buttonText: mixedData.cta.buttonText.fr
-    }
+      text: mixedData.cta.text.fr,
+      button: mixedData.cta.button.fr,
+    },
   };
 
   const dataEn = {
-    hero: {
-      backgroundImage: mixedData.hero.backgroundImage,
-      title: mixedData.hero.title.en,
-      description: mixedData.hero.description.en,
-      stats: mixedData.hero.stats.map(stat => ({
-        number: stat.number.en,
-        label: stat.label.en,
-        icon: stat.icon
-      })),
-      buttonTexts: {
-        primary: mixedData.hero.buttonTexts.primary.en,
-        secondary: mixedData.hero.buttonTexts.secondary.en
-      }
-    },
-    restaurants: mixedData.restaurants.map((restaurant) => ({
-      id: restaurant.id,
-      name: restaurant.name.en,
-      type: restaurant.type.en,
-      description: restaurant.description.en,
-      detailedDescription: restaurant.detailedDescription.en,
-      images: restaurant.images || ['/uploads/Restaurant.png'],
-      rating: restaurant.rating,
-      priceRange: restaurant.priceRange.en,
-      hours: restaurant.hours.en,
-      capacity: restaurant.capacity.en,
-      reservationRequired: restaurant.reservationRequired,
-      dressCode: restaurant.dressCode.en,
-      specialties: restaurant.specialties.map((spec) => spec.en),
-      features: restaurant.features.map((feature) => feature.en),
-      hidden: restaurant.hidden || false
+    heroTitle: mixedData.heroTitle.en,
+    heroSubtitle: mixedData.heroSubtitle.en,
+    heroImage: mixedData.heroImage,
+    rooms: mixedData.rooms.map((room) => ({
+      id: room.id,
+      name: room.name.en,
+      subtitle: room.subtitle.en,
+      description: room.description.en,
+      size: room.size,
+      guests: room.guests.en,
+      amenities: room.amenities.en,
+      image: room.image,
+      hidden: room.hidden || false,
     })),
+    stats: mixedData.stats,
+    statsLabels: {
+      total: mixedData.statsLabels.total.en,
+      categories: mixedData.statsLabels.categories.en,
+      max: mixedData.statsLabels.max.en,
+    },
+    labels: {
+      amenities: mixedData.labels.amenities.en,
+      includedServices: mixedData.labels.includedServices.en,
+    },
+    servicesTitle: mixedData.servicesTitle.en,
+    servicesDescription: mixedData.servicesDescription.en,
+    services: mixedData.services.map((service) => ({
+      icon: service.icon,
+      title: service.title.en,
+      desc: service.desc.en,
+      hidden: service.hidden || false,
+    })),
+    buttonText: mixedData.buttonText.en,
+    bookButton: mixedData.bookButton.en,
+    includedServices: mixedData.includedServices.en,
     cta: {
       title: mixedData.cta.title.en,
-      description: mixedData.cta.description.en,
-      buttonText: mixedData.cta.buttonText.en
-    }
+      text: mixedData.cta.text.en,
+      button: mixedData.cta.button.en,
+    },
   };
 
   return { dataFr, dataEn };
@@ -111,58 +424,56 @@ const splitRestaurantData = (mixedData: typeof restaurantPageData) => {
 const reconstructMixed = (dataFr: any, dataEn: any | null) => {
   if (!dataFr || typeof dataFr !== 'object') {
     console.warn('Invalid dataFr structure, falling back to default');
-    return restaurantPageData;
+    return chambresData;
   }
   const enFallback = dataEn || dataFr;
   return {
-    hero: {
-      backgroundImage: dataFr.hero.backgroundImage,
-      title: { fr: dataFr.hero.title, en: enFallback.hero.title },
-      description: { fr: dataFr.hero.description, en: enFallback.hero.description },
-      stats: dataFr.hero.stats.map((statFr: any, i: number) => {
-        const statEn = enFallback.hero.stats[i] || statFr;
-        return {
-          number: { fr: statFr.number, en: statEn.number },
-          label: { fr: statFr.label, en: statEn.label },
-          icon: statFr.icon
-        };
-      }),
-      buttonTexts: {
-        primary: { fr: dataFr.hero.buttonTexts.primary, en: enFallback.hero.buttonTexts.primary },
-        secondary: { fr: dataFr.hero.buttonTexts.secondary, en: enFallback.hero.buttonTexts.secondary }
-      }
-    },
-    restaurants: dataFr.restaurants.map((restaurantFr: any, i: number) => {
-      const restaurantEn = enFallback.restaurants[i] || restaurantFr;
+    heroTitle: { fr: dataFr.heroTitle, en: enFallback.heroTitle || dataFr.heroTitle },
+    heroSubtitle: { fr: dataFr.heroSubtitle, en: enFallback.heroSubtitle || dataFr.heroSubtitle },
+    heroImage: dataFr.heroImage,
+    rooms: dataFr.rooms.map((roomFr: any, i: number) => {
+      const roomEn = enFallback.rooms[i] || roomFr;
       return {
-        id: restaurantFr.id,
-        name: { fr: restaurantFr.name, en: restaurantEn.name },
-        type: { fr: restaurantFr.type, en: restaurantEn.type },
-        description: { fr: restaurantFr.description, en: restaurantEn.description },
-        detailedDescription: { fr: restaurantFr.detailedDescription, en: restaurantEn.detailedDescription },
-        images: restaurantFr.images || ['/uploads/Restaurant.png'],
-        rating: restaurantFr.rating,
-        priceRange: { fr: restaurantFr.priceRange, en: restaurantEn.priceRange },
-        hours: { fr: restaurantFr.hours, en: restaurantEn.hours },
-        capacity: { fr: restaurantFr.capacity, en: restaurantEn.capacity },
-        reservationRequired: restaurantFr.reservationRequired,
-        dressCode: { fr: restaurantFr.dressCode, en: restaurantEn.dressCode },
-        specialties: restaurantFr.specialties.map((sFr: string, j: number) => ({
-          fr: sFr,
-          en: restaurantEn.specialties[j] || sFr
-        })),
-        features: restaurantFr.features.map((fFr: string, j: number) => ({
-          fr: fFr,
-          en: restaurantEn.features[j] || fFr
-        })),
-        hidden: restaurantFr.hidden !== undefined ? restaurantFr.hidden : (restaurantEn.hidden || false)
+        id: roomFr.id,
+        name: { fr: roomFr.name, en: roomEn.name || roomFr.name },
+        subtitle: { fr: roomFr.subtitle, en: roomEn.subtitle || roomFr.subtitle },
+        description: { fr: roomFr.description, en: roomEn.description || roomFr.description },
+        size: roomFr.size,
+        guests: { fr: roomFr.guests, en: roomEn.guests || roomFr.guests },
+        amenities: {
+          fr: roomFr.amenities,
+          en: roomEn.amenities || roomFr.amenities,
+        },
+        image: roomFr.image,
+        hidden: roomFr.hidden !== undefined ? roomFr.hidden : (roomEn.hidden || false),
       };
     }),
+    stats: dataFr.stats,
+    statsLabels: {
+      total: { fr: dataFr.statsLabels.total, en: enFallback.statsLabels.total || dataFr.statsLabels.total },
+      categories: { fr: dataFr.statsLabels.categories, en: enFallback.statsLabels.categories || dataFr.statsLabels.categories },
+      max: { fr: dataFr.statsLabels.max, en: enFallback.statsLabels.max || dataFr.statsLabels.max },
+    },
+    labels: {
+      amenities: { fr: dataFr.labels.amenities, en: enFallback.labels.amenities || dataFr.labels.amenities },
+      includedServices: { fr: dataFr.labels.includedServices, en: enFallback.labels.includedServices || dataFr.labels.includedServices },
+    },
+    servicesTitle: { fr: dataFr.servicesTitle, en: enFallback.servicesTitle || dataFr.servicesTitle },
+    servicesDescription: { fr: dataFr.servicesDescription, en: enFallback.servicesDescription || dataFr.servicesDescription },
+    services: dataFr.services.map((serviceFr: any, i: number) => ({
+      icon: serviceFr.icon,
+      title: { fr: serviceFr.title, en: enFallback.services[i]?.title || serviceFr.title },
+      desc: { fr: serviceFr.desc, en: enFallback.services[i]?.desc || serviceFr.desc },
+      hidden: serviceFr.hidden !== undefined ? serviceFr.hidden : (enFallback.services[i]?.hidden || false),
+    })),
+    buttonText: { fr: dataFr.buttonText, en: enFallback.buttonText || dataFr.buttonText },
+    bookButton: { fr: dataFr.bookButton, en: enFallback.bookButton || dataFr.bookButton },
+    includedServices: { fr: dataFr.includedServices, en: enFallback.includedServices || dataFr.includedServices },
     cta: {
-      title: { fr: dataFr.cta.title, en: enFallback.cta.title },
-      description: { fr: dataFr.cta.description, en: enFallback.cta.description },
-      buttonText: { fr: dataFr.cta.buttonText, en: enFallback.cta.buttonText }
-    }
+      title: { fr: dataFr.cta.title, en: enFallback.cta.title || dataFr.cta.title },
+      text: { fr: dataFr.cta.text, en: enFallback.cta.text || dataFr.cta.text },
+      button: { fr: dataFr.cta.button, en: enFallback.cta.button || dataFr.cta.button },
+    },
   };
 };
 
@@ -194,103 +505,24 @@ const TextFormatter: React.FC<TextFormatterProps> = ({ text, className }) => {
   );
 };
 
-// Carousel Component
-interface CarouselProps {
-  images: string[];
-  onImageChange?: (imageUrl: string) => void;
-  isAdmin?: boolean;
-}
-
-const Carousel: React.FC<CarouselProps> = ({ images, onImageChange, isAdmin = false }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const nextImage = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
-
-  const prevImage = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
-  };
-
-  const goToImage = (index: number) => {
-    setCurrentIndex(index);
-  };
-
-  if (!images || images.length === 0) {
-    return (
-      <div className="w-full h-80 bg-muted flex items-center justify-center">
-        <p className="text-muted-foreground">Aucune image disponible</p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="relative w-full h-80 lg:h-full overflow-hidden group">
-      {/* Main Image */}
-      <div className="w-full h-full">
-        <img 
-          src={images[currentIndex]} 
-          alt={`Image ${currentIndex + 1}`}
-          className="w-full h-full object-cover transition-transform duration-500"
-        />
-      </div>
-
-      {/* Navigation Arrows */}
-      {images.length > 1 && (
-        <>
-          <button
-            onClick={prevImage}
-            className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <button
-            onClick={nextImage}
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-        </>
-      )}
-
-      {/* Image Indicators */}
-      {images.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-          {images.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => goToImage(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === currentIndex ? 'bg-white' : 'bg-white/50'
-              }`}
-            />
-          ))}
-        </div>
-      )}
-
-      {/* Image Counter */}
-      {images.length > 1 && (
-        <div className="absolute top-4 right-4 bg-black/50 text-white px-2 py-1 rounded text-sm">
-          {currentIndex + 1} / {images.length}
-        </div>
-      )}
-    </div>
-  );
-};
-
-const Restaurants = () => {
+const Chambres = () => {
   const { currentLang } = useLanguage();
-  const langKey = currentLang.code.toLowerCase();
-  const [location, navigate] = useLocation();
-  const [data, setData] = useState(() => reconstructMixed(splitRestaurantData(restaurantPageData).dataFr, splitRestaurantData(restaurantPageData).dataEn));
+  const lang = currentLang.code.toLowerCase();
+  const [data, setData] = useState(() => {
+    // Ensure hidden is added to default data if not present
+    const defaultData = { ...chambresData };
+    defaultData.rooms = defaultData.rooms.map(room => ({ ...room, hidden: room.hidden || false }));
+    defaultData.services = defaultData.services.map(service => ({ ...service, hidden: service.hidden || false }));
+    return defaultData;
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const isAdmin = !!localStorage.getItem('userToken');
 
-  // Fetch restaurants data from backend
+  // Fetch chambres data from backend
   useEffect(() => {
-    const fetchRestaurantsData = async () => {
+    const fetchChambresData = async () => {
       try {
         setLoading(true);
         setError(null);
@@ -303,7 +535,7 @@ const Restaurants = () => {
         let section = sections.find((s: any) => s.sectionKey === SECTION_KEY);
         if (!section) {
           // Table is empty for this sectionKey, create default
-          const { dataFr, dataEn } = splitRestaurantData(restaurantPageData);
+          const { dataFr, dataEn } = splitChambresData(chambresData);
           const createResponse = await fetch('/api/globalSections', {
             method: 'POST',
             headers: { ...headers, 'Content-Type': 'application/json' },
@@ -316,7 +548,7 @@ const Restaurants = () => {
           });
 
           if (!createResponse.ok) {
-            throw new Error('Failed to create restaurants data');
+            throw new Error('Failed to create chambres data');
           }
 
           const created = await createResponse.json();
@@ -327,72 +559,21 @@ const Restaurants = () => {
           const fetchedData = reconstructMixed(section.dataFr, section.dataEn);
           setData(fetchedData);
         } else {
-          setData(() => reconstructMixed(splitRestaurantData(restaurantPageData).dataFr, splitRestaurantData(restaurantPageData).dataEn));
+          setData(chambresData);
         }
       } catch (err) {
-        console.error('Error fetching restaurants data:', err);
-        setError('Failed to load restaurants data');
-        setData(() => reconstructMixed(splitRestaurantData(restaurantPageData).dataFr, splitRestaurantData(restaurantPageData).dataEn));
+        console.error('Error fetching chambres data:', err);
+        setError('Failed to load chambres data');
+        setData(chambresData);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchRestaurantsData();
+    fetchChambresData();
   }, []);
 
-  // SOLUTION COMPLÈTE : Gestion du défilement pour tous les cas
-  useEffect(() => {
-    let scrollTimeout: NodeJS.Timeout;
-
-    const handleScrollToHash = () => {
-      const hash = window.location.hash.replace('#', '');
-      if (hash && !loading) {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-          const element = document.getElementById(hash);
-          if (element) {
-            element.scrollIntoView({ 
-              behavior: 'smooth',
-              block: 'start'
-            });
-          }
-        }, 100);
-      }
-    };
-
-    // 1. Écouter les changements de hash (navigation depuis d'autres pages)
-    window.addEventListener('hashchange', handleScrollToHash);
-    
-    // 2. Vérifier au chargement initial
-    handleScrollToHash();
-
-    // 3. Intercepter les clics sur les liens d'ancres MÊME sur la page actuelle
-    const handleAnchorClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      const link = target.closest('a');
-      
-      if (link && link.hash) {
-        const hash = link.hash.replace('#', '');
-        if (hash && window.location.pathname === '/restaurants') {
-          e.preventDefault();
-          // Mettre à jour l'URL sans recharger
-          window.history.pushState(null, '', link.hash);
-          handleScrollToHash();
-        }
-      }
-    };
-
-    document.addEventListener('click', handleAnchorClick);
-
-    return () => {
-      window.removeEventListener('hashchange', handleScrollToHash);
-      document.removeEventListener('click', handleAnchorClick);
-      clearTimeout(scrollTimeout);
-    };
-  }, [loading]);
-
-  const updateRestaurantsSection = async (updatedMixedData: typeof data) => {
+  const updateChambresSection = async (updatedMixedData: typeof data) => {
     try {
       const headers = getAuthHeaders();
       let currentSectionResponse = await fetch(`/api/globalSections?sectionKey=${SECTION_KEY}`, { headers });
@@ -403,7 +584,7 @@ const Restaurants = () => {
       let currentSection = currentData.find((s: any) => s.sectionKey === SECTION_KEY);
 
       if (!currentSection) {
-        const { dataFr, dataEn } = splitRestaurantData(restaurantPageData);
+        const { dataFr, dataEn } = splitChambresData(chambresData);
         const createResponse = await fetch('/api/globalSections', {
           method: 'POST',
           headers: { ...headers, 'Content-Type': 'application/json' },
@@ -420,7 +601,7 @@ const Restaurants = () => {
         currentSection = await createResponse.json();
       }
 
-      const { dataFr: updatedDataFr, dataEn: updatedDataEn } = splitRestaurantData(updatedMixedData);
+      const { dataFr: updatedDataFr, dataEn: updatedDataEn } = splitChambresData(updatedMixedData);
 
       const putResponse = await fetch(`/api/globalSections/${currentSection.id}`, {
         method: 'PUT',
@@ -432,694 +613,1008 @@ const Restaurants = () => {
       });
 
       if (!putResponse.ok) {
-        throw new Error('Failed to update restaurants section');
+        throw new Error('Failed to update chambres section');
       }
     } catch (err) {
-      console.error('Error updating restaurants section:', err);
+      console.error('Error updating chambres section:', err);
     }
   };
 
-  const getText = (textObj: { fr: string; en: string }) => textObj[langKey as keyof typeof textObj];
+  const getText = (textObj: any): string => {
+    if (typeof textObj === 'string') return textObj;
+    if (typeof textObj === 'number') return textObj.toString();
+    const langText = textObj?.[lang];
+    if (typeof langText === 'string') return langText;
+    const frText = textObj?.fr;
+    if (typeof frText === 'string') return frText;
+    return '';
+  };
 
-  const updateHeroField = (field: 'title' | 'description') => {
+  const updateHeroTitle = async (newFr: string, newEn: string) => {
+    const updatedData = { ...data, heroTitle: { fr: newFr, en: newEn } };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const updateHeroSubtitle = async (newFr: string, newEn: string) => {
+    const updatedData = { ...data, heroSubtitle: { fr: newFr, en: newEn } };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const updateHeroImage = async (newUrl: string) => {
+    const updatedData = { ...data, heroImage: newUrl };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const updateStatsLabel = (labelKey: 'total' | 'categories' | 'max') => {
     return async (newFr: string, newEn: string) => {
       const updatedData = {
         ...data,
-        hero: {
-          ...data.hero,
-          [field]: { fr: newFr, en: newEn },
+        statsLabels: {
+          ...data.statsLabels,
+          [labelKey]: { fr: newFr, en: newEn },
         },
       };
       setData(updatedData);
-      await updateRestaurantsSection(updatedData);
+      await updateChambresSection(updatedData);
     };
   };
 
-  const updateHeroBackgroundImage = async (newUrl: string) => {
+  const updateLabel = (labelKey: 'amenities' | 'includedServices') => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        labels: {
+          ...data.labels,
+          [labelKey]: { fr: newFr, en: newEn },
+        },
+      };
+      setData(updatedData);
+      await updateChambresSection(updatedData);
+    };
+  };
+
+  const updateServicesTitle = async (newFr: string, newEn: string) => {
+    const updatedData = { ...data, servicesTitle: { fr: newFr, en: newEn } };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const updateServicesDescription = async (newFr: string, newEn: string) => {
+    const updatedData = { ...data, servicesDescription: { fr: newFr, en: newEn } };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const updateServiceField = (serviceIndex: number, field: 'title' | 'desc') => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        services: data.services.map((service, i) =>
+          i === serviceIndex
+            ? { ...service, [field]: { fr: newFr, en: newEn } }
+            : service
+        ),
+      };
+      setData(updatedData);
+      await updateChambresSection(updatedData);
+    };
+  };
+
+  const toggleServiceHidden = async (serviceIndex: number) => {
     const updatedData = {
       ...data,
-      hero: {
-        ...data.hero,
-        backgroundImage: newUrl,
-      },
+      services: data.services.map((service, i) =>
+        i === serviceIndex ? { ...service, hidden: !service.hidden } : service
+      ),
     };
     setData(updatedData);
-    await updateRestaurantsSection(updatedData);
+    await updateChambresSection(updatedData);
   };
 
-  const updateHeroStat = (statIndex: number, statField: 'number' | 'label') => {
-    return async (newFr: string, newEn: string) => {
-      const updatedStats = [...data.hero.stats];
-      updatedStats[statIndex] = {
-        ...updatedStats[statIndex],
-        [statField]: { fr: newFr, en: newEn },
-      };
-      const updatedData = {
-        ...data,
-        hero: {
-          ...data.hero,
-          stats: updatedStats,
-        },
-      };
-      setData(updatedData);
-      await updateRestaurantsSection(updatedData);
+  const addService = async () => {
+    const newService = {
+      icon: 'Coffee',
+      title: { fr: 'Nouveau Service', en: 'New Service' },
+      desc: { fr: 'Description du nouveau service.', en: 'Description of the new service.' },
+      hidden: false,
     };
-  };
-
-  const updateHeroButtonText = (buttonType: 'primary' | 'secondary') => {
-    return async (newFr: string, newEn: string) => {
-      const updatedData = {
-        ...data,
-        hero: {
-          ...data.hero,
-          buttonTexts: {
-            ...data.hero.buttonTexts,
-            [buttonType]: { fr: newFr, en: newEn },
-          },
-        },
-      };
-      setData(updatedData);
-      await updateRestaurantsSection(updatedData);
-    };
-  };
-
-  const updateRestaurantField = (restaurantId: number, field: string) => {
-    return async (newFr: string, newEn: string) => {
-      const updatedRestaurants = data.restaurants.map((restaurant) => {
-        if (restaurant.id === restaurantId) {
-          return {
-            ...restaurant,
-            [field]: { fr: newFr, en: newEn },
-          };
-        }
-        return restaurant;
-      });
-      const updatedData = { ...data, restaurants: updatedRestaurants };
-      setData(updatedData);
-      await updateRestaurantsSection(updatedData);
-    };
-  };
-
-  const updateRestaurantHours = (restaurantId: number) => {
-    return async (newFr: string, newEn: string) => {
-      const updatedRestaurants = data.restaurants.map((restaurant) => {
-        if (restaurant.id === restaurantId) {
-          return {
-            ...restaurant,
-            hours: { fr: newFr, en: newEn },
-          };
-        }
-        return restaurant;
-      });
-      const updatedData = { ...data, restaurants: updatedRestaurants };
-      setData(updatedData);
-      await updateRestaurantsSection(updatedData);
-    };
-  };
-
-  const updateRestaurantCapacity = (restaurantId: number) => {
-    return async (newFr: string, newEn: string) => {
-      const updatedRestaurants = data.restaurants.map((restaurant) => {
-        if (restaurant.id === restaurantId) {
-          return {
-            ...restaurant,
-            capacity: { fr: newFr, en: newEn },
-          };
-        }
-        return restaurant;
-      });
-      const updatedData = { ...data, restaurants: updatedRestaurants };
-      setData(updatedData);
-      await updateRestaurantsSection(updatedData);
-    };
-  };
-
-  const updateRestaurantPriceRange = (restaurantId: number) => {
-    return async (newFr: string, newEn: string) => {
-      const updatedRestaurants = data.restaurants.map((restaurant) => {
-        if (restaurant.id === restaurantId) {
-          return {
-            ...restaurant,
-            priceRange: { fr: newFr, en: newEn },
-          };
-        }
-        return restaurant;
-      });
-      const updatedData = { ...data, restaurants: updatedRestaurants };
-      setData(updatedData);
-      await updateRestaurantsSection(updatedData);
-    };
-  };
-
-  const updateRestaurantSpecialties = (restaurantId: number, specialtyIndex: number) => {
-    return async (newFr: string, newEn: string) => {
-      const updatedRestaurants = data.restaurants.map((restaurant) => {
-        if (restaurant.id === restaurantId) {
-          const updatedSpecialties = [...restaurant.specialties];
-          updatedSpecialties[specialtyIndex] = { fr: newFr, en: newEn };
-          return { ...restaurant, specialties: updatedSpecialties };
-        }
-        return restaurant;
-      });
-      const updatedData = { ...data, restaurants: updatedRestaurants };
-      setData(updatedData);
-      await updateRestaurantsSection(updatedData);
-    };
-  };
-
-  const addRestaurantSpecialty = async (restaurantId: number) => {
-    const updatedRestaurants = data.restaurants.map((restaurant) => {
-      if (restaurant.id === restaurantId) {
-        const newSpecialty = { fr: 'Nouvelle spécialité', en: 'New specialty' };
-        return { ...restaurant, specialties: [...restaurant.specialties, newSpecialty] };
-      }
-      return restaurant;
-    });
-    const updatedData = { ...data, restaurants: updatedRestaurants };
-    setData(updatedData);
-    await updateRestaurantsSection(updatedData);
-  };
-
-  const removeRestaurantSpecialty = async (restaurantId: number, specialtyIndex: number) => {
-    const updatedRestaurants = data.restaurants.map((restaurant) => {
-      if (restaurant.id === restaurantId) {
-        const updatedSpecialties = restaurant.specialties.filter((_, index) => index !== specialtyIndex);
-        return { ...restaurant, specialties: updatedSpecialties };
-      }
-      return restaurant;
-    });
-    const updatedData = { ...data, restaurants: updatedRestaurants };
-    setData(updatedData);
-    await updateRestaurantsSection(updatedData);
-  };
-
-  const updateRestaurantFeatures = (restaurantId: number, featureIndex: number) => {
-    return async (newFr: string, newEn: string) => {
-      const updatedRestaurants = data.restaurants.map((restaurant) => {
-        if (restaurant.id === restaurantId) {
-          const updatedFeatures = [...restaurant.features];
-          updatedFeatures[featureIndex] = { fr: newFr, en: newEn };
-          return { ...restaurant, features: updatedFeatures };
-        }
-        return restaurant;
-      });
-      const updatedData = { ...data, restaurants: updatedRestaurants };
-      setData(updatedData);
-      await updateRestaurantsSection(updatedData);
-    };
-  };
-
-  const addRestaurantFeature = async (restaurantId: number) => {
-    const updatedRestaurants = data.restaurants.map((restaurant) => {
-      if (restaurant.id === restaurantId) {
-        const newFeature = { fr: 'Nouvelle caractéristique', en: 'New feature' };
-        return { ...restaurant, features: [...restaurant.features, newFeature] };
-      }
-      return restaurant;
-    });
-    const updatedData = { ...data, restaurants: updatedRestaurants };
-    setData(updatedData);
-    await updateRestaurantsSection(updatedData);
-  };
-
-  const removeRestaurantFeature = async (restaurantId: number, featureIndex: number) => {
-    const updatedRestaurants = data.restaurants.map((restaurant) => {
-      if (restaurant.id === restaurantId) {
-        const updatedFeatures = restaurant.features.filter((_, index) => index !== featureIndex);
-        return { ...restaurant, features: updatedFeatures };
-      }
-      return restaurant;
-    });
-    const updatedData = { ...data, restaurants: updatedRestaurants };
-    setData(updatedData);
-    await updateRestaurantsSection(updatedData);
-  };
-
-  const toggleRestaurantHidden = async (restaurantId: number) => {
-    const updatedRestaurants = data.restaurants.map((restaurant) => {
-      if (restaurant.id === restaurantId) {
-        return { ...restaurant, hidden: !restaurant.hidden };
-      }
-      return restaurant;
-    });
-    const updatedData = { ...data, restaurants: updatedRestaurants };
-    setData(updatedData);
-    await updateRestaurantsSection(updatedData);
-  };
-
-  const updateRestaurantImages = async (restaurantId: number, newImages: string[]) => {
-    const updatedRestaurants = data.restaurants.map((restaurant) => {
-      if (restaurant.id === restaurantId) {
-        return { ...restaurant, images: newImages };
-      }
-      return restaurant;
-    });
-    const updatedData = { ...data, restaurants: updatedRestaurants };
-    setData(updatedData);
-    await updateRestaurantsSection(updatedData);
-  };
-
-  const updateCtaField = (field: 'title' | 'description' | 'buttonText') => {
-    return async (newFr: string, newEn: string) => {
-      const updatedData = {
-        ...data,
-        cta: {
-          ...data.cta,
-          [field]: { fr: newFr, en: newEn },
-        },
-      };
-      setData(updatedData);
-      await updateRestaurantsSection(updatedData);
-    };
-  };
-
-  const updateCtaLink = async (newLink: string) => {
     const updatedData = {
       ...data,
-      cta: {
-        ...data.cta,
-        buttonLink: newLink,
-      },
+      services: [...data.services, newService],
     };
     setData(updatedData);
-    await updateRestaurantsSection(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const removeService = async (index: number) => {
+    const updatedData = {
+      ...data,
+      services: data.services.filter((_, i) => i !== index),
+    };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const updateButtonText = async (newFr: string, newEn: string) => {
+    const updatedData = { ...data, buttonText: { fr: newFr, en: newEn } };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const updateBookButton = async (newFr: string, newEn: string) => {
+    const updatedData = { ...data, bookButton: { fr: newFr, en: newEn } };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const updateCtaTitle = async (newFr: string, newEn: string) => {
+    const updatedData = { ...data, cta: { ...data.cta, title: { fr: newFr, en: newEn } } };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const updateCtaText = async (newFr: string, newEn: string) => {
+    const updatedData = { ...data, cta: { ...data.cta, text: { fr: newFr, en: newEn } } };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const updateCtaButton = async (newFr: string, newEn: string) => {
+    const updatedData = { ...data, cta: { ...data.cta, button: { fr: newFr, en: newEn } } };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const updateRoomField = (roomIndex: number, field: 'name' | 'subtitle' | 'description' | 'guests') => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        rooms: data.rooms.map((room, i) =>
+          i === roomIndex
+            ? { ...room, [field]: { fr: newFr, en: newEn } }
+            : room
+        ),
+      };
+      setData(updatedData);
+      await updateChambresSection(updatedData);
+    };
+  };
+
+  const updateRoomAmenity = (roomIndex: number, amenityIndex: number) => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        rooms: data.rooms.map((room, i) =>
+          i === roomIndex
+            ? {
+                ...room,
+                amenities: {
+                  fr: room.amenities.fr.map((a, j) => j === amenityIndex ? newFr : a),
+                  en: room.amenities.en.map((a, j) => j === amenityIndex ? newEn : a),
+                },
+              }
+            : room
+        ),
+      };
+      setData(updatedData);
+      await updateChambresSection(updatedData);
+    };
+  };
+
+  const addRoomAmenity = async (roomIndex: number) => {
+    const updatedData = {
+      ...data,
+      rooms: data.rooms.map((room, i) =>
+        i === roomIndex
+          ? {
+              ...room,
+              amenities: {
+                fr: [...room.amenities.fr, 'Nouvelle commodité'],
+                en: [...room.amenities.en, 'New amenity'],
+              },
+            }
+          : room
+      ),
+    };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const removeRoomAmenity = async (roomIndex: number, amenityIndex: number) => {
+    const updatedData = {
+      ...data,
+      rooms: data.rooms.map((room, i) =>
+        i === roomIndex
+          ? {
+              ...room,
+              amenities: {
+                fr: room.amenities.fr.filter((_, j) => j !== amenityIndex),
+                en: room.amenities.en.filter((_, j) => j !== amenityIndex),
+              },
+            }
+          : room
+      ),
+    };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const updateRoomImage = (roomIndex: number) => {
+    return async (newUrl: string) => {
+      const updatedData = {
+        ...data,
+        rooms: data.rooms.map((room, i) => (i === roomIndex ? { ...room, image: newUrl } : room)),
+      };
+      setData(updatedData);
+      await updateChambresSection(updatedData);
+    };
+  };
+
+  const updateRoomSize = (roomIndex: number) => {
+    return async (newSize: string) => {
+      const updatedData = {
+        ...data,
+        rooms: data.rooms.map((room, i) =>
+          i === roomIndex ? { ...room, size: newSize } : room
+        ),
+      };
+      setData(updatedData);
+      await updateChambresSection(updatedData);
+    };
+  };
+
+  const updateStatValue = (key: 'totalRooms' | 'categories' | 'maxSize') => {
+    return async (newValue: string) => {
+      const parsedValue = key === 'maxSize' ? newValue : parseInt(newValue) || 0;
+      const updatedData = {
+        ...data,
+        stats: {
+          ...data.stats,
+          [key]: parsedValue,
+        },
+      };
+      setData(updatedData);
+      await updateChambresSection(updatedData);
+    };
+  };
+
+  const toggleRoomHidden = async (roomIndex: number) => {
+    const updatedData = {
+      ...data,
+      rooms: data.rooms.map((room, i) =>
+        i === roomIndex ? { ...room, hidden: !room.hidden } : room
+      ),
+    };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const addRoom = async () => {
+    let newRoom;
+    if (data.rooms.length > 0) {
+      const maxId = Math.max(...data.rooms.map((r: any) => r.id));
+      newRoom = {
+        ...data.rooms[0],
+        id: maxId + 1,
+        name: { fr: 'Nouvelle Chambre', en: 'New Room' },
+        hidden: false,
+      };
+    } else {
+      newRoom = {
+        id: 1,
+        name: { fr: 'Nouvelle Chambre', en: 'New Room' },
+        subtitle: { fr: 'Sous-titre', en: 'Subtitle' },
+        description: { fr: 'Description de la chambre.', en: 'Room description.' },
+        size: '30 m²',
+        guests: { fr: '2 personnes', en: '2 guests' },
+        amenities: { fr: ['Wifi'], en: ['Wifi'] },
+        image: hotelRoom,
+        hidden: false,
+      };
+    }
+    const updatedData = {
+      ...data,
+      rooms: [...data.rooms, newRoom],
+    };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const removeRoom = async (id: number) => {
+    const updatedData = {
+      ...data,
+      rooms: data.rooms.filter((room) => room.id !== id),
+    };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const getAmenityIcon = (amenity: string) => {
+    const lower = amenity.toLowerCase();
+    if (lower.includes('wifi') || lower.includes('wi-fi')) {
+      return <Wifi className="w-4 h-4" />;
+    }
+    if (lower.includes('climat') || lower.includes('air conditioning')) {
+      return <Wind className="w-4 h-4" />;
+    }
+    if (lower.includes('tv') || lower.includes('télé')) {
+      return <Tv className="w-4 h-4" />;
+    }
+    if (lower.includes('téléphone') || lower.includes('phone')) {
+      return <Phone className="w-4 h-4" />;
+    }
+    if (lower.includes('coffre') || lower.includes('safe')) {
+      return <Lock className="w-4 h-4" />;
+    }
+    if (lower.includes('minibar')) {
+      return <Wine className="w-4 h-4" />;
+    }
+    if (lower.includes('café') || lower.includes('coffee') || lower.includes('expresso')) {
+      return <Coffee className="w-4 h-4" />;
+    }
+    if (lower.includes('thé') || lower.includes('tea')) {
+      return <CupSoda className="w-4 h-4" />;
+    }
+    if (lower.includes('eau') || lower.includes('water') || lower.includes('minérale')) {
+      return <Droplet className="w-4 h-4" />;
+    }
+    if (lower.includes('fer') || lower.includes('iron')) {
+      return <Shirt className="w-4 h-4" />;
+    }
+    if (lower.includes('salle de bain') || lower.includes('bathroom') || lower.includes('salles de bain')) {
+      return <ShowerHead className="w-4 h-4" />;
+    }
+    if (lower.includes('miroir') || lower.includes('mirror')) {
+      return <Square className="w-4 h-4" />;
+    }
+    if (lower.includes('sèche') || lower.includes('hairdryer')) {
+      return <Wind className="w-4 h-4" />;
+    }
+    if (lower.includes('peignoir') || lower.includes('bathrobe') || lower.includes('dressing')) {
+      return <Shirt className="w-4 h-4" />;
+    }
+    if (lower.includes('pantoufles') || lower.includes('slippers')) {
+      return <Footprints className="w-4 h-4" />;
+    }
+    if (lower.includes('courtoisie') || lower.includes('toiletries') || lower.includes('articles')) {
+      return <Gift className="w-4 h-4" />;
+    }
+    // Default fallback
+    return <Coffee className="w-4 h-4" />;
+  };
+
+  const getIncludedServiceIcon = (service: string) => {
+    if (service.includes('Piscine') || service.includes('Pool')) {
+      return <Waves className="w-4 h-4" />;  // Waves for pool
+    }
+    if (service.includes('Fitness') || service.includes('Gym') || service.includes('Salle de sport')) {
+      return <Dumbbell className="w-4 h-4" />;
+    }
+    if (service.includes('Tennis') || service.includes('Court de tennis') || service.includes('Tennis Court')) {
+      return <Activity className="w-4 h-4" />;
+    }
+    if (service.includes('Parking')) {
+      return <Car className="w-4 h-4" />;
+    }
+    return <Wifi className="w-4 h-4" />;
+  };
+
+  const getServiceIcon = (icon: string) => {
+    switch (icon) {
+      case 'Coffee': return <Coffee className="w-8 h-8" />;
+      case 'Scissors': return <WashingMachine className="w-8 h-8" />;
+      case 'Briefcase': return <Briefcase className="w-8 h-8" />;
+      case 'Plane': return <Plane className="w-8 h-8" />;
+      default: return <Tv className="w-8 h-8" />;
+    }
+  };
+
+  const isFr = currentLang.code === 'fr';
+
+  const addRoomCard = (
+    <Card className="border-2 border-dashed border-muted-foreground hover:border-primary transition-colors flex flex-col">
+      <CardContent className="flex flex-col items-center justify-center h-full p-8 text-center">
+        <Button
+          variant="outline"
+          size="lg"
+          onClick={addRoom}
+          className="mb-4 rounded-full w-16 h-16 p-0"
+        >
+          <Plus className="w-6 h-6" />
+        </Button>
+        <p className="text-muted-foreground">
+          {isFr ? 'Ajouter une nouvelle chambre' : 'Add a new room'}
+        </p>
+      </CardContent>
+    </Card>
+  );
+
+  const openImagePopup = (imageUrl: string) => {
+    setSelectedImage(imageUrl);
+  };
+
+  const closeImagePopup = () => {
+    setSelectedImage(null);
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
+      <div className="min-h-screen bg-background">
+        {/* Hero Skeleton */}
+        <section className="relative h-screen bg-gray-900">
+          <div className="absolute inset-0 bg-black/50" />
+          <div className="relative h-full flex items-center justify-center text-center px-4 text-white">
+            <div className="max-w-7xl mx-auto space-y-8 animate-pulse">
+              <div className="h-20 w-96 bg-white/10 rounded mx-auto mb-8" />
+              <div className="h-8 w-80 bg-white/10 rounded mx-auto mb-8" />
+              <div className="h-6 w-96 bg-white/10 rounded mx-auto mb-12" />
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {[1, 2, 3].map(i => (
+                  <div key={i} className="space-y-2">
+                    <div className="h-10 w-20 bg-white/10 rounded mx-auto" />
+                    <div className="h-5 w-32 bg-white/10 rounded mx-auto" />
+                  </div>
+                ))}
+              </div>
+              <div className="h-12 w-48 bg-white/10 rounded mx-auto" />
+            </div>
+          </div>
+        </section>
+        {/* Rooms Skeleton */}
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+            {[1, 2, 3, 4, 5, 6].map(i => (
+              <div key={i} className="flex flex-col lg:flex lg:flex-row gap-8 animate-pulse">
+                <div className="lg:w-1/2 h-80 lg:h-auto bg-gray-300 rounded" />
+                <div className="lg:w-1/2 space-y-4">
+                  <div className="flex gap-4">
+                    <div className="h-6 w-20 bg-gray-300 rounded" />
+                    <div className="h-6 w-24 bg-gray-300 rounded" />
+                  </div>
+                  <div className="h-8 w-64 bg-gray-300 rounded" />
+                  <div className="h-6 w-48 bg-gray-300 rounded" />
+                  <div className="h-4 w-full bg-gray-300 rounded mb-4" />
+                  <div className="space-y-2">
+                    <div className="h-4 w-3/4 bg-gray-300 rounded" />
+                    <div className="h-4 w-5/6 bg-gray-300 rounded" />
+                    <div className="h-4 w-2/3 bg-gray-300 rounded" />
+                  </div>
+                  <div className="space-y-2">
+                    <div className="h-4 w-1/2 bg-gray-300 rounded" />
+                    <div className="flex flex-wrap gap-2">
+                      {[1, 2, 3, 4, 5, 6].map(j => <div key={j} className="h-6 w-20 bg-gray-300 rounded-full" />)}
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="h-4 w-1/2 bg-gray-300 rounded" />
+                    <div className="flex flex-wrap gap-2">
+                      {[1, 2, 3, 4].map(j => <div key={j} className="h-6 w-20 bg-gray-300 rounded-full" />)}
+                    </div>
+                  </div>
+                  <div className="h-10 w-full bg-gray-300 rounded" />
+                </div>
+              </div>
+            ))}
+            {isAdmin && (
+              <div className="flex justify-center">
+                <div className="h-64 w-full max-w-md bg-gray-300 rounded-lg" />
+              </div>
+            )}
+          </div>
+        </section>
+        {/* Services Skeleton */}
+        <section className="py-20 bg-card/30">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12 space-y-4 animate-pulse">
+              <div className="h-10 w-64 bg-gray-300 rounded mx-auto" />
+              <div className="h-5 w-80 bg-gray-300 rounded mx-auto" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[1, 2, 3, 4].map(i => (
+                <div key={i} className="space-y-4">
+                  <div className="h-12 w-12 bg-gray-300 rounded-full mx-auto" />
+                  <div className="h-6 w-48 bg-gray-300 rounded mx-auto" />
+                  <div className="h-4 w-full bg-gray-300 rounded" />
+                </div>
+              ))}
+            </div>
+            {isAdmin && (
+              <div className="flex justify-center mt-8">
+                <div className="h-12 w-48 bg-gray-300 rounded" />
+              </div>
+            )}
+          </div>
+        </section>
+        {/* CTA Skeleton */}
+        <section className="py-20 bg-primary/5">
+          <div className="max-w-7xl mx-auto px-4 text-center space-y-4 animate-pulse">
+            <div className="h-10 w-80 bg-gray-300 rounded mx-auto" />
+            <div className="h-6 w-64 bg-gray-300 rounded mx-auto" />
+            <div className="h-12 w-48 bg-gray-300 rounded mx-auto" />
+          </div>
+        </section>
+        <Footer />
       </div>
     );
   }
 
   if (error) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-destructive mb-4">Erreur</h2>
-          <p className="text-muted-foreground">{error}</p>
-        </div>
-      </div>
-    );
+    console.warn(error);
   }
+
+  const getAmenities = (room: any) => room.amenities[lang] || room.amenities.fr;
+  const getIncludedServices = () => data.includedServices[lang] || data.includedServices.fr;
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src={data.hero.backgroundImage}
-            alt="Restaurants & Bars"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black/50"></div>
-        </div>
-        
-        <div className="relative z-10 text-center text-white max-w-4xl mx-auto px-4">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            {isAdmin ? (
-              <Tooltip
-                content={getText(data.hero.title)}
-                onSave={updateHeroField('title')}
-                isAdmin={isAdmin}
-              />
-            ) : (
-              getText(data.hero.title)
-            )}
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-            {isAdmin ? (
-              <Tooltip
-                content={getText(data.hero.description)}
-                onSave={updateHeroField('description')}
-                isAdmin={isAdmin}
-                multiline
-              />
-            ) : (
-              <TextFormatter text={getText(data.hero.description)} />
-            )}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
-              className="bg-primary hover:bg-primary/90 text-white"
-              onClick={() => navigate('#restaurants-list')}
-            >
-              {getText(data.hero.buttonTexts.primary)}
-            </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="border-white text-white hover:bg-white/10"
-              onClick={() => navigate('/contact')}
-            >
-              {getText(data.hero.buttonTexts.secondary)}
-            </Button>
-          </div>
-        </div>
 
-        {/* Stats Section */}
-        <div className="absolute bottom-0 left-0 right-0 bg-black/30 backdrop-blur-sm py-8">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              {data.hero.stats.map((stat, index) => (
-                <div key={index} className="text-center text-white">
-                  <div className="text-2xl md:text-3xl font-bold mb-2">
-                    {isAdmin ? (
-                      <Tooltip
-                        content={getText(stat.number)}
-                        onSave={updateHeroStat(index, 'number')}
-                        isAdmin={isAdmin}
-                      />
-                    ) : (
-                      getText(stat.number)
-                    )}
+      {/* Parallax Hero Section */}
+      <ImageTooltip imageUrl={data.heroImage} onSave={updateHeroImage}>
+        <ParallaxSection
+          backgroundImage={data.heroImage || suiteImage}
+          parallaxSpeed={0.3}
+          minHeight="100vh"
+          overlay={true}
+          overlayOpacity={0.5}
+          className="flex items-center pt-20"
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+            <div>
+              <h1 className="text-6xl md:text-7xl font-serif font-bold mb-8 drop-shadow-lg">
+                <Tooltip
+                  frLabel={data.heroTitle.fr}
+                  enLabel={data.heroTitle.en}
+                  onSave={updateHeroTitle}
+                >
+                  <TextFormatter text={getText(data.heroTitle)} />
+                </Tooltip>
+              </h1>
+              <div className="w-32 h-1 bg-primary mx-auto mb-8"></div>
+              <div className="text-2xl md:text-3xl max-w-4xl mx-auto leading-relaxed drop-shadow-lg mb-12 text-white">
+                <Tooltip
+                  frLabel={data.heroSubtitle.fr}
+                  enLabel={data.heroSubtitle.en}
+                  onSave={updateHeroSubtitle}
+                >
+                  <TextFormatter text={getText(data.heroSubtitle)} className="drop-shadow-lg" />
+                </Tooltip>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-primary mb-2">
+                    <Tooltip
+                      frLabel={data.stats.totalRooms.toString()}
+                      enLabel={data.stats.totalRooms.toString()}
+                      onSave={updateStatValue('totalRooms')}
+                    >
+                      <span>{data.stats.totalRooms}</span>
+                    </Tooltip>
                   </div>
-                  <div className="text-sm md:text-base">
-                    {isAdmin ? (
-                      <Tooltip
-                        content={getText(stat.label)}
-                        onSave={updateHeroStat(index, 'label')}
-                        isAdmin={isAdmin}
-                      />
-                    ) : (
-                      getText(stat.label)
-                    )}
+                  <div className="text-lg">
+                    <Tooltip
+                      frLabel={data.statsLabels.total.fr}
+                      enLabel={data.statsLabels.total.en}
+                      onSave={updateStatsLabel('total')}
+                    >
+                      <TextFormatter text={getText(data.statsLabels.total)} />
+                    </Tooltip>
                   </div>
                 </div>
-              ))}
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-primary mb-2">
+                    <Tooltip
+                      frLabel={data.stats.categories.toString()}
+                      enLabel={data.stats.categories.toString()}
+                      onSave={updateStatValue('categories')}
+                    >
+                      <span>{data.stats.categories}</span>
+                    </Tooltip>
+                  </div>
+                  <div className="text-lg">
+                    <Tooltip
+                      frLabel={data.statsLabels.categories.fr}
+                      enLabel={data.statsLabels.categories.en}
+                      onSave={updateStatsLabel('categories')}
+                    >
+                      <TextFormatter text={getText(data.statsLabels.categories)} />
+                    </Tooltip>
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-primary mb-2">
+                    <Tooltip
+                      frLabel={data.stats.maxSize}
+                      enLabel={data.stats.maxSize}
+                      onSave={updateStatValue('maxSize')}
+                    >
+                      <span>{data.stats.maxSize}</span>
+                    </Tooltip>
+                  </div>
+                  <div className="text-lg">
+                    <Tooltip
+                      frLabel={data.statsLabels.max.fr}
+                      enLabel={data.statsLabels.max.en}
+                      onSave={updateStatsLabel('max')}
+                    >
+                      <TextFormatter text={getText(data.statsLabels.max)} />
+                    </Tooltip>
+                  </div>
+                </div>
+              </div>
+              <Button size="lg" className="shadow-lg" data-testid="button-discover-rooms">
+                <Tooltip
+                  frLabel={data.buttonText.fr}
+                  enLabel={data.buttonText.en}
+                  onSave={updateButtonText}
+                >
+                  <TextFormatter text={getText(data.buttonText)} />
+                </Tooltip>
+              </Button>
             </div>
           </div>
+        </ParallaxSection>
+      </ImageTooltip>
+
+      {/* Image Popup Modal */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
+          onClick={closeImagePopup}
+        >
+          <button 
+            className="absolute top-4 right-4 text-white text-2xl z-10"
+            onClick={closeImagePopup}
+          >
+            ×
+          </button>
+          <img 
+            src={selectedImage} 
+            alt="Image en grand format" 
+            className="max-w-full max-h-full object-contain cursor-zoom-out"
+            onClick={(e) => e.stopPropagation()}
+          />
         </div>
-      </section>
+      )}
 
-      {/* Restaurants List */}
-      <section id="restaurants-list" className="py-20 bg-background">
-        <div className="container mx-auto px-4">
+      {/* Rooms Showcase */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-16">
-            {data.restaurants
-              .filter(restaurant => !restaurant.hidden)
-              .map((restaurant, index) => (
-                <div 
-                  key={restaurant.id} 
-                  id={`restaurant-${restaurant.id}`}
-                  className={`flex flex-col lg:flex-row gap-8 items-center ${
-                    index % 2 === 1 ? 'lg:flex-row-reverse' : ''
-                  }`}
+            {data.rooms.map((room, index) => {
+              if (!isAdmin && room.hidden) return null;
+              return (
+                <Card
+                  key={room.id}
+                  className={`relative overflow-hidden hover-elevate transition-all duration-300 ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
+                    } flex flex-col ${room.hidden ? 'opacity-50' : ''}`}
+                  data-testid={`card-room-${room.id}`}
                 >
-                  {/* Image Section with Carousel */}
-                  <div className="lg:w-1/2 w-full">
-                    <div className="rounded-lg overflow-hidden shadow-2xl h-80 lg:h-full">
-                      <Carousel 
-                        images={restaurant.images} 
-                        isAdmin={isAdmin}
-                      />
+                  {isAdmin && (
+                    <div className="absolute top-2 right-2 z-10 flex gap-1">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => toggleRoomHidden(index)}
+                        title={room.hidden ? (isFr ? 'Afficher' : 'Show') : (isFr ? 'Masquer' : 'Hide')}
+                      >
+                        {room.hidden ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeRoom(room.id)}
+                      >
+                        <Trash2 className="w-4 h-4" /> 
+                      </Button>
                     </div>
+                  )}
+                  <div className="lg:w-2/3 flex">
+                    <ImageTooltip imageUrl={room.image} onSave={updateRoomImage(index)}>
+                      <div 
+                        className="w-full relative cursor-pointer overflow-hidden aspect-[4/3] h-auto"
+                        onClick={() => openImagePopup(room.image || hotelRoom)}
+                      >
+                        <img
+                          src={room.image || hotelRoom}
+                          alt={getText(room.name)}
+                          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105 cursor-pointer"
+                        />
+                      </div>
+                    </ImageTooltip>
                   </div>
 
-                  {/* Content Section */}
-                  <div className="lg:w-1/2 w-full space-y-6">
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <h2 className="text-3xl font-bold text-foreground">
-                          {isAdmin ? (
-                            <Tooltip
-                              content={getText(restaurant.name)}
-                              onSave={updateRestaurantField(restaurant.id, 'name')}
-                              isAdmin={isAdmin}
-                            />
-                          ) : (
-                            getText(restaurant.name)
-                          )}
-                        </h2>
-                        {isAdmin && (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => toggleRestaurantHidden(restaurant.id)}
-                            className="flex items-center gap-2"
-                          >
-                            {restaurant.hidden ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
-                            {restaurant.hidden ? 'Afficher' : 'Masquer'}
-                          </Button>
-                        )}
-                      </div>
-                      
-                      <p className="text-lg text-muted-foreground italic">
-                        {isAdmin ? (
-                          <Tooltip
-                            content={getText(restaurant.type)}
-                            onSave={updateRestaurantField(restaurant.id, 'type')}
-                            isAdmin={isAdmin}
-                          />
-                        ) : (
-                          getText(restaurant.type)
-                        )}
-                      </p>
-
-                      <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-1">
-                          {[...Array(5)].map((_, i) => (
-                            <Star
-                              key={i}
-                              className={`w-4 h-4 ${
-                                i < restaurant.rating
-                                  ? 'text-yellow-400 fill-current'
-                                  : 'text-gray-300'
-                              }`}
-                            />
-                          ))}
+                  {/* Conteneur de contenu */}
+                  <div className="lg:w-1/3 p-8 flex flex-col justify-center">
+                    <div className="flex-1">
+                      <CardHeader className="p-0 mb-6">
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="flex items-center gap-4">
+                            {room.size && (
+                              <Badge variant="outline" className="text-primary border-primary text-xl">
+                                <MapPin className="w-3 h-3 mr-1" />
+                                <Tooltip
+                                  frLabel={room.size}
+                                  enLabel={room.size}
+                                  onSave={() => {}}  // Size is not bilingual, but can add update
+                                >
+                                  <span>{room.size}</span>
+                                </Tooltip>
+                              </Badge>
+                            )}
+                            <Badge variant="outline" className="text-primary border-primary text-xl">
+                              <Users className="w-3 h-3 mr-1" />
+                              <Tooltip
+                                frLabel={room.guests.fr}
+                                enLabel={room.guests.en}
+                                onSave={updateRoomField(index, 'guests')}
+                              >
+                                <TextFormatter text={getText(room.guests)} />
+                              </Tooltip>
+                            </Badge>
+                          </div>
                         </div>
-                        <Badge variant="secondary" className="text-sm">
-                          {isAdmin ? (
-                            <Tooltip
-                              content={getText(restaurant.priceRange)}
-                              onSave={updateRestaurantPriceRange(restaurant.id)}
-                              isAdmin={isAdmin}
-                            />
-                          ) : (
-                            getText(restaurant.priceRange)
-                          )}
-                        </Badge>
-                      </div>
-                    </div>
-
-                    <div className="space-y-4">
-                      <p className="text-foreground leading-relaxed">
-                        {isAdmin ? (
+                        <CardTitle className="text-3xl font-serif text-foreground mb-2">
                           <Tooltip
-                            content={getText(restaurant.description)}
-                            onSave={updateRestaurantField(restaurant.id, 'description')}
-                            isAdmin={isAdmin}
-                            multiline
-                          />
-                        ) : (
-                          <TextFormatter text={getText(restaurant.description)} />
-                        )}
-                      </p>
-
-                      <p className="text-muted-foreground leading-relaxed">
-                        {isAdmin ? (
-                          <Tooltip
-                            content={getText(restaurant.detailedDescription)}
-                            onSave={updateRestaurantField(restaurant.id, 'detailedDescription')}
-                            isAdmin={isAdmin}
-                            multiline
-                          />
-                        ) : (
-                          <TextFormatter text={getText(restaurant.detailedDescription)} />
-                        )}
-                      </p>
-                    </div>
-
-                    {/* Restaurant Details */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
-                      <div className="flex items-center gap-3">
-                        <Clock className="w-5 h-5 text-primary" />
-                        <span className="text-sm">
-                          {isAdmin ? (
-                            <Tooltip
-                              content={getText(restaurant.hours)}
-                              onSave={updateRestaurantHours(restaurant.id)}
-                              isAdmin={isAdmin}
-                              multiline
-                            />
-                          ) : (
-                            getText(restaurant.hours)
-                          )}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <MapPin className="w-5 h-5 text-primary" />
-                        <span className="text-sm">
-                          {isAdmin ? (
-                            <Tooltip
-                              content={getText(restaurant.capacity)}
-                              onSave={updateRestaurantCapacity(restaurant.id)}
-                              isAdmin={isAdmin}
-                            />
-                          ) : (
-                            getText(restaurant.capacity)
-                          )}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Specialties */}
-                    <div className="pt-4">
-                      <h4 className="font-semibold text-foreground mb-3">
-                        {currentLang.code === 'fr' ? 'Spécialités' : 'Specialties'}
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {restaurant.specialties.map((specialty, specIndex) => (
-                          <Badge key={specIndex} variant="outline" className="text-sm">
-                            {isAdmin ? (
-                              <div className="flex items-center gap-1">
-                                <Tooltip
-                                  content={getText(specialty)}
-                                  onSave={updateRestaurantSpecialties(restaurant.id, specIndex)}
-                                  isAdmin={isAdmin}
-                                />
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  className="h-4 w-4 p-0 text-destructive hover:text-destructive/80"
-                                  onClick={() => removeRestaurantSpecialty(restaurant.id, specIndex)}
-                                >
-                                  <Trash2 className="w-3 h-3" />
-                                </Button>
-                              </div>
-                            ) : (
-                              getText(specialty)
-                            )}
-                          </Badge>
-                        ))}
-                        {isAdmin && (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => addRestaurantSpecialty(restaurant.id)}
-                            className="flex items-center gap-1"
+                            frLabel={room.name.fr}
+                            enLabel={room.name.en}
+                            onSave={updateRoomField(index, 'name')}
                           >
-                            <Plus className="w-4 h-4" />
-                            Ajouter
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Features */}
-                    <div className="pt-4">
-                      <h4 className="font-semibold text-foreground mb-3">
-                        {currentLang.code === 'fr' ? 'Caractéristiques' : 'Features'}
-                      </h4>
-                      <ul className="space-y-2">
-                        {restaurant.features.map((feature, featureIndex) => (
-                          <li key={featureIndex} className="flex items-center gap-2 text-sm">
-                            <Sparkles className="w-4 h-4 text-primary" />
-                            {isAdmin ? (
-                              <div className="flex items-center gap-1">
-                                <Tooltip
-                                  content={getText(feature)}
-                                  onSave={updateRestaurantFeatures(restaurant.id, featureIndex)}
-                                  isAdmin={isAdmin}
-                                />
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  className="h-4 w-4 p-0 text-destructive hover:text-destructive/80"
-                                  onClick={() => removeRestaurantFeature(restaurant.id, featureIndex)}
-                                >
-                                  <Trash2 className="w-3 h-3" />
-                                </Button>
-                              </div>
-                            ) : (
-                              getText(feature)
-                            )}
-                          </li>
-                        ))}
-                        {isAdmin && (
-                          <li>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => addRestaurantFeature(restaurant.id)}
-                              className="flex items-center gap-1"
+                            <TextFormatter text={getText(room.name)} />
+                          </Tooltip>
+                        </CardTitle>
+                        {room.subtitle && (
+                          <p className="text-primary font-luxury italic text-2xl mb-4">
+                            <Tooltip
+                              frLabel={room.subtitle.fr}
+                              enLabel={room.subtitle.en}
+                              onSave={updateRoomField(index, 'subtitle')}
                             >
-                              <Plus className="w-4 h-4" />
-                              Ajouter
-                            </Button>
-                          </li>
+                              <TextFormatter text={getText(room.subtitle)} />
+                            </Tooltip>
+                          </p>
                         )}
-                      </ul>
+                      </CardHeader>
+
+                      <CardContent className="p-0 space-y-6">
+                        <div className="text-muted-foreground leading-relaxed">
+                          <Tooltip
+                            frLabel={room.description.fr}
+                            enLabel={room.description.en}
+                            onSave={updateRoomField(index, 'description')}
+                          >
+                            <TextFormatter text={getText(room.description)} />
+                          </Tooltip>
+                        </div>
+
+                        {room.amenities && room.amenities.fr.length > 0 && (
+                          <div>
+                            <h4 className="font-semibold text-foreground mb-3">
+                              <Tooltip
+                                frLabel={data.labels.amenities.fr}
+                                enLabel={data.labels.amenities.en}
+                                onSave={updateLabel('amenities')}
+                              >
+                                <TextFormatter text={getText(data.labels.amenities)} />
+                              </Tooltip>
+                            </h4>
+                            <div className="flex flex-wrap gap-3">
+                              {getAmenities(room).map((amenity, idx) => {
+                                const frAmenity = room.amenities.fr[idx];
+                                const enAmenity = room.amenities.en ? room.amenities.en[idx] : frAmenity;
+                                return (
+                                  <div key={idx} className="flex items-center gap-2 px-3 py-1 bg-card rounded-full text-sm relative">
+                                    {getAmenityIcon(amenity)}
+                                    <Tooltip
+                                      frLabel={frAmenity}
+                                      enLabel={enAmenity}
+                                      onSave={updateRoomAmenity(index, idx)}
+                                    >
+                                      <TextFormatter text={amenity} className="text-muted-foreground" />
+                                    </Tooltip>
+                                    {isAdmin && (
+                                      <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => removeRoomAmenity(index, idx)}
+                                        className="absolute -top-1 -right-1 h-4 w-4 p-0"
+                                      >
+                                        <Trash2 className="w-3 h-3" />
+                                      </Button>
+                                    )}
+                                  </div>
+                                );
+                              })}
+                              {isAdmin && (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => addRoomAmenity(index)}
+                                  className="mt-2"
+                                >
+                                  <Plus className="w-4 h-4 mr-1" />
+                                  {isFr ? 'Ajouter une commodité' : 'Add an amenity'}
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Included Services Section */}
+                        <div>
+                          <h4 className="font-semibold text-foreground mb-3">
+                            <Tooltip
+                              frLabel={data.labels.includedServices.fr}
+                              enLabel={data.labels.includedServices.en}
+                              onSave={updateLabel('includedServices')}
+                            >
+                              <TextFormatter text={getText(data.labels.includedServices)} />
+                            </Tooltip>
+                          </h4>
+                          <div className="flex flex-wrap gap-3">
+                            {getIncludedServices().map((service, idx) => (
+                              <div key={idx} className="flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full text-sm border border-primary/20">
+                                {getIncludedServiceIcon(service)}
+                                <span className="text-primary font-medium">{service}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </CardContent>
                     </div>
 
-                    {restaurant.reservationRequired && (
-                      <div className="pt-4">
-                        <Badge variant="default" className="bg-primary text-primary-foreground">
-                          {currentLang.code === 'fr' ? 'Réservation recommandée' : 'Reservation recommended'}
-                        </Badge>
-                      </div>
-                    )}
+                    <div className="mt-8">
+                      <Button
+                        className="w-full"
+                        data-testid={`button-book-${room.id}`}
+                      >
+                        <Tooltip
+                          frLabel={data.bookButton.fr}
+                          enLabel={data.bookButton.en}
+                          onSave={updateBookButton}
+                        >
+                          <TextFormatter text={getText(data.bookButton)} />
+                        </Tooltip>
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                </Card>
+              );
+            })}
+            {isAdmin && addRoomCard}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <ParallaxSection
-        backgroundImage="/uploads/cta-bg.jpg"
-        className="py-20"
-      >
-        <div className="container mx-auto px-4 text-center text-white">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            {isAdmin ? (
+      {/* Services Section */}
+      <section className="py-20 bg-card/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-serif font-bold text-foreground mb-4">
               <Tooltip
-                content={getText(data.cta.title)}
-                onSave={updateCtaField('title')}
-                isAdmin={isAdmin}
-              />
-            ) : (
-              getText(data.cta.title)
-            )}
+                frLabel={data.servicesTitle.fr}
+                enLabel={data.servicesTitle.en}
+                onSave={updateServicesTitle}
+              >
+                <TextFormatter text={getText(data.servicesTitle)} />
+              </Tooltip>
+            </h2>
+            <div className="text-lg text-muted-foreground">
+              <Tooltip
+                frLabel={data.servicesDescription.fr}
+                enLabel={data.servicesDescription.en}
+                onSave={updateServicesDescription}
+              >
+                <TextFormatter text={getText(data.servicesDescription)} />
+              </Tooltip>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {data.services.map((service, index) => {
+              if (!isAdmin && service.hidden) return null;
+              return (
+                <Card key={index} className={`relative text-center hover-elevate ${service.hidden ? 'opacity-50' : ''}`}>
+                  {isAdmin && (
+                    <div className="absolute top-2 right-2 z-10 flex gap-1">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => toggleServiceHidden(index)}
+                        title={service.hidden ? (isFr ? 'Afficher' : 'Show') : (isFr ? 'Masquer' : 'Hide')}
+                      >
+                        {service.hidden ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeService(index)}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  )}
+                  <CardContent className="pt-6">
+                    <div className="text-primary mb-4 flex justify-center">
+                      {getServiceIcon(service.icon)}
+                    </div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">
+                      <Tooltip
+                        frLabel={service.title.fr}
+                        enLabel={service.title.en}
+                        onSave={updateServiceField(index, 'title')}
+                      >
+                        <TextFormatter text={getText(service.title)} />
+                      </Tooltip>
+                    </h3>
+                    <div className="text-sm text-muted-foreground">
+                      <Tooltip
+                        frLabel={service.desc.fr}
+                        enLabel={service.desc.en}
+                        onSave={updateServiceField(index, 'desc')}
+                      >
+                        <TextFormatter text={getText(service.desc)} />
+                      </Tooltip>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+          {isAdmin && (
+            <div className="flex justify-center mt-8">
+              <Button
+                variant="outline"
+                onClick={addService}
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                {isFr ? 'Ajouter un service' : 'Add a service'}
+              </Button>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Call to Action Section */}
+      <section className="py-20 bg-primary/5">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-serif font-bold mb-4">
+            <Tooltip
+              frLabel={data.cta.title.fr}
+              enLabel={data.cta.title.en}
+              onSave={updateCtaTitle}
+            >
+              <TextFormatter text={getText(data.cta.title)} />
+            </Tooltip>
           </h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            {isAdmin ? (
+          <div className="text-xl text-muted-foreground mb-8">
+            <Tooltip
+              frLabel={data.cta.text.fr}
+              enLabel={data.cta.text.en}
+              onSave={updateCtaText}
+            >
+              <TextFormatter text={getText(data.cta.text)} />
+            </Tooltip>
+          </div>
+          <Button size="lg" asChild>
+            <a href="/page-de-reservation-synxis" className="text-lg">
               <Tooltip
-                content={getText(data.cta.description)}
-                onSave={updateCtaField('description')}
-                isAdmin={isAdmin}
-                multiline
-              />
-            ) : (
-              getText(data.cta.description)
-            )}
-          </p>
-          <Button 
-            size="lg" 
-            className="bg-primary hover:bg-primary/90 text-white"
-            onClick={() => navigate(data.cta.buttonLink || '/offres-speciales')}
-          >
-            {isAdmin ? (
-              <Tooltip
-                content={getText(data.cta.buttonText)}
-                onSave={updateCtaField('buttonText')}
-                isAdmin={isAdmin}
-              />
-            ) : (
-              getText(data.cta.buttonText)
-            )}
+                frLabel={data.cta.button.fr}
+                enLabel={data.cta.button.en}
+                onSave={updateCtaButton}
+              >
+                <TextFormatter text={getText(data.cta.button)} />
+              </Tooltip>
+            </a>
           </Button>
         </div>
-      </ParallaxSection>
+      </section>
 
       <Footer />
     </div>
   );
 };
 
-export default Restaurants;
+export default Chambres;

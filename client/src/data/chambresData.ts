@@ -30,28 +30,6 @@ export const chambresData = {
         fr: "2 personnes",
         en: "2 people"
       },
-      features: [
-        {
-          fr: "Un lit King Size ou deux lits jumeaux",
-          en: "One King Size bed or two twin beds"
-        },
-        {
-          fr: "Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
-          en: "Panoramic view or Queen's Palace & Lake Anosy view"
-        },
-        {
-          fr: "Décoration chaleureuse et agencement soigné",
-          en: "Warm decoration and careful layout"
-        },
-        {
-          fr: "Cadre reposant pour la détente",
-          en: "Relaxing setting for rest"
-        },
-        {
-          fr: "Vue dégagée sur la ville",
-          en: "Unobstructed city view"
-        }
-      ],
       amenities: {
         fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé et café avec eau minérale", "Wifi haut débit", "Salle de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
         en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Tea and coffee service with mineral water", "High-speed WiFi", "Luxury marble bathroom", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
@@ -77,28 +55,6 @@ export const chambresData = {
         fr: "2 personnes",
         en: "2 people"
       },
-      features: [
-        {
-          fr: "Un lit King Size ou deux lits jumeaux",
-          en: "One King Size bed or two twin beds"
-        },
-        {
-          fr: "Vue panoramique ou sur le Palais de la Reine & le lac Anosy",
-          en: "Panoramic view or Queen's Palace & Lake Anosy view"
-        },
-        {
-          fr: "Atmosphère paisible aux étages supérieurs",
-          en: "Peaceful atmosphere on upper floors"
-        },
-        {
-          fr: "Point de vue imprenable sur le panorama urbain",
-          en: "Unbeatable urban panorama view"
-        },
-        {
-          fr: "Cadre confortable pour travail ou détente",
-          en: "Comfortable setting for work or relaxation"
-        }
-      ],
       amenities: {
         fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé", "Machine à expresso", "Eau minérale", "Wifi haut débit", "Fer et table à repasser", "Salle de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
         en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Tea service", "Espresso machine", "Mineral water", "High-speed WiFi", "Iron and ironing board", "Luxury marble bathroom", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
@@ -124,28 +80,6 @@ export const chambresData = {
         fr: "2 personnes",
         en: "2 people"
       },
-      features: [
-        {
-          fr: "Chambre avec lit King Size",
-          en: "Bedroom with King Size bed"
-        },
-        {
-          fr: "Salon séparé",
-          en: "Separate living room"
-        },
-        {
-          fr: "Vue panoramique ou sur le Palais de la Reine & le lac Anosy",
-          en: "Panoramic view or Queen's Palace & Lake Anosy view"
-        },
-        {
-          fr: "Localisée aux étages élevés",
-          en: "Located on upper floors"
-        },
-        {
-          fr: "Espace idéal pour détente et travail",
-          en: "Space ideal for relaxation and work"
-        }
-      ],
       amenities: {
         fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé", "Machine à expresso", "Eau minérale", "Wifi haut débit", "Fer et table à repasser", "02 salles de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
         en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Tea service", "Espresso machine", "Mineral water", "High-speed WiFi", "Iron and ironing board", "2 luxury marble bathrooms", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
@@ -171,28 +105,6 @@ export const chambresData = {
         fr: "4 personnes",
         en: "4 people"
       },
-      features: [
-        {
-          fr: "Chambre avec lit King Size",
-          en: "Bedroom with King Size bed"
-        },
-        {
-          fr: "Chambre avec deux lits simples",
-          en: "Bedroom with two single beds"
-        },
-        {
-          fr: "Salon séparé",
-          en: "Separate living room"
-        },
-        {
-          fr: "Vue panoramique ou sur le Palais de la Reine & le lac Anosy",
-          en: "Panoramic view or Queen's Palace & Lake Anosy view"
-        },
-        {
-          fr: "Espace familial spacieux et serein",
-          en: "Spacious and serene family space"
-        }
-      ],
       amenities: {
         fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé", "Machine à expresso", "Eau minérale", "Wifi haut débit", "Fer et table à repasser", "02 Salles de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
         en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Tea service", "Espresso machine", "Mineral water", "High-speed WiFi", "Iron and ironing board", "2 luxury marble bathrooms", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
@@ -218,28 +130,6 @@ export const chambresData = {
         fr: "2 personnes",
         en: "2 people"
       },
-      features: [
-        {
-          fr: "Chambre avec lit King Size",
-          en: "Bedroom with King Size bed"
-        },
-        {
-          fr: "Large salon séparé avec kitchenette",
-          en: "Wide separate living room with kitchenette"
-        },
-        {
-          fr: "Vue sur le Palais de la Reine & le lac Anosy",
-          en: "Queen's Palace & Lake Anosy view"
-        },
-        {
-          fr: "Cadre raffiné et confortable",
-          en: "Refined and comfortable setting"
-        },
-        {
-          fr: "Installée en hauteur",
-          en: "Installed in height"
-        }
-      ],
       amenities: {
         fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé", "Machine à expresso", "Eau minérale", "Wifi haut débit", "Fer et table à repasser", "02 salles de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
         en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Tea service", "Espresso machine", "Mineral water", "High-speed WiFi", "Iron and ironing board", "2 luxury marble bathrooms", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
@@ -265,32 +155,6 @@ export const chambresData = {
         fr: "2 personnes",
         en: "2 people"
       },
-      features: [
-        {
-          fr: "Chambre spacieuse avec lit Super King Size",
-          en: "Spacious bedroom with Super King Size bed"
-        },
-        {
-          fr: "Salon confortable avec table à manger",
-          en: "Comfortable living room with dining table"
-        },
-        {
-          fr: "Kitchenette équipée",
-          en: "Equipped kitchenette"
-        },
-        {
-          fr: "Vue unique sur la plaine d’Antananarivo",
-          en: "Unique view of the Antananarivo plain"
-        },
-        {
-          fr: "Étages les plus élevés",
-          en: "Highest floors"
-        },
-        {
-          fr: "Dressing séparé",
-          en: "Separate dressing room"
-        }
-      ],
       amenities: {
         fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé et café individuel avec eau minérale", "Wifi haut débit", "Dressing séparé", "Fer et table à repasser", "Salles de bain de luxe en marbre (2 ou 3)", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
         en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Individual tea and coffee service with mineral water", "High-speed WiFi", "Separate dressing room", "Iron and ironing board", "Luxury marble bathrooms (2 or 3)", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
@@ -317,10 +181,6 @@ export const chambresData = {
     }
   },
   labels: {
-    features: {
-      fr: "Caractéristiques :",
-      en: "Features:"
-    },
     amenities: {
       fr: "Équipements :",
       en: "Amenities:"
@@ -357,8 +217,8 @@ export const chambresData = {
         en: "Laundry Service"
       }, 
       desc: {
-        fr: "Service de nettoyage à sec et repassage",
-        en: "Dry cleaning and ironing service"
+        fr: "Blanchisserie et repassage",
+        en: "Laundry and ironing"
       } 
     },
     { 

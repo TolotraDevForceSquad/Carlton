@@ -1,3 +1,5 @@
+
+
 // src/components/Chambres.tsx
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
@@ -67,7 +69,6 @@ const splitChambresData = (mixedData: typeof chambresData) => {
       description: room.description.fr,
       size: room.size,
       guests: room.guests.fr,
-      features: room.features.map((feature) => feature.fr),
       amenities: room.amenities.fr,
       image: room.image,
       hidden: room.hidden || false,
@@ -79,7 +80,6 @@ const splitChambresData = (mixedData: typeof chambresData) => {
       max: mixedData.statsLabels.max.fr,
     },
     labels: {
-      features: mixedData.labels.features.fr,
       amenities: mixedData.labels.amenities.fr,
       includedServices: mixedData.labels.includedServices.fr,
     },
@@ -112,7 +112,6 @@ const splitChambresData = (mixedData: typeof chambresData) => {
       description: room.description.en,
       size: room.size,
       guests: room.guests.en,
-      features: room.features.map((feature) => feature.en),
       amenities: room.amenities.en,
       image: room.image,
       hidden: room.hidden || false,
@@ -124,7 +123,6 @@ const splitChambresData = (mixedData: typeof chambresData) => {
       max: mixedData.statsLabels.max.en,
     },
     labels: {
-      features: mixedData.labels.features.en,
       amenities: mixedData.labels.amenities.en,
       includedServices: mixedData.labels.includedServices.en,
     },
@@ -169,10 +167,6 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
         description: { fr: roomFr.description, en: roomEn.description || roomFr.description },
         size: roomFr.size,
         guests: { fr: roomFr.guests, en: roomEn.guests || roomFr.guests },
-        features: roomFr.features.map((fFr: string, j: number) => ({
-          fr: fFr,
-          en: roomEn.features[j] || fFr,
-        })),
         amenities: {
           fr: roomFr.amenities,
           en: roomEn.amenities || roomFr.amenities,
@@ -188,7 +182,6 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
       max: { fr: dataFr.statsLabels.max, en: enFallback.statsLabels.max || dataFr.statsLabels.max },
     },
     labels: {
-      features: { fr: dataFr.labels.features, en: enFallback.labels.features || dataFr.labels.features },
       amenities: { fr: dataFr.labels.amenities, en: enFallback.labels.amenities || dataFr.labels.amenities },
       includedServices: { fr: dataFr.labels.includedServices, en: enFallback.labels.includedServices || dataFr.labels.includedServices },
     },
@@ -396,7 +389,7 @@ const Chambres = () => {
     };
   };
 
-  const updateLabel = (labelKey: 'features' | 'amenities' | 'includedServices') => {
+  const updateLabel = (labelKey: 'amenities' | 'includedServices') => {
     return async (newFr: string, newEn: string) => {
       const updatedData = {
         ...data,
@@ -515,58 +508,6 @@ const Chambres = () => {
       setData(updatedData);
       await updateChambresSection(updatedData);
     };
-  };
-
-  const updateRoomFeature = (roomIndex: number, featureIndex: number) => {
-    return async (newFr: string, newEn: string) => {
-      const updatedData = {
-        ...data,
-        rooms: data.rooms.map((room, i) =>
-          i === roomIndex
-            ? {
-                ...room,
-                features: room.features.map((feature, j) =>
-                  j === featureIndex ? { fr: newFr, en: newEn } : feature
-                ),
-              }
-            : room
-        ),
-      };
-      setData(updatedData);
-      await updateChambresSection(updatedData);
-    };
-  };
-
-  const addRoomFeature = async (roomIndex: number) => {
-    const updatedData = {
-      ...data,
-      rooms: data.rooms.map((room, i) =>
-        i === roomIndex
-          ? {
-              ...room,
-              features: [...room.features, { fr: 'Nouvelle caractéristique', en: 'New feature' }],
-            }
-          : room
-      ),
-    };
-    setData(updatedData);
-    await updateChambresSection(updatedData);
-  };
-
-  const removeRoomFeature = async (roomIndex: number, featureIndex: number) => {
-    const updatedData = {
-      ...data,
-      rooms: data.rooms.map((room, i) =>
-        i === roomIndex
-          ? {
-              ...room,
-              features: room.features.filter((_, j) => j !== featureIndex),
-            }
-          : room
-      ),
-    };
-    setData(updatedData);
-    await updateChambresSection(updatedData);
   };
 
   const updateRoomAmenity = (roomIndex: number, amenityIndex: number) => {
@@ -696,7 +637,6 @@ const Chambres = () => {
         description: { fr: 'Description de la chambre.', en: 'Room description.' },
         size: '30 m²',
         guests: { fr: '2 personnes', en: '2 guests' },
-        features: [{ fr: 'Caractéristique 1', en: 'Feature 1' }],
         amenities: { fr: ['Wifi'], en: ['Wifi'] },
         image: hotelRoom,
         hidden: false,
@@ -935,9 +875,6 @@ const Chambres = () => {
   const getAmenities = (room: any) => room.amenities[lang] || room.amenities.fr;
   const getIncludedServices = () => data.includedServices[lang] || data.includedServices.fr;
 
-  // Vérifier si la chambre nécessite un format rectangulaire large (h < w)
-  const isWideImageRoom = (roomId: number) => [1, 2, 3].includes(roomId);
-
   return (
     <div className="min-h-screen bg-background">
 
@@ -1071,11 +1008,10 @@ const Chambres = () => {
 
       {/* Rooms Showcase */}
       <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[80%] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-16">
             {data.rooms.map((room, index) => {
               if (!isAdmin && room.hidden) return null;
-              const isWide = isWideImageRoom(room.id);
               return (
                 <Card
                   key={room.id}
@@ -1105,7 +1041,7 @@ const Chambres = () => {
                   <div className="lg:w-1/2 flex">
                     <ImageTooltip imageUrl={room.image} onSave={updateRoomImage(index)}>
                       <div 
-                        className={`w-full relative cursor-pointer overflow-hidden ${isWide ? 'aspect-[4/3] h-auto' : 'h-80 lg:h-full'}`}
+                        className="w-full relative cursor-pointer overflow-hidden aspect-[4/3] h-auto"
                         onClick={() => openImagePopup(room.image || hotelRoom)}
                       >
                         <img
@@ -1118,7 +1054,7 @@ const Chambres = () => {
                   </div>
 
                   {/* Conteneur de contenu */}
-                  <div className={`lg:w-1/2 p-8 flex flex-col ${isWide ? 'justify-center' : ''}`}>
+                  <div className="lg:w-1/2 p-8 flex flex-col justify-center">
                     <div className="flex-1">
                       <CardHeader className="p-0 mb-6">
                         <div className="flex items-center justify-between mb-4">
@@ -1179,57 +1115,6 @@ const Chambres = () => {
                             <TextFormatter text={getText(room.description)} />
                           </Tooltip>
                         </div>
-
-                        {room.features && room.features.length > 0 && (
-                          <div>
-                            <h4 className="font-semibold text-foreground mb-3">
-                              <Tooltip
-                                frLabel={data.labels.features.fr}
-                                enLabel={data.labels.features.en}
-                                onSave={updateLabel('features')}
-                              >
-                                <TextFormatter text={getText(data.labels.features)} />
-                              </Tooltip>
-                            </h4>
-                            <div className="space-y-1">
-                              {room.features.map((feature, idx) => (
-                                <div key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                                  <div className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                                  <div className="flex-1">
-                                    <Tooltip
-                                      frLabel={feature.fr}
-                                      enLabel={feature.en}
-                                      onSave={updateRoomFeature(index, idx)}
-                                    >
-                                      <TextFormatter text={getText(feature)} className="block" />
-                                    </Tooltip>
-                                  </div>
-                                  {isAdmin && (
-                                    <Button
-                                      variant="ghost"
-                                      size="sm"
-                                      onClick={() => removeRoomFeature(index, idx)}
-                                      className="h-6 w-6 p-0"
-                                    >
-                                      <Trash2 className="w-3 h-3" />
-                                    </Button>
-                                  )}
-                                </div>
-                              ))}
-                              {isAdmin && (
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  onClick={() => addRoomFeature(index)}
-                                  className="mt-2"
-                                >
-                                  <Plus className="w-4 h-4 mr-1" />
-                                  {isFr ? 'Ajouter une caractéristique' : 'Add a feature'}
-                                </Button>
-                              )}
-                            </div>
-                          </div>
-                        )}
 
                         {room.amenities && room.amenities.fr.length > 0 && (
                           <div>

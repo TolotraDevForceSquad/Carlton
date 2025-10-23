@@ -1,464 +1,238 @@
-// src/data/chambresData.ts
-export const chambresData = {
-  heroTitle: {
-    fr: "Chambres & Suites",
-    en: "Rooms & Suites"
+// src/data/restaurantData.ts
+export const restaurantPageData = {
+  hero: {
+    backgroundImage: '/uploads/Restaurants & Bars_OK/Cover.jpg',
+    title: {
+      fr: "Restaurants & Bars",
+      en: "Restaurants & Bars"
+    },
+    description: {
+      fr: "Quatre univers culinaires uniques pour des expériences gastronomiques variées au cœur de Madagascar",
+      en: "Four unique culinary universes for varied gastronomic experiences in the heart of Madagascar"
+    },
+    stats: [
+      {
+        number: { fr: "4", en: "4" },
+        label: { fr: "Restaurants & Bars", en: "Restaurants & Bars" },
+        icon: "Utensils"
+      },
+      {
+        number: { fr: "5★", en: "5★" },
+        label: { fr: "Gastronomie", en: "Gastronomy" },
+        icon: "Star"
+      },
+      {
+        number: { fr: "6h30-23h", en: "6:30am-11pm" },
+        label: { fr: "Service continu", en: "Continuous Service" },
+        icon: "Clock"
+      },
+      {
+        number: { fr: "Premium", en: "Premium" },
+        label: { fr: "Cuisine d'exception", en: "Exceptional Cuisine" },
+        icon: "Sparkles"
+      }
+    ],
+    buttonTexts: {
+      primary: { fr: "Découvrir nos restaurants", en: "Discover our restaurants" },
+      secondary: { fr: "Réserver une table", en: "Reserve a table" }
+    }
   },
-  heroSubtitle: {
-    fr: "Chambres et suites élégantes avec vue imprenable sur le Palais de la Reine et le lac Anosy",
-    en: "Elegant rooms and suites with breathtaking views of the Queen's Palace and Lake Anosy"
-  },
-  heroImage: "/uploads/Presidential_suite_bedroom_interior_7adece21.png",
-  rooms: [
+  restaurants: [
     {
       id: 1,
-      name: {
-        fr: "Chambre Executive",
-        en: "Executive Room"
-      },
-      subtitle: {
-        fr: "Vue Panoramique ou Vue sur le Palais de la Reine & le lac Anosy",
-        en: "Panoramic View or Queen's Palace & Lake Anosy View"
-      },
+      name: { fr: "Le Bistrot du Carlton", en: "Le Bistrot du Carlton" },
+      type: { fr: "Bistrot – Bar / Cuisine Bistrot revisitée", en: "Bistrot – Bar / Revisited Bistrot Cuisine" },
       description: {
-        fr: "Un lit King Size ou deux lits jumeaux. (-) Nos chambres Executive, allient espace, confort et fonctionnalité pour un séjour des plus agréables. Avec une décoration chaleureuse et un agencement soigné, elles offrent un cadre reposant propice à la détente. Profitez de la vue dégagée sur la ville, qui ajoute une note d’évasion à votre expérience.",
-        en: "One King Size bed or two twin beds. (-) Our Executive Rooms combine space, comfort, and functionality for the most pleasant stay. With warm decoration and careful layout, they offer a relaxing setting conducive to rest. Enjoy the unobstructed city view, adding a touch of escape to your experience."
+        fr: "Bistrot urbain, esprit d'ici et d'ailleurs ! (-) Dans une ambiance chic et rétro, notre bistrot revisite la cuisine traditionnelle avec une touche moderne et internationale.",
+        en: "Urban bistro, spirit from here and elsewhere! (-) In a chic and retro atmosphere, our bistro revisits traditional cuisine with a modern and international touch."
       },
-      image: "/uploads/Luxury_suite_interior_386342fd.png",
-      size: "24 m²",
-      guests: {
-        fr: "2 personnes",
-        en: "2 people"
+      detailedDescription: {
+        fr: "Ici, les plats sont préparés avec des produits frais et de saison pour des recettes généreuses et riches en goût. Vous retrouverez des incontournables comme la terrine de foie gras, la salade César, le magret de canard, ou encore des classiques revisités tels que les spaghetti carbonara, le club sandwich, le hamburger maison ou le fish & chips croustillant. Et bien sûr, les desserts comme la crème brûlée ou la mousse au chocolat. Pour compléter le tout, des options végétariens sont disponibles pour régaler tous les appétits. (-) Ouvert du matin jusqu'en soirée, avec terrasse en plein air, c'est l'endroit parfait pour un café, un déjeuner de travail ou un dîner décontracté entre amis.",
+        en: "Here, the dishes are homemade, prepared with fresh and seasonal products for generous and flavorful recipes. You'll find essentials like foie gras terrine, Caesar salad, duck breast, or revisited classics such as spaghetti carbonara, club sandwich, homemade hamburger or crispy fish & chips. And of course, desserts like crème brûlée or chocolate mousse. To complete it all, vegetarian options are available to delight all appetites. (-) Open from morning to evening, with an outdoor terrace, it's the perfect place for a coffee, a business lunch or a casual dinner with friends."
       },
-      features: [
-        {
-          fr: "Un lit King Size ou deux lits jumeaux",
-          en: "One King Size bed or two twin beds"
-        },
-        {
-          fr: "Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
-          en: "Panoramic view or Queen's Palace & Lake Anosy view"
-        },
-        {
-          fr: "Décoration chaleureuse et agencement soigné",
-          en: "Warm decoration and careful layout"
-        },
-        {
-          fr: "Cadre reposant pour la détente",
-          en: "Relaxing setting for rest"
-        },
-        {
-          fr: "Vue dégagée sur la ville",
-          en: "Unobstructed city view"
-        }
+      images: [
+        '/uploads/Restaurants & Bars_OK/Bistrot_01.jpg',
+        '/uploads/Restaurants & Bars_OK/Bistrot_02.jpg',
+        '/uploads/Restaurants & Bars_OK/Bistrot_03.jpg',
+        '/uploads/Restaurants & Bars_OK/Bistrot_04.jpg',
+        '/uploads/Restaurants & Bars_OK/Bistrot_05.JPG'
       ],
-      amenities: {
-        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé et café avec eau minérale", "Wifi haut débit", "Salle de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
-        en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Tea and coffee service with mineral water", "High-speed WiFi", "Luxury marble bathroom", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
-      }
+      rating: 4,
+      priceRange: { fr: "€€€", en: "€€€" },
+      hours: { fr: "Bar : 06h30 à 23h00 | Restaurant : 11h00 à 23h00", en: "Bar: 6:30am to 11pm | Restaurant: 11am to 11pm" },
+      capacity: { fr: "Terrasse en plein air", en: "Outdoor Terrace" },
+      reservationRequired: false,
+      dressCode: { fr: "", en: "" },
+      specialties: [
+        { fr: "Terrine de foie gras", en: "Foie Gras Terrine" },
+        { fr: "Salade César", en: "Caesar Salad" },
+        { fr: "Magret de canard", en: "Duck Breast" },
+        { fr: "Spaghetti carbonara", en: "Spaghetti Carbonara" },
+        { fr: "Club sandwich", en: "Club Sandwich" },
+        { fr: "Hamburger maison", en: "Homemade Hamburger" },
+        { fr: "Fish & chips croustillant", en: "Crispy Fish & Chips" },
+        { fr: "Crème brûlée", en: "Crème Brûlée" },
+        { fr: "Mousse au chocolat", en: "Chocolate Mousse" }
+      ],
+      features: [
+        { fr: "Ouvert tous les jours", en: "Open Every Day" },
+        { fr: "Produits frais et de saison", en: "Fresh and Seasonal Products" },
+        { fr: "Options végétariennes", en: "Vegetarian Options" },
+        { fr: "Terrasse extérieure", en: "Outdoor Terrace" },
+        { fr: "Idéal pour déjeuners d'affaires", en: "Ideal for Business Lunches" }
+      ],
+      hidden: false
     },
     {
       id: 2,
-      name: {
-        fr: "Chambre Premium",
-        en: "Premium Room"
-      },
-      subtitle: {
-        fr: "Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
-        en: "Panoramic View or Queen's Palace & Lake Anosy View"
-      },
+      name: { fr: "Ile Rouge & la Terrasse", en: "Ile Rouge & the Terrace" },
+      type: { fr: "Restaurant en salle / Cuisine internationale", en: "Indoor Restaurant / International Cuisine" },
       description: {
-        fr: "Un lit King Size ou deux lits jumeaux. (-) Situées aux étages supérieurs, les chambres Premium offrent une atmosphère paisible avec un point de vue imprenable sur le panorama urbain. Dotées d’équipements complets, bénéficiez d’un cadre confortable et intime pour un séjour parfait que ce soit pour le travail ou la détente.",
-        en: "One King Size bed or two twin beds. (-) Located on the upper floors, Premium Rooms offer a peaceful atmosphere with an unbeatable view of the urban panorama. Equipped with complete amenities, enjoy a comfortable and intimate setting for a perfect stay, whether for work or relaxation."
+        fr: "Une invitation au voyage des saveurs ! (-) Notre restaurant vous propose une cuisine du monde raffinée, élaborée avec des ingrédients locaux soigneusement sélectionnés.",
+        en: "An invitation to a journey of flavors! (-) Our restaurant offers refined world cuisine, crafted with carefully selected local ingredients."
       },
-      image: "/uploads/Luxury_suite_interior_386342fd.png",
-      size: "24 m²",
-      guests: {
-        fr: "2 personnes",
-        en: "2 people"
+      detailedDescription: {
+        fr: "Les spécialités malgaches côtoient des plats internationaux, pour une expérience culinaire variée et raffinée, mêlant traditions locales et saveurs du monde. (-) De larges baies vitrées baignent la salle de lumière naturelle et offrent une vue apaisante sur la piscine et le jardin. C'est dans cette atmosphère chaleureuse que le petit-déjeuner est servi en buffet ou à la carte. Au fil des saisons, le restaurant devient un lieu de retrouvaille privilégié pour célébrer les moments forts de l'année : les fêtes des mères, des pères, Pâques, Noël, Nouvel an ... Famille et proches se retrouvent autour de menus spéciaux ou de buffets généreux et hauts en saveurs, dans une ambiance conviviale et festive.",
+        en: "Malagasy specialties mingle with international dishes, for a varied and refined culinary experience, blending local traditions and world flavors. (-) Large bay windows bathe the room in natural light and offer a soothing view of the pool and garden. It is in this warm atmosphere that breakfast is served as a buffet or à la carte. Through the seasons, the restaurant becomes a privileged meeting place to celebrate the highlights of the year: Mother's Day, Father's Day, Easter, Christmas, New Year... Family and loved ones gather around special menus or generous and flavorful buffets, in a convivial and festive atmosphere."
       },
-      features: [
-        {
-          fr: "Un lit King Size ou deux lits jumeaux",
-          en: "One King Size bed or two twin beds"
-        },
-        {
-          fr: "Vue panoramique ou sur le Palais de la Reine & le lac Anosy",
-          en: "Panoramic view or Queen's Palace & Lake Anosy view"
-        },
-        {
-          fr: "Atmosphère paisible aux étages supérieurs",
-          en: "Peaceful atmosphere on upper floors"
-        },
-        {
-          fr: "Point de vue imprenable sur le panorama urbain",
-          en: "Unbeatable urban panorama view"
-        },
-        {
-          fr: "Cadre confortable pour travail ou détente",
-          en: "Comfortable setting for work or relaxation"
-        }
+      images: [
+        '/uploads/Restaurants & Bars_OK/Ile rouge_01.jpg',
+        '/uploads/Restaurants & Bars_OK/Ile rouge_02.jpg',
+        '/uploads/Restaurants & Bars_OK/Ile rouge_03.jpg'
       ],
-      amenities: {
-        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé", "Machine à expresso", "Eau minérale", "Wifi haut débit", "Fer et table à repasser", "Salle de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
-        en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Tea service", "Espresso machine", "Mineral water", "High-speed WiFi", "Iron and ironing board", "Luxury marble bathroom", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
-      }
+      rating: 5,
+      priceRange: { fr: "€€€€", en: "€€€€" },
+      hours: { fr: "Petit-déjeuner : 06h30 à 10h30 | Déjeuner : 12h00 à 15h00 | Dîner : 19h00 à 23h00", en: "Breakfast: 6:30am to 10:30am | Lunch: 12pm to 3pm | Dinner: 7pm to 11pm" },
+      capacity: { fr: "60 couverts en salle + terrasse", en: "60 seats indoors + terrace" },
+      reservationRequired: true,
+      dressCode: { fr: "", en: "" },
+      specialties: [
+        { fr: "Spécialités malgaches", en: "Malagasy Specialties" },
+        { fr: "Plats internationaux", en: "International Dishes" },
+        { fr: "Buffet petit-déjeuner", en: "Breakfast Buffet" },
+        { fr: "Menus spéciaux saisonniers", en: "Seasonal Special Menus" }
+      ],
+      features: [
+        { fr: "Ouvert tous les jours", en: "Open Every Day" },
+        { fr: "Vue sur piscine et jardin", en: "View of Pool and Garden" },
+        { fr: "Événements festifs", en: "Festive Events" },
+        { fr: "Buffets généreux", en: "Generous Buffets" },
+        { fr: "Ingrédients locaux", en: "Local Ingredients" }
+      ],
+      hidden: false
     },
     {
       id: 3,
-      name: {
-        fr: "Club Suite",
-        en: "Club Suite"
-      },
-      subtitle: {
-        fr: "Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
-        en: "Panoramic View or Queen's Palace & Lake Anosy View"
-      },
+      name: { fr: "L'Oasis de Tana", en: "L'Oasis de Tana" },
+      type: { fr: "Restaurant en plein air / Spécialités : salades, grillades, pizzas", en: "Outdoor Restaurant / Specialties: Salads, Grills, Pizzas" },
       description: {
-        fr: "Une chambre avec un lit King Size et un salon séparé. (-) Localisées dans les étages élevés, nos Club Suites comprennent une chambre avec un grand lit et un salon séparé. Un espace entièrement équipé, idéal pour un séjour parfait entre détente et travail, dans un confort optimal.",
-        en: "One bedroom with a King Size bed and a separate living room. (-) Located on the upper floors, our Club Suites feature a bedroom with a large bed and a separate living room. A fully equipped space, ideal for a perfect stay between relaxation and work, in optimal comfort."
+        fr: "Escapade gustative au grand air  (-) Au sein d'un jardin paisible, notre restaurant vous accueille dans une ambiance détendue et tranquille.",
+        en: "Gastronomic escape in the open air! (-) Within a peaceful garden, our restaurant welcomes you in a relaxed and serene atmosphere."
       },
-      image: "/uploads/Luxury_suite_interior_386342fd.png",
-      size: "48 m²",
-      guests: {
-        fr: "2 personnes",
-        en: "2 people"
+      detailedDescription: {
+        fr: "Offrez-vous un moment suspendu pour déguster des plats généreux et variés, soigneusement préparés avec des ingrédients de qualité. Salades gourmandes, grillades savoureuses et desserts irrésistibles composent une carte qui éveille les sens. L'endroit idéal pour un déjeuner d'affaires ou simplement se faire plaisir autour d'un bon repas. (-) Notre bar vous invite à prolonger l'expérience dans un esprit tout aussi relaxant. Laissez-vous surprendre par une sélection de cocktails originaux, frais et délicieux, pensés pour accompagner vos instants de détente jusqu'à la fin de la journée. Une parenthèse pour s'offrir une pause dans un cadre verdoyant.",
+        en: "Treat yourself to a suspended moment to savor generous and varied dishes, carefully prepared with quality ingredients. Gourmet salads, savory grills and irresistible desserts make up a menu that awakens the senses. The ideal place for a business lunch or simply to treat yourself to a good meal. (-) Our bar invites you to extend the experience in an equally relaxing spirit. Let yourself be surprised by a selection of original, fresh and delicious cocktails, designed to accompany your moments of relaxation until the end of the day. A break to treat yourself in a green setting."
       },
-      features: [
-        {
-          fr: "Chambre avec lit King Size",
-          en: "Bedroom with King Size bed"
-        },
-        {
-          fr: "Salon séparé",
-          en: "Separate living room"
-        },
-        {
-          fr: "Vue panoramique ou sur le Palais de la Reine & le lac Anosy",
-          en: "Panoramic view or Queen's Palace & Lake Anosy view"
-        },
-        {
-          fr: "Localisée aux étages élevés",
-          en: "Located on upper floors"
-        },
-        {
-          fr: "Espace idéal pour détente et travail",
-          en: "Space ideal for relaxation and work"
-        }
+      images: [
+        '/uploads/Restaurants & Bars_OK/Oasis_01.jpg',
+        '/uploads/Restaurants & Bars_OK/Oasis_02.jpg',
+        '/uploads/Restaurants & Bars_OK/Oasis_03.jpg'
       ],
-      amenities: {
-        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé", "Machine à expresso", "Eau minérale", "Wifi haut débit", "Fer et table à repasser", "02 salles de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
-        en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Tea service", "Espresso machine", "Mineral water", "High-speed WiFi", "Iron and ironing board", "2 luxury marble bathrooms", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
-      }
+      rating: 4,
+      priceRange: { fr: "€€€", en: "€€€" },
+      hours: { fr: "Bar : à partir de 8h00 | Restaurant (hiver) : 11h00 à 17h00 | Restaurant (été) : 11h00 à 18h00", en: "Bar: from 8am | Restaurant (winter): 11am to 5pm | Restaurant (summer): 11am to 6pm" },
+      capacity: { fr: "50 places en plein air", en: "50 Outdoor Seats" },
+      reservationRequired: false,
+      dressCode: { fr: "", en: "" },
+      specialties: [
+        { fr: "Salades gourmandes", en: "Gourmet Salads" },
+        { fr: "Grillades savoureuses", en: "Savory Grills" },
+        { fr: "Pizzas", en: "Pizzas" },
+        { fr: "Desserts irrésistibles", en: "Irresistible Desserts" },
+        { fr: "Cocktails originaux", en: "Original Cocktails" }
+      ],
+      features: [
+        { fr: "Ouvert tous les jours", en: "Open Every Day" },
+        { fr: "Jardin paisible", en: "Peaceful Garden" },
+        { fr: "Ambiance détendue", en: "Relaxed Atmosphere" },
+        { fr: "Déjeuners d'affaires", en: "Business Lunches" },
+        { fr: "Cadre verdoyant", en: "Green Setting" }
+      ],
+      hidden: false
     },
     {
       id: 4,
-      name: {
-        fr: "Family Suite",
-        en: "Family Suite"
-      },
-      subtitle: {
-        fr: "Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
-        en: "Panoramic View or Queen's Palace & Lake Anosy View"
-      },
+      name: { fr: "L'Eclair by Carlton", en: "L'Eclair by Carlton" },
+      type: { fr: "Pâtisserie & Boulangerie", en: "Patisserie & Bakery" },
       description: {
-        fr: "Une chambre avec un lit King Size, une chambre avec deux lits simples et un salon séparé. (-) La Family Suite, lumineuse et généreusement agencée est parfaitement conçue pour un séjour familial en toute sérénité. Elle se compose d’une chambre principale dotée d’un grand lit et d’une seconde chambre avec deux lits simples, parfaite pour les enfants ou les amis. Un salon indépendant permet à chacun de profiter d’un moment de détente dans une atmosphère chaleureuse et accueillante. Cette suite permet à toute la famille de se sentir comme à la maison.",
-        en: "One room with a King Size bed, one room with two single beds and a separate living room. (-) The Family Suite, bright and generously laid out, is perfectly designed for a family stay in complete serenity. It consists of a main bedroom equipped with a large bed and a second bedroom with two single beds, perfect for children or friends. An independent living room allows everyone to enjoy a moment of relaxation in a warm and welcoming atmosphere. This suite allows the whole family to feel at home."
+        fr: "Un véritable rendez-vous gourmand en plein centre-ville (-) Bienvenue dans notre pâtisserie & boulangerie artisanale !",
+        en: "A true gourmet rendezvous in the heart of the city! (-) Welcome to our artisan patisserie & bakery!"
       },
-      image: "/uploads/Luxury_suite_interior_386342fd.png",
-      size: "72 m²",
-      guests: {
-        fr: "4 personnes",
-        en: "4 people"
+      detailedDescription: {
+        fr: "Chaque jour, notre équipe passionnée prépare avec soin des produits faits maison, frais et savoureux : pains variés à la croûte dorée, viennoiseries fondantes, gâteaux et entremets délicats, sans oublier sandwiches gourmands, snacks savoureux, glaces rafraîchissantes, boissons chaudes réconfortantes et salades de fruits fraîches. (-) Ici, l'ambiance est conviviale et chaleureuse, un lieu où les amateurs de douceurs se sentent comme chez eux, accueillis par une équipe souriante et attentive, toujours prête à partager un moment de plaisir et de gourmandise.",
+        en: "Every day, our passionate team carefully prepares homemade, fresh and tasty products: varied breads with golden crusts, melting pastries, delicate cakes and entremets, not forgetting gourmet sandwiches, tasty snacks, refreshing ice creams, comforting hot drinks and fresh fruit salads. (-) Here, the atmosphere is convivial and warm, a place where sweet lovers feel at home, welcomed by a smiling and attentive team, always ready to share a moment of pleasure and indulgence."
       },
-      features: [
-        {
-          fr: "Chambre avec lit King Size",
-          en: "Bedroom with King Size bed"
-        },
-        {
-          fr: "Chambre avec deux lits simples",
-          en: "Bedroom with two single beds"
-        },
-        {
-          fr: "Salon séparé",
-          en: "Separate living room"
-        },
-        {
-          fr: "Vue panoramique ou sur le Palais de la Reine & le lac Anosy",
-          en: "Panoramic view or Queen's Palace & Lake Anosy view"
-        },
-        {
-          fr: "Espace familial spacieux et serein",
-          en: "Spacious and serene family space"
-        }
+      images: [
+        '/uploads/Restaurants & Bars_OK/Eclair_01.jpg',
+        '/uploads/Restaurants & Bars_OK/Eclair_02.jpg',
+        '/uploads/Restaurants & Bars_OK/Eclair_03.jpg'
       ],
-      amenities: {
-        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé", "Machine à expresso", "Eau minérale", "Wifi haut débit", "Fer et table à repasser", "02 Salles de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
-        en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Tea service", "Espresso machine", "Mineral water", "High-speed WiFi", "Iron and ironing board", "2 luxury marble bathrooms", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
-      }
-    },
-    {
-      id: 5,
-      name: {
-        fr: "Suite",
-        en: "Suite"
-      },
-      subtitle: {
-        fr: "Vue sur le Palais de la Reine & le lac Anosy",
-        en: "Queen's Palace & Lake Anosy View"
-      },
-      description: {
-        fr: "Une chambre avec un lit King Size et un large salon séparé. Installées en hauteur, nos Suites offrent un équilibre parfait entre bien-être, style et praticité, dans un espace généreux et lumineux. Elle comprend une grande chambre avec un lit King Size et un vaste salon séparé avec kitchenette pour se détendre ou travailler en toute tranquillité. Le salon accueillant, les équipements et commodités offerts assurent un séjour réussi. Un cadre luxueux pour se sentir bien, dès les premiers instants.",
-        en: "One room with a King Size bed and a wide separate living room. Installed at height, our Suites offer a perfect balance between well-being, style, and practicality, in a generous and bright space. It includes a large bedroom with a King Size bed and a vast separate living room with kitchenette to relax or work in complete tranquility. The welcoming living room, the equipment and amenities offered ensure a successful stay. A luxurious setting to feel good, from the first moments."
-      },
-      image: "/uploads/Luxury_suite_interior_386342fd.png",
-      size: "72 m²",
-      guests: {
-        fr: "2 personnes",
-        en: "2 people"
-      },
-      features: [
-        {
-          fr: "Chambre avec lit King Size",
-          en: "Bedroom with King Size bed"
-        },
-        {
-          fr: "Large salon séparé avec kitchenette",
-          en: "Wide separate living room with kitchenette"
-        },
-        {
-          fr: "Vue sur le Palais de la Reine & le lac Anosy",
-          en: "Queen's Palace & Lake Anosy view"
-        },
-        {
-          fr: "Cadre raffiné et confortable",
-          en: "Refined and comfortable setting"
-        },
-        {
-          fr: "Installée en hauteur",
-          en: "Installed in height"
-        }
+      rating: 5,
+      priceRange: { fr: "€€", en: "€€" },
+      hours: { fr: "De 06h30 à 18h30", en: "From 6:30am to 6:30pm" },
+      capacity: { fr: "Emporter et 25 places assises", en: "Takeaway and 25 Seats" },
+      reservationRequired: false,
+      dressCode: { fr: "", en: "" },
+      specialties: [
+        { fr: "Pains variés", en: "Varied Breads" },
+        { fr: "Viennoiseries fondantes", en: "Melting Pastries" },
+        { fr: "Gâteaux et entremets", en: "Cakes and Entremets" },
+        { fr: "Sandwiches gourmands", en: "Gourmet Sandwiches" },
+        { fr: "Glaces rafraîchissantes", en: "Refreshing Ice Creams" },
+        { fr: "Salades de fruits fraîches", en: "Fresh Fruit Salads" }
       ],
-      amenities: {
-        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé", "Machine à expresso", "Eau minérale", "Wifi haut débit", "Fer et table à repasser", "02 salles de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
-        en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Tea service", "Espresso machine", "Mineral water", "High-speed WiFi", "Iron and ironing board", "2 luxury marble bathrooms", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
-      }
-    },
-    {
-      id: 6,
-      name: {
-        fr: "Suite Présidentielle",
-        en: "Presidential Suite"
-      },
-      subtitle: {
-        fr: "96 m²- Vue sur le Palais de la Reine & le lac Anosy",
-        en: "96 m² – View of the Queen’s Palace & Lake Anosy"
-      },
-      description: {
-        fr: "Appartement comprenant une chambre spacieuse avec un lit Super King Size et un salon confortable. Nos Suites Présidentielles sont nichées dans les étages les plus élevés, en surplomb de la ville, vous offrant une perspective unique sur la plaine d’Antananarivo. Elles se composent d’une grande chambre et d’un salon spacieux avec une table à manger et une kitchenette. Inondées de lumière et empreintes de calme, les Suites Présidentielles offrent un cadre exceptionnel pour un séjour tout en confort et en sérénité.",
-        en: "Apartment including a spacious bedroom with a Super King Size bed and a comfortable living room. Our Presidential Suites are nestled on the highest floors, overlooking the city, offering you a unique perspective on the Antananarivo plain. They consist of a large bedroom and a spacious living room with a dining table and kitchenette. Flooded with light and imbued with calm, the Presidential Suites offer an exceptional setting for a stay full of comfort and serenity."
-      },
-      image: "/uploads/Presidential_suite_bedroom_interior_7adece21.png",
-      size: "96 m²",
-      guests: {
-        fr: "2 personnes",
-        en: "2 people"
-      },
       features: [
-        {
-          fr: "Chambre spacieuse avec lit Super King Size",
-          en: "Spacious bedroom with Super King Size bed"
-        },
-        {
-          fr: "Salon confortable avec table à manger",
-          en: "Comfortable living room with dining table"
-        },
-        {
-          fr: "Kitchenette équipée",
-          en: "Equipped kitchenette"
-        },
-        {
-          fr: "Vue unique sur la plaine d’Antananarivo",
-          en: "Unique view of the Antananarivo plain"
-        },
-        {
-          fr: "Étages les plus élevés",
-          en: "Highest floors"
-        },
-        {
-          fr: "Dressing séparé",
-          en: "Separate dressing room"
-        }
+        { fr: "Ouvert tous les jours", en: "Open Every Day" },
+        { fr: "Produits faits maison", en: "Homemade Products" },
+        { fr: "Ambiance conviviale", en: "Convivial Atmosphere" },
+        { fr: "Équipe passionnée", en: "Passionate Team" },
+        { fr: "Emporter disponible", en: "Takeaway Available" }
       ],
-      amenities: {
-        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé et café individuel avec eau minérale", "Wifi haut débit", "Dressing séparé", "Fer et table à repasser", "Salles de bain de luxe en marbre (2 ou 3)", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
-        en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Individual tea and coffee service with mineral water", "High-speed WiFi", "Separate dressing room", "Iron and ironing board", "Luxury marble bathrooms (2 or 3)", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
-      }
+      hidden: false
     }
   ],
-  stats: {
-    totalRooms: 171,
-    categories: 6,
-    maxSize: "96 m²"
-  },
-  statsLabels: {
-    total: {
-      fr: "Chambres & Suites",
-      en: "Rooms & Suites"
-    },
-    categories: {
-      fr: "Catégories de standing",
-      en: "Categories of standing"
-    },
-    max: {
-      fr: "Suite Présidentielle",
-      en: "Presidential Suite"
-    }
-  },
-  labels: {
-    features: {
-      fr: "Caractéristiques :",
-      en: "Features:"
-    },
-    amenities: {
-      fr: "Équipements :",
-      en: "Amenities:"
-    },
-    includedServices: {
-      fr: "Services :",
-      en: "Services:"
-    }
-  },
-  servicesTitle: {
-    fr: "Services",
-    en: "Services"
-  },
-  servicesDescription: {
-    fr: "Profitez de nos services supplémentaires pour un séjour encore plus personnalisé",
-    en: "Enjoy our additional services for an even more personalized stay"
-  },
-  services: [
-    { 
-      icon: "Coffee", 
-      title: {
-        fr: "Room Service",
-        en: "Room Service"
-      }, 
-      desc: {
-        fr: "Service en chambre disponible 24h/24",
-        en: "24/7 room service available"
-      } 
-    },
-    { 
-      icon: "Scissors", 
-      title: {
-        fr: "Service de blanchisserie",
-        en: "Laundry Service"
-      }, 
-      desc: {
-        fr: "Service de nettoyage à sec et repassage",
-        en: "Dry cleaning and ironing service"
-      } 
-    },
-    { 
-      icon: "Briefcase", 
-      title: {
-        fr: "Business Corner",
-        en: "Business Corner"
-      }, 
-      desc: {
-        fr: "Espace de travail équipé",
-        en: "Equipped workspace"
-      } 
-    },
-    { 
-      icon: "Plane", 
-      title: {
-        fr: "Transferts Aéroport",
-        en: "Airport Transfers"
-      }, 
-      desc: {
-        fr: "Navette aéroport-hôtel",
-        en: "Airport-hotel shuttle"
-      } 
-    }
-  ],
-  buttonText: {
-    fr: "Découvrir nos hébergements",
-    en: "Discover our accommodations"
-  },
-  bookButton: {
-    fr: "Réserver votre séjour",
-    en: "Book your stay"
-  },
-  includedServices: {
-    fr: ["Wifi Haut débit", "Piscine", "Fitness", "Tennis", "Parking"],
-    en: ["High-speed WiFi", "Pool", "Fitness", "Tennis", "Parking"]
-  },
   cta: {
     title: {
-      fr: "Un voyage à Antananarivo ?",
-      en: "A trip to Antananarivo?"
+      fr: "Envie d’un moment gourmand ?",
+      en: "Craving a gourmet moment?"
     },
-    text: {
-      fr: "Vivez-le pleinement avec nous",
-      en: "Live it fully with us"
+    description: {
+      fr: "Nos restaurants n’attendent que vous.",
+      en: "Our restaurants are waiting for you."
     },
-    button: {
-      fr: "Réserver votre séjour",
-      en: "Book your stay"
-    }
+    buttonText: {
+      fr: "Profiter des offres spéciales",
+      en: "Enjoy special offers"
+    },
+    buttonLink: "/offres-speciales" // lien vers les offres spéciales
   }
 };
 
 
-// src/components/Chambres.tsx
 import { useState, useEffect } from 'react';
+import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
-import {
-  MapPin,
-  Users,
-  Wifi,
-  Car,
-  Coffee,
-  Tv,
-  Wind,
-  Waves,  // For pool
-  Dumbbell,
-  Activity,  // Alternative for tennis court (sports activity)
-  Plane,
-  WashingMachine,
-  Briefcase,
-  Phone,       // For telephone
-  Lock,        // For safe
-  EyeOff,
-  Trash2, // For delete
-  Eye,
-  Plus,
-  // New imports for amenities icons
-  Wine,
-  CupSoda,
-  Droplet,
-  Shirt,
-  ShowerHead,
-  Square,
-  Footprints,
-  Gift
-} from 'lucide-react';
+import { Clock, MapPin, Star, Sparkles, Utensils, Plus, Trash2, Eye, EyeOff, Image as ImageIcon, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Tooltip, ImageTooltip } from '@/components/Tooltip';
 import Footer from '@/components/Footer';
 import ParallaxSection from '@/components/ParallaxSection';
-import { formatAmpersand } from '@/lib/utils/formatAmpersand';
-import { chambresData } from '@/data/chambresData';
+import { restaurantPageData } from '@/data/restaurantsData';
 import { useLanguage } from '@/components/context/LanguageContext';
-import hotelRoom from '@assets/generated_images/Luxury_suite_interior_386342fd.png';
-import suiteImage from '@assets/generated_images/Presidential_suite_bedroom_interior_7adece21.png';
+import { formatAmpersand } from '@/lib/utils/formatAmpersand';
 
-const SECTION_KEY = 'chambres';
+const SECTION_KEY = 'restaurants';
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('userToken');
@@ -469,96 +243,84 @@ const getAuthHeaders = () => {
   return headers;
 };
 
-// Helper to split chambresData into dataFr and dataEn structures
-const splitChambresData = (mixedData: typeof chambresData) => {
+// Helper to split restaurantPageData into dataFr and dataEn structures
+const splitRestaurantData = (mixedData: typeof restaurantPageData) => {
   const dataFr = {
-    heroTitle: mixedData.heroTitle.fr,
-    heroSubtitle: mixedData.heroSubtitle.fr,
-    heroImage: mixedData.heroImage,
-    rooms: mixedData.rooms.map((room) => ({
-      id: room.id,
-      name: room.name.fr,
-      subtitle: room.subtitle.fr,
-      description: room.description.fr,
-      size: room.size,
-      guests: room.guests.fr,
-      features: room.features.map((feature) => feature.fr),
-      amenities: room.amenities.fr,
-      image: room.image,
-      hidden: room.hidden || false,
-    })),
-    stats: mixedData.stats,
-    statsLabels: {
-      total: mixedData.statsLabels.total.fr,
-      categories: mixedData.statsLabels.categories.fr,
-      max: mixedData.statsLabels.max.fr,
+    hero: {
+      backgroundImage: mixedData.hero.backgroundImage,
+      title: mixedData.hero.title.fr,
+      description: mixedData.hero.description.fr,
+      stats: mixedData.hero.stats.map(stat => ({
+        number: stat.number.fr,
+        label: stat.label.fr,
+        icon: stat.icon
+      })),
+      buttonTexts: {
+        primary: mixedData.hero.buttonTexts.primary.fr,
+        secondary: mixedData.hero.buttonTexts.secondary.fr
+      }
     },
-    labels: {
-      features: mixedData.labels.features.fr,
-      amenities: mixedData.labels.amenities.fr,
-      includedServices: mixedData.labels.includedServices.fr,
-    },
-    servicesTitle: mixedData.servicesTitle.fr,
-    servicesDescription: mixedData.servicesDescription.fr,
-    services: mixedData.services.map((service) => ({
-      icon: service.icon,
-      title: service.title.fr,
-      desc: service.desc.fr,
-      hidden: service.hidden || false,
+    restaurants: mixedData.restaurants.map((restaurant) => ({
+      id: restaurant.id,
+      name: restaurant.name.fr,
+      type: restaurant.type.fr,
+      description: restaurant.description.fr,
+      detailedDescription: restaurant.detailedDescription.fr,
+      images: restaurant.images || ['/uploads/Restaurant.png'],
+      rating: restaurant.rating,
+      priceRange: restaurant.priceRange.fr,
+      hours: restaurant.hours.fr,
+      capacity: restaurant.capacity.fr,
+      reservationRequired: restaurant.reservationRequired,
+      dressCode: restaurant.dressCode.fr,
+      specialties: restaurant.specialties.map((spec) => spec.fr),
+      features: restaurant.features.map((feature) => feature.fr),
+      hidden: restaurant.hidden || false
     })),
-    buttonText: mixedData.buttonText.fr,
-    bookButton: mixedData.bookButton.fr,
-    includedServices: mixedData.includedServices.fr,
     cta: {
       title: mixedData.cta.title.fr,
-      text: mixedData.cta.text.fr,
-      button: mixedData.cta.button.fr,
-    },
+      description: mixedData.cta.description.fr,
+      buttonText: mixedData.cta.buttonText.fr
+    }
   };
 
   const dataEn = {
-    heroTitle: mixedData.heroTitle.en,
-    heroSubtitle: mixedData.heroSubtitle.en,
-    heroImage: mixedData.heroImage,
-    rooms: mixedData.rooms.map((room) => ({
-      id: room.id,
-      name: room.name.en,
-      subtitle: room.subtitle.en,
-      description: room.description.en,
-      size: room.size,
-      guests: room.guests.en,
-      features: room.features.map((feature) => feature.en),
-      amenities: room.amenities.en,
-      image: room.image,
-      hidden: room.hidden || false,
-    })),
-    stats: mixedData.stats,
-    statsLabels: {
-      total: mixedData.statsLabels.total.en,
-      categories: mixedData.statsLabels.categories.en,
-      max: mixedData.statsLabels.max.en,
+    hero: {
+      backgroundImage: mixedData.hero.backgroundImage,
+      title: mixedData.hero.title.en,
+      description: mixedData.hero.description.en,
+      stats: mixedData.hero.stats.map(stat => ({
+        number: stat.number.en,
+        label: stat.label.en,
+        icon: stat.icon
+      })),
+      buttonTexts: {
+        primary: mixedData.hero.buttonTexts.primary.en,
+        secondary: mixedData.hero.buttonTexts.secondary.en
+      }
     },
-    labels: {
-      features: mixedData.labels.features.en,
-      amenities: mixedData.labels.amenities.en,
-      includedServices: mixedData.labels.includedServices.en,
-    },
-    servicesTitle: mixedData.servicesTitle.en,
-    servicesDescription: mixedData.servicesDescription.en,
-    services: mixedData.services.map((service) => ({
-      icon: service.icon,
-      title: service.title.en,
-      desc: service.desc.en,
-      hidden: service.hidden || false,
+    restaurants: mixedData.restaurants.map((restaurant) => ({
+      id: restaurant.id,
+      name: restaurant.name.en,
+      type: restaurant.type.en,
+      description: restaurant.description.en,
+      detailedDescription: restaurant.detailedDescription.en,
+      images: restaurant.images || ['/uploads/Restaurant.png'],
+      rating: restaurant.rating,
+      priceRange: restaurant.priceRange.en,
+      hours: restaurant.hours.en,
+      capacity: restaurant.capacity.en,
+      reservationRequired: restaurant.reservationRequired,
+      dressCode: restaurant.dressCode.en,
+      specialties: restaurant.specialties.map((spec) => spec.en),
+      features: restaurant.features.map((feature) => feature.en),
+      hidden: restaurant.hidden || false
     })),
-    buttonText: mixedData.buttonText.en,
-    bookButton: mixedData.bookButton.en,
-    includedServices: mixedData.includedServices.en,
     cta: {
       title: mixedData.cta.title.en,
-      text: mixedData.cta.text.en,
-      button: mixedData.cta.button.en,
-    },
+      description: mixedData.cta.description.en,
+      buttonText: mixedData.cta.buttonText.en
+    }
   };
 
   return { dataFr, dataEn };
@@ -568,61 +330,58 @@ const splitChambresData = (mixedData: typeof chambresData) => {
 const reconstructMixed = (dataFr: any, dataEn: any | null) => {
   if (!dataFr || typeof dataFr !== 'object') {
     console.warn('Invalid dataFr structure, falling back to default');
-    return chambresData;
+    return restaurantPageData;
   }
   const enFallback = dataEn || dataFr;
   return {
-    heroTitle: { fr: dataFr.heroTitle, en: enFallback.heroTitle || dataFr.heroTitle },
-    heroSubtitle: { fr: dataFr.heroSubtitle, en: enFallback.heroSubtitle || dataFr.heroSubtitle },
-    heroImage: dataFr.heroImage,
-    rooms: dataFr.rooms.map((roomFr: any, i: number) => {
-      const roomEn = enFallback.rooms[i] || roomFr;
+    hero: {
+      backgroundImage: dataFr.hero.backgroundImage,
+      title: { fr: dataFr.hero.title, en: enFallback.hero.title },
+      description: { fr: dataFr.hero.description, en: enFallback.hero.description },
+      stats: dataFr.hero.stats.map((statFr: any, i: number) => {
+        const statEn = enFallback.hero.stats[i] || statFr;
+        return {
+          number: { fr: statFr.number, en: statEn.number },
+          label: { fr: statFr.label, en: statEn.label },
+          icon: statFr.icon
+        };
+      }),
+      buttonTexts: {
+        primary: { fr: dataFr.hero.buttonTexts.primary, en: enFallback.hero.buttonTexts.primary },
+        secondary: { fr: dataFr.hero.buttonTexts.secondary, en: enFallback.hero.buttonTexts.secondary }
+      }
+    },
+    restaurants: dataFr.restaurants.map((restaurantFr: any, i: number) => {
+      const restaurantEn = enFallback.restaurants[i] || restaurantFr;
       return {
-        id: roomFr.id,
-        name: { fr: roomFr.name, en: roomEn.name || roomFr.name },
-        subtitle: { fr: roomFr.subtitle, en: roomEn.subtitle || roomFr.subtitle },
-        description: { fr: roomFr.description, en: roomEn.description || roomFr.description },
-        size: roomFr.size,
-        guests: { fr: roomFr.guests, en: roomEn.guests || roomFr.guests },
-        features: roomFr.features.map((fFr: string, j: number) => ({
-          fr: fFr,
-          en: roomEn.features[j] || fFr,
+        id: restaurantFr.id,
+        name: { fr: restaurantFr.name, en: restaurantEn.name },
+        type: { fr: restaurantFr.type, en: restaurantEn.type },
+        description: { fr: restaurantFr.description, en: restaurantEn.description },
+        detailedDescription: { fr: restaurantFr.detailedDescription, en: restaurantEn.detailedDescription },
+        images: restaurantFr.images || ['/uploads/Restaurant.png'],
+        rating: restaurantFr.rating,
+        priceRange: { fr: restaurantFr.priceRange, en: restaurantEn.priceRange },
+        hours: { fr: restaurantFr.hours, en: restaurantEn.hours },
+        capacity: { fr: restaurantFr.capacity, en: restaurantEn.capacity },
+        reservationRequired: restaurantFr.reservationRequired,
+        dressCode: { fr: restaurantFr.dressCode, en: restaurantEn.dressCode },
+        specialties: restaurantFr.specialties.map((sFr: string, j: number) => ({
+          fr: sFr,
+          en: restaurantEn.specialties[j] || sFr
         })),
-        amenities: {
-          fr: roomFr.amenities,
-          en: roomEn.amenities || roomFr.amenities,
-        },
-        image: roomFr.image,
-        hidden: roomFr.hidden !== undefined ? roomFr.hidden : (roomEn.hidden || false),
+        features: restaurantFr.features.map((fFr: string, j: number) => ({
+          fr: fFr,
+          en: restaurantEn.features[j] || fFr
+        })),
+        hidden: restaurantFr.hidden !== undefined ? restaurantFr.hidden : (restaurantEn.hidden || false)
       };
     }),
-    stats: dataFr.stats,
-    statsLabels: {
-      total: { fr: dataFr.statsLabels.total, en: enFallback.statsLabels.total || dataFr.statsLabels.total },
-      categories: { fr: dataFr.statsLabels.categories, en: enFallback.statsLabels.categories || dataFr.statsLabels.categories },
-      max: { fr: dataFr.statsLabels.max, en: enFallback.statsLabels.max || dataFr.statsLabels.max },
-    },
-    labels: {
-      features: { fr: dataFr.labels.features, en: enFallback.labels.features || dataFr.labels.features },
-      amenities: { fr: dataFr.labels.amenities, en: enFallback.labels.amenities || dataFr.labels.amenities },
-      includedServices: { fr: dataFr.labels.includedServices, en: enFallback.labels.includedServices || dataFr.labels.includedServices },
-    },
-    servicesTitle: { fr: dataFr.servicesTitle, en: enFallback.servicesTitle || dataFr.servicesTitle },
-    servicesDescription: { fr: dataFr.servicesDescription, en: enFallback.servicesDescription || dataFr.servicesDescription },
-    services: dataFr.services.map((serviceFr: any, i: number) => ({
-      icon: serviceFr.icon,
-      title: { fr: serviceFr.title, en: enFallback.services[i]?.title || serviceFr.title },
-      desc: { fr: serviceFr.desc, en: enFallback.services[i]?.desc || serviceFr.desc },
-      hidden: serviceFr.hidden !== undefined ? serviceFr.hidden : (enFallback.services[i]?.hidden || false),
-    })),
-    buttonText: { fr: dataFr.buttonText, en: enFallback.buttonText || dataFr.buttonText },
-    bookButton: { fr: dataFr.bookButton, en: enFallback.bookButton || dataFr.bookButton },
-    includedServices: { fr: dataFr.includedServices, en: enFallback.includedServices || dataFr.includedServices },
     cta: {
-      title: { fr: dataFr.cta.title, en: enFallback.cta.title || dataFr.cta.title },
-      text: { fr: dataFr.cta.text, en: enFallback.cta.text || dataFr.cta.text },
-      button: { fr: dataFr.cta.button, en: enFallback.cta.button || dataFr.cta.button },
-    },
+      title: { fr: dataFr.cta.title, en: enFallback.cta.title },
+      description: { fr: dataFr.cta.description, en: enFallback.cta.description },
+      buttonText: { fr: dataFr.cta.buttonText, en: enFallback.cta.buttonText }
+    }
   };
 };
 
@@ -654,24 +413,90 @@ const TextFormatter: React.FC<TextFormatterProps> = ({ text, className }) => {
   );
 };
 
-const Chambres = () => {
+interface RestaurantCarouselProps {
+  images: string[];
+  onImageClick: (imageUrl: string) => void;
+  className?: string;
+}
+
+const RestaurantCarousel: React.FC<RestaurantCarouselProps> = ({ images, onImageClick, className }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const goToPrev = () => {
+    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+
+  const goToNext = () => {
+    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
+
+  const goToIndex = (index: number) => {
+    setCurrentIndex(index);
+  };
+
+  if (images.length === 0) return null;
+
+  return (
+    <div className={`relative w-full h-80 lg:h-full overflow-hidden rounded-lg cursor-pointer ${className || ''}`}>
+      <img
+        src={images[currentIndex]}
+        alt="Restaurant image"
+        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+        onClick={() => onImageClick(images[currentIndex])}
+      />
+      {images.length > 1 && (
+        <>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              goToPrev();
+            }}
+            className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              goToNext();
+            }}
+            className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+            {images.map((_, index) => (
+              <button
+                key={index}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  goToIndex(index);
+                }}
+                className={`w-3 h-3 rounded-full transition-colors ${
+                  index === currentIndex ? 'bg-white' : 'bg-white/50'
+                }`}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+const Restaurants = () => {
   const { currentLang } = useLanguage();
-  const lang = currentLang.code.toLowerCase();
-  const [data, setData] = useState(() => {
-    // Ensure hidden is added to default data if not present
-    const defaultData = { ...chambresData };
-    defaultData.rooms = defaultData.rooms.map(room => ({ ...room, hidden: room.hidden || false }));
-    defaultData.services = defaultData.services.map(service => ({ ...service, hidden: service.hidden || false }));
-    return defaultData;
-  });
+  const langKey = currentLang.code.toLowerCase();
+  const [location, navigate] = useLocation();
+  const [data, setData] = useState(() => reconstructMixed(splitRestaurantData(restaurantPageData).dataFr, splitRestaurantData(restaurantPageData).dataEn));
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const isAdmin = !!localStorage.getItem('userToken');
 
-  // Fetch chambres data from backend
+  // Fetch restaurants data from backend
   useEffect(() => {
-    const fetchChambresData = async () => {
+    const fetchRestaurantsData = async () => {
       try {
         setLoading(true);
         setError(null);
@@ -684,7 +509,7 @@ const Chambres = () => {
         let section = sections.find((s: any) => s.sectionKey === SECTION_KEY);
         if (!section) {
           // Table is empty for this sectionKey, create default
-          const { dataFr, dataEn } = splitChambresData(chambresData);
+          const { dataFr, dataEn } = splitRestaurantData(restaurantPageData);
           const createResponse = await fetch('/api/globalSections', {
             method: 'POST',
             headers: { ...headers, 'Content-Type': 'application/json' },
@@ -697,7 +522,7 @@ const Chambres = () => {
           });
 
           if (!createResponse.ok) {
-            throw new Error('Failed to create chambres data');
+            throw new Error('Failed to create restaurants data');
           }
 
           const created = await createResponse.json();
@@ -708,21 +533,72 @@ const Chambres = () => {
           const fetchedData = reconstructMixed(section.dataFr, section.dataEn);
           setData(fetchedData);
         } else {
-          setData(chambresData);
+          setData(() => reconstructMixed(splitRestaurantData(restaurantPageData).dataFr, splitRestaurantData(restaurantPageData).dataEn));
         }
       } catch (err) {
-        console.error('Error fetching chambres data:', err);
-        setError('Failed to load chambres data');
-        setData(chambresData);
+        console.error('Error fetching restaurants data:', err);
+        setError('Failed to load restaurants data');
+        setData(() => reconstructMixed(splitRestaurantData(restaurantPageData).dataFr, splitRestaurantData(restaurantPageData).dataEn));
       } finally {
         setLoading(false);
       }
     };
 
-    fetchChambresData();
+    fetchRestaurantsData();
   }, []);
 
-  const updateChambresSection = async (updatedMixedData: typeof data) => {
+  // SOLUTION COMPLÈTE : Gestion du défilement pour tous les cas
+  useEffect(() => {
+    let scrollTimeout: NodeJS.Timeout;
+
+    const handleScrollToHash = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash && !loading) {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          const element = document.getElementById(hash);
+          if (element) {
+            element.scrollIntoView({ 
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        }, 100);
+      }
+    };
+
+    // 1. Écouter les changements de hash (navigation depuis d'autres pages)
+    window.addEventListener('hashchange', handleScrollToHash);
+    
+    // 2. Vérifier au chargement initial
+    handleScrollToHash();
+
+    // 3. Intercepter les clics sur les liens d'ancres MÊME sur la page actuelle
+    const handleAnchorClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const link = target.closest('a');
+      
+      if (link && link.hash) {
+        const hash = link.hash.replace('#', '');
+        if (hash && window.location.pathname === '/restaurants') {
+          e.preventDefault();
+          // Mettre à jour l'URL sans recharger
+          window.history.pushState(null, '', link.hash);
+          handleScrollToHash();
+        }
+      }
+    };
+
+    document.addEventListener('click', handleAnchorClick);
+
+    return () => {
+      window.removeEventListener('hashchange', handleScrollToHash);
+      document.removeEventListener('click', handleAnchorClick);
+      clearTimeout(scrollTimeout);
+    };
+  }, [loading]);
+
+  const updateRestaurantsSection = async (updatedMixedData: typeof data) => {
     try {
       const headers = getAuthHeaders();
       let currentSectionResponse = await fetch(`/api/globalSections?sectionKey=${SECTION_KEY}`, { headers });
@@ -733,7 +609,7 @@ const Chambres = () => {
       let currentSection = currentData.find((s: any) => s.sectionKey === SECTION_KEY);
 
       if (!currentSection) {
-        const { dataFr, dataEn } = splitChambresData(chambresData);
+        const { dataFr, dataEn } = splitRestaurantData(restaurantPageData);
         const createResponse = await fetch('/api/globalSections', {
           method: 'POST',
           headers: { ...headers, 'Content-Type': 'application/json' },
@@ -750,7 +626,7 @@ const Chambres = () => {
         currentSection = await createResponse.json();
       }
 
-      const { dataFr: updatedDataFr, dataEn: updatedDataEn } = splitChambresData(updatedMixedData);
+      const { dataFr: updatedDataFr, dataEn: updatedDataEn } = splitRestaurantData(updatedMixedData);
 
       const putResponse = await fetch(`/api/globalSections/${currentSection.id}`, {
         method: 'PUT',
@@ -762,477 +638,280 @@ const Chambres = () => {
       });
 
       if (!putResponse.ok) {
-        throw new Error('Failed to update chambres section');
+        throw new Error('Failed to update restaurants section');
       }
     } catch (err) {
-      console.error('Error updating chambres section:', err);
+      console.error('Error updating restaurants section:', err);
     }
   };
 
-  const getText = (textObj: any): string => {
-    if (typeof textObj === 'string') return textObj;
-    if (typeof textObj === 'number') return textObj.toString();
-    const langText = textObj?.[lang];
-    if (typeof langText === 'string') return langText;
-    const frText = textObj?.fr;
-    if (typeof frText === 'string') return frText;
-    return '';
-  };
+  const getText = (textObj: { fr: string; en: string }) => textObj[langKey as keyof typeof textObj];
 
-  const updateHeroTitle = async (newFr: string, newEn: string) => {
-    const updatedData = { ...data, heroTitle: { fr: newFr, en: newEn } };
-    setData(updatedData);
-    await updateChambresSection(updatedData);
-  };
-
-  const updateHeroSubtitle = async (newFr: string, newEn: string) => {
-    const updatedData = { ...data, heroSubtitle: { fr: newFr, en: newEn } };
-    setData(updatedData);
-    await updateChambresSection(updatedData);
-  };
-
-  const updateHeroImage = async (newUrl: string) => {
-    const updatedData = { ...data, heroImage: newUrl };
-    setData(updatedData);
-    await updateChambresSection(updatedData);
-  };
-
-  const updateStatsLabel = (labelKey: 'total' | 'categories' | 'max') => {
+  const updateHeroField = (field: 'title' | 'description') => {
     return async (newFr: string, newEn: string) => {
       const updatedData = {
         ...data,
-        statsLabels: {
-          ...data.statsLabels,
-          [labelKey]: { fr: newFr, en: newEn },
+        hero: {
+          ...data.hero,
+          [field]: { fr: newFr, en: newEn },
         },
       };
       setData(updatedData);
-      await updateChambresSection(updatedData);
+      await updateRestaurantsSection(updatedData);
     };
   };
 
-  const updateLabel = (labelKey: 'features' | 'amenities' | 'includedServices') => {
+  const updateHeroBackgroundImage = async (newUrl: string) => {
+    const updatedData = {
+      ...data,
+      hero: {
+        ...data.hero,
+        backgroundImage: newUrl,
+      },
+    };
+    setData(updatedData);
+    await updateRestaurantsSection(updatedData);
+  };
+
+  const updateHeroStat = (statIndex: number, statField: 'number' | 'label') => {
     return async (newFr: string, newEn: string) => {
       const updatedData = {
         ...data,
-        labels: {
-          ...data.labels,
-          [labelKey]: { fr: newFr, en: newEn },
+        hero: {
+          ...data.hero,
+          stats: data.hero.stats.map((stat, i) =>
+            i === statIndex
+              ? {
+                  ...stat,
+                  [statField]: { fr: newFr, en: newEn }
+                }
+              : stat
+          ),
         },
       };
       setData(updatedData);
-      await updateChambresSection(updatedData);
+      await updateRestaurantsSection(updatedData);
     };
   };
 
-  const updateServicesTitle = async (newFr: string, newEn: string) => {
-    const updatedData = { ...data, servicesTitle: { fr: newFr, en: newEn } };
-    setData(updatedData);
-    await updateChambresSection(updatedData);
-  };
-
-  const updateServicesDescription = async (newFr: string, newEn: string) => {
-    const updatedData = { ...data, servicesDescription: { fr: newFr, en: newEn } };
-    setData(updatedData);
-    await updateChambresSection(updatedData);
-  };
-
-  const updateServiceField = (serviceIndex: number, field: 'title' | 'desc') => {
+  const updateHeroButton = (buttonKey: 'primary' | 'secondary') => {
     return async (newFr: string, newEn: string) => {
       const updatedData = {
         ...data,
-        services: data.services.map((service, i) =>
-          i === serviceIndex
-            ? { ...service, [field]: { fr: newFr, en: newEn } }
-            : service
+        hero: {
+          ...data.hero,
+          buttonTexts: {
+            ...data.hero.buttonTexts,
+            [buttonKey]: { fr: newFr, en: newEn },
+          },
+        },
+      };
+      setData(updatedData);
+      await updateRestaurantsSection(updatedData);
+    };
+  };
+
+  const updateRestaurantField = (index: number, field: 'name' | 'type' | 'description' | 'detailedDescription' | 'priceRange' | 'hours' | 'capacity' | 'dressCode') => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        restaurants: data.restaurants.map((restaurant, i) =>
+          i === index
+            ? { ...restaurant, [field]: { fr: newFr, en: newEn } }
+            : restaurant
         ),
       };
       setData(updatedData);
-      await updateChambresSection(updatedData);
+      await updateRestaurantsSection(updatedData);
     };
   };
 
-  const toggleServiceHidden = async (serviceIndex: number) => {
+  const updateRestaurantImages = (index: number) => {
+    return async (newImages: string[]) => {
+      const updatedData = {
+        ...data,
+        restaurants: data.restaurants.map((restaurant, i) => (i === index ? { ...restaurant, images: newImages } : restaurant)),
+      };
+      setData(updatedData);
+      await updateRestaurantsSection(updatedData);
+    };
+  };
+
+  const updateRestaurantSpecialty = (restaurantIndex: number, specialtyIndex: number) => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        restaurants: data.restaurants.map((restaurant, i) =>
+          i === restaurantIndex
+            ? {
+                ...restaurant,
+                specialties: restaurant.specialties.map((specialty, j) =>
+                  j === specialtyIndex ? { fr: newFr, en: newEn } : specialty
+                ),
+              }
+            : restaurant
+        ),
+      };
+      setData(updatedData);
+      await updateRestaurantsSection(updatedData);
+    };
+  };
+
+  const addRestaurantSpecialty = async (restaurantIndex: number) => {
     const updatedData = {
       ...data,
-      services: data.services.map((service, i) =>
-        i === serviceIndex ? { ...service, hidden: !service.hidden } : service
+      restaurants: data.restaurants.map((restaurant, i) =>
+        i === restaurantIndex
+          ? {
+              ...restaurant,
+              specialties: [...restaurant.specialties, { fr: "Nouvelle spécialité", en: "New specialty" }],
+            }
+          : restaurant
       ),
     };
     setData(updatedData);
-    await updateChambresSection(updatedData);
+    await updateRestaurantsSection(updatedData);
   };
 
-  const addService = async () => {
-    const newService = {
-      icon: 'Coffee',
-      title: { fr: 'Nouveau Service', en: 'New Service' },
-      desc: { fr: 'Description du nouveau service.', en: 'Description of the new service.' },
-      hidden: false,
-    };
+  const removeRestaurantSpecialty = async (restaurantIndex: number, specialtyIndex: number) => {
     const updatedData = {
       ...data,
-      services: [...data.services, newService],
+      restaurants: data.restaurants.map((restaurant, i) =>
+        i === restaurantIndex
+          ? {
+              ...restaurant,
+              specialties: restaurant.specialties.filter((_, j) => j !== specialtyIndex),
+            }
+          : restaurant
+      ),
     };
     setData(updatedData);
-    await updateChambresSection(updatedData);
+    await updateRestaurantsSection(updatedData);
   };
 
-  const removeService = async (index: number) => {
-    const updatedData = {
-      ...data,
-      services: data.services.filter((_, i) => i !== index),
-    };
-    setData(updatedData);
-    await updateChambresSection(updatedData);
-  };
-
-  const updateButtonText = async (newFr: string, newEn: string) => {
-    const updatedData = { ...data, buttonText: { fr: newFr, en: newEn } };
-    setData(updatedData);
-    await updateChambresSection(updatedData);
-  };
-
-  const updateBookButton = async (newFr: string, newEn: string) => {
-    const updatedData = { ...data, bookButton: { fr: newFr, en: newEn } };
-    setData(updatedData);
-    await updateChambresSection(updatedData);
-  };
-
-  const updateCtaTitle = async (newFr: string, newEn: string) => {
-    const updatedData = { ...data, cta: { ...data.cta, title: { fr: newFr, en: newEn } } };
-    setData(updatedData);
-    await updateChambresSection(updatedData);
-  };
-
-  const updateCtaText = async (newFr: string, newEn: string) => {
-    const updatedData = { ...data, cta: { ...data.cta, text: { fr: newFr, en: newEn } } };
-    setData(updatedData);
-    await updateChambresSection(updatedData);
-  };
-
-  const updateCtaButton = async (newFr: string, newEn: string) => {
-    const updatedData = { ...data, cta: { ...data.cta, button: { fr: newFr, en: newEn } } };
-    setData(updatedData);
-    await updateChambresSection(updatedData);
-  };
-
-  const updateRoomField = (roomIndex: number, field: 'name' | 'subtitle' | 'description' | 'guests') => {
+  const updateRestaurantFeature = (restaurantIndex: number, featureIndex: number) => {
     return async (newFr: string, newEn: string) => {
       const updatedData = {
         ...data,
-        rooms: data.rooms.map((room, i) =>
-          i === roomIndex
-            ? { ...room, [field]: { fr: newFr, en: newEn } }
-            : room
-        ),
-      };
-      setData(updatedData);
-      await updateChambresSection(updatedData);
-    };
-  };
-
-  const updateRoomFeature = (roomIndex: number, featureIndex: number) => {
-    return async (newFr: string, newEn: string) => {
-      const updatedData = {
-        ...data,
-        rooms: data.rooms.map((room, i) =>
-          i === roomIndex
+        restaurants: data.restaurants.map((restaurant, i) =>
+          i === restaurantIndex
             ? {
-                ...room,
-                features: room.features.map((feature, j) =>
+                ...restaurant,
+                features: restaurant.features.map((feature, j) =>
                   j === featureIndex ? { fr: newFr, en: newEn } : feature
                 ),
               }
-            : room
+            : restaurant
         ),
       };
       setData(updatedData);
-      await updateChambresSection(updatedData);
+      await updateRestaurantsSection(updatedData);
     };
   };
 
-  const addRoomFeature = async (roomIndex: number) => {
+  const addRestaurantFeature = async (restaurantIndex: number) => {
     const updatedData = {
       ...data,
-      rooms: data.rooms.map((room, i) =>
-        i === roomIndex
+      restaurants: data.restaurants.map((restaurant, i) =>
+        i === restaurantIndex
           ? {
-              ...room,
-              features: [...room.features, { fr: 'Nouvelle caractéristique', en: 'New feature' }],
+              ...restaurant,
+              features: [...restaurant.features, { fr: "Nouvelle caractéristique", en: "New feature" }],
             }
-          : room
+          : restaurant
       ),
     };
     setData(updatedData);
-    await updateChambresSection(updatedData);
+    await updateRestaurantsSection(updatedData);
   };
 
-  const removeRoomFeature = async (roomIndex: number, featureIndex: number) => {
+  const removeRestaurantFeature = async (restaurantIndex: number, featureIndex: number) => {
     const updatedData = {
       ...data,
-      rooms: data.rooms.map((room, i) =>
-        i === roomIndex
+      restaurants: data.restaurants.map((restaurant, i) =>
+        i === restaurantIndex
           ? {
-              ...room,
-              features: room.features.filter((_, j) => j !== featureIndex),
+              ...restaurant,
+              features: restaurant.features.filter((_, j) => j !== featureIndex),
             }
-          : room
+          : restaurant
       ),
     };
     setData(updatedData);
-    await updateChambresSection(updatedData);
+    await updateRestaurantsSection(updatedData);
   };
 
-  const updateRoomAmenity = (roomIndex: number, amenityIndex: number) => {
+  const toggleRestaurantHidden = async (index: number) => {
+    const updatedData = {
+      ...data,
+      restaurants: data.restaurants.map((restaurant, i) =>
+        i === index ? { ...restaurant, hidden: !restaurant.hidden } : restaurant
+      ),
+    };
+    setData(updatedData);
+    await updateRestaurantsSection(updatedData);
+  };
+
+  const updateCtaField = (field: 'title' | 'description' | 'buttonText') => {
     return async (newFr: string, newEn: string) => {
       const updatedData = {
         ...data,
-        rooms: data.rooms.map((room, i) =>
-          i === roomIndex
-            ? {
-                ...room,
-                amenities: {
-                  fr: room.amenities.fr.map((a, j) => j === amenityIndex ? newFr : a),
-                  en: room.amenities.en.map((a, j) => j === amenityIndex ? newEn : a),
-                },
-              }
-            : room
-        ),
-      };
-      setData(updatedData);
-      await updateChambresSection(updatedData);
-    };
-  };
-
-  const addRoomAmenity = async (roomIndex: number) => {
-    const updatedData = {
-      ...data,
-      rooms: data.rooms.map((room, i) =>
-        i === roomIndex
-          ? {
-              ...room,
-              amenities: {
-                fr: [...room.amenities.fr, 'Nouvelle commodité'],
-                en: [...room.amenities.en, 'New amenity'],
-              },
-            }
-          : room
-      ),
-    };
-    setData(updatedData);
-    await updateChambresSection(updatedData);
-  };
-
-  const removeRoomAmenity = async (roomIndex: number, amenityIndex: number) => {
-    const updatedData = {
-      ...data,
-      rooms: data.rooms.map((room, i) =>
-        i === roomIndex
-          ? {
-              ...room,
-              amenities: {
-                fr: room.amenities.fr.filter((_, j) => j !== amenityIndex),
-                en: room.amenities.en.filter((_, j) => j !== amenityIndex),
-              },
-            }
-          : room
-      ),
-    };
-    setData(updatedData);
-    await updateChambresSection(updatedData);
-  };
-
-  const updateRoomImage = (roomIndex: number) => {
-    return async (newUrl: string) => {
-      const updatedData = {
-        ...data,
-        rooms: data.rooms.map((room, i) => (i === roomIndex ? { ...room, image: newUrl } : room)),
-      };
-      setData(updatedData);
-      await updateChambresSection(updatedData);
-    };
-  };
-
-  const updateRoomSize = (roomIndex: number) => {
-    return async (newSize: string) => {
-      const updatedData = {
-        ...data,
-        rooms: data.rooms.map((room, i) =>
-          i === roomIndex ? { ...room, size: newSize } : room
-        ),
-      };
-      setData(updatedData);
-      await updateChambresSection(updatedData);
-    };
-  };
-
-  const updateStatValue = (key: 'totalRooms' | 'categories' | 'maxSize') => {
-    return async (newValue: string) => {
-      const parsedValue = key === 'maxSize' ? newValue : parseInt(newValue) || 0;
-      const updatedData = {
-        ...data,
-        stats: {
-          ...data.stats,
-          [key]: parsedValue,
+        cta: {
+          ...data.cta,
+          [field]: { fr: newFr, en: newEn },
         },
       };
       setData(updatedData);
-      await updateChambresSection(updatedData);
+      await updateRestaurantsSection(updatedData);
     };
   };
 
-  const toggleRoomHidden = async (roomIndex: number) => {
-    const updatedData = {
-      ...data,
-      rooms: data.rooms.map((room, i) =>
-        i === roomIndex ? { ...room, hidden: !room.hidden } : room
-      ),
-    };
-    setData(updatedData);
-    await updateChambresSection(updatedData);
-  };
-
-  const addRoom = async () => {
-    let newRoom;
-    if (data.rooms.length > 0) {
-      const maxId = Math.max(...data.rooms.map((r: any) => r.id));
-      newRoom = {
-        ...data.rooms[0],
+  const addRestaurant = async () => {
+    let newRestaurant;
+    if (data.restaurants.length > 0) {
+      const maxId = Math.max(...data.restaurants.map((r: any) => r.id));
+      newRestaurant = {
+        ...data.restaurants[0],
         id: maxId + 1,
-        name: { fr: 'Nouvelle Chambre', en: 'New Room' },
+        name: { fr: "Nouveau Restaurant", en: "New Restaurant" },
+        images: ['/uploads/Restaurant.png'],
         hidden: false,
       };
     } else {
-      newRoom = {
+      newRestaurant = {
         id: 1,
-        name: { fr: 'Nouvelle Chambre', en: 'New Room' },
-        subtitle: { fr: 'Sous-titre', en: 'Subtitle' },
-        description: { fr: 'Description de la chambre.', en: 'Room description.' },
-        size: '30 m²',
-        guests: { fr: '2 personnes', en: '2 guests' },
-        features: [{ fr: 'Caractéristique 1', en: 'Feature 1' }],
-        amenities: { fr: ['Wifi'], en: ['Wifi'] },
-        image: hotelRoom,
-        hidden: false,
+        name: { fr: "Nouveau Restaurant", en: "New Restaurant" },
+        type: { fr: "Type de restaurant", en: "Restaurant Type" },
+        description: { fr: "Description du restaurant.", en: "Restaurant description." },
+        detailedDescription: { fr: "Description détaillée.", en: "Detailed description." },
+        images: ['/uploads/Restaurant.png'],
+        rating: 4,
+        priceRange: { fr: "€€€", en: "€€€" },
+        hours: { fr: "Horaires", en: "Hours" },
+        capacity: { fr: "Capacité", en: "Capacity" },
+        reservationRequired: false,
+        dressCode: { fr: "", en: "" },
+        specialties: [{ fr: "Spécialité 1", en: "Specialty 1" }],
+        features: [{ fr: "Caractéristique 1", en: "Feature 1" }],
+        hidden: false
       };
     }
     const updatedData = {
       ...data,
-      rooms: [...data.rooms, newRoom],
+      restaurants: [...data.restaurants, newRestaurant],
     };
     setData(updatedData);
-    await updateChambresSection(updatedData);
+    await updateRestaurantsSection(updatedData);
   };
 
-  const removeRoom = async (id: number) => {
+  const removeRestaurant = async (id: number) => {
     const updatedData = {
       ...data,
-      rooms: data.rooms.filter((room) => room.id !== id),
+      restaurants: data.restaurants.filter((restaurant) => restaurant.id !== id),
     };
     setData(updatedData);
-    await updateChambresSection(updatedData);
+    await updateRestaurantsSection(updatedData);
   };
-
-  const getAmenityIcon = (amenity: string) => {
-    const lower = amenity.toLowerCase();
-    if (lower.includes('wifi') || lower.includes('wi-fi')) {
-      return <Wifi className="w-4 h-4" />;
-    }
-    if (lower.includes('climat') || lower.includes('air conditioning')) {
-      return <Wind className="w-4 h-4" />;
-    }
-    if (lower.includes('tv') || lower.includes('télé')) {
-      return <Tv className="w-4 h-4" />;
-    }
-    if (lower.includes('téléphone') || lower.includes('phone')) {
-      return <Phone className="w-4 h-4" />;
-    }
-    if (lower.includes('coffre') || lower.includes('safe')) {
-      return <Lock className="w-4 h-4" />;
-    }
-    if (lower.includes('minibar')) {
-      return <Wine className="w-4 h-4" />;
-    }
-    if (lower.includes('café') || lower.includes('coffee') || lower.includes('expresso')) {
-      return <Coffee className="w-4 h-4" />;
-    }
-    if (lower.includes('thé') || lower.includes('tea')) {
-      return <CupSoda className="w-4 h-4" />;
-    }
-    if (lower.includes('eau') || lower.includes('water') || lower.includes('minérale')) {
-      return <Droplet className="w-4 h-4" />;
-    }
-    if (lower.includes('fer') || lower.includes('iron')) {
-      return <Shirt className="w-4 h-4" />;
-    }
-    if (lower.includes('salle de bain') || lower.includes('bathroom') || lower.includes('salles de bain')) {
-      return <ShowerHead className="w-4 h-4" />;
-    }
-    if (lower.includes('miroir') || lower.includes('mirror')) {
-      return <Square className="w-4 h-4" />;
-    }
-    if (lower.includes('sèche') || lower.includes('hairdryer')) {
-      return <Wind className="w-4 h-4" />;
-    }
-    if (lower.includes('peignoir') || lower.includes('bathrobe') || lower.includes('dressing')) {
-      return <Shirt className="w-4 h-4" />;
-    }
-    if (lower.includes('pantoufles') || lower.includes('slippers')) {
-      return <Footprints className="w-4 h-4" />;
-    }
-    if (lower.includes('courtoisie') || lower.includes('toiletries') || lower.includes('articles')) {
-      return <Gift className="w-4 h-4" />;
-    }
-    // Default fallback
-    return <Coffee className="w-4 h-4" />;
-  };
-
-  const getIncludedServiceIcon = (service: string) => {
-    if (service.includes('Piscine') || service.includes('Pool')) {
-      return <Waves className="w-4 h-4" />;  // Waves for pool
-    }
-    if (service.includes('Fitness') || service.includes('Gym') || service.includes('Salle de sport')) {
-      return <Dumbbell className="w-4 h-4" />;
-    }
-    if (service.includes('Tennis') || service.includes('Court de tennis') || service.includes('Tennis Court')) {
-      return <Activity className="w-4 h-4" />;
-    }
-    if (service.includes('Parking')) {
-      return <Car className="w-4 h-4" />;
-    }
-    return <Wifi className="w-4 h-4" />;
-  };
-
-  const getServiceIcon = (icon: string) => {
-    switch (icon) {
-      case 'Coffee': return <Coffee className="w-8 h-8" />;
-      case 'Scissors': return <WashingMachine className="w-8 h-8" />;
-      case 'Briefcase': return <Briefcase className="w-8 h-8" />;
-      case 'Plane': return <Plane className="w-8 h-8" />;
-      default: return <Tv className="w-8 h-8" />;
-    }
-  };
-
-  const isFr = currentLang.code === 'fr';
-
-  const addRoomCard = (
-    <Card className="border-2 border-dashed border-muted-foreground hover:border-primary transition-colors flex flex-col">
-      <CardContent className="flex flex-col items-center justify-center h-full p-8 text-center">
-        <Button
-          variant="outline"
-          size="lg"
-          onClick={addRoom}
-          className="mb-4 rounded-full w-16 h-16 p-0"
-        >
-          <Plus className="w-6 h-6" />
-        </Button>
-        <p className="text-muted-foreground">
-          {isFr ? 'Ajouter une nouvelle chambre' : 'Add a new room'}
-        </p>
-      </CardContent>
-    </Card>
-  );
 
   const openImagePopup = (imageUrl: string) => {
     setSelectedImage(imageUrl);
@@ -1242,100 +921,116 @@ const Chambres = () => {
     setSelectedImage(null);
   };
 
+  // Fonction utilitaire pour gérer les clics sur les boutons de navigation
+  const handleRestaurantNavigation = (sectionId: string) => {
+    if (window.location.pathname === '/restaurants') {
+      // Si déjà sur la page restaurants, on utilise le défilement direct
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+        // Mettre à jour l'URL sans recharger
+        window.history.pushState(null, '', `#${sectionId}`);
+      }
+    } else {
+      // Sinon, navigation normale
+      navigate(`/restaurants#${sectionId}`);
+    }
+  };
+
+  const addRestaurantCard = (
+    <Card className="border-2 border-dashed border-muted-foreground hover:border-primary transition-colors flex flex-col">
+      <CardContent className="flex flex-col items-center justify-center h-full p-8 text-center">
+        <Button
+          variant="outline"
+          size="lg"
+          onClick={addRestaurant}
+          className="mb-4 rounded-full w-16 h-16 p-0"
+        >
+          <Plus className="w-6 h-6" />
+        </Button>
+        <p className="text-muted-foreground">
+          {currentLang.code === 'fr' ? 'Ajouter un nouveau restaurant' : 'Add a new restaurant'}
+        </p>
+      </CardContent>
+    </Card>
+  );
+
   if (loading) {
     return (
       <div className="min-h-screen bg-background">
-        {/* Hero Skeleton */}
-        <section className="relative h-screen bg-gray-900">
-          <div className="absolute inset-0 bg-black/50" />
-          <div className="relative h-full flex items-center justify-center text-center px-4 text-white">
-            <div className="max-w-7xl mx-auto space-y-8 animate-pulse">
-              <div className="h-20 w-96 bg-white/10 rounded mx-auto mb-8" />
-              <div className="h-8 w-80 bg-white/10 rounded mx-auto mb-8" />
-              <div className="h-6 w-96 bg-white/10 rounded mx-auto mb-12" />
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {[1, 2, 3].map(i => (
-                  <div key={i} className="space-y-2">
-                    <div className="h-10 w-20 bg-white/10 rounded mx-auto" />
-                    <div className="h-5 w-32 bg-white/10 rounded mx-auto" />
-                  </div>
-                ))}
-              </div>
-              <div className="h-12 w-48 bg-white/10 rounded mx-auto" />
-            </div>
-          </div>
-        </section>
-        {/* Rooms Skeleton */}
-        <section className="py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-            {[1, 2, 3, 4, 5, 6].map(i => (
-              <div key={i} className="flex flex-col lg:flex lg:flex-row gap-8 animate-pulse">
-                <div className="lg:w-1/2 h-80 lg:h-auto bg-gray-300 rounded" />
-                <div className="lg:w-1/2 space-y-4">
-                  <div className="flex gap-4">
-                    <div className="h-6 w-20 bg-gray-300 rounded" />
-                    <div className="h-6 w-24 bg-gray-300 rounded" />
-                  </div>
-                  <div className="h-8 w-64 bg-gray-300 rounded" />
-                  <div className="h-6 w-48 bg-gray-300 rounded" />
-                  <div className="h-4 w-full bg-gray-300 rounded mb-4" />
-                  <div className="space-y-2">
-                    <div className="h-4 w-3/4 bg-gray-300 rounded" />
-                    <div className="h-4 w-5/6 bg-gray-300 rounded" />
-                    <div className="h-4 w-2/3 bg-gray-300 rounded" />
-                  </div>
-                  <div className="space-y-2">
-                    <div className="h-4 w-1/2 bg-gray-300 rounded" />
-                    <div className="flex flex-wrap gap-2">
-                      {[1, 2, 3, 4, 5, 6].map(j => <div key={j} className="h-6 w-20 bg-gray-300 rounded-full" />)}
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="h-4 w-1/2 bg-gray-300 rounded" />
-                    <div className="flex flex-wrap gap-2">
-                      {[1, 2, 3, 4].map(j => <div key={j} className="h-6 w-20 bg-gray-300 rounded-full" />)}
-                    </div>
-                  </div>
-                  <div className="h-10 w-full bg-gray-300 rounded" />
-                </div>
-              </div>
-            ))}
-            {isAdmin && (
-              <div className="flex justify-center">
-                <div className="h-64 w-full max-w-md bg-gray-300 rounded-lg" />
-              </div>
-            )}
-          </div>
-        </section>
-        {/* Services Skeleton */}
-        <section className="py-20 bg-card/30">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12 space-y-4 animate-pulse">
-              <div className="h-10 w-64 bg-gray-300 rounded mx-auto" />
-              <div className="h-5 w-80 bg-gray-300 rounded mx-auto" />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[1, 2, 3, 4].map(i => (
-                <div key={i} className="space-y-4">
-                  <div className="h-12 w-12 bg-gray-300 rounded-full mx-auto" />
-                  <div className="h-6 w-48 bg-gray-300 rounded mx-auto" />
-                  <div className="h-4 w-full bg-gray-300 rounded" />
+        <ParallaxSection
+          backgroundImage={data.hero.backgroundImage || "/uploads/generated_images/Luxury_hotel_restaurant_interior_090ad235.png"}
+          parallaxSpeed={0.4}
+          minHeight="100vh"
+          overlay={true}
+          overlayOpacity={0.6}
+          className="flex items-center pt-20"
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white animate-pulse">
+            <div className="h-20 w-full bg-muted/20 mb-8" />
+            <div className="h-8 w-96 bg-muted/20 mx-auto mb-8" />
+            <div className="h-12 w-80 bg-muted/20 mx-auto mb-12" />
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+              {[1,2,3,4].map((i) => (
+                <div key={i} className="text-center">
+                  <div className="h-8 w-8 bg-muted/20 rounded mx-auto mb-2" />
+                  <div className="h-6 w-24 bg-muted/20 mx-auto" />
                 </div>
               ))}
             </div>
-            {isAdmin && (
-              <div className="flex justify-center mt-8">
-                <div className="h-12 w-48 bg-gray-300 rounded" />
-              </div>
-            )}
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <div className="h-12 w-48 bg-muted/20" />
+              <div className="h-12 w-40 bg-muted/20" />
+            </div>
+          </div>
+        </ParallaxSection>
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="space-y-16">
+              {[1,2,3,4].map((i) => (
+                <div key={i} className="flex flex-col lg:flex animate-pulse">
+                  <div className="lg:w-1/2">
+                    <div className="w-full h-80 lg:h-full bg-muted rounded-lg" />
+                  </div>
+                  <div className="lg:w-1/2 p-8 space-y-6">
+                    <div className="h-4 w-32 bg-muted mb-4" />
+                    <div className="h-6 w-64 bg-muted mb-3" />
+                    <div className="flex flex-wrap gap-4">
+                      <div className="h-4 w-48 bg-muted" />
+                      <div className="h-4 w-32 bg-muted" />
+                    </div>
+                    <div className="h-20 w-full bg-muted mb-6" />
+                    <div className="h-32 w-full bg-muted mb-6" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <div className="h-4 w-24 bg-muted" />
+                        {[1,2,3].map((j) => <div key={j} className="h-3 w-full bg-muted" />)}
+                      </div>
+                      <div className="space-y-2">
+                        <div className="h-4 w-24 bg-muted" />
+                        {[1,2,3].map((j) => <div key={j} className="h-3 w-full bg-muted" />)}
+                      </div>
+                    </div>
+                    <div className="h-16 w-full bg-muted rounded-lg" />
+                  </div>
+                </div>
+              ))}
+              {isAdmin && (
+                <div className="flex justify-center">
+                  <div className="h-64 w-full max-w-md bg-muted rounded-lg" />
+                </div>
+              )}
+            </div>
           </div>
         </section>
-        {/* CTA Skeleton */}
         <section className="py-20 bg-primary/5">
-          <div className="max-w-7xl mx-auto px-4 text-center space-y-4 animate-pulse">
-            <div className="h-10 w-80 bg-gray-300 rounded mx-auto" />
-            <div className="h-6 w-64 bg-gray-300 rounded mx-auto" />
-            <div className="h-12 w-48 bg-gray-300 rounded mx-auto" />
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-pulse">
+            <div className="h-12 w-64 bg-muted mx-auto mb-6" />
+            <div className="h-6 w-80 bg-muted mx-auto mb-8" />
+            <div className="h-12 w-48 bg-muted mx-auto" />
           </div>
         </section>
         <Footer />
@@ -1347,121 +1042,137 @@ const Chambres = () => {
     console.warn(error);
   }
 
-  const getAmenities = (room: any) => room.amenities[lang] || room.amenities.fr;
-  const getIncludedServices = () => data.includedServices[lang] || data.includedServices.fr;
+  const { hero, restaurants, cta } = data;
 
-  // Vérifier si la chambre nécessite un format rectangulaire large (h < w)
-  const isWideImageRoom = (roomId: number) => [1, 2, 3].includes(roomId);
+  const isFr = currentLang.code === 'fr';
 
   return (
     <div className="min-h-screen bg-background">
-
+      {/* Style pour le défilement fluide */}
+      <style>
+        {`
+          html {
+            scroll-behavior: smooth;
+          }
+        `}
+      </style>
+      
       {/* Parallax Hero Section */}
-      <ImageTooltip imageUrl={data.heroImage} onSave={updateHeroImage}>
+      <div className="relative">
         <ParallaxSection
-          backgroundImage={data.heroImage || suiteImage}
-          parallaxSpeed={0.3}
+          backgroundImage={hero.backgroundImage}
+          parallaxSpeed={0.4}
           minHeight="100vh"
           overlay={true}
-          overlayOpacity={0.5}
+          overlayOpacity={0.6}
           className="flex items-center pt-20"
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-            <div>
+            <Tooltip
+              frLabel={hero.title.fr}
+              enLabel={hero.title.en}
+              onSave={updateHeroField('title')}
+            >
               <h1 className="text-6xl md:text-7xl font-serif font-bold mb-8 drop-shadow-lg">
-                <Tooltip
-                  frLabel={data.heroTitle.fr}
-                  enLabel={data.heroTitle.en}
-                  onSave={updateHeroTitle}
-                >
-                  <TextFormatter text={getText(data.heroTitle)} />
-                </Tooltip>
+                <TextFormatter text={getText(hero.title)} />
               </h1>
-              <div className="w-32 h-1 bg-primary mx-auto mb-8"></div>
+            </Tooltip>
+            <div className="w-32 h-1 bg-primary mx-auto mb-8"></div>
+            <Tooltip
+              frLabel={hero.description.fr}
+              enLabel={hero.description.en}
+              onSave={updateHeroField('description')}
+            >
               <div className="text-2xl md:text-3xl max-w-4xl mx-auto leading-relaxed drop-shadow-lg mb-12 text-white">
-                <Tooltip
-                  frLabel={data.heroSubtitle.fr}
-                  enLabel={data.heroSubtitle.en}
-                  onSave={updateHeroSubtitle}
-                >
-                  <TextFormatter text={getText(data.heroSubtitle)} className="drop-shadow-lg" />
-                </Tooltip>
+                <TextFormatter text={getText(hero.description)} className="drop-shadow-lg" />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-primary mb-2">
-                    <Tooltip
-                      frLabel={data.stats.totalRooms.toString()}
-                      enLabel={data.stats.totalRooms.toString()}
-                      onSave={updateStatValue('totalRooms')}
-                    >
-                      <span>{data.stats.totalRooms}</span>
-                    </Tooltip>
+            </Tooltip>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+              {hero.stats.map((stat, index) => (
+                <div key={index} className="text-center">
+                  <div className="text-3xl font-bold text-primary mb-2">
+                    {(() => {
+                      const Icon = stat.icon === 'Utensils' ? Utensils : stat.icon === 'Star' ? Star : stat.icon === 'Clock' ? Clock : Sparkles;
+                      return (
+                        <>
+                          <div className="mb-2">
+                            <Icon className="w-8 h-8 mx-auto block" />
+                          </div>
+                          <Tooltip
+                            frLabel={stat.number.fr}
+                            enLabel={stat.number.en}
+                            onSave={updateHeroStat(index, 'number')}
+                          >
+                            <div className="block">
+                              <TextFormatter text={getText(stat.number)} />
+                            </div>
+                          </Tooltip>
+                        </>
+                      );
+                    })()}
                   </div>
-                  <div className="text-lg">
-                    <Tooltip
-                      frLabel={data.statsLabels.total.fr}
-                      enLabel={data.statsLabels.total.en}
-                      onSave={updateStatsLabel('total')}
-                    >
-                      <TextFormatter text={getText(data.statsLabels.total)} />
-                    </Tooltip>
-                  </div>
+                  <Tooltip
+                    frLabel={stat.label.fr}
+                    enLabel={stat.label.en}
+                    onSave={updateHeroStat(index, 'label')}
+                  >
+                    <div className="text-lg">
+                      <TextFormatter text={getText(stat.label)} />
+                    </div>
+                  </Tooltip>
                 </div>
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-primary mb-2">
-                    <Tooltip
-                      frLabel={data.stats.categories.toString()}
-                      enLabel={data.stats.categories.toString()}
-                      onSave={updateStatValue('categories')}
-                    >
-                      <span>{data.stats.categories}</span>
-                    </Tooltip>
-                  </div>
-                  <div className="text-lg">
-                    <Tooltip
-                      frLabel={data.statsLabels.categories.fr}
-                      enLabel={data.statsLabels.categories.en}
-                      onSave={updateStatsLabel('categories')}
-                    >
-                      <TextFormatter text={getText(data.statsLabels.categories)} />
-                    </Tooltip>
-                  </div>
-                </div>
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-primary mb-2">
-                    <Tooltip
-                      frLabel={data.stats.maxSize}
-                      enLabel={data.stats.maxSize}
-                      onSave={updateStatValue('maxSize')}
-                    >
-                      <span>{data.stats.maxSize}</span>
-                    </Tooltip>
-                  </div>
-                  <div className="text-lg">
-                    <Tooltip
-                      frLabel={data.statsLabels.max.fr}
-                      enLabel={data.statsLabels.max.en}
-                      onSave={updateStatsLabel('max')}
-                    >
-                      <TextFormatter text={getText(data.statsLabels.max)} />
-                    </Tooltip>
-                  </div>
-                </div>
-              </div>
-              <Button size="lg" className="shadow-lg" data-testid="button-discover-rooms">
+              ))}
+            </div>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <button 
+                onClick={() => handleRestaurantNavigation('bistrot')}
+                className="bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors shadow-lg"
+              >
                 <Tooltip
-                  frLabel={data.buttonText.fr}
-                  enLabel={data.buttonText.en}
-                  onSave={updateButtonText}
+                  frLabel={hero.buttonTexts.primary.fr}
+                  enLabel={hero.buttonTexts.primary.en}
+                  onSave={updateHeroButton('primary')}
                 >
-                  <TextFormatter text={getText(data.buttonText)} />
+                  <span>
+                    <TextFormatter text={getText(hero.buttonTexts.primary)} />
+                  </span>
                 </Tooltip>
-              </Button>
+              </button>
+              <button 
+                onClick={() => navigate('/contact')}
+                className="bg-white/10 backdrop-blur-sm border border-white/30 text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/20 transition-colors shadow-lg"
+              >
+                <Tooltip
+                  frLabel={hero.buttonTexts.secondary.fr}
+                  enLabel={hero.buttonTexts.secondary.en}
+                  onSave={updateHeroButton('secondary')}
+                >
+                  <span>
+                    <TextFormatter text={getText(hero.buttonTexts.secondary)} />
+                  </span>
+                </Tooltip>
+              </button>
             </div>
           </div>
         </ParallaxSection>
-      </ImageTooltip>
+        {isAdmin && (
+          <div className="absolute top-4 left-4 z-50">
+            <ImageTooltip
+              imageUrl={hero.backgroundImage}
+              onSave={updateHeroBackgroundImage}
+            >
+              <Button
+                variant="ghost"
+                size="sm"
+                className="bg-background/80 backdrop-blur-sm text-foreground border border-border/50 hover:bg-background"
+              >
+                <ImageIcon className="w-4 h-4 mr-1" />
+                {isFr ? 'Éditer fond' : 'Edit bg'}
+              </Button>
+            </ImageTooltip>
+          </div>
+        )}
+      </div>
 
       {/* Image Popup Modal */}
       {selectedImage && (
@@ -1484,146 +1195,158 @@ const Chambres = () => {
         </div>
       )}
 
-      {/* Rooms Showcase */}
+      {/* Restaurants Details */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-16">
-            {data.rooms.map((room, index) => {
-              if (!isAdmin && room.hidden) return null;
-              const isWide = isWideImageRoom(room.id);
+            {restaurants.map((restaurant, index) => {
+              if (!isAdmin && restaurant.hidden) return null;
+              const anchorId = restaurant.name.fr === "Le Bistrot du Carlton" ? "bistrot" :
+                              restaurant.name.fr === "Ile Rouge & la Terrasse" ? "ile-rouge" :
+                              restaurant.name.fr === "L'Oasis de Tana" ? "oasis" : "eclair";
+              const direction = index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse';
               return (
-                <Card
-                  key={room.id}
-                  className={`relative overflow-hidden hover-elevate transition-all duration-300 ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
-                    } flex flex-col ${room.hidden ? 'opacity-50' : ''}`}
-                  data-testid={`card-room-${room.id}`}
+                <Card 
+                  key={restaurant.id} 
+                  id={anchorId}
+                  className={`relative overflow-hidden hover-elevate transition-all duration-300 ${direction} flex flex-col lg:flex ${restaurant.hidden ? 'opacity-50' : ''}`}
+                  data-testid={`card-restaurant-${restaurant.id}`}
                 >
                   {isAdmin && (
                     <div className="absolute top-2 right-2 z-10 flex gap-1">
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => toggleRoomHidden(index)}
-                        title={room.hidden ? (isFr ? 'Afficher' : 'Show') : (isFr ? 'Masquer' : 'Hide')}
+                        onClick={() => toggleRestaurantHidden(index)}
+                        title={restaurant.hidden ? (isFr ? 'Afficher' : 'Show') : (isFr ? 'Masquer' : 'Hide')}
                       >
-                        {room.hidden ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                        {restaurant.hidden ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
                       </Button>
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => removeRoom(room.id)}
+                        onClick={() => removeRestaurant(restaurant.id)}
                       >
-                        <Trash2 className="w-4 h-4" /> 
+                        <Trash2 className="w-4 h-4" />
                       </Button>
                     </div>
                   )}
-                  <div className="lg:w-1/2 flex">
-                    <ImageTooltip imageUrl={room.image} onSave={updateRoomImage(index)}>
-                      <div 
-                        className={`w-full relative cursor-pointer overflow-hidden ${isWide ? 'aspect-[4/3] h-auto' : 'h-80 lg:h-full'}`}
-                        onClick={() => openImagePopup(room.image || hotelRoom)}
-                      >
-                        <img
-                          src={room.image || hotelRoom}
-                          alt={getText(room.name)}
-                          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105 cursor-pointer"
-                        />
+                  <div className="lg:w-1/2 flex relative">
+                    <ImageTooltip
+                      imageUrl={restaurant.images[0] || '/uploads/Restaurant.png'}
+                      onSave={(newUrl) => updateRestaurantImages(index)([newUrl, ...restaurant.images.slice(1)])}
+                    >
+                      <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                        <Button variant="ghost" size="sm" className="bg-background/80">
+                          <ImageIcon className="w-4 h-4" />
+                          {isFr ? 'Éditer images' : 'Edit images'}
+                        </Button>
                       </div>
+                      <RestaurantCarousel
+                        images={restaurant.images}
+                        onImageClick={openImagePopup}
+                      />
                     </ImageTooltip>
                   </div>
-
-                  {/* Conteneur de contenu */}
-                  <div className={`lg:w-1/2 p-8 flex flex-col ${isWide ? 'justify-center' : ''}`}>
-                    <div className="flex-1">
+                  
+                  <div className="lg:w-1/2 p-8 flex flex-col justify-between">
+                    <div>
                       <CardHeader className="p-0 mb-6">
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center gap-4">
-                            {room.size && (
-                              <Badge variant="outline" className="text-primary border-primary text-xl">
-                                <MapPin className="w-3 h-3 mr-1" />
-                                <Tooltip
-                                  frLabel={room.size}
-                                  enLabel={room.size}
-                                  onSave={() => {}}  // Size is not bilingual, but can add update
-                                >
-                                  <span>{room.size}</span>
-                                </Tooltip>
-                              </Badge>
-                            )}
-                            <Badge variant="outline" className="text-primary border-primary text-xl">
-                              <Users className="w-3 h-3 mr-1" />
-                              <Tooltip
-                                frLabel={room.guests.fr}
-                                enLabel={room.guests.en}
-                                onSave={updateRoomField(index, 'guests')}
-                              >
-                                <TextFormatter text={getText(room.guests)} />
-                              </Tooltip>
+                        <div className="mb-2">
+                          <Tooltip
+                            frLabel={restaurant.type.fr}
+                            enLabel={restaurant.type.en}
+                            onSave={updateRestaurantField(index, 'type')}
+                          >
+                            <Badge variant="outline" className="text-primary border-primary">
+                              <TextFormatter text={getText(restaurant.type)} />
                             </Badge>
+                          </Tooltip>
+                        </div>
+                        <Tooltip
+                          frLabel={restaurant.name.fr}
+                          enLabel={restaurant.name.en}
+                          onSave={updateRestaurantField(index, 'name')}
+                        >
+                          <CardTitle className="text-3xl font-serif text-foreground mb-3">
+                            <TextFormatter text={getText(restaurant.name)} />
+                          </CardTitle>
+                        </Tooltip>
+                        <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mb-4">
+                          <div className="flex items-center gap-1">
+                            <Clock className="w-4 h-4" />
+                            <Tooltip
+                              frLabel={restaurant.hours.fr}
+                              enLabel={restaurant.hours.en}
+                              onSave={updateRestaurantField(index, 'hours')}
+                            >
+                              <span>
+                                <TextFormatter text={getText(restaurant.hours)} />
+                              </span>
+                            </Tooltip>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <MapPin className="w-4 h-4" />
+                            <Tooltip
+                              frLabel={restaurant.capacity.fr}
+                              enLabel={restaurant.capacity.en}
+                              onSave={updateRestaurantField(index, 'capacity')}
+                            >
+                              <span>
+                                <TextFormatter text={getText(restaurant.capacity)} />
+                              </span>
+                            </Tooltip>
                           </div>
                         </div>
-                        <CardTitle className="text-3xl font-serif text-foreground mb-2">
-                          <Tooltip
-                            frLabel={room.name.fr}
-                            enLabel={room.name.en}
-                            onSave={updateRoomField(index, 'name')}
-                          >
-                            <TextFormatter text={getText(room.name)} />
-                          </Tooltip>
-                        </CardTitle>
-                        {room.subtitle && (
-                          <p className="text-primary font-luxury italic text-2xl mb-4">
-                            <Tooltip
-                              frLabel={room.subtitle.fr}
-                              enLabel={room.subtitle.en}
-                              onSave={updateRoomField(index, 'subtitle')}
-                            >
-                              <TextFormatter text={getText(room.subtitle)} />
-                            </Tooltip>
-                          </p>
-                        )}
                       </CardHeader>
-
+                      
                       <CardContent className="p-0 space-y-6">
-                        <div className="text-muted-foreground leading-relaxed">
-                          <Tooltip
-                            frLabel={room.description.fr}
-                            enLabel={room.description.en}
-                            onSave={updateRoomField(index, 'description')}
-                          >
-                            <TextFormatter text={getText(room.description)} />
-                          </Tooltip>
-                        </div>
-
-                        {room.features && room.features.length > 0 && (
+                        <Tooltip
+                          frLabel={restaurant.description.fr}
+                          enLabel={restaurant.description.en}
+                          onSave={updateRestaurantField(index, 'description')}
+                        >
+                          <div className="text-muted-foreground leading-relaxed">
+                            <TextFormatter text={getText(restaurant.description)} />
+                          </div>
+                        </Tooltip>
+                        
+                        <Tooltip
+                          frLabel={restaurant.detailedDescription.fr}
+                          enLabel={restaurant.detailedDescription.en}
+                          onSave={updateRestaurantField(index, 'detailedDescription')}
+                        >
+                          <div className="text-muted-foreground leading-relaxed text-sm">
+                            <TextFormatter text={getText(restaurant.detailedDescription)} />
+                          </div>
+                        </Tooltip>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div>
-                            <h4 className="font-semibold text-foreground mb-3">
-                              <Tooltip
-                                frLabel={data.labels.features.fr}
-                                enLabel={data.labels.features.en}
-                                onSave={updateLabel('features')}
-                              >
-                                <TextFormatter text={getText(data.labels.features)} />
-                              </Tooltip>
+                            <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                              <Sparkles className="w-4 h-4" />
+                              {isFr ? 'Spécialités' : 'Specialties'}
                             </h4>
                             <div className="space-y-1">
-                              {room.features.map((feature, idx) => (
-                                <div key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                              {restaurant.specialties.map((specialty, sIndex) => (
+                                <div key={sIndex} className="text-sm text-muted-foreground flex items-start gap-2">
                                   <div className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0"></div>
                                   <div className="flex-1">
                                     <Tooltip
-                                      frLabel={feature.fr}
-                                      enLabel={feature.en}
-                                      onSave={updateRoomFeature(index, idx)}
+                                      frLabel={specialty.fr}
+                                      enLabel={specialty.en}
+                                      onSave={updateRestaurantSpecialty(index, sIndex)}
                                     >
-                                      <TextFormatter text={getText(feature)} className="block" />
+                                      <span className="block">
+                                        <TextFormatter text={getText(specialty)} className="block" />
+                                      </span>
                                     </Tooltip>
                                   </div>
                                   {isAdmin && (
                                     <Button
                                       variant="ghost"
                                       size="sm"
-                                      onClick={() => removeRoomFeature(index, idx)}
+                                      onClick={() => removeRestaurantSpecialty(index, sIndex)}
                                       className="h-6 w-6 p-0"
                                     >
                                       <Trash2 className="w-3 h-3" />
@@ -1635,237 +1358,123 @@ const Chambres = () => {
                                 <Button
                                   variant="outline"
                                   size="sm"
-                                  onClick={() => addRoomFeature(index)}
+                                  onClick={() => addRestaurantSpecialty(index)}
                                   className="mt-2"
                                 >
                                   <Plus className="w-4 h-4 mr-1" />
-                                  {isFr ? 'Ajouter une caractéristique' : 'Add a feature'}
+                                  {isFr ? 'Ajouter une spécialité' : 'Add a specialty'}
                                 </Button>
                               )}
                             </div>
                           </div>
-                        )}
-
-                        {room.amenities && room.amenities.fr.length > 0 && (
+                          
                           <div>
-                            <h4 className="font-semibold text-foreground mb-3">
-                              <Tooltip
-                                frLabel={data.labels.amenities.fr}
-                                enLabel={data.labels.amenities.en}
-                                onSave={updateLabel('amenities')}
-                              >
-                                <TextFormatter text={getText(data.labels.amenities)} />
-                              </Tooltip>
+                            <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                              <Utensils className="w-4 h-4" />
+                              {isFr ? 'Services' : 'Services'}
                             </h4>
-                            <div className="flex flex-wrap gap-3">
-                              {getAmenities(room).map((amenity, idx) => {
-                                const frAmenity = room.amenities.fr[idx];
-                                const enAmenity = room.amenities.en ? room.amenities.en[idx] : frAmenity;
-                                return (
-                                  <div key={idx} className="flex items-center gap-2 px-3 py-1 bg-card rounded-full text-sm relative">
-                                    {getAmenityIcon(amenity)}
+                            <div className="space-y-1">
+                              {restaurant.features.map((feature, fIndex) => (
+                                <div key={fIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                                  <div className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                                  <div className="flex-1">
                                     <Tooltip
-                                      frLabel={frAmenity}
-                                      enLabel={enAmenity}
-                                      onSave={updateRoomAmenity(index, idx)}
+                                      frLabel={feature.fr}
+                                      enLabel={feature.en}
+                                      onSave={updateRestaurantFeature(index, fIndex)}
                                     >
-                                      <TextFormatter text={amenity} className="text-muted-foreground" />
+                                      <span className="block">
+                                        <TextFormatter text={getText(feature)} className="block" />
+                                      </span>
                                     </Tooltip>
-                                    {isAdmin && (
-                                      <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        onClick={() => removeRoomAmenity(index, idx)}
-                                        className="absolute -top-1 -right-1 h-4 w-4 p-0"
-                                      >
-                                        <Trash2 className="w-3 h-3" />
-                                      </Button>
-                                    )}
                                   </div>
-                                );
-                              })}
+                                  {isAdmin && (
+                                    <Button
+                                      variant="ghost"
+                                      size="sm"
+                                      onClick={() => removeRestaurantFeature(index, fIndex)}
+                                      className="h-6 w-6 p-0"
+                                    >
+                                      <Trash2 className="w-3 h-3" />
+                                    </Button>
+                                  )}
+                                </div>
+                              ))}
                               {isAdmin && (
                                 <Button
                                   variant="outline"
                                   size="sm"
-                                  onClick={() => addRoomAmenity(index)}
+                                  onClick={() => addRestaurantFeature(index)}
                                   className="mt-2"
                                 >
                                   <Plus className="w-4 h-4 mr-1" />
-                                  {isFr ? 'Ajouter une commodité' : 'Add an amenity'}
+                                  {isFr ? 'Ajouter un service' : 'Add a service'}
                                 </Button>
                               )}
                             </div>
                           </div>
-                        )}
-
-                        {/* Included Services Section */}
-                        <div>
-                          <h4 className="font-semibold text-foreground mb-3">
+                        </div>
+                        
+                        <div className="p-4 bg-card/50 rounded-lg">
+                          <p className="text-sm text-muted-foreground">
+                            <strong>{isFr ? ' :' : ' '}</strong>
                             <Tooltip
-                              frLabel={data.labels.includedServices.fr}
-                              enLabel={data.labels.includedServices.en}
-                              onSave={updateLabel('includedServices')}
+                              frLabel={restaurant.dressCode.fr}
+                              enLabel={restaurant.dressCode.en}
+                              onSave={updateRestaurantField(index, 'dressCode')}
                             >
-                              <TextFormatter text={getText(data.labels.includedServices)} />
+                              <span className="ml-1">
+                                <TextFormatter text={getText(restaurant.dressCode)} />
+                              </span>
                             </Tooltip>
-                          </h4>
-                          <div className="flex flex-wrap gap-3">
-                            {getIncludedServices().map((service, idx) => (
-                              <div key={idx} className="flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full text-sm border border-primary/20">
-                                {getIncludedServiceIcon(service)}
-                                <span className="text-primary font-medium">{service}</span>
-                              </div>
-                            ))}
-                          </div>
+                          </p>
                         </div>
                       </CardContent>
-                    </div>
-
-                    <div className="mt-8">
-                      <Button
-                        className="w-full"
-                        data-testid={`button-book-${room.id}`}
-                      >
-                        <Tooltip
-                          frLabel={data.bookButton.fr}
-                          enLabel={data.bookButton.en}
-                          onSave={updateBookButton}
-                        >
-                          <TextFormatter text={getText(data.bookButton)} />
-                        </Tooltip>
-                      </Button>
                     </div>
                   </div>
                 </Card>
               );
             })}
-            {isAdmin && addRoomCard}
+            {isAdmin && addRestaurantCard}
           </div>
-        </div>
-      </section>
-
-      {/* Services Section */}
-      <section className="py-20 bg-card/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-serif font-bold text-foreground mb-4">
-              <Tooltip
-                frLabel={data.servicesTitle.fr}
-                enLabel={data.servicesTitle.en}
-                onSave={updateServicesTitle}
-              >
-                <TextFormatter text={getText(data.servicesTitle)} />
-              </Tooltip>
-            </h2>
-            <div className="text-lg text-muted-foreground">
-              <Tooltip
-                frLabel={data.servicesDescription.fr}
-                enLabel={data.servicesDescription.en}
-                onSave={updateServicesDescription}
-              >
-                <TextFormatter text={getText(data.servicesDescription)} />
-              </Tooltip>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {data.services.map((service, index) => {
-              if (!isAdmin && service.hidden) return null;
-              return (
-                <Card key={index} className={`relative text-center hover-elevate ${service.hidden ? 'opacity-50' : ''}`}>
-                  {isAdmin && (
-                    <div className="absolute top-2 right-2 z-10 flex gap-1">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => toggleServiceHidden(index)}
-                        title={service.hidden ? (isFr ? 'Afficher' : 'Show') : (isFr ? 'Masquer' : 'Hide')}
-                      >
-                        {service.hidden ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => removeService(index)}
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  )}
-                  <CardContent className="pt-6">
-                    <div className="text-primary mb-4 flex justify-center">
-                      {getServiceIcon(service.icon)}
-                    </div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">
-                      <Tooltip
-                        frLabel={service.title.fr}
-                        enLabel={service.title.en}
-                        onSave={updateServiceField(index, 'title')}
-                      >
-                        <TextFormatter text={getText(service.title)} />
-                      </Tooltip>
-                    </h3>
-                    <div className="text-sm text-muted-foreground">
-                      <Tooltip
-                        frLabel={service.desc.fr}
-                        enLabel={service.desc.en}
-                        onSave={updateServiceField(index, 'desc')}
-                      >
-                        <TextFormatter text={getText(service.desc)} />
-                      </Tooltip>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-          {isAdmin && (
-            <div className="flex justify-center mt-8">
-              <Button
-                variant="outline"
-                onClick={addService}
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                {isFr ? 'Ajouter un service' : 'Add a service'}
-              </Button>
-            </div>
-          )}
         </div>
       </section>
 
       {/* Call to Action Section */}
       <section className="py-20 bg-primary/5">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-4xl font-serif font-bold mb-4">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <Tooltip
+            frLabel={cta.title.fr}
+            enLabel={cta.title.en}
+            onSave={updateCtaField('title')}
+          >
+            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-foreground">
+              <TextFormatter text={getText(cta.title)} />
+            </h2>
+          </Tooltip>
+          <Tooltip
+            frLabel={cta.description.fr}
+            enLabel={cta.description.en}
+            onSave={updateCtaField('description')}
+          >
+            <div className="text-xl text-muted-foreground mb-8 leading-relaxed">
+              <TextFormatter text={getText(cta.description)} />
+            </div>
+          </Tooltip>
+          <button 
+            onClick={() => navigate(cta.buttonLink || '/contact')}
+            className="bg-primary text-primary-foreground px-8 py-4 rounded-lg font-semibold text-lg hover:bg-primary/90 transition-colors shadow-lg"
+          >
             <Tooltip
-              frLabel={data.cta.title.fr}
-              enLabel={data.cta.title.en}
-              onSave={updateCtaTitle}
+              frLabel={cta.buttonText.fr}
+              enLabel={cta.buttonText.en}
+              onSave={updateCtaField('buttonText')}
             >
-              <TextFormatter text={getText(data.cta.title)} />
+              <span>
+                <TextFormatter text={getText(cta.buttonText)} />
+              </span>
             </Tooltip>
-          </h2>
-          <div className="text-xl text-muted-foreground mb-8">
-            <Tooltip
-              frLabel={data.cta.text.fr}
-              enLabel={data.cta.text.en}
-              onSave={updateCtaText}
-            >
-              <TextFormatter text={getText(data.cta.text)} />
-            </Tooltip>
-          </div>
-          <Button size="lg" asChild>
-            <a href="/page-de-reservation-synxis" className="text-lg">
-              <Tooltip
-                frLabel={data.cta.button.fr}
-                enLabel={data.cta.button.en}
-                onSave={updateCtaButton}
-              >
-                <TextFormatter text={getText(data.cta.button)} />
-              </Tooltip>
-            </a>
-          </Button>
+          </button>
         </div>
       </section>
 
@@ -1874,4 +1483,4 @@ const Chambres = () => {
   );
 };
 
-export default Chambres;
+export default Restaurants;

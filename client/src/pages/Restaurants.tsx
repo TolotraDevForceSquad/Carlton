@@ -200,6 +200,7 @@ interface RestaurantCarouselProps {
 
 const RestaurantCarousel: React.FC<RestaurantCarouselProps> = ({ images, onImageClick, className }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   const goToPrev = () => {
     setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
@@ -213,10 +214,27 @@ const RestaurantCarousel: React.FC<RestaurantCarouselProps> = ({ images, onImage
     setCurrentIndex(index);
   };
 
+  // Auto-scroll functionality
+  useEffect(() => {
+    if (images.length <= 1) return;
+
+    const interval = setInterval(() => {
+      if (!isHovered) {
+        goToNext();
+      }
+    }, 3000); // Change image every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [images.length, isHovered]);
+
   if (images.length === 0) return null;
 
   return (
-    <div className={`relative w-full h-80 lg:h-full overflow-hidden rounded-lg cursor-pointer ${className || ''}`}>
+    <div 
+      className={`relative w-full h-80 lg:h-full overflow-hidden cursor-pointer ${className || ''}`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <img
         src={images[currentIndex]}
         alt="Restaurant image"
@@ -976,7 +994,7 @@ const Restaurants = () => {
 
       {/* Restaurants Details */}
       <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[80%] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-16">
             {restaurants.map((restaurant, index) => {
               if (!isAdmin && restaurant.hidden) return null;
@@ -1011,21 +1029,23 @@ const Restaurants = () => {
                     </div>
                   )}
                   <div className="lg:w-1/2 flex relative">
-                    <ImageTooltip
-                      imageUrl={restaurant.images[0] || '/uploads/Restaurant.png'}
-                      onSave={(newUrl) => updateRestaurantImages(index)([newUrl, ...restaurant.images.slice(1)])}
-                    >
+                    {isAdmin && (
                       <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
-                        <Button variant="ghost" size="sm" className="bg-background/80">
-                          <ImageIcon className="w-4 h-4" />
-                          {isFr ? 'Éditer images' : 'Edit images'}
-                        </Button>
+                        <ImageTooltip
+                          imageUrl={restaurant.images[0] || '/uploads/Restaurant.png'}
+                          onSave={(newUrl) => updateRestaurantImages(index)([newUrl, ...restaurant.images.slice(1)])}
+                        >
+                          <Button variant="ghost" size="sm" className="bg-background/80">
+                            <ImageIcon className="w-4 h-4" />
+                            {isFr ? 'Éditer images' : 'Edit images'}
+                          </Button>
+                        </ImageTooltip>
                       </div>
-                      <RestaurantCarousel
-                        images={restaurant.images}
-                        onImageClick={openImagePopup}
-                      />
-                    </ImageTooltip>
+                    )}
+                    <RestaurantCarousel
+                      images={restaurant.images}
+                      onImageClick={openImagePopup}
+                    />
                   </div>
                   
                   <div className="lg:w-1/2 p-8 flex flex-col justify-between">
@@ -1037,7 +1057,7 @@ const Restaurants = () => {
                             enLabel={restaurant.type.en}
                             onSave={updateRestaurantField(index, 'type')}
                           >
-                            <Badge variant="outline" className="text-primary border-primary">
+                            <Badge variant="outline" className="text-primary text-xl border-primary">
                               <TextFormatter text={getText(restaurant.type)} />
                             </Badge>
                           </Tooltip>
