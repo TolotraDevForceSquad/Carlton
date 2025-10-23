@@ -1,147 +1,463 @@
-// src/data/homeData.ts
-export const homeData = {
-  title: {
-    fr: "L'Art de l'Hospitalité & du Luxe",
-    en: "The Art of Hospitality & Luxury" // Titre inchangé mais conservé
+// src/data/chambresData.ts
+export const chambresData = {
+  heroTitle: {
+    fr: "Chambres & Suites",
+    en: "Rooms & Suites"
   },
-  content: {
-    fr: `Vivez une expérience singulière au Carlton Madagascar, membre de Preferred Hotels and Resorts, reconnu à travers le monde pour ses établissements hôteliers d’excellence.
-
-Niché dans le cœur culturel de la ville, l’hôtel vous immerge dans un cadre magnifique avec une vue imprenable sur le Palais de la Reine et le Lac Anosy.
-
-Carlton Madagascar offre une expérience inédite à travers une harmonie parfaite d’histoire, de confort et de prestige. Quel que soit le motif de votre voyage, notre équipe dédiée s’engage à vous offrir un service personnalisé, répondant à toutes vos attentes.
-
-En tant que membre certifié de Preferred Hotels and Resorts, nous garantissons les standards les plus élevés pour faire de votre visite à Antananarivo un moment mémorable.
-
-Réservez votre séjour au Carlton Madagascar et laissez-nous vous accompagner dans la création de souvenirs précieux dans un lieu véritablement unique.`,
-    en: `Live a unique experience at Carlton Madagascar, a member of Preferred Hotels and Resorts, recognized worldwide for its establishments of excellence.
-
-Nestled in the cultural heart of the city, the hotel immerses you in a magnificent setting with an unobstructed view of the Queen's Palace and Lake Anosy.
-
-Carlton Madagascar offers an unprecedented experience through a perfect harmony of history, comfort, and prestige. Whatever the purpose of your trip, our dedicated team is committed to providing you with personalized service, meeting all your expectations.
-
-As a certified member of Preferred Hotels and Resorts, we guarantee the highest standards to make your visit to Antananarivo a memorable moment.
-
-Book your stay at Carlton Madagascar and let us accompany you in creating precious memories in a truly unique place.`
+  heroSubtitle: {
+    fr: "Chambres et suites élégantes avec vue imprenable sur le Palais de la Reine et le lac Anosy",
+    en: "Elegant rooms and suites with breathtaking views of the Queen's Palace and Lake Anosy"
   },
-  contentShort: {
-    fr: `Vivez une expérience singulière au Carlton Madagascar, membre de Preferred Hotels and Resorts, reconnu à travers le monde pour ses établissements hôteliers d’excellence.
-
-Niché dans le cœur culturel de la ville, l’hôtel vous immerge dans un cadre magnifique avec une vue imprenable sur le Palais de la Reine et le Lac Anosy.`,
-    en: `Live a unique experience at Carlton Madagascar, a member of Preferred Hotels and Resorts, recognized worldwide for its establishments of excellence.
-
-Nestled in the cultural heart of the city, the hotel immerses you in a magnificent setting with an unobstructed view of the Queen's Palace and Lake Anosy.`
-  },
-  highlights: [
+  heroImage: "/uploads/Presidential_suite_bedroom_interior_7adece21.png",
+  rooms: [
     {
-      icon: "Sparkles", // Chambres & Suites
-      title: {
-        fr: "Chambres & Suites",
-        en: "Rooms & Suites"
+      id: 1,
+      name: {
+        fr: "Chambre Executive",
+        en: "Executive Room"
+      },
+      subtitle: {
+        fr: "24 m²- Vue Panoramique ou Vue sur le Palais de la Reine & le lac Anosy",
+        en: "24 m² – Panoramic View or Queen's Palace & Lake Anosy View"
       },
       description: {
-        fr: "Avec 171 chambres et suites élégantes, l’hôtel vous offre une vue panoramique sur Antananarivo, mettant en lumière le Palais de la Reine et le lac Anosy avec le Mémorial de la Première Guerre mondiale.",
-        en: "With 171 elegant rooms and suites, the hotel offers a panoramic view of Antananarivo, highlighting the Queen's Palace and Lake Anosy with the World War I Memorial."
+        fr: "Un lit King Size ou deux lits jumeaux. (-) Nos chambres Executive, allient espace, confort et fonctionnalité pour un séjour des plus agréables. Avec une décoration chaleureuse et un agencement soigné, elles offrent un cadre reposant propice à la détente. Profitez de la vue dégagée sur la ville, qui ajoute une note d’évasion à votre expérience.",
+        en: "One King Size bed or two twin beds. (-) Our Executive Rooms combine space, comfort, and functionality for the most pleasant stay. With warm decoration and careful layout, they offer a relaxing setting conducive to rest. Enjoy the unobstructed city view, adding a touch of escape to your experience."
       },
-      link: "/chambres",
-      linkText: {
-        fr: "En savoir plus",
-        en: "Learn more"
+      image: "/uploads/Luxury_suite_interior_386342fd.png",
+      size: "24 m²",
+      guests: {
+        fr: "2 personnes",
+        en: "2 people"
       },
-      image: "/uploads/Presidential_suite_bedroom_interior_7adece21.png" // Image existante
+      features: [
+        {
+          fr: "Un lit King Size ou deux lits jumeaux",
+          en: "One King Size bed or two twin beds"
+        },
+        {
+          fr: "Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
+          en: "Panoramic view or Queen's Palace & Lake Anosy view"
+        },
+        {
+          fr: "Décoration chaleureuse et agencement soigné",
+          en: "Warm decoration and careful layout"
+        },
+        {
+          fr: "Cadre reposant pour la détente",
+          en: "Relaxing setting for rest"
+        },
+        {
+          fr: "Vue dégagée sur la ville",
+          en: "Unobstructed city view"
+        }
+      ],
+      amenities: {
+        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé et café avec eau minérale", "Wifi haut débit", "Salle de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
+        en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Tea and coffee service with mineral water", "High-speed WiFi", "Luxury marble bathroom", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
+      }
     },
     {
-      icon: "Utensils", // Restaurants & Bars
-      title: {
-        fr: "Restaurants & Bars",
-        en: "Restaurants & Bars"
+      id: 2,
+      name: {
+        fr: "Chambre Premium",
+        en: "Premium Room"
+      },
+      subtitle: {
+        fr: "24 m²- Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
+        en: "24 m² – Panoramic View or Queen's Palace & Lake Anosy View"
       },
       description: {
-        fr: "Trois restaurants et bars, trois ambiances — en salle, en terrasse ou en plein air dans un cadre verdoyant — pour vous faire vivre une expérience culinaire unique qui allie cuisine internationale et saveurs malgaches en sublimant la fraîcheur et l’authenticité des produits locaux. Et, une pâtisserie-boulangerie qui propose chaque jour des produits frais, authentiques et gourmands. Une adresse incontournable pour les amateurs de bon goût.",
-        en: "Three restaurants and bars, three atmospheres — indoors, on the terrace, or outdoors in a green setting — to provide a unique culinary experience that combines international cuisine and Malagasy flavors, enhancing the freshness and authenticity of local products. Plus, a pastry-bakery that offers fresh, authentic, and gourmet products every day. An essential address for those with good taste."
+        fr: "Un lit King Size ou deux lits jumeaux. (-) Situées aux étages supérieurs, les chambres Premium offrent une atmosphère paisible avec un point de vue imprenable sur le panorama urbain. Dotées d’équipements complets, bénéficiez d’un cadre confortable et intime pour un séjour parfait que ce soit pour le travail ou la détente.",
+        en: "One King Size bed or two twin beds. (-) Located on the upper floors, Premium Rooms offer a peaceful atmosphere with an unbeatable view of the urban panorama. Equipped with complete amenities, enjoy a comfortable and intimate setting for a perfect stay, whether for work or relaxation."
       },
-      link: "/restaurants",
-      linkText: {
-        fr: "En savoir plus",
-        en: "Learn more"
+      image: "/uploads/Luxury_suite_interior_386342fd.png",
+      size: "24 m²",
+      guests: {
+        fr: "2 personnes",
+        en: "2 people"
       },
-      image: "/uploads/Luxury_hotel_restaurant_interior_090ad235.png" // Image existante
+      features: [
+        {
+          fr: "Un lit King Size ou deux lits jumeaux",
+          en: "One King Size bed or two twin beds"
+        },
+        {
+          fr: "Vue panoramique ou sur le Palais de la Reine & le lac Anosy",
+          en: "Panoramic view or Queen's Palace & Lake Anosy view"
+        },
+        {
+          fr: "Atmosphère paisible aux étages supérieurs",
+          en: "Peaceful atmosphere on upper floors"
+        },
+        {
+          fr: "Point de vue imprenable sur le panorama urbain",
+          en: "Unbeatable urban panorama view"
+        },
+        {
+          fr: "Cadre confortable pour travail ou détente",
+          en: "Comfortable setting for work or relaxation"
+        }
+      ],
+      amenities: {
+        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé", "Machine à expresso", "Eau minérale", "Wifi haut débit", "Fer et table à repasser", "Salle de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
+        en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Tea service", "Espresso machine", "Mineral water", "High-speed WiFi", "Iron and ironing board", "Luxury marble bathroom", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
+      }
     },
     {
-      icon: "Calendar", // Événements & Réceptions
-      title: {
-        fr: "Événements & Réceptions",
-        en: "Events & Receptions"
+      id: 3,
+      name: {
+        fr: "Club Suite",
+        en: "Club Suite"
+      },
+      subtitle: {
+        fr: "48 m²- Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
+        en: "48 m² – Panoramic View or Queen's Palace & Lake Anosy View"
       },
       description: {
-        fr: "Grâce à son expertise reconnue dans l’organisation d’événements, l’hôtel est devenu le choix privilégié pour accueillir aussi bien les célébrations privées que les événements professionnels de prestige.",
-        en: "Thanks to its recognized expertise in event organization, the hotel has become the preferred choice for hosting both private celebrations and prestigious professional events."
+        fr: "Une chambre avec un lit King Size et un salon séparé. (-) Localisées dans les étages élevés, nos Club Suites comprennent une chambre avec un grand lit et un salon séparé. Un espace entièrement équipé, idéal pour un séjour parfait entre détente et travail, dans un confort optimal.",
+        en: "One bedroom with a King Size bed and a separate living room. (-) Located on the upper floors, our Club Suites feature a bedroom with a large bed and a separate living room. A fully equipped space, ideal for a perfect stay between relaxation and work, in optimal comfort."
       },
-      link: "/evenements",
-      linkText: {
-        fr: "En savoir plus",
-        en: "Learn more"
+      image: "/uploads/Luxury_suite_interior_386342fd.png",
+      size: "48 m²",
+      guests: {
+        fr: "2 personnes",
+        en: "2 people"
       },
-      image: "/uploads/Luxury_hotel_wedding_reception_d3ca816d.png" // Image existante
+      features: [
+        {
+          fr: "Chambre avec lit King Size",
+          en: "Bedroom with King Size bed"
+        },
+        {
+          fr: "Salon séparé",
+          en: "Separate living room"
+        },
+        {
+          fr: "Vue panoramique ou sur le Palais de la Reine & le lac Anosy",
+          en: "Panoramic view or Queen's Palace & Lake Anosy view"
+        },
+        {
+          fr: "Localisée aux étages élevés",
+          en: "Located on upper floors"
+        },
+        {
+          fr: "Espace idéal pour détente et travail",
+          en: "Space ideal for relaxation and work"
+        }
+      ],
+      amenities: {
+        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé", "Machine à expresso", "Eau minérale", "Wifi haut débit", "Fer et table à repasser", "02 salles de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
+        en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Tea service", "Espresso machine", "Mineral water", "High-speed WiFi", "Iron and ironing board", "2 luxury marble bathrooms", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
+      }
     },
     {
-      icon: "Camera", // Nouveaux Équipements & Services - L'endroit idéal pour le carrousel
-      title: {
-        fr: "Équipements & Services",
-        en: "Facilities & Services"
+      id: 4,
+      name: {
+        fr: "Family Suite",
+        en: "Family Suite"
+      },
+      subtitle: {
+        fr: "72 m²- Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
+        en: "72 m² – Panoramic View or Queen's Palace & Lake Anosy View"
       },
       description: {
-        fr: "171 Chambres & Suites, 03 Restaurants & Bars – Pâtisserie & Boulangerie, Evènements & Réceptions, Transferts Aéroport, Piscine - Fitness – Tennis – Soins Holistiques, Salon de beauté & coiffure, Boutiques de luxe, Agences de Voyage – Banque & GAB, Casino – Bar & VIP Lounge, Parking sécurisé.",
-        en: "171 Rooms & Suites, 03 Restaurants & Bars – Pastry & Bakery, Events & Receptions, Airport Transfers, Pool - Fitness – Tennis – Holistic Care, Beauty & Hair Salon, Luxury Shops, Travel Agencies – Bank & ATM, Casino – Bar & VIP Lounge, Secure Parking."
+        fr: "Une chambre avec un lit King Size, une chambre avec deux lits simples et un salon séparé. (-) La Family Suite, lumineuse et généreusement agencée est parfaitement conçue pour un séjour familial en toute sérénité. Elle se compose d’une chambre principale dotée d’un grand lit et d’une seconde chambre avec deux lits simples, parfaite pour les enfants ou les amis. Un salon indépendant permet à chacun de profiter d’un moment de détente dans une atmosphère chaleureuse et accueillante. Cette suite permet à toute la famille de se sentir comme à la maison.",
+        en: "One room with a King Size bed, one room with two single beds and a separate living room. (-) The Family Suite, bright and generously laid out, is perfectly designed for a family stay in complete serenity. It consists of a main bedroom equipped with a large bed and a second bedroom with two single beds, perfect for children or friends. An independent living room allows everyone to enjoy a moment of relaxation in a warm and welcoming atmosphere. This suite allows the whole family to feel at home."
       },
-      link: "/bien-etre-loisirs", // Lien vers les installations/services existantes
-      linkText: {
-        fr: "Voir nos installations",
-        en: "View our facilities"
+      image: "/uploads/Luxury_suite_interior_386342fd.png",
+      size: "72 m²",
+      guests: {
+        fr: "4 personnes",
+        en: "4 people"
       },
-      image: "/uploads/Hotel_infinity_pool_wellness_a9857557.png" // Image existante
+      features: [
+        {
+          fr: "Chambre avec lit King Size",
+          en: "Bedroom with King Size bed"
+        },
+        {
+          fr: "Chambre avec deux lits simples",
+          en: "Bedroom with two single beds"
+        },
+        {
+          fr: "Salon séparé",
+          en: "Separate living room"
+        },
+        {
+          fr: "Vue panoramique ou sur le Palais de la Reine & le lac Anosy",
+          en: "Panoramic view or Queen's Palace & Lake Anosy view"
+        },
+        {
+          fr: "Espace familial spacieux et serein",
+          en: "Spacious and serene family space"
+        }
+      ],
+      amenities: {
+        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé", "Machine à expresso", "Eau minérale", "Wifi haut débit", "Fer et table à repasser", "02 Salles de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
+        en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Tea service", "Espresso machine", "Mineral water", "High-speed WiFi", "Iron and ironing board", "2 luxury marble bathrooms", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
+      }
+    },
+    {
+      id: 5,
+      name: {
+        fr: "Suite",
+        en: "Suite"
+      },
+      subtitle: {
+        fr: "72 m²- Vue sur le Palais de la Reine & le lac Anosy",
+        en: "72 m² – Queen's Palace & Lake Anosy View"
+      },
+      description: {
+        fr: "Une chambre avec un lit King Size et un large salon séparé. Installées en hauteur, nos Suites offrent un équilibre parfait entre bien-être, style et praticité, dans un espace généreux et lumineux. Elle comprend une grande chambre avec un lit King Size et un vaste salon séparé avec kitchenette pour se détendre ou travailler en toute tranquillité. Le salon accueillant, les équipements et commodités offerts assurent un séjour réussi. Un cadre luxueux pour se sentir bien, dès les premiers instants.",
+        en: "One room with a King Size bed and a wide separate living room. Installed at height, our Suites offer a perfect balance between well-being, style, and practicality, in a generous and bright space. It includes a large bedroom with a King Size bed and a vast separate living room with kitchenette to relax or work in complete tranquility. The welcoming living room, the equipment and amenities offered ensure a successful stay. A luxurious setting to feel good, from the first moments."
+      },
+      image: "/uploads/Luxury_suite_interior_386342fd.png",
+      size: "72 m²",
+      guests: {
+        fr: "2 personnes",
+        en: "2 people"
+      },
+      features: [
+        {
+          fr: "Chambre avec lit King Size",
+          en: "Bedroom with King Size bed"
+        },
+        {
+          fr: "Large salon séparé avec kitchenette",
+          en: "Wide separate living room with kitchenette"
+        },
+        {
+          fr: "Vue sur le Palais de la Reine & le lac Anosy",
+          en: "Queen's Palace & Lake Anosy view"
+        },
+        {
+          fr: "Cadre raffiné et confortable",
+          en: "Refined and comfortable setting"
+        },
+        {
+          fr: "Installée en hauteur",
+          en: "Installed in height"
+        }
+      ],
+      amenities: {
+        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé", "Machine à expresso", "Eau minérale", "Wifi haut débit", "Fer et table à repasser", "02 salles de bain de luxe en marbre", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
+        en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Tea service", "Espresso machine", "Mineral water", "High-speed WiFi", "Iron and ironing board", "2 luxury marble bathrooms", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
+      }
+    },
+    {
+      id: 6,
+      name: {
+        fr: "Suite Présidentielle",
+        en: "Presidential Suite"
+      },
+      subtitle: {
+        fr: "96 m²- Vue sur le Palais de la Reine & le lac Anosy",
+        en: "96 m² – View of the Queen’s Palace & Lake Anosy"
+      },
+      description: {
+        fr: "Appartement comprenant une chambre spacieuse avec un lit Super King Size et un salon confortable. Nos Suites Présidentielles sont nichées dans les étages les plus élevés, en surplomb de la ville, vous offrant une perspective unique sur la plaine d’Antananarivo. Elles se composent d’une grande chambre et d’un salon spacieux avec une table à manger et une kitchenette. Inondées de lumière et empreintes de calme, les Suites Présidentielles offrent un cadre exceptionnel pour un séjour tout en confort et en sérénité.",
+        en: "Apartment including a spacious bedroom with a Super King Size bed and a comfortable living room. Our Presidential Suites are nestled on the highest floors, overlooking the city, offering you a unique perspective on the Antananarivo plain. They consist of a large bedroom and a spacious living room with a dining table and kitchenette. Flooded with light and imbued with calm, the Presidential Suites offer an exceptional setting for a stay full of comfort and serenity."
+      },
+      image: "/uploads/Presidential_suite_bedroom_interior_7adece21.png",
+      size: "96 m²",
+      guests: {
+        fr: "2 personnes",
+        en: "2 people"
+      },
+      features: [
+        {
+          fr: "Chambre spacieuse avec lit Super King Size",
+          en: "Spacious bedroom with Super King Size bed"
+        },
+        {
+          fr: "Salon confortable avec table à manger",
+          en: "Comfortable living room with dining table"
+        },
+        {
+          fr: "Kitchenette équipée",
+          en: "Equipped kitchenette"
+        },
+        {
+          fr: "Vue unique sur la plaine d’Antananarivo",
+          en: "Unique view of the Antananarivo plain"
+        },
+        {
+          fr: "Étages les plus élevés",
+          en: "Highest floors"
+        },
+        {
+          fr: "Dressing séparé",
+          en: "Separate dressing room"
+        }
+      ],
+      amenities: {
+        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé et café individuel avec eau minérale", "Wifi haut débit", "Dressing séparé", "Fer et table à repasser", "Salles de bain de luxe en marbre (2 ou 3)", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
+        en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Individual tea and coffee service with mineral water", "High-speed WiFi", "Separate dressing room", "Iron and ironing board", "Luxury marble bathrooms (2 or 3)", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
+      }
     }
   ],
+  stats: {
+    totalRooms: 171,
+    categories: 6,
+    maxSize: "96 m²"
+  },
+  statsLabels: {
+    total: {
+      fr: "Chambres & Suites",
+      en: "Rooms & Suites"
+    },
+    categories: {
+      fr: "Catégories de standing",
+      en: "Categories of standing"
+    },
+    max: {
+      fr: "Suite Présidentielle",
+      en: "Presidential Suite"
+    }
+  },
+  labels: {
+    features: {
+      fr: "Caractéristiques :",
+      en: "Features:"
+    },
+    amenities: {
+      fr: "Équipements :",
+      en: "Amenities:"
+    },
+    includedServices: {
+      fr: "Services :",
+      en: "Services:"
+    }
+  },
+  servicesTitle: {
+    fr: "Services",
+    en: "Services"
+  },
+  servicesDescription: {
+    fr: "Profitez de nos services supplémentaires pour un séjour encore plus personnalisé",
+    en: "Enjoy our additional services for an even more personalized stay"
+  },
+  services: [
+    { 
+      icon: "Coffee", 
+      title: {
+        fr: "Room Service",
+        en: "Room Service"
+      }, 
+      desc: {
+        fr: "Service en chambre disponible 24h/24",
+        en: "24/7 room service available"
+      } 
+    },
+    { 
+      icon: "Scissors", 
+      title: {
+        fr: "Service de blanchisserie",
+        en: "Laundry Service"
+      }, 
+      desc: {
+        fr: "Service de nettoyage à sec et repassage",
+        en: "Dry cleaning and ironing service"
+      } 
+    },
+    { 
+      icon: "Briefcase", 
+      title: {
+        fr: "Business Corner",
+        en: "Business Corner"
+      }, 
+      desc: {
+        fr: "Espace de travail équipé",
+        en: "Equipped workspace"
+      } 
+    },
+    { 
+      icon: "Plane", 
+      title: {
+        fr: "Transferts Aéroport",
+        en: "Airport Transfers"
+      }, 
+      desc: {
+        fr: "Navette aéroport-hôtel",
+        en: "Airport-hotel shuttle"
+      } 
+    }
+  ],
+  buttonText: {
+    fr: "Découvrir nos hébergements",
+    en: "Discover our accommodations"
+  },
+  bookButton: {
+    fr: "Réserver votre séjour",
+    en: "Book your stay"
+  },
+  includedServices: {
+    fr: ["Wifi Haut débit", "Piscine", "Fitness", "Tennis", "Parking"],
+    en: ["High-speed WiFi", "Pool", "Fitness", "Tennis", "Parking"]
+  },
   cta: {
     title: {
-      fr: "Réservez Votre Séjour",
-      en: "Book Your Stay"
+      fr: "Un voyage à Antananarivo ?",
+      en: "A trip to Antananarivo?"
     },
-    description: {
-      fr: "Découvrez l'hospitalité malgache dans le cadre unique du Carlton Madagascar",
-      en: "Discover Malagasy hospitality in the unique setting of the Carlton Madagascar"
+    text: {
+      fr: "Vivez-le pleinement avec nous",
+      en: "Live it fully with us"
     },
-    primaryButton: {
-      fr: "Réserver maintenant",
-      en: "Book now"
-    },
-    secondaryButton: {
-      fr: "Voir nos chambres",
-      en: "See our rooms"
-    },
-    primaryLink: "/contact", // L'utilisateur a mentionné "page de réservation Synxis", je garde le lien de contact comme dans l'initial, mais l'idéal serait un lien de réservation direct.
-    secondaryLink: "/chambres" // Page Chambres & Suites
-  },
-  parallaxImage: "/uploads/Hotel_infinity_pool_wellness_a9857557.png" // Image existante
+    button: {
+      fr: "Réserver votre séjour",
+      en: "Book your stay"
+    }
+  }
 };
 
-// src/components/Home.tsx
-import HeroSection from '@/components/HeroSection';
-import ParallaxSection from '@/components/ParallaxSection';
+// src/components/Chambres.tsx
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Star, Clock, MapPin, Utensils, Camera, Calendar, Sparkles, Check, X, ChevronDown, ChevronUp } from 'lucide-react'; 
-import Footer from '@/components/Footer';
-import { Link } from 'wouter';
-import { formatAmpersand } from '@/lib/utils/formatAmpersand';
-import { homeData as initialHomeData } from '@/data/homeData';
-import wellnessImage from '@assets/generated_images/Hotel_infinity_pool_wellness_a9857557.png';
-import { useLanguage } from '@/components/context/LanguageContext';
+import {
+  MapPin,
+  Users,
+  Wifi,
+  Car,
+  Coffee,
+  Tv,
+  Wind,
+  Waves,  // For pool
+  Dumbbell,
+  Activity,  // Alternative for tennis court (sports activity)
+  Plane,
+  WashingMachine,
+  Briefcase,
+  Phone,       // For telephone
+  Lock,        // For safe
+  EyeOff,
+  Trash2, // For delete
+  Eye,
+  Plus,
+  // New imports for amenities icons
+  Wine,
+  CupSoda,
+  Droplet,
+  Shirt,
+  ShowerHead,
+  Square,
+  Footprints,
+  Gift
+} from 'lucide-react';
 import { Tooltip, ImageTooltip } from '@/components/Tooltip';
-import { useState, useEffect, useCallback } from 'react';
+import Footer from '@/components/Footer';
+import ParallaxSection from '@/components/ParallaxSection';
+import { formatAmpersand } from '@/lib/utils/formatAmpersand';
+import { chambresData } from '@/data/chambresData';
+import { useLanguage } from '@/components/context/LanguageContext';
+import hotelRoom from '@assets/generated_images/Luxury_suite_interior_386342fd.png';
+import suiteImage from '@assets/generated_images/Presidential_suite_bedroom_interior_7adece21.png';
 
-const SECTION_KEY = 'home';
+const SECTION_KEY = 'chambres';
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('userToken');
@@ -152,218 +468,209 @@ const getAuthHeaders = () => {
   return headers;
 };
 
-// Composant Modal pour l'affichage en popup
-const ImageModal = ({ isOpen, onClose, imageUrl, alt }: { 
-  isOpen: boolean; 
-  onClose: () => void; 
-  imageUrl: string; 
-  alt: string;
-}) => {
-  if (!isOpen) return null;
+// Helper to split chambresData into dataFr and dataEn structures
+const splitChambresData = (mixedData: typeof chambresData) => {
+  const dataFr = {
+    heroTitle: mixedData.heroTitle.fr,
+    heroSubtitle: mixedData.heroSubtitle.fr,
+    heroImage: mixedData.heroImage,
+    rooms: mixedData.rooms.map((room) => ({
+      id: room.id,
+      name: room.name.fr,
+      subtitle: room.subtitle.fr,
+      description: room.description.fr,
+      size: room.size,
+      guests: room.guests.fr,
+      features: room.features.map((feature) => feature.fr),
+      amenities: room.amenities.fr,
+      image: room.image,
+      hidden: room.hidden || false,
+    })),
+    stats: mixedData.stats,
+    statsLabels: {
+      total: mixedData.statsLabels.total.fr,
+      categories: mixedData.statsLabels.categories.fr,
+      max: mixedData.statsLabels.max.fr,
+    },
+    labels: {
+      features: mixedData.labels.features.fr,
+      amenities: mixedData.labels.amenities.fr,
+      includedServices: mixedData.labels.includedServices.fr,
+    },
+    servicesTitle: mixedData.servicesTitle.fr,
+    servicesDescription: mixedData.servicesDescription.fr,
+    services: mixedData.services.map((service) => ({
+      icon: service.icon,
+      title: service.title.fr,
+      desc: service.desc.fr,
+      hidden: service.hidden || false,
+    })),
+    buttonText: mixedData.buttonText.fr,
+    bookButton: mixedData.bookButton.fr,
+    includedServices: mixedData.includedServices.fr,
+    cta: {
+      title: mixedData.cta.title.fr,
+      text: mixedData.cta.text.fr,
+      button: mixedData.cta.button.fr,
+    },
+  };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-      <div className="relative max-w-4xl max-h-[90vh] mx-4">
-        <button
-          onClick={onClose}
-          className="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors z-10"
-        >
-          <X className="w-8 h-8" />
-        </button>
-        <img
-          src={imageUrl}
-          alt={alt}
-          className="w-full h-full object-contain max-h-[80vh] rounded-lg shadow-2xl"
-        />
-      </div>
-    </div>
-  );
+  const dataEn = {
+    heroTitle: mixedData.heroTitle.en,
+    heroSubtitle: mixedData.heroSubtitle.en,
+    heroImage: mixedData.heroImage,
+    rooms: mixedData.rooms.map((room) => ({
+      id: room.id,
+      name: room.name.en,
+      subtitle: room.subtitle.en,
+      description: room.description.en,
+      size: room.size,
+      guests: room.guests.en,
+      features: room.features.map((feature) => feature.en),
+      amenities: room.amenities.en,
+      image: room.image,
+      hidden: room.hidden || false,
+    })),
+    stats: mixedData.stats,
+    statsLabels: {
+      total: mixedData.statsLabels.total.en,
+      categories: mixedData.statsLabels.categories.en,
+      max: mixedData.statsLabels.max.en,
+    },
+    labels: {
+      features: mixedData.labels.features.en,
+      amenities: mixedData.labels.amenities.en,
+      includedServices: mixedData.labels.includedServices.en,
+    },
+    servicesTitle: mixedData.servicesTitle.en,
+    servicesDescription: mixedData.servicesDescription.en,
+    services: mixedData.services.map((service) => ({
+      icon: service.icon,
+      title: service.title.en,
+      desc: service.desc.en,
+      hidden: service.hidden || false,
+    })),
+    buttonText: mixedData.buttonText.en,
+    bookButton: mixedData.bookButton.en,
+    includedServices: mixedData.includedServices.en,
+    cta: {
+      title: mixedData.cta.title.en,
+      text: mixedData.cta.text.en,
+      button: mixedData.cta.button.en,
+    },
+  };
+
+  return { dataFr, dataEn };
 };
 
-// Composant Carousel pour Équipements & Services
-const EquipmentCarousel = ({ 
-  images, 
-  currentIndex, 
-  onIndexChange 
-}: { 
-  images: string[]; 
-  currentIndex: number; 
-  onIndexChange: (index: number) => void;
-}) => {
+// Reconstruct mixed data from dataFr and dataEn
+const reconstructMixed = (dataFr: any, dataEn: any | null) => {
+  if (!dataFr || typeof dataFr !== 'object') {
+    console.warn('Invalid dataFr structure, falling back to default');
+    return chambresData;
+  }
+  const enFallback = dataEn || dataFr;
+  return {
+    heroTitle: { fr: dataFr.heroTitle, en: enFallback.heroTitle || dataFr.heroTitle },
+    heroSubtitle: { fr: dataFr.heroSubtitle, en: enFallback.heroSubtitle || dataFr.heroSubtitle },
+    heroImage: dataFr.heroImage,
+    rooms: dataFr.rooms.map((roomFr: any, i: number) => {
+      const roomEn = enFallback.rooms[i] || roomFr;
+      return {
+        id: roomFr.id,
+        name: { fr: roomFr.name, en: roomEn.name || roomFr.name },
+        subtitle: { fr: roomFr.subtitle, en: roomEn.subtitle || roomFr.subtitle },
+        description: { fr: roomFr.description, en: roomEn.description || roomFr.description },
+        size: roomFr.size,
+        guests: { fr: roomFr.guests, en: roomEn.guests || roomFr.guests },
+        features: roomFr.features.map((fFr: string, j: number) => ({
+          fr: fFr,
+          en: roomEn.features[j] || fFr,
+        })),
+        amenities: {
+          fr: roomFr.amenities,
+          en: roomEn.amenities || roomFr.amenities,
+        },
+        image: roomFr.image,
+        hidden: roomFr.hidden !== undefined ? roomFr.hidden : (roomEn.hidden || false),
+      };
+    }),
+    stats: dataFr.stats,
+    statsLabels: {
+      total: { fr: dataFr.statsLabels.total, en: enFallback.statsLabels.total || dataFr.statsLabels.total },
+      categories: { fr: dataFr.statsLabels.categories, en: enFallback.statsLabels.categories || dataFr.statsLabels.categories },
+      max: { fr: dataFr.statsLabels.max, en: enFallback.statsLabels.max || dataFr.statsLabels.max },
+    },
+    labels: {
+      features: { fr: dataFr.labels.features, en: enFallback.labels.features || dataFr.labels.features },
+      amenities: { fr: dataFr.labels.amenities, en: enFallback.labels.amenities || dataFr.labels.amenities },
+      includedServices: { fr: dataFr.labels.includedServices, en: enFallback.labels.includedServices || dataFr.labels.includedServices },
+    },
+    servicesTitle: { fr: dataFr.servicesTitle, en: enFallback.servicesTitle || dataFr.servicesTitle },
+    servicesDescription: { fr: dataFr.servicesDescription, en: enFallback.servicesDescription || dataFr.servicesDescription },
+    services: dataFr.services.map((serviceFr: any, i: number) => ({
+      icon: serviceFr.icon,
+      title: { fr: serviceFr.title, en: enFallback.services[i]?.title || serviceFr.title },
+      desc: { fr: serviceFr.desc, en: enFallback.services[i]?.desc || serviceFr.desc },
+      hidden: serviceFr.hidden !== undefined ? serviceFr.hidden : (enFallback.services[i]?.hidden || false),
+    })),
+    buttonText: { fr: dataFr.buttonText, en: enFallback.buttonText || dataFr.buttonText },
+    bookButton: { fr: dataFr.bookButton, en: enFallback.bookButton || dataFr.bookButton },
+    includedServices: { fr: dataFr.includedServices, en: enFallback.includedServices || dataFr.includedServices },
+    cta: {
+      title: { fr: dataFr.cta.title, en: enFallback.cta.title || dataFr.cta.title },
+      text: { fr: dataFr.cta.text, en: enFallback.cta.text || dataFr.cta.text },
+      button: { fr: dataFr.cta.button, en: enFallback.cta.button || dataFr.cta.button },
+    },
+  };
+};
+
+interface TextFormatterProps {
+  text: any;
+  className?: string;
+}
+
+const TextFormatter: React.FC<TextFormatterProps> = ({ text, className }) => {
+  let displayText: string;
+  if (typeof text === 'string') {
+    displayText = text;
+  } else if (typeof text === 'number') {
+    displayText = text.toString();
+  } else {
+    displayText = String(text || '');
+  }
+
+  const parts = displayText.split('(-)').filter(part => part.trim().length > 0);
+  if (parts.length === 1) {
+    return <span className={className}>{formatAmpersand(displayText)}</span>;
+  }
   return (
-    <div className="relative h-96 lg:h-[500px] w-full overflow-hidden rounded-xl shadow-2xl">
-      {images.map((image, index) => (
-        <div
-          key={index}
-          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-            index === currentIndex ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          <img
-            src={image}
-            alt={`Equipment ${index + 1}`}
-            className="w-full h-full object-cover transition-transform duration-700 ease-in-out hover:scale-105"
-            loading="lazy"
-            decoding="async"
-          />
-          <div className="absolute inset-0 bg-black/20"></div>
-        </div>
+    <div className={`space-y-2 ${className || ''}`}>
+      {parts.map((part, i) => (
+        <p key={i} className="leading-relaxed">{formatAmpersand(part.trim())}</p>
       ))}
-      
-      {/* Indicateurs de navigation */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-        {images.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => onIndexChange(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              index === currentIndex 
-                ? 'bg-white scale-125' 
-                : 'bg-white/50 hover:bg-white/70'
-            }`}
-          />
-        ))}
-      </div>
     </div>
   );
 };
 
-const Home = () => {
+const Chambres = () => {
   const { currentLang } = useLanguage();
   const lang = currentLang.code.toLowerCase();
-  
-  const [data, setData] = useState(initialHomeData);
+  const [data, setData] = useState(() => {
+    // Ensure hidden is added to default data if not present
+    const defaultData = { ...chambresData };
+    defaultData.rooms = defaultData.rooms.map(room => ({ ...room, hidden: room.hidden || false }));
+    defaultData.services = defaultData.services.map(service => ({ ...service, hidden: service.hidden || false }));
+    return defaultData;
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
-  // État pour l'expansion du contenu
-  const [isContentExpanded, setIsContentExpanded] = useState(false);
-  
-  // États pour les modales d'images
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<string>('');
-  const [selectedImageAlt, setSelectedImageAlt] = useState<string>('');
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const isAdmin = !!localStorage.getItem('userToken');
 
-  // État pour le carrousel Équipements & Services
-  const [carouselIndex, setCarouselIndex] = useState(0);
-  
-  // Images pour le carrousel Équipements & Services
-  const carouselImages = [
-    "/uploads/Hotel_infinity_pool_wellness_a9857557.png",
-    "/uploads/Presidential_suite_bedroom_interior_7adece21.png",
-    "/uploads/Luxury_hotel_restaurant_interior_090ad235.png",
-    "/uploads/Luxury_hotel_wedding_reception_d3ca816d.png"
-  ];
-
-  // Gestion du carrousel automatique
+  // Fetch chambres data from backend
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCarouselIndex((prev) => (prev + 1) % carouselImages.length);
-    }, 2000); // Change toutes les 2 secondes
-
-    return () => clearInterval(interval);
-  }, [carouselImages.length]);
-
-  // Fonction pour ouvrir la modal d'image
-  const openImageModal = useCallback((imageUrl: string, alt: string) => {
-    setSelectedImage(imageUrl);
-    setSelectedImageAlt(alt);
-    setModalOpen(true);
-  }, []);
-
-  // Fonction pour fermer la modal
-  const closeImageModal = useCallback(() => {
-    setModalOpen(false);
-    setSelectedImage('');
-    setSelectedImageAlt('');
-  }, []);
-
-  // Helper to split homeData into dataFr and dataEn structures
-  const splitHomeData = (mixedData: typeof initialHomeData) => {
-    const dataFr = {
-      title: mixedData.title.fr,
-      content: mixedData.content.fr,
-      contentShort: mixedData.contentShort.fr,
-      highlights: mixedData.highlights.map((highlight) => ({
-        icon: highlight.icon,
-        title: highlight.title.fr,
-        description: highlight.description.fr,
-        link: highlight.link,
-        linkText: highlight.linkText.fr,
-        image: highlight.image,
-      })),
-      cta: {
-        title: mixedData.cta.title.fr,
-        description: mixedData.cta.description.fr,
-        primaryButton: mixedData.cta.primaryButton.fr,
-        secondaryButton: mixedData.cta.secondaryButton.fr,
-        primaryLink: mixedData.cta.primaryLink,
-        secondaryLink: mixedData.cta.secondaryLink,
-      },
-      parallaxImage: mixedData.parallaxImage,
-    };
-
-    const dataEn = {
-      title: mixedData.title.en,
-      content: mixedData.content.en,
-      contentShort: mixedData.contentShort.en,
-      highlights: mixedData.highlights.map((highlight) => ({
-        icon: highlight.icon,
-        title: highlight.title.en,
-        description: highlight.description.en,
-        link: highlight.link,
-        linkText: highlight.linkText.en,
-        image: highlight.image,
-      })),
-      cta: {
-        title: mixedData.cta.title.en,
-        description: mixedData.cta.description.en,
-        primaryButton: mixedData.cta.primaryButton.en,
-        secondaryButton: mixedData.cta.secondaryButton.en,
-        primaryLink: mixedData.cta.primaryLink,
-        secondaryLink: mixedData.cta.secondaryLink,
-      },
-      parallaxImage: mixedData.parallaxImage,
-    };
-
-    return { dataFr, dataEn };
-  };
-
-  // Reconstruct mixed data from dataFr and dataEn
-  const reconstructMixed = (dataFr: any, dataEn: any | null) => {
-    if (!dataFr || typeof dataFr !== 'object') {
-      console.warn('Invalid dataFr structure, falling back to default');
-      return initialHomeData;
-    }
-    const enFallback = dataEn || dataFr;
-    const mixed = {
-      title: { fr: dataFr.title, en: enFallback.title || dataFr.title },
-      content: { fr: dataFr.content, en: enFallback.content || dataFr.content },
-      contentShort: { fr: dataFr.contentShort, en: enFallback.contentShort || dataFr.contentShort },
-      highlights: dataFr.highlights.map((highlightFr: any, i: number) => ({
-        icon: highlightFr.icon || initialHomeData.highlights[i].icon,
-        title: { fr: highlightFr.title, en: enFallback.highlights[i]?.title || highlightFr.title },
-        description: { fr: highlightFr.description, en: enFallback.highlights[i]?.description || highlightFr.description },
-        link: highlightFr.link || initialHomeData.highlights[i].link,
-        linkText: { fr: highlightFr.linkText, en: enFallback.highlights[i]?.linkText || highlightFr.linkText },
-        image: highlightFr.image || initialHomeData.highlights[i].image,
-      })),
-      cta: {
-        title: { fr: dataFr.cta?.title || initialHomeData.cta.title.fr, en: enFallback.cta?.title || dataFr.cta?.title || initialHomeData.cta.title.en },
-        description: { fr: dataFr.cta?.description || initialHomeData.cta.description.fr, en: enFallback.cta?.description || dataFr.cta?.description || initialHomeData.cta.description.en },
-        primaryButton: { fr: dataFr.cta?.primaryButton || initialHomeData.cta.primaryButton.fr, en: enFallback.cta?.primaryButton || dataFr.cta?.primaryButton || initialHomeData.cta.primaryButton.en },
-        secondaryButton: { fr: dataFr.cta?.secondaryButton || initialHomeData.cta.secondaryButton.fr, en: enFallback.cta?.secondaryButton || dataFr.cta?.secondaryButton || initialHomeData.cta.secondaryButton.en },
-        primaryLink: dataFr.cta?.primaryLink || initialHomeData.cta.primaryLink,
-        secondaryLink: dataFr.cta?.secondaryLink || initialHomeData.cta.secondaryLink,
-      },
-      parallaxImage: dataFr.parallaxImage || initialHomeData.parallaxImage,
-    };
-    return mixed;
-  };
-
-  // Fetch home data from backend
-  useEffect(() => {
-    const fetchHomeData = async () => {
+    const fetchChambresData = async () => {
       try {
         setLoading(true);
         setError(null);
@@ -375,7 +682,8 @@ const Home = () => {
         }
         let section = sections.find((s: any) => s.sectionKey === SECTION_KEY);
         if (!section) {
-          const { dataFr, dataEn } = splitHomeData(initialHomeData);
+          // Table is empty for this sectionKey, create default
+          const { dataFr, dataEn } = splitChambresData(chambresData);
           const createResponse = await fetch('/api/globalSections', {
             method: 'POST',
             headers: { ...headers, 'Content-Type': 'application/json' },
@@ -388,7 +696,7 @@ const Home = () => {
           });
 
           if (!createResponse.ok) {
-            throw new Error('Failed to create home data');
+            throw new Error('Failed to create chambres data');
           }
 
           const created = await createResponse.json();
@@ -399,24 +707,24 @@ const Home = () => {
           const fetchedData = reconstructMixed(section.dataFr, section.dataEn);
           setData(fetchedData);
         } else {
-          setData(initialHomeData);
+          setData(chambresData);
         }
       } catch (err) {
-        console.error('Error fetching home data:', err);
-        setError('Failed to load home data');
-        setData(initialHomeData);
+        console.error('Error fetching chambres data:', err);
+        setError('Failed to load chambres data');
+        setData(chambresData);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchHomeData();
+    fetchChambresData();
   }, []);
 
-  const updateHomeSection = async (updatedMixedData: typeof initialHomeData) => {
+  const updateChambresSection = async (updatedMixedData: typeof data) => {
     try {
       const headers = getAuthHeaders();
-      const currentSectionResponse = await fetch(`/api/globalSections?sectionKey=${SECTION_KEY}`, { headers });
+      let currentSectionResponse = await fetch(`/api/globalSections?sectionKey=${SECTION_KEY}`, { headers });
       let currentData: any[] = [];
       if (currentSectionResponse.ok) {
         currentData = await currentSectionResponse.json();
@@ -424,7 +732,7 @@ const Home = () => {
       let currentSection = currentData.find((s: any) => s.sectionKey === SECTION_KEY);
 
       if (!currentSection) {
-        const { dataFr, dataEn } = splitHomeData(initialHomeData);
+        const { dataFr, dataEn } = splitChambresData(chambresData);
         const createResponse = await fetch('/api/globalSections', {
           method: 'POST',
           headers: { ...headers, 'Content-Type': 'application/json' },
@@ -441,240 +749,594 @@ const Home = () => {
         currentSection = await createResponse.json();
       }
 
-      const { dataFr: updatedDataFr, dataEn: updatedDataEn } = splitHomeData(updatedMixedData);
+      const { dataFr: updatedDataFr, dataEn: updatedDataEn } = splitChambresData(updatedMixedData);
 
       const putResponse = await fetch(`/api/globalSections/${currentSection.id}`, {
         method: 'PUT',
         headers: { ...headers, 'Content-Type': 'application/json' },
         body: JSON.stringify({
           dataFr: updatedDataFr,
-          dataEn: Object.keys(updatedDataEn).length > 0 ? updatedDataEn : null
-        })
+          dataEn: Object.keys(updatedDataEn).length > 0 ? updatedDataEn : null,
+        }),
       });
 
       if (!putResponse.ok) {
-        throw new Error('Failed to update home section');
+        throw new Error('Failed to update chambres section');
       }
     } catch (err) {
-      console.error('Error updating home section:', err);
-    }
-  };
-  
-  const { title: rawTitle, content: rawContent, contentShort: rawContentShort, highlights: rawHighlights, cta: rawCta, parallaxImage } = data;
-  
-  const title = rawTitle[lang];
-  const fullContent = rawContent[lang];
-  const shortContent = rawContentShort[lang];
-  const displayedContent = isContentExpanded ? fullContent : shortContent;
-  const showExpandButton = fullContent.trim() !== shortContent.trim();
-  
-  const highlights = rawHighlights.map(highlight => ({
-    ...highlight,
-    title: highlight.title[lang],
-    description: highlight.description[lang],
-    linkText: highlight.linkText[lang]
-  }));
-  
-  const processedHighlights = highlights.map((highlight, index) => ({
-    ...highlight,
-    image: highlight.image || wellnessImage
-  }));
-
-  const mainHighlights = processedHighlights.slice(0, 3);
-  const equipmentHighlight = processedHighlights[3];
-
-  const getServicesList = (description: string) => {
-      return description.split(',').map(s => s.trim()).filter(s => s.length > 0);
-  }
-  
-  const cta = {
-    ...rawCta,
-    title: rawCta.title[lang],
-    description: rawCta.description[lang],
-    primaryButton: rawCta.primaryButton[lang],
-    secondaryButton: rawCta.secondaryButton[lang]
-  };
-  
-  const getHighlightIcon = (iconName: string) => {
-    switch (iconName) {
-      case 'Sparkles': return <Sparkles className="w-8 h-8" />;
-      case 'Utensils': return <Utensils className="w-8 h-8" />;
-      case 'Calendar': return <Calendar className="w-8 h-8" />;
-      case 'Camera': return <Camera className="w-8 h-8" />;
-      default: return null;
+      console.error('Error updating chambres section:', err);
     }
   };
 
-  const toggleContentExpansion = () => {
-    setIsContentExpanded(!isContentExpanded);
+  const getText = (textObj: any): string => {
+    if (typeof textObj === 'string') return textObj;
+    if (typeof textObj === 'number') return textObj.toString();
+    const langText = textObj?.[lang];
+    if (typeof langText === 'string') return langText;
+    const frText = textObj?.fr;
+    if (typeof frText === 'string') return frText;
+    return '';
   };
 
-  const buttonText = lang === 'fr' 
-    ? (isContentExpanded ? 'Lire moins' : 'Lire plus') 
-    : (isContentExpanded ? 'Read less' : 'Read more');
-  const ChevronIcon = isContentExpanded ? ChevronUp : ChevronDown;
-
-  const contentParagraphs = displayedContent.split('\n\n').map((para, i) => (
-    <p key={i} className="mb-6 last:mb-0">
-      {para}
-    </p>
-  ));
-
-  // Les fonctions de mise à jour restent inchangées
-  const updateTitle = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      title: { fr: newFr, en: newEn }
-    };
+  const updateHeroTitle = async (newFr: string, newEn: string) => {
+    const updatedData = { ...data, heroTitle: { fr: newFr, en: newEn } };
     setData(updatedData);
-    await updateHomeSection(updatedData);
+    await updateChambresSection(updatedData);
   };
 
-  const updateContent = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      content: { fr: newFr, en: newEn }
-    };
+  const updateHeroSubtitle = async (newFr: string, newEn: string) => {
+    const updatedData = { ...data, heroSubtitle: { fr: newFr, en: newEn } };
     setData(updatedData);
-    await updateHomeSection(updatedData);
+    await updateChambresSection(updatedData);
   };
 
-  const updateContentShort = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      contentShort: { fr: newFr, en: newEn }
-    };
+  const updateHeroImage = async (newUrl: string) => {
+    const updatedData = { ...data, heroImage: newUrl };
     setData(updatedData);
-    await updateHomeSection(updatedData);
+    await updateChambresSection(updatedData);
   };
 
-  const updateHighlightTitle = (index: number) => async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      highlights: data.highlights.map((h, i) => 
-        i === index ? { ...h, title: { fr: newFr, en: newEn } } : h
-      )
+  const updateStatsLabel = (labelKey: 'total' | 'categories' | 'max') => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        statsLabels: {
+          ...data.statsLabels,
+          [labelKey]: { fr: newFr, en: newEn },
+        },
+      };
+      setData(updatedData);
+      await updateChambresSection(updatedData);
     };
-    setData(updatedData);
-    await updateHomeSection(updatedData);
   };
 
-  const updateHighlightDescription = (index: number) => async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      highlights: data.highlights.map((h, i) => 
-        i === index ? { ...h, description: { fr: newFr, en: newEn } } : h
-      )
+  const updateLabel = (labelKey: 'features' | 'amenities' | 'includedServices') => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        labels: {
+          ...data.labels,
+          [labelKey]: { fr: newFr, en: newEn },
+        },
+      };
+      setData(updatedData);
+      await updateChambresSection(updatedData);
     };
-    setData(updatedData);
-    await updateHomeSection(updatedData);
   };
 
-  const updateHighlightLinkText = (index: number) => async (newFr: string, newEn: string) => {
+  const updateServicesTitle = async (newFr: string, newEn: string) => {
+    const updatedData = { ...data, servicesTitle: { fr: newFr, en: newEn } };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const updateServicesDescription = async (newFr: string, newEn: string) => {
+    const updatedData = { ...data, servicesDescription: { fr: newFr, en: newEn } };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const updateServiceField = (serviceIndex: number, field: 'title' | 'desc') => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        services: data.services.map((service, i) =>
+          i === serviceIndex
+            ? { ...service, [field]: { fr: newFr, en: newEn } }
+            : service
+        ),
+      };
+      setData(updatedData);
+      await updateChambresSection(updatedData);
+    };
+  };
+
+  const toggleServiceHidden = async (serviceIndex: number) => {
     const updatedData = {
       ...data,
-      highlights: data.highlights.map((h, i) => 
-        i === index ? { ...h, linkText: { fr: newFr, en: newEn } } : h
-      )
+      services: data.services.map((service, i) =>
+        i === serviceIndex ? { ...service, hidden: !service.hidden } : service
+      ),
     };
     setData(updatedData);
-    await updateHomeSection(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const addService = async () => {
+    const newService = {
+      icon: 'Coffee',
+      title: { fr: 'Nouveau Service', en: 'New Service' },
+      desc: { fr: 'Description du nouveau service.', en: 'Description of the new service.' },
+      hidden: false,
+    };
+    const updatedData = {
+      ...data,
+      services: [...data.services, newService],
+    };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const removeService = async (index: number) => {
+    const updatedData = {
+      ...data,
+      services: data.services.filter((_, i) => i !== index),
+    };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const updateButtonText = async (newFr: string, newEn: string) => {
+    const updatedData = { ...data, buttonText: { fr: newFr, en: newEn } };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const updateBookButton = async (newFr: string, newEn: string) => {
+    const updatedData = { ...data, bookButton: { fr: newFr, en: newEn } };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
   };
 
   const updateCtaTitle = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      cta: { ...data.cta, title: { fr: newFr, en: newEn } }
-    };
+    const updatedData = { ...data, cta: { ...data.cta, title: { fr: newFr, en: newEn } } };
     setData(updatedData);
-    await updateHomeSection(updatedData);
+    await updateChambresSection(updatedData);
   };
 
-  const updateCtaDescription = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      cta: { ...data.cta, description: { fr: newFr, en: newEn } }
-    };
+  const updateCtaText = async (newFr: string, newEn: string) => {
+    const updatedData = { ...data, cta: { ...data.cta, text: { fr: newFr, en: newEn } } };
     setData(updatedData);
-    await updateHomeSection(updatedData);
+    await updateChambresSection(updatedData);
   };
 
-  const updateCtaPrimaryButton = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      cta: { ...data.cta, primaryButton: { fr: newFr, en: newEn } }
-    };
+  const updateCtaButton = async (newFr: string, newEn: string) => {
+    const updatedData = { ...data, cta: { ...data.cta, button: { fr: newFr, en: newEn } } };
     setData(updatedData);
-    await updateHomeSection(updatedData);
+    await updateChambresSection(updatedData);
   };
 
-  const updateCtaSecondaryButton = async (newFr: string, newEn: string) => {
-    const updatedData = {
-      ...data,
-      cta: { ...data.cta, secondaryButton: { fr: newFr, en: newEn } }
+  const updateRoomField = (roomIndex: number, field: 'name' | 'subtitle' | 'description' | 'guests') => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        rooms: data.rooms.map((room, i) =>
+          i === roomIndex
+            ? { ...room, [field]: { fr: newFr, en: newEn } }
+            : room
+        ),
+      };
+      setData(updatedData);
+      await updateChambresSection(updatedData);
     };
-    setData(updatedData);
-    await updateHomeSection(updatedData);
   };
 
-  const updateHighlightImage = (index: number) => async (newImageUrl: string) => {
-    const updatedData = {
-      ...data,
-      highlights: data.highlights.map((h, i) => 
-        i === index ? { ...h, image: newImageUrl } : h
-      )
+  const updateRoomFeature = (roomIndex: number, featureIndex: number) => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        rooms: data.rooms.map((room, i) =>
+          i === roomIndex
+            ? {
+                ...room,
+                features: room.features.map((feature, j) =>
+                  j === featureIndex ? { fr: newFr, en: newEn } : feature
+                ),
+              }
+            : room
+        ),
+      };
+      setData(updatedData);
+      await updateChambresSection(updatedData);
     };
-    setData(updatedData);
-    await updateHomeSection(updatedData);
   };
 
-  const updateParallaxImage = async (newImageUrl: string) => {
+  const addRoomFeature = async (roomIndex: number) => {
     const updatedData = {
       ...data,
-      parallaxImage: newImageUrl
+      rooms: data.rooms.map((room, i) =>
+        i === roomIndex
+          ? {
+              ...room,
+              features: [...room.features, { fr: 'Nouvelle caractéristique', en: 'New feature' }],
+            }
+          : room
+      ),
     };
     setData(updatedData);
-    await updateHomeSection(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const removeRoomFeature = async (roomIndex: number, featureIndex: number) => {
+    const updatedData = {
+      ...data,
+      rooms: data.rooms.map((room, i) =>
+        i === roomIndex
+          ? {
+              ...room,
+              features: room.features.filter((_, j) => j !== featureIndex),
+            }
+          : room
+      ),
+    };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const updateRoomAmenity = (roomIndex: number, amenityIndex: number) => {
+    return async (newFr: string, newEn: string) => {
+      const updatedData = {
+        ...data,
+        rooms: data.rooms.map((room, i) =>
+          i === roomIndex
+            ? {
+                ...room,
+                amenities: {
+                  fr: room.amenities.fr.map((a, j) => j === amenityIndex ? newFr : a),
+                  en: room.amenities.en.map((a, j) => j === amenityIndex ? newEn : a),
+                },
+              }
+            : room
+        ),
+      };
+      setData(updatedData);
+      await updateChambresSection(updatedData);
+    };
+  };
+
+  const addRoomAmenity = async (roomIndex: number) => {
+    const updatedData = {
+      ...data,
+      rooms: data.rooms.map((room, i) =>
+        i === roomIndex
+          ? {
+              ...room,
+              amenities: {
+                fr: [...room.amenities.fr, 'Nouvelle commodité'],
+                en: [...room.amenities.en, 'New amenity'],
+              },
+            }
+          : room
+      ),
+    };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const removeRoomAmenity = async (roomIndex: number, amenityIndex: number) => {
+    const updatedData = {
+      ...data,
+      rooms: data.rooms.map((room, i) =>
+        i === roomIndex
+          ? {
+              ...room,
+              amenities: {
+                fr: room.amenities.fr.filter((_, j) => j !== amenityIndex),
+                en: room.amenities.en.filter((_, j) => j !== amenityIndex),
+              },
+            }
+          : room
+      ),
+    };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const updateRoomImage = (roomIndex: number) => {
+    return async (newUrl: string) => {
+      const updatedData = {
+        ...data,
+        rooms: data.rooms.map((room, i) => (i === roomIndex ? { ...room, image: newUrl } : room)),
+      };
+      setData(updatedData);
+      await updateChambresSection(updatedData);
+    };
+  };
+
+  const updateRoomSize = (roomIndex: number) => {
+    return async (newSize: string) => {
+      const updatedData = {
+        ...data,
+        rooms: data.rooms.map((room, i) =>
+          i === roomIndex ? { ...room, size: newSize } : room
+        ),
+      };
+      setData(updatedData);
+      await updateChambresSection(updatedData);
+    };
+  };
+
+  const updateStatValue = (key: 'totalRooms' | 'categories' | 'maxSize') => {
+    return async (newValue: string) => {
+      const parsedValue = key === 'maxSize' ? newValue : parseInt(newValue) || 0;
+      const updatedData = {
+        ...data,
+        stats: {
+          ...data.stats,
+          [key]: parsedValue,
+        },
+      };
+      setData(updatedData);
+      await updateChambresSection(updatedData);
+    };
+  };
+
+  const toggleRoomHidden = async (roomIndex: number) => {
+    const updatedData = {
+      ...data,
+      rooms: data.rooms.map((room, i) =>
+        i === roomIndex ? { ...room, hidden: !room.hidden } : room
+      ),
+    };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const addRoom = async () => {
+    let newRoom;
+    if (data.rooms.length > 0) {
+      const maxId = Math.max(...data.rooms.map((r: any) => r.id));
+      newRoom = {
+        ...data.rooms[0],
+        id: maxId + 1,
+        name: { fr: 'Nouvelle Chambre', en: 'New Room' },
+        hidden: false,
+      };
+    } else {
+      newRoom = {
+        id: 1,
+        name: { fr: 'Nouvelle Chambre', en: 'New Room' },
+        subtitle: { fr: 'Sous-titre', en: 'Subtitle' },
+        description: { fr: 'Description de la chambre.', en: 'Room description.' },
+        size: '30 m²',
+        guests: { fr: '2 personnes', en: '2 guests' },
+        features: [{ fr: 'Caractéristique 1', en: 'Feature 1' }],
+        amenities: { fr: ['Wifi'], en: ['Wifi'] },
+        image: hotelRoom,
+        hidden: false,
+      };
+    }
+    const updatedData = {
+      ...data,
+      rooms: [...data.rooms, newRoom],
+    };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const removeRoom = async (id: number) => {
+    const updatedData = {
+      ...data,
+      rooms: data.rooms.filter((room) => room.id !== id),
+    };
+    setData(updatedData);
+    await updateChambresSection(updatedData);
+  };
+
+  const getAmenityIcon = (amenity: string) => {
+    const lower = amenity.toLowerCase();
+    if (lower.includes('wifi') || lower.includes('wi-fi')) {
+      return <Wifi className="w-4 h-4" />;
+    }
+    if (lower.includes('climat') || lower.includes('air conditioning')) {
+      return <Wind className="w-4 h-4" />;
+    }
+    if (lower.includes('tv') || lower.includes('télé')) {
+      return <Tv className="w-4 h-4" />;
+    }
+    if (lower.includes('téléphone') || lower.includes('phone')) {
+      return <Phone className="w-4 h-4" />;
+    }
+    if (lower.includes('coffre') || lower.includes('safe')) {
+      return <Lock className="w-4 h-4" />;
+    }
+    if (lower.includes('minibar')) {
+      return <Wine className="w-4 h-4" />;
+    }
+    if (lower.includes('café') || lower.includes('coffee') || lower.includes('expresso')) {
+      return <Coffee className="w-4 h-4" />;
+    }
+    if (lower.includes('thé') || lower.includes('tea')) {
+      return <CupSoda className="w-4 h-4" />;
+    }
+    if (lower.includes('eau') || lower.includes('water') || lower.includes('minérale')) {
+      return <Droplet className="w-4 h-4" />;
+    }
+    if (lower.includes('fer') || lower.includes('iron')) {
+      return <Shirt className="w-4 h-4" />;
+    }
+    if (lower.includes('salle de bain') || lower.includes('bathroom') || lower.includes('salles de bain')) {
+      return <ShowerHead className="w-4 h-4" />;
+    }
+    if (lower.includes('miroir') || lower.includes('mirror')) {
+      return <Square className="w-4 h-4" />;
+    }
+    if (lower.includes('sèche') || lower.includes('hairdryer')) {
+      return <Wind className="w-4 h-4" />;
+    }
+    if (lower.includes('peignoir') || lower.includes('bathrobe') || lower.includes('dressing')) {
+      return <Shirt className="w-4 h-4" />;
+    }
+    if (lower.includes('pantoufles') || lower.includes('slippers')) {
+      return <Footprints className="w-4 h-4" />;
+    }
+    if (lower.includes('courtoisie') || lower.includes('toiletries') || lower.includes('articles')) {
+      return <Gift className="w-4 h-4" />;
+    }
+    // Default fallback
+    return <Coffee className="w-4 h-4" />;
+  };
+
+  const getIncludedServiceIcon = (service: string) => {
+    if (service.includes('Piscine') || service.includes('Pool')) {
+      return <Waves className="w-4 h-4" />;  // Waves for pool
+    }
+    if (service.includes('Fitness') || service.includes('Gym') || service.includes('Salle de sport')) {
+      return <Dumbbell className="w-4 h-4" />;
+    }
+    if (service.includes('Tennis') || service.includes('Court de tennis') || service.includes('Tennis Court')) {
+      return <Activity className="w-4 h-4" />;
+    }
+    if (service.includes('Parking')) {
+      return <Car className="w-4 h-4" />;
+    }
+    return <Wifi className="w-4 h-4" />;
+  };
+
+  const getServiceIcon = (icon: string) => {
+    switch (icon) {
+      case 'Coffee': return <Coffee className="w-8 h-8" />;
+      case 'Scissors': return <WashingMachine className="w-8 h-8" />;
+      case 'Briefcase': return <Briefcase className="w-8 h-8" />;
+      case 'Plane': return <Plane className="w-8 h-8" />;
+      default: return <Tv className="w-8 h-8" />;
+    }
+  };
+
+  const isFr = currentLang.code === 'fr';
+
+  const addRoomCard = (
+    <Card className="border-2 border-dashed border-muted-foreground hover:border-primary transition-colors flex flex-col">
+      <CardContent className="flex flex-col items-center justify-center h-full p-8 text-center">
+        <Button
+          variant="outline"
+          size="lg"
+          onClick={addRoom}
+          className="mb-4 rounded-full w-16 h-16 p-0"
+        >
+          <Plus className="w-6 h-6" />
+        </Button>
+        <p className="text-muted-foreground">
+          {isFr ? 'Ajouter une nouvelle chambre' : 'Add a new room'}
+        </p>
+      </CardContent>
+    </Card>
+  );
+
+  const openImagePopup = (imageUrl: string) => {
+    setSelectedImage(imageUrl);
+  };
+
+  const closeImagePopup = () => {
+    setSelectedImage(null);
   };
 
   if (loading) {
     return (
       <div className="min-h-screen bg-background">
-        <main>
-          <HeroSection />
-          <section className="py-20 bg-card/30">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-16">
-                <Skeleton className="h-12 w-64 mx-auto mb-6" />
-                <Skeleton className="h-1 w-24 mx-auto mb-6" />
-                <Skeleton className="h-8 w-full max-w-4xl mx-auto" />
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-                {Array.from({ length: 4 }).map((_, i) => (
-                  <div key={i} className="space-y-4">
-                    <Skeleton className="h-48 w-full" />
-                    <Skeleton className="h-6 w-3/4" />
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-10 w-full" />
+        {/* Hero Skeleton */}
+        <section className="relative h-screen bg-gray-900">
+          <div className="absolute inset-0 bg-black/50" />
+          <div className="relative h-full flex items-center justify-center text-center px-4 text-white">
+            <div className="max-w-7xl mx-auto space-y-8 animate-pulse">
+              <div className="h-20 w-96 bg-white/10 rounded mx-auto mb-8" />
+              <div className="h-8 w-80 bg-white/10 rounded mx-auto mb-8" />
+              <div className="h-6 w-96 bg-white/10 rounded mx-auto mb-12" />
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {[1, 2, 3].map(i => (
+                  <div key={i} className="space-y-2">
+                    <div className="h-10 w-20 bg-white/10 rounded mx-auto" />
+                    <div className="h-5 w-32 bg-white/10 rounded mx-auto" />
                   </div>
                 ))}
               </div>
+              <div className="h-12 w-48 bg-white/10 rounded mx-auto" />
             </div>
-          </section>
-          <section className="relative h-[70vh] bg-gray-900">
-            <Skeleton className="absolute inset-0" />
-          </section>
-          <section className="py-20 bg-gradient-to-r from-primary/10 to-accent/10">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-              <Skeleton className="h-12 w-80 mx-auto mb-6" />
-              <Skeleton className="h-6 w-full max-w-md mx-auto mb-8" />
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Skeleton className="h-12 w-40" />
-                <Skeleton className="h-12 w-48" />
+          </div>
+        </section>
+        {/* Rooms Skeleton */}
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+            {[1, 2, 3, 4, 5, 6].map(i => (
+              <div key={i} className="flex flex-col lg:flex lg:flex-row gap-8 animate-pulse">
+                <div className="lg:w-1/2 h-80 lg:h-auto bg-gray-300 rounded" />
+                <div className="lg:w-1/2 space-y-4">
+                  <div className="flex gap-4">
+                    <div className="h-6 w-20 bg-gray-300 rounded" />
+                    <div className="h-6 w-24 bg-gray-300 rounded" />
+                  </div>
+                  <div className="h-8 w-64 bg-gray-300 rounded" />
+                  <div className="h-6 w-48 bg-gray-300 rounded" />
+                  <div className="h-4 w-full bg-gray-300 rounded mb-4" />
+                  <div className="space-y-2">
+                    <div className="h-4 w-3/4 bg-gray-300 rounded" />
+                    <div className="h-4 w-5/6 bg-gray-300 rounded" />
+                    <div className="h-4 w-2/3 bg-gray-300 rounded" />
+                  </div>
+                  <div className="space-y-2">
+                    <div className="h-4 w-1/2 bg-gray-300 rounded" />
+                    <div className="flex flex-wrap gap-2">
+                      {[1, 2, 3, 4, 5, 6].map(j => <div key={j} className="h-6 w-20 bg-gray-300 rounded-full" />)}
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="h-4 w-1/2 bg-gray-300 rounded" />
+                    <div className="flex flex-wrap gap-2">
+                      {[1, 2, 3, 4].map(j => <div key={j} className="h-6 w-20 bg-gray-300 rounded-full" />)}
+                    </div>
+                  </div>
+                  <div className="h-10 w-full bg-gray-300 rounded" />
+                </div>
               </div>
+            ))}
+            {isAdmin && (
+              <div className="flex justify-center">
+                <div className="h-64 w-full max-w-md bg-gray-300 rounded-lg" />
+              </div>
+            )}
+          </div>
+        </section>
+        {/* Services Skeleton */}
+        <section className="py-20 bg-card/30">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12 space-y-4 animate-pulse">
+              <div className="h-10 w-64 bg-gray-300 rounded mx-auto" />
+              <div className="h-5 w-80 bg-gray-300 rounded mx-auto" />
             </div>
-          </section>
-        </main>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[1, 2, 3, 4].map(i => (
+                <div key={i} className="space-y-4">
+                  <div className="h-12 w-12 bg-gray-300 rounded-full mx-auto" />
+                  <div className="h-6 w-48 bg-gray-300 rounded mx-auto" />
+                  <div className="h-4 w-full bg-gray-300 rounded" />
+                </div>
+              ))}
+            </div>
+            {isAdmin && (
+              <div className="flex justify-center mt-8">
+                <div className="h-12 w-48 bg-gray-300 rounded" />
+              </div>
+            )}
+          </div>
+        </section>
+        {/* CTA Skeleton */}
+        <section className="py-20 bg-primary/5">
+          <div className="max-w-7xl mx-auto px-4 text-center space-y-4 animate-pulse">
+            <div className="h-10 w-80 bg-gray-300 rounded mx-auto" />
+            <div className="h-6 w-64 bg-gray-300 rounded mx-auto" />
+            <div className="h-12 w-48 bg-gray-300 rounded mx-auto" />
+          </div>
+        </section>
         <Footer />
       </div>
     );
@@ -684,337 +1346,527 @@ const Home = () => {
     console.warn(error);
   }
 
+  const getAmenities = (room: any) => room.amenities[lang] || room.amenities.fr;
+  const getIncludedServices = () => data.includedServices[lang] || data.includedServices.fr;
+
   return (
     <div className="min-h-screen bg-background">
-      <main>
-        <HeroSection />
-        
-        {/* Présentation de l'hôtel */}
-        <section className="py-20 bg-card/30">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-6">
-                <Tooltip 
-                  frLabel={data.title.fr} 
-                  enLabel={data.title.en} 
-                  onSave={updateTitle}
+
+      {/* Parallax Hero Section */}
+      <ImageTooltip imageUrl={data.heroImage} onSave={updateHeroImage}>
+        <ParallaxSection
+          backgroundImage={data.heroImage || suiteImage}
+          parallaxSpeed={0.3}
+          minHeight="100vh"
+          overlay={true}
+          overlayOpacity={0.5}
+          className="flex items-center pt-20"
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+            <div>
+              <h1 className="text-6xl md:text-7xl font-serif font-bold mb-8 drop-shadow-lg">
+                <Tooltip
+                  frLabel={data.heroTitle.fr}
+                  enLabel={data.heroTitle.en}
+                  onSave={updateHeroTitle}
                 >
-                  {formatAmpersand(title)}
+                  <TextFormatter text={getText(data.heroTitle)} />
                 </Tooltip>
-              </h2>
-              <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
-              <div className="max-w-4xl mx-auto">
-                {showExpandButton ? (
-                  isContentExpanded ? (
-                    <Tooltip 
-                      frLabel={data.content.fr} 
-                      enLabel={data.content.en} 
-                      onSave={updateContent}
-                    >
-                      <div className="text-xl text-muted-foreground leading-relaxed prose prose-lg dark:prose-invert space-y-4 mb-8">
-                        {contentParagraphs}
-                      </div>
-                    </Tooltip>
-                  ) : (
-                    <Tooltip 
-                      frLabel={data.contentShort.fr} 
-                      enLabel={data.contentShort.en} 
-                      onSave={updateContentShort}
-                    >
-                      <div className="text-xl text-muted-foreground leading-relaxed prose prose-lg dark:prose-invert space-y-4 mb-8">
-                        {contentParagraphs}
-                      </div>
-                    </Tooltip>
-                  )
-                ) : (
-                  <Tooltip 
-                    frLabel={data.content.fr} 
-                    enLabel={data.content.en} 
-                    onSave={updateContent}
-                  >
-                    <div className="text-xl text-muted-foreground leading-relaxed prose prose-lg dark:prose-invert space-y-4 mb-8">
-                      {contentParagraphs}
-                    </div>
-                  </Tooltip>
-                )}
-                {showExpandButton && (
-                  <div className="text-center mt-8">
-                    <button
-                      onClick={toggleContentExpansion}
-                      className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-medium text-sm"
-                    >
-                      {buttonText} <ChevronIcon className="w-4 h-4 ml-1" />
-                    </button>
-                  </div>
-                )}
+              </h1>
+              <div className="w-32 h-1 bg-primary mx-auto mb-8"></div>
+              <div className="text-2xl md:text-3xl max-w-4xl mx-auto leading-relaxed drop-shadow-lg mb-12 text-white">
+                <Tooltip
+                  frLabel={data.heroSubtitle.fr}
+                  enLabel={data.heroSubtitle.en}
+                  onSave={updateHeroSubtitle}
+                >
+                  <TextFormatter text={getText(data.heroSubtitle)} className="drop-shadow-lg" />
+                </Tooltip>
               </div>
-            </div>
-
-            {/* Highlights principaux (3 premiers) avec layouts alternés */}
-            <div className="space-y-12 mb-20">
-              {mainHighlights.map((highlight, index) => {
-                const isImageLeft = index % 2 === 0;
-                return (
-                  <div key={index} className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center bg-background p-8 rounded-xl shadow-lg">
-                    {isImageLeft ? (
-                      <>
-                        {/* Image à gauche sur desktop, en haut sur mobile */}
-                        <div className="lg:col-span-7">
-                          <ImageTooltip imageUrl={data.highlights[index].image || wellnessImage} onSave={updateHighlightImage(index)}>
-                            <div 
-                              className="relative h-64 lg:h-80 overflow-hidden cursor-pointer rounded-xl"
-                              onClick={() => openImageModal(highlight.image, highlight.title)}
-                            >
-                              <img 
-                                src={highlight.image} 
-                                alt={highlight.title}
-                                className="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-110 rounded-xl"
-                                loading="lazy"
-                                decoding="async"
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                              <div className="absolute top-4 left-4">
-                                <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/20 backdrop-blur-sm rounded-full">
-                                  <div className="text-primary">
-                                    {getHighlightIcon(highlight.icon)}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </ImageTooltip>
-                        </div>
-                        {/* Texte à droite sur desktop, en bas sur mobile */}
-                        <div className="lg:col-span-5">
-                          <h3 className="text-3xl font-serif font-bold text-foreground mb-4">
-                            <Tooltip 
-                              frLabel={data.highlights[index].title.fr} 
-                              enLabel={data.highlights[index].title.en} 
-                              onSave={updateHighlightTitle(index)}
-                            >
-                              {formatAmpersand(highlight.title)}
-                            </Tooltip>
-                          </h3>
-                          <p className="text-muted-foreground mb-6 leading-relaxed text-lg">
-                            <Tooltip 
-                              frLabel={data.highlights[index].description.fr} 
-                              enLabel={data.highlights[index].description.en} 
-                              onSave={updateHighlightDescription(index)}
-                            >
-                              {highlight.description}
-                            </Tooltip>
-                          </p>
-                          <Link href={highlight.link}>
-                            <Button className="w-full lg:w-auto bg-yellow-500 hover:bg-yellow-600 text-black">
-                              <Tooltip 
-                                frLabel={data.highlights[index].linkText.fr} 
-                                enLabel={data.highlights[index].linkText.en} 
-                                onSave={updateHighlightLinkText(index)}
-                              >
-                                {highlight.linkText}
-                              </Tooltip>
-                            </Button>
-                          </Link>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        {/* Texte à gauche sur desktop, en haut sur mobile */}
-                        <div className="lg:col-span-5">
-                          <h3 className="text-3xl font-serif font-bold text-foreground mb-4">
-                            <Tooltip 
-                              frLabel={data.highlights[index].title.fr} 
-                              enLabel={data.highlights[index].title.en} 
-                              onSave={updateHighlightTitle(index)}
-                            >
-                              {formatAmpersand(highlight.title)}
-                            </Tooltip>
-                          </h3>
-                          <p className="text-muted-foreground mb-6 leading-relaxed text-lg">
-                            <Tooltip 
-                              frLabel={data.highlights[index].description.fr} 
-                              enLabel={data.highlights[index].description.en} 
-                              onSave={updateHighlightDescription(index)}
-                            >
-                              {highlight.description}
-                            </Tooltip>
-                          </p>
-                          <Link href={highlight.link}>
-                            <Button className="w-full lg:w-auto bg-yellow-500 hover:bg-yellow-600 text-black">
-                              <Tooltip 
-                                frLabel={data.highlights[index].linkText.fr} 
-                                enLabel={data.highlights[index].linkText.en} 
-                                onSave={updateHighlightLinkText(index)}
-                              >
-                                {highlight.linkText}
-                              </Tooltip>
-                            </Button>
-                          </Link>
-                        </div>
-                        {/* Image à droite sur desktop, en bas sur mobile */}
-                        <div className="lg:col-span-7">
-                          <ImageTooltip imageUrl={data.highlights[index].image || wellnessImage} onSave={updateHighlightImage(index)}>
-                            <div 
-                              className="relative h-64 lg:h-80 overflow-hidden cursor-pointer rounded-xl"
-                              onClick={() => openImageModal(highlight.image, highlight.title)}
-                            >
-                              <img 
-                                src={highlight.image} 
-                                alt={highlight.title}
-                                className="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-110 rounded-xl"
-                                loading="lazy"
-                                decoding="async"
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                              <div className="absolute top-4 left-4">
-                                <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/20 backdrop-blur-sm rounded-full">
-                                  <div className="text-primary">
-                                    {getHighlightIcon(highlight.icon)}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </ImageTooltip>
-                        </div>
-                      </>
-                    )}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-primary mb-2">
+                    <Tooltip
+                      frLabel={data.stats.totalRooms.toString()}
+                      enLabel={data.stats.totalRooms.toString()}
+                      onSave={updateStatValue('totalRooms')}
+                    >
+                      <span>{data.stats.totalRooms}</span>
+                    </Tooltip>
                   </div>
-                );
-              })}
+                  <div className="text-lg">
+                    <Tooltip
+                      frLabel={data.statsLabels.total.fr}
+                      enLabel={data.statsLabels.total.en}
+                      onSave={updateStatsLabel('total')}
+                    >
+                      <TextFormatter text={getText(data.statsLabels.total)} />
+                    </Tooltip>
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-primary mb-2">
+                    <Tooltip
+                      frLabel={data.stats.categories.toString()}
+                      enLabel={data.stats.categories.toString()}
+                      onSave={updateStatValue('categories')}
+                    >
+                      <span>{data.stats.categories}</span>
+                    </Tooltip>
+                  </div>
+                  <div className="text-lg">
+                    <Tooltip
+                      frLabel={data.statsLabels.categories.fr}
+                      enLabel={data.statsLabels.categories.en}
+                      onSave={updateStatsLabel('categories')}
+                    >
+                      <TextFormatter text={getText(data.statsLabels.categories)} />
+                    </Tooltip>
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-primary mb-2">
+                    <Tooltip
+                      frLabel={data.stats.maxSize}
+                      enLabel={data.stats.maxSize}
+                      onSave={updateStatValue('maxSize')}
+                    >
+                      <span>{data.stats.maxSize}</span>
+                    </Tooltip>
+                  </div>
+                  <div className="text-lg">
+                    <Tooltip
+                      frLabel={data.statsLabels.max.fr}
+                      enLabel={data.statsLabels.max.en}
+                      onSave={updateStatsLabel('max')}
+                    >
+                      <TextFormatter text={getText(data.statsLabels.max)} />
+                    </Tooltip>
+                  </div>
+                </div>
+              </div>
+              <Button size="lg" className="shadow-lg" data-testid="button-discover-rooms">
+                <Tooltip
+                  frLabel={data.buttonText.fr}
+                  enLabel={data.buttonText.en}
+                  onSave={updateButtonText}
+                >
+                  <TextFormatter text={getText(data.buttonText)} />
+                </Tooltip>
+              </Button>
             </div>
+          </div>
+        </ParallaxSection>
+      </ImageTooltip>
 
-            {/* Section Équipements & Services avec carrousel */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center bg-background p-8 rounded-xl shadow-lg">
-                {/* Colonne de la liste des services */}
-                <div className="lg:col-span-5">
-                    <h3 className="text-3xl font-serif font-bold text-foreground mb-4 flex items-center">
-                        <Tooltip 
-                            frLabel={data.highlights[3].title.fr} 
-                            enLabel={data.highlights[3].title.en} 
-                            onSave={updateHighlightTitle(3)}
-                        >
-                            {equipmentHighlight.title}
-                        </Tooltip>
-                    </h3>
-                    <div className="space-y-3">
-                        {getServicesList(equipmentHighlight.description).map((service, i) => (
-                            <div key={i} className="flex items-start text-lg text-muted-foreground">
-                                <Check className="w-5 h-5 text-primary mr-3 mt-1 flex-shrink-0" />
-                                <span className="flex-1">{service}</span>
-                            </div>
-                        ))}
+      {/* Image Popup Modal */}
+      {selectedImage && (
+        <div 
+          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
+          onClick={closeImagePopup}
+        >
+          <button 
+            className="absolute top-4 right-4 text-white text-2xl z-10"
+            onClick={closeImagePopup}
+          >
+            ×
+          </button>
+          <img 
+            src={selectedImage} 
+            alt="Image en grand format" 
+            className="max-w-full max-h-full object-contain cursor-zoom-out"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
+
+      {/* Rooms Showcase */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="space-y-16">
+            {data.rooms.map((room, index) => {
+              if (!isAdmin && room.hidden) return null;
+              return (
+                <Card
+                  key={room.id}
+                  className={`relative overflow-hidden hover-elevate transition-all duration-300 ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
+                    } flex flex-col ${room.hidden ? 'opacity-50' : ''}`}
+                  data-testid={`card-room-${room.id}`}
+                >
+                  {isAdmin && (
+                    <div className="absolute top-2 right-2 z-10 flex gap-1">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => toggleRoomHidden(index)}
+                        title={room.hidden ? (isFr ? 'Afficher' : 'Show') : (isFr ? 'Masquer' : 'Hide')}
+                      >
+                        {room.hidden ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeRoom(room.id)}
+                      >
+                        <Trash2 className="w-4 h-4" /> 
+                      </Button>
                     </div>
-                    <Link href={equipmentHighlight.link}>
-                      <Button className="mt-8 bg-yellow-500 hover:bg-yellow-600 text-black">
-                        <Tooltip 
-                          frLabel={data.highlights[3].linkText.fr} 
-                          enLabel={data.highlights[3].linkText.en} 
-                          onSave={updateHighlightLinkText(3)}
+                  )}
+                  <div className="lg:w-1/2 flex">
+                    <ImageTooltip imageUrl={room.image} onSave={updateRoomImage(index)}>
+                      <div 
+                        className="w-full h-80 lg:h-full relative cursor-pointer overflow-hidden"
+                        onClick={() => openImagePopup(room.image || hotelRoom)}
+                      >
+                        <img
+                          src={room.image || hotelRoom}
+                          alt={getText(room.name)}
+                          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105 cursor-pointer"
+                        />
+                      </div>
+                    </ImageTooltip>
+                  </div>
+
+                  {/* Conteneur de contenu */}
+                  <div className="lg:w-1/2 p-8 flex flex-col">
+                    <div className="flex-1">
+                      <CardHeader className="p-0 mb-6">
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="flex items-center gap-4">
+                            {room.size && (
+                              <Badge variant="outline" className="text-primary border-primary">
+                                <MapPin className="w-3 h-3 mr-1" />
+                                <Tooltip
+                                  frLabel={room.size}
+                                  enLabel={room.size}
+                                  onSave={() => {}}  // Size is not bilingual, but can add update
+                                >
+                                  <span>{room.size}</span>
+                                </Tooltip>
+                              </Badge>
+                            )}
+                            <Badge variant="outline" className="text-primary border-primary">
+                              <Users className="w-3 h-3 mr-1" />
+                              <Tooltip
+                                frLabel={room.guests.fr}
+                                enLabel={room.guests.en}
+                                onSave={updateRoomField(index, 'guests')}
+                              >
+                                <TextFormatter text={getText(room.guests)} />
+                              </Tooltip>
+                            </Badge>
+                          </div>
+                        </div>
+                        <CardTitle className="text-3xl font-serif text-foreground mb-2">
+                          <Tooltip
+                            frLabel={room.name.fr}
+                            enLabel={room.name.en}
+                            onSave={updateRoomField(index, 'name')}
+                          >
+                            <TextFormatter text={getText(room.name)} />
+                          </Tooltip>
+                        </CardTitle>
+                        {room.subtitle && (
+                          <p className="text-primary font-luxury italic text-lg mb-4">
+                            <Tooltip
+                              frLabel={room.subtitle.fr}
+                              enLabel={room.subtitle.en}
+                              onSave={updateRoomField(index, 'subtitle')}
+                            >
+                              <TextFormatter text={getText(room.subtitle)} />
+                            </Tooltip>
+                          </p>
+                        )}
+                      </CardHeader>
+
+                      <CardContent className="p-0 space-y-6">
+                        <div className="text-muted-foreground leading-relaxed">
+                          <Tooltip
+                            frLabel={room.description.fr}
+                            enLabel={room.description.en}
+                            onSave={updateRoomField(index, 'description')}
+                          >
+                            <TextFormatter text={getText(room.description)} />
+                          </Tooltip>
+                        </div>
+
+                        {room.features && room.features.length > 0 && (
+                          <div>
+                            <h4 className="font-semibold text-foreground mb-3">
+                              <Tooltip
+                                frLabel={data.labels.features.fr}
+                                enLabel={data.labels.features.en}
+                                onSave={updateLabel('features')}
+                              >
+                                <TextFormatter text={getText(data.labels.features)} />
+                              </Tooltip>
+                            </h4>
+                            <div className="space-y-1">
+                              {room.features.map((feature, idx) => (
+                                <div key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                                  <div className="w-1 h-1 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                                  <div className="flex-1">
+                                    <Tooltip
+                                      frLabel={feature.fr}
+                                      enLabel={feature.en}
+                                      onSave={updateRoomFeature(index, idx)}
+                                    >
+                                      <TextFormatter text={getText(feature)} className="block" />
+                                    </Tooltip>
+                                  </div>
+                                  {isAdmin && (
+                                    <Button
+                                      variant="ghost"
+                                      size="sm"
+                                      onClick={() => removeRoomFeature(index, idx)}
+                                      className="h-6 w-6 p-0"
+                                    >
+                                      <Trash2 className="w-3 h-3" />
+                                    </Button>
+                                  )}
+                                </div>
+                              ))}
+                              {isAdmin && (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => addRoomFeature(index)}
+                                  className="mt-2"
+                                >
+                                  <Plus className="w-4 h-4 mr-1" />
+                                  {isFr ? 'Ajouter une caractéristique' : 'Add a feature'}
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                        {room.amenities && room.amenities.fr.length > 0 && (
+                          <div>
+                            <h4 className="font-semibold text-foreground mb-3">
+                              <Tooltip
+                                frLabel={data.labels.amenities.fr}
+                                enLabel={data.labels.amenities.en}
+                                onSave={updateLabel('amenities')}
+                              >
+                                <TextFormatter text={getText(data.labels.amenities)} />
+                              </Tooltip>
+                            </h4>
+                            <div className="flex flex-wrap gap-3">
+                              {getAmenities(room).map((amenity, idx) => {
+                                const frAmenity = room.amenities.fr[idx];
+                                const enAmenity = room.amenities.en ? room.amenities.en[idx] : frAmenity;
+                                return (
+                                  <div key={idx} className="flex items-center gap-2 px-3 py-1 bg-card rounded-full text-sm relative">
+                                    {getAmenityIcon(amenity)}
+                                    <Tooltip
+                                      frLabel={frAmenity}
+                                      enLabel={enAmenity}
+                                      onSave={updateRoomAmenity(index, idx)}
+                                    >
+                                      <TextFormatter text={amenity} className="text-muted-foreground" />
+                                    </Tooltip>
+                                    {isAdmin && (
+                                      <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() => removeRoomAmenity(index, idx)}
+                                        className="absolute -top-1 -right-1 h-4 w-4 p-0"
+                                      >
+                                        <Trash2 className="w-3 h-3" />
+                                      </Button>
+                                    )}
+                                  </div>
+                                );
+                              })}
+                              {isAdmin && (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => addRoomAmenity(index)}
+                                  className="mt-2"
+                                >
+                                  <Plus className="w-4 h-4 mr-1" />
+                                  {isFr ? 'Ajouter une commodité' : 'Add an amenity'}
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Included Services Section */}
+                        <div>
+                          <h4 className="font-semibold text-foreground mb-3">
+                            <Tooltip
+                              frLabel={data.labels.includedServices.fr}
+                              enLabel={data.labels.includedServices.en}
+                              onSave={updateLabel('includedServices')}
+                            >
+                              <TextFormatter text={getText(data.labels.includedServices)} />
+                            </Tooltip>
+                          </h4>
+                          <div className="flex flex-wrap gap-3">
+                            {getIncludedServices().map((service, idx) => (
+                              <div key={idx} className="flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full text-sm border border-primary/20">
+                                {getIncludedServiceIcon(service)}
+                                <span className="text-primary font-medium">{service}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </div>
+
+                    <div className="mt-8">
+                      <Button
+                        className="w-full"
+                        data-testid={`button-book-${room.id}`}
+                      >
+                        <Tooltip
+                          frLabel={data.bookButton.fr}
+                          enLabel={data.bookButton.en}
+                          onSave={updateBookButton}
                         >
-                          {equipmentHighlight.linkText}
+                          <TextFormatter text={getText(data.bookButton)} />
                         </Tooltip>
                       </Button>
-                    </Link>
-                </div>
-                
-                {/* Colonne Carrousel */}
-                <div className="lg:col-span-7">
-                  <ImageTooltip imageUrl={carouselImages[carouselIndex]} onSave={updateHighlightImage(3)}>
-                    <div 
-                      className="cursor-pointer"
-                      onClick={() => openImageModal(carouselImages[carouselIndex], equipmentHighlight.title)}
-                    >
-                      <EquipmentCarousel 
-                        images={carouselImages}
-                        currentIndex={carouselIndex}
-                        onIndexChange={setCarouselIndex}
-                      />
                     </div>
-                  </ImageTooltip>
-                </div>
-            </div>
+                  </div>
+                </Card>
+              );
+            })}
+            {isAdmin && addRoomCard}
           </div>
-        </section>
-
-        {/* Section Parallax - Bien-être */}
-        <div 
-          className="cursor-pointer"
-          onClick={() => openImageModal(parallaxImage || wellnessImage, "Hôtel Carlton Madagascar")}
-        >
-          <ImageTooltip imageUrl={parallaxImage || wellnessImage} onSave={updateParallaxImage}>
-            <ParallaxSection
-              backgroundImage={parallaxImage || wellnessImage}
-              parallaxSpeed={0.5}
-              minHeight="70vh"
-              overlay={true}
-              overlayOpacity={0.4}
-              className="flex items-center"
-            >
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-              </div>
-            </ParallaxSection>
-          </ImageTooltip>
         </div>
+      </section>
 
-        {/* Call to Action final */}
-        <section className="py-20 bg-gradient-to-r from-primary/10 to-accent/10">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-6">
-              <Tooltip 
-                frLabel={data.cta.title.fr} 
-                enLabel={data.cta.title.en} 
-                onSave={updateCtaTitle}
+      {/* Services Section */}
+      <section className="py-20 bg-card/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-serif font-bold text-foreground mb-4">
+              <Tooltip
+                frLabel={data.servicesTitle.fr}
+                enLabel={data.servicesTitle.en}
+                onSave={updateServicesTitle}
               >
-                {cta.title}
+                <TextFormatter text={getText(data.servicesTitle)} />
               </Tooltip>
             </h2>
-            <p className="text-lg text-muted-foreground mb-8">
-              <Tooltip 
-                frLabel={data.cta.description.fr} 
-                enLabel={data.cta.description.en} 
-                onSave={updateCtaDescription}
+            <div className="text-lg text-muted-foreground">
+              <Tooltip
+                frLabel={data.servicesDescription.fr}
+                enLabel={data.servicesDescription.en}
+                onSave={updateServicesDescription}
               >
-                {cta.description}
+                <TextFormatter text={getText(data.servicesDescription)} />
               </Tooltip>
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href={cta.primaryLink}>
-                <Button size="lg" className="w-full sm:w-auto bg-yellow-500 hover:bg-yellow-600 text-black">
-                  <Tooltip 
-                    frLabel={data.cta.primaryButton.fr} 
-                    enLabel={data.cta.primaryButton.en} 
-                    onSave={updateCtaPrimaryButton}
-                  >
-                    {cta.primaryButton}
-                  </Tooltip>
-                </Button>
-              </Link>
-              <Link href={cta.secondaryLink}>
-                <Button variant="outline" size="lg" className="w-full sm:w-auto border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black">
-                  <Tooltip 
-                    frLabel={data.cta.secondaryButton.fr} 
-                    enLabel={data.cta.secondaryButton.en} 
-                    onSave={updateCtaSecondaryButton}
-                  >
-                    {cta.secondaryButton}
-                  </Tooltip>
-                </Button>
-              </Link>
             </div>
           </div>
-        </section>
-      </main>
 
-      {/* Modal pour l'affichage des images en plein écran */}
-      <ImageModal 
-        isOpen={modalOpen}
-        onClose={closeImageModal}
-        imageUrl={selectedImage}
-        alt={selectedImageAlt}
-      />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {data.services.map((service, index) => {
+              if (!isAdmin && service.hidden) return null;
+              return (
+                <Card key={index} className={`relative text-center hover-elevate ${service.hidden ? 'opacity-50' : ''}`}>
+                  {isAdmin && (
+                    <div className="absolute top-2 right-2 z-10 flex gap-1">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => toggleServiceHidden(index)}
+                        title={service.hidden ? (isFr ? 'Afficher' : 'Show') : (isFr ? 'Masquer' : 'Hide')}
+                      >
+                        {service.hidden ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeService(index)}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  )}
+                  <CardContent className="pt-6">
+                    <div className="text-primary mb-4 flex justify-center">
+                      {getServiceIcon(service.icon)}
+                    </div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">
+                      <Tooltip
+                        frLabel={service.title.fr}
+                        enLabel={service.title.en}
+                        onSave={updateServiceField(index, 'title')}
+                      >
+                        <TextFormatter text={getText(service.title)} />
+                      </Tooltip>
+                    </h3>
+                    <div className="text-sm text-muted-foreground">
+                      <Tooltip
+                        frLabel={service.desc.fr}
+                        enLabel={service.desc.en}
+                        onSave={updateServiceField(index, 'desc')}
+                      >
+                        <TextFormatter text={getText(service.desc)} />
+                      </Tooltip>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+          {isAdmin && (
+            <div className="flex justify-center mt-8">
+              <Button
+                variant="outline"
+                onClick={addService}
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                {isFr ? 'Ajouter un service' : 'Add a service'}
+              </Button>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Call to Action Section */}
+      <section className="py-20 bg-primary/5">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <h2 className="text-4xl font-serif font-bold mb-4">
+            <Tooltip
+              frLabel={data.cta.title.fr}
+              enLabel={data.cta.title.en}
+              onSave={updateCtaTitle}
+            >
+              <TextFormatter text={getText(data.cta.title)} />
+            </Tooltip>
+          </h2>
+          <div className="text-xl text-muted-foreground mb-8">
+            <Tooltip
+              frLabel={data.cta.text.fr}
+              enLabel={data.cta.text.en}
+              onSave={updateCtaText}
+            >
+              <TextFormatter text={getText(data.cta.text)} />
+            </Tooltip>
+          </div>
+          <Button size="lg" asChild>
+            <a href="/page-de-reservation-synxis" className="text-lg">
+              <Tooltip
+                frLabel={data.cta.button.fr}
+                enLabel={data.cta.button.en}
+                onSave={updateCtaButton}
+              >
+                <TextFormatter text={getText(data.cta.button)} />
+              </Tooltip>
+            </a>
+          </Button>
+        </div>
+      </section>
 
       <Footer />
     </div>
   );
 };
 
-export default Home;
+export default Chambres;

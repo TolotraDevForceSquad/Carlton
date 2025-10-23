@@ -1,214 +1,123 @@
 // src/data/offresData.ts
 export const offresPageData = {
   hero: {
-    title: {
-      fr: "Offres Spéciales",
-      en: "Special Offers"
-    },
+    title: { fr: 'Offres Exclusives', en: 'Exclusive Offers' },
     description: {
-      fr: "Découvrez nos séjours d'exception conçus pour créer des souvenirs inoubliables au cœur de Madagascar",
-      en: "Discover our exceptional stays designed to create unforgettable memories in the heart of Madagascar"
+      fr: 'Découvrez nos promotions et événements spéciaux pour un séjour inoubliable au Carlton Madagascar',
+      en: 'Discover our promotions and special events for an unforgettable stay at Carlton Madagascar'
     },
     image: '/uploads/Offre.png'
   },
-  offerFeaturesTitle: {
-    fr: "Cette offre comprend :",
-    en: "This offer includes :"
+  mainSection: {
+    title: { fr: 'Moments Carlton', en: 'Carlton Moments' },
+    description: { fr: '', en: '' },
+    show: true
   },
-  seasonalSection: {
-    title: { fr: "Rendez-vous Festifs", en: "Festive Appointments" },
-    description: {
-      fr: "Plongez dans l'effervescence de nos événements spéciaux, où gastronomie, musique et convivialité se mêlent pour des moments inoubliables.",
-      en: "Dive into the excitement of our special events, where gastronomy, music, and conviviality blend for unforgettable moments."
-    },
-    show: true,
-  },
+  offerFeaturesTitle: { fr: 'Ce qui est inclus :', en: 'What\'s included :' },
   offers: [
     {
       id: 1,
-      title: {
-        fr: "Business Lunch",
-        en: "Business Lunch"
-      },
-      subtitle: {
-        fr: "Déjeuner Menu à 2 ou 3 services au choix",
-        en: "Lunch menu with 2 or 3 courses to choose"
-      },
+      title: { fr: 'Déjeuner d\'affaires', en: 'Business Lunch' },
+      subtitle: { fr: 'Menu à 2 ou 3 services au choix', en: '2 or 3-course menu to choose from' },
       description: {
-        fr: "Un déjeuner menu en 2 ou 3 plats selon vos envies. Concocté avec soin pour s’adapter à votre emploi du temps, il est servi dans un rythme fluide, sans compromis sur la qualité. Une formule parfaite pour votre pause déjeuner ou une rencontre professionnelle.",
-        en: "A lunch menu in 2 or 3 dishes according to your wishes. Carefully prepared to fit your schedule, served at a smooth pace without compromising on quality. The perfect formula for your lunch break or a professional meeting."
+        fr: 'Un déjeuner menu en 2 ou 3 plats selon vos envies. Concocté avec soin pour s’adapter à votre emploi du temps, il est servi dans un rythme fluide, sans compromis sur la qualité. Une formule parfaite pour votre pause déjeuner ou une rencontre professionnelle.',
+        en: 'A lunch menu in 2 or 3 dishes according to your wishes. Carefully prepared to fit your schedule, it is served at a smooth pace, without compromising on quality. A perfect formula for your lunch break or a professional meeting.'
       },
-      duration: {
-        fr: "Du lundi au vendredi, de 12h à 14h30",
-        en: "Monday to Friday, 12pm to 2:30pm"
-      },
-      category: {
-        fr: "Déjeuner d'affaires",
-        en: "Business Lunch"
-      },
+      duration: { fr: 'Du lundi au vendredi, de 12h à 14h30', en: 'Monday to Friday from 12pm to 2:30pm' },
+      category: { fr: 'Déjeuner d\'affaires', en: 'Business Lunch' },
       features: [
-        {
-          fr: "Menu à 2 services : Entrée + Plat ou Plat + Dessert à 64 000 Ariary",
-          en: "2-course menu: Starter + Main or Main + Dessert at 64,000 Ariary"
-        },
-        {
-          fr: "Menu à 3 services : Entrée + Plat + Dessert à 73 000 Ariary",
-          en: "3-course menu: Starter + Main + Dessert at 73,000 Ariary"
-        }
+        { fr: 'Menu à 2 services : Entrée + Plat ou Plat + Dessert à 64.000 Ariary', en: '2-course menu: Starter + Main or Main + Dessert at 64,000 Ariary' },
+        { fr: 'Menu à 3 services : Entrée + Plat + Dessert à 73.000 Ariary', en: '3-course menu: Starter + Main + Dessert at 73,000 Ariary' }
       ],
-      validUntil: {
-        fr: "",
-        en: ""
-      },
+      validUntil: { fr: '', en: '' },
       highlight: null,
       image: '/uploads/Offre.png',
       hidden: false
     },
     {
       id: 2,
-      title: {
-        fr: "L’Apéro du Chef",
-        en: "The Chef's Aperitif"
-      },
-      subtitle: {
-        fr: "Suggestion d’apéro sur ardoise du Chef",
-        en: "Chef's chalkboard aperitif suggestion"
-      },
+      title: { fr: 'L’Apéro du Chef', en: 'The Chef\'s Aperitif' },
+      subtitle: { fr: 'Suggestion d’apéro sur ardoise du Chef', en: 'Chef\'s Aperitif Suggestion on the Blackboard' },
       description: {
-        fr: "Des assiettes d’amuse-bouches salés au choix, variés et savoureux, à partager — ou pas. Parfait pour se détendre en fin de journée, que vous soyez seul ou entre amis, après une longue journée. Un moment de plaisir simple, gourmand et bien mérité.",
-        en: "Plates of savory amuse-bouches to choose from, varied and tasty, to share—or not. Perfect for unwinding at the end of the day, whether alone or with friends, after a long day. A simple, indulgent, and well-deserved moment of pleasure."
+        fr: 'Des assiettes d’amuse-bouches salés au choix, variés et savoureux, à partager — ou pas. Parfait pour se détendre en fin de journée, que vous soyez seul ou entre amis, après une longue journée. Un moment de plaisir simple, gourmand et bien mérité.',
+        en: 'Plates of savory amuse-bouches to choose from, varied and tasty, to share — or not. Perfect for relaxing at the end of the day, whether alone or with friends, after a long day. A simple, indulgent, and well-deserved moment of pleasure.'
       },
       duration: {
-        fr: "Du lundi au vendredi à partir de 17h à 19h",
-        en: "Monday to Friday from 5pm to 7pm"
+        fr: 'Du lundi au vendredi à partir de 17h à 19h',
+        en: 'Monday to Friday from 5pm to 7pm'
       },
-      category: {
-        fr: "Apéritif",
-        en: "Aperitif"
-      },
+      category: { fr: 'Apéritif', en: 'Aperitif' },
       features: [
-        {
-          fr: "Prix : 28 000 Ariary",
-          en: "Price: 28,000 Ariary"
-        }
+        { fr: 'Une ardoise d’aperitifs au choix', en: 'A choice of aperitifs on the blackboard' },
+        { fr: 'Prix : 28.000 Ariary', en: 'Price: 28,000 Ariary' }
       ],
-      validUntil: {
-        fr: "",
-        en: ""
-      },
+      validUntil: { fr: '', en: '' },
       highlight: null,
       image: '/uploads/Offre.png',
       hidden: false
     },
     {
       id: 3,
-      title: {
-        fr: "Yoga",
-        en: "Yoga"
-      },
-      subtitle: {
-        fr: "Tous les samedis à 8h",
-        en: "Every Saturday at 8am"
-      },
+      title: { fr: 'Yoga', en: 'Yoga' },
+      subtitle: { fr: 'Tous les samedis à 8h', en: 'Every Saturday at 8am' },
       description: {
-        fr: "Commencez votre week-end en douceur avec une séance de yoga d’une heure, un rituel parfait pour relâcher la pression du quotidien et retrouver l’équilibre. Un petit-déjeuner est offert à la fin de séance pour prolonger cette pause de bien-être.",
-        en: "Start your weekend gently with a one-hour yoga session, a perfect ritual to release daily stress and regain balance. A breakfast is offered at the end of the session to extend this wellness break."
+        fr: 'Commencez votre week-end en douceur avec une séance de yoga d’une heure, un rituel parfait pour relâcher la pression du quotidien et retrouver l’équilibre. Un petit-déjeuner est offert à la fin de séance pour prolonger cette pause de bien-être.',
+        en: 'Start your weekend gently with a one-hour yoga session, a perfect ritual to release daily stress and regain balance. A breakfast is offered at the end of the session to extend this wellness break.'
       },
-      duration: {
-        fr: "Tous les samedis à 8h",
-        en: "Every Saturday at 8am"
-      },
-      category: {
-        fr: "Bien-être",
-        en: "Wellness"
-      },
+      duration: { fr: 'Tous les samedis à 8h', en: 'Every Saturday at 8am' },
+      category: { fr: 'Bien-être', en: 'Wellness' },
       features: [
-        {
-          fr: "50 000 Ar avec petit-déjeuner",
-          en: "50,000 Ar with breakfast"
-        },
-        {
-          fr: "Séance de yoga d’une heure",
-          en: "One-hour yoga session"
-        }
+        { fr: '50.000 Ar avec petit-déjeuner', en: '50,000 Ar with breakfast' }
       ],
-      validUntil: {
-        fr: "",
-        en: ""
-      },
+      validUntil: { fr: '', en: '' },
       highlight: null,
       image: '/uploads/Offre.png',
       hidden: false
     }
   ],
+  seasonalSection: {
+    title: { fr: 'Rendez-vous Festifs', en: 'Festive Appointments' },
+    description: { fr: '', en: '' },
+    show: true
+  },
   seasonalOffers: [
     {
-      title: {
-        fr: "Soirée Jazz Enchantée",
-        en: "Enchanted Jazz Evening"
-      },
-      period: {
-        fr: "Chaque vendredi soir",
-        en: "Every Friday evening"
-      },
+      title: { fr: 'Soirée Jazz Enchantée', en: 'Enchanted Jazz Evening' },
+      period: { fr: 'Chaque vendredi soir', en: 'Every Friday evening' },
       description: {
-        fr: "Laissez-vous emporter par les mélodies envoûtantes du jazz live dans l'atmosphère feutrée du Bistrot du Carlton. Accompagné de cocktails signature et d'assiettes raffinées, c'est l'occasion idéale pour une soirée sophistiquée entre collègues ou amoureux de la musique.",
-        en: "Let yourself be carried away by the enchanting melodies of live jazz in the intimate atmosphere of the Carlton's Bistrot. Paired with signature cocktails and refined plates, it's the perfect opportunity for a sophisticated evening with colleagues or music lovers."
+        fr: 'Laissez-vous emporter par les mélodies envoûtantes du jazz live dans l\'atmosphère feutrée du Bistrot du Carlton. Accompagné de cocktails signature et d\'assiettes raffinées, c\'est l\'occasion idéale pour une soirée sophistiquée entre collègues ou amoureux de la musique.',
+        en: 'Let yourself be carried away by the enchanting melodies of live jazz in the intimate atmosphere of the Carlton\'s Bistrot. Paired with signature cocktails and refined plates, it\'s the perfect opportunity for a sophisticated evening with colleagues or music lovers.'
       },
       image: '/uploads/Env.png',
       hidden: false
     },
     {
-      title: {
-        fr: "Brunch Tropical Dominical",
-        en: "Tropical Sunday Brunch"
-      },
-      period: {
-        fr: "Tous les dimanches de 11h à 15h",
-        en: "Every Sunday from 11am to 3pm"
-      },
+      title: { fr: 'Brunch Tropical Dominical', en: 'Tropical Sunday Brunch' },
+      period: { fr: 'Tous les dimanches de 11h à 15h', en: 'Every Sunday from 11am to 3pm' },
       description: {
-        fr: "Un festin dominical aux saveurs exotiques de Madagascar fusionnées avec la finesse française. Buffets à volonté avec fruits frais, fruits de mer, pâtisseries artisanales et animations musicales pour une pause gourmande en famille ou entre amis.",
-        en: "A Sunday feast blending Madagascar's exotic flavors with French finesse. All-you-can-eat buffets featuring fresh fruits, seafood, artisanal pastries, and live music for a indulgent family or friends gathering."
+        fr: 'Un festin dominical aux saveurs exotiques de Madagascar fusionnées avec la finesse française. Buffets à volonté avec fruits frais, fruits de mer, pâtisseries artisanales et animations musicales pour une pause gourmande en famille ou entre amis.',
+        en: 'A Sunday feast blending Madagascar\'s exotic flavors with French finesse. All-you-can-eat buffets featuring fresh fruits, seafood, artisanal pastries, and live music for a indulgent family or friends gathering.'
       },
       image: '/uploads/Env.png',
       hidden: false
     },
     {
-      title: {
-        fr: "Nuit des Étoiles et Vins",
-        en: "Stars and Wines Night"
-      },
-      period: {
-        fr: "Premier samedi du mois",
-        en: "First Saturday of the month"
-      },
+      title: { fr: 'Nuit des Étoiles et Vins', en: 'Stars and Wines Night' },
+      period: { fr: 'Premier samedi du mois', en: 'First Saturday of the month' },
       description: {
-        fr: "Sous un ciel étoilé, découvrez une sélection exclusive de vins malgaches et internationaux, harmonisés avec des accords mets d'exception. Dégustations guidées par nos sommeliers, dans le cadre enchanteur des jardins du Carlton.",
-        en: "Under a starry sky, discover an exclusive selection of Malagasy and international wines, paired with exceptional food matches. Guided tastings by our sommeliers, in the enchanting setting of the Carlton's gardens."
+        fr: 'Sous un ciel étoilé, découvrez une sélection exclusive de vins malgaches et internationaux, harmonisés avec des accords mets d\'exception. Dégustations guidées par nos sommeliers, dans le cadre enchanteur des jardins du Carlton.',
+        en: 'Under a starry sky, discover an exclusive selection of Malagasy and international wines, paired with exceptional food matches. Guided tastings by our sommeliers, in the enchanting setting of the Carlton\'s gardens.'
       },
       image: '/uploads/Env.png',
       hidden: false
     }
   ],
   cta: {
-    title: {
-      fr: "Et si vous preniez du temps pour vous ?",
-      en: "What if you took some time for yourself?"
-    },
-    description: {
-      fr: "Laissez-vous tenter par un moment au Carlton Madagascar",
-      en: "Let yourself be tempted by a moment at Carlton Madagascar"
-    },
+    title: { fr: 'Et si vous preniez du temps pour vous ?', en: 'What if you took some time for yourself?' },
+    description: { fr: 'Laissez-vous tenter par un moment au Carlton Madagascar', en: 'Let yourself be tempted by a moment at Carlton Madagascar' },
     buttonTexts: {
-      primary: {
-        fr: "Réserver au +261 20 22 260 60",
-        en: "Book at +261 20 22 260 60"
-      },
-      secondary: {
-        fr: "",
-        en: ""
-      }
+      primary: { fr: 'Réserver au +261 20 22 260 60', en: 'Book at +261 20 22 260 60' },
+      secondary: { fr: '', en: '' }
     }
   }
 };

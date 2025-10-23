@@ -16,7 +16,7 @@ import {
   Dumbbell,
   Activity,  // Alternative for tennis court (sports activity)
   Plane,
-  Scissors,
+  WashingMachine,
   Briefcase,
   Phone,       // For telephone
   Lock,        // For safe
@@ -792,7 +792,7 @@ const Chambres = () => {
   const getServiceIcon = (icon: string) => {
     switch (icon) {
       case 'Coffee': return <Coffee className="w-8 h-8" />;
-      case 'Scissors': return <Scissors className="w-8 h-8" />;
+      case 'Scissors': return <WashingMachine className="w-8 h-8" />;
       case 'Briefcase': return <Briefcase className="w-8 h-8" />;
       case 'Plane': return <Plane className="w-8 h-8" />;
       default: return <Tv className="w-8 h-8" />;
