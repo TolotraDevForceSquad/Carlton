@@ -23,9 +23,9 @@ export const mainNavData = {
     ],
     '/bien-etre-loisirs': [
       { label: { fr: 'Piscine', en: 'Pool' }, href: '/bien-etre-loisirs#piscine' },
-      { label: { fr: 'Salle de sport', en: 'Gym' }, href: '/bien-etre-loisirs#salle-sport' },
-      { label: { fr: 'Court de tennis', en: 'Tennis Court' }, href: '/bien-etre-loisirs#tennis' },
-      { label: { fr: 'Soins holistique', en: 'Holistic Care' }, href: '/bien-etre-loisirs#soins' }
+      { label: { fr: 'Fitness', en: 'Gym' }, href: '/bien-etre-loisirs#salle-sport' },
+      { label: { fr: 'Tennis', en: 'Tennis Court' }, href: '/bien-etre-loisirs#tennis' },
+      { label: { fr: 'Soins Holistiques', en: 'Holistic Care' }, href: '/bien-etre-loisirs#soins' }
     ],
     '/evenements': [
       { label: { fr: 'Mariages', en: 'Weddings' }, href: '/evenements#mariages' },

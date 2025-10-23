@@ -1,3 +1,5 @@
+
+
 // src/components/Home.tsx
 import HeroSection from '@/components/HeroSection';
 import ParallaxSection from '@/components/ParallaxSection';
@@ -64,7 +66,7 @@ const EquipmentCarousel = ({
   onIndexChange: (index: number) => void;
 }) => {
   return (
-    <div className="relative h-96 lg:h-[500px] w-full overflow-hidden rounded-xl shadow-2xl">
+    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl shadow-2xl">
       {images.map((image, index) => (
         <div
           key={index}
@@ -353,9 +355,6 @@ const Home = () => {
     image: highlight.image || wellnessImage
   }));
 
-  const mainHighlights = processedHighlights.slice(0, 3);
-  const equipmentHighlight = processedHighlights[3];
-
   const getServicesList = (description: string) => {
       return description.split(',').map(s => s.trim()).filter(s => s.length > 0);
   }
@@ -623,37 +622,51 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Highlights principaux (3 premiers) avec layouts alternés */}
+            {/* Tous les highlights (4) avec layouts alternés */}
             <div className="space-y-12 mb-20">
-              {mainHighlights.map((highlight, index) => {
+              {processedHighlights.map((highlight, index) => {
                 const isImageLeft = index % 2 === 0;
+                const isEquipment = index === 3;
                 return (
                   <div key={index} className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center bg-background p-8 rounded-xl shadow-lg">
                     {isImageLeft ? (
                       <>
                         {/* Image à gauche sur desktop, en haut sur mobile */}
                         <div className="lg:col-span-7">
-                          <ImageTooltip imageUrl={data.highlights[index].image || wellnessImage} onSave={updateHighlightImage(index)}>
-                            <div 
-                              className="relative h-64 lg:h-80 overflow-hidden cursor-pointer rounded-xl"
-                              onClick={() => openImageModal(highlight.image, highlight.title)}
-                            >
-                              <img 
-                                src={highlight.image} 
-                                alt={highlight.title}
-                                className="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-110 rounded-xl"
-                                loading="lazy"
-                                decoding="async"
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                              <div className="absolute top-4 left-4">
-                                <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/20 backdrop-blur-sm rounded-full">
-                                  <div className="text-primary">
-                                    {getHighlightIcon(highlight.icon)}
+                          <ImageTooltip imageUrl={isEquipment ? carouselImages[carouselIndex] : data.highlights[index].image || wellnessImage} onSave={updateHighlightImage(index)}>
+                            {isEquipment ? (
+                              <div 
+                                className="cursor-pointer"
+                                onClick={() => openImageModal(carouselImages[carouselIndex], highlight.title)}
+                              >
+                                <EquipmentCarousel 
+                                  images={carouselImages}
+                                  currentIndex={carouselIndex}
+                                  onIndexChange={setCarouselIndex}
+                                />
+                              </div>
+                            ) : (
+                              <div 
+                                className="relative aspect-[4/3] overflow-hidden cursor-pointer rounded-xl"
+                                onClick={() => openImageModal(highlight.image, highlight.title)}
+                              >
+                                <img 
+                                  src={highlight.image} 
+                                  alt={highlight.title}
+                                  className="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-110 rounded-xl"
+                                  loading="lazy"
+                                  decoding="async"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                                <div className="absolute top-4 left-4">
+                                  <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/20 backdrop-blur-sm rounded-full">
+                                    <div className="text-primary">
+                                      {getHighlightIcon(highlight.icon)}
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
+                            )}
                           </ImageTooltip>
                         </div>
                         {/* Texte à droite sur desktop, en bas sur mobile */}
@@ -667,15 +680,26 @@ const Home = () => {
                               {formatAmpersand(highlight.title)}
                             </Tooltip>
                           </h3>
-                          <p className="text-muted-foreground mb-6 leading-relaxed text-lg">
-                            <Tooltip 
-                              frLabel={data.highlights[index].description.fr} 
-                              enLabel={data.highlights[index].description.en} 
-                              onSave={updateHighlightDescription(index)}
-                            >
-                              {highlight.description}
-                            </Tooltip>
-                          </p>
+                          {isEquipment ? (
+                            <div className="space-y-3 mb-6">
+                              {getServicesList(highlight.description).map((service, i) => (
+                                <div key={i} className="flex items-start text-lg text-muted-foreground">
+                                  <Check className="w-5 h-5 text-primary mr-3 mt-1 flex-shrink-0" />
+                                  <span className="flex-1">{service}</span>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <p className="text-muted-foreground mb-6 leading-relaxed text-lg text-justify">
+                              <Tooltip 
+                                frLabel={data.highlights[index].description.fr} 
+                                enLabel={data.highlights[index].description.en} 
+                                onSave={updateHighlightDescription(index)}
+                              >
+                                {highlight.description}
+                              </Tooltip>
+                            </p>
+                          )}
                           <Link href={highlight.link}>
                             <Button className="w-full lg:w-auto bg-yellow-500 hover:bg-yellow-600 text-black">
                               <Tooltip 
@@ -702,15 +726,26 @@ const Home = () => {
                               {formatAmpersand(highlight.title)}
                             </Tooltip>
                           </h3>
-                          <p className="text-muted-foreground mb-6 leading-relaxed text-lg">
-                            <Tooltip 
-                              frLabel={data.highlights[index].description.fr} 
-                              enLabel={data.highlights[index].description.en} 
-                              onSave={updateHighlightDescription(index)}
-                            >
-                              {highlight.description}
-                            </Tooltip>
-                          </p>
+                          {isEquipment ? (
+                            <div className="space-y-3 mb-6">
+                              {getServicesList(highlight.description).map((service, i) => (
+                                <div key={i} className="flex items-start text-lg text-muted-foreground">
+                                  <Check className="w-5 h-5 text-primary mr-3 mt-1 flex-shrink-0" />
+                                  <span className="flex-1">{service}</span>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <p className="text-muted-foreground mb-6 leading-relaxed text-lg text-justify">
+                              <Tooltip 
+                                frLabel={data.highlights[index].description.fr} 
+                                enLabel={data.highlights[index].description.en} 
+                                onSave={updateHighlightDescription(index)}
+                              >
+                                {highlight.description}
+                              </Tooltip>
+                            </p>
+                          )}
                           <Link href={highlight.link}>
                             <Button className="w-full lg:w-auto bg-yellow-500 hover:bg-yellow-600 text-black">
                               <Tooltip 
@@ -725,27 +760,40 @@ const Home = () => {
                         </div>
                         {/* Image à droite sur desktop, en bas sur mobile */}
                         <div className="lg:col-span-7">
-                          <ImageTooltip imageUrl={data.highlights[index].image || wellnessImage} onSave={updateHighlightImage(index)}>
-                            <div 
-                              className="relative h-64 lg:h-80 overflow-hidden cursor-pointer rounded-xl"
-                              onClick={() => openImageModal(highlight.image, highlight.title)}
-                            >
-                              <img 
-                                src={highlight.image} 
-                                alt={highlight.title}
-                                className="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-110 rounded-xl"
-                                loading="lazy"
-                                decoding="async"
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                              <div className="absolute top-4 left-4">
-                                <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/20 backdrop-blur-sm rounded-full">
-                                  <div className="text-primary">
-                                    {getHighlightIcon(highlight.icon)}
+                          <ImageTooltip imageUrl={isEquipment ? carouselImages[carouselIndex] : data.highlights[index].image || wellnessImage} onSave={updateHighlightImage(index)}>
+                            {isEquipment ? (
+                              <div 
+                                className="cursor-pointer"
+                                onClick={() => openImageModal(carouselImages[carouselIndex], highlight.title)}
+                              >
+                                <EquipmentCarousel 
+                                  images={carouselImages}
+                                  currentIndex={carouselIndex}
+                                  onIndexChange={setCarouselIndex}
+                                />
+                              </div>
+                            ) : (
+                              <div 
+                                className="relative aspect-[4/3] overflow-hidden cursor-pointer rounded-xl"
+                                onClick={() => openImageModal(highlight.image, highlight.title)}
+                              >
+                                <img 
+                                  src={highlight.image} 
+                                  alt={highlight.title}
+                                  className="w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-110 rounded-xl"
+                                  loading="lazy"
+                                  decoding="async"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                                <div className="absolute top-4 left-4">
+                                  <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/20 backdrop-blur-sm rounded-full">
+                                    <div className="text-primary">
+                                      {getHighlightIcon(highlight.icon)}
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
+                            )}
                           </ImageTooltip>
                         </div>
                       </>
@@ -753,57 +801,6 @@ const Home = () => {
                   </div>
                 );
               })}
-            </div>
-
-            {/* Section Équipements & Services avec carrousel */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center bg-background p-8 rounded-xl shadow-lg">
-                {/* Colonne de la liste des services */}
-                <div className="lg:col-span-5">
-                    <h3 className="text-3xl font-serif font-bold text-foreground mb-4 flex items-center">
-                        <Tooltip 
-                            frLabel={data.highlights[3].title.fr} 
-                            enLabel={data.highlights[3].title.en} 
-                            onSave={updateHighlightTitle(3)}
-                        >
-                            {equipmentHighlight.title}
-                        </Tooltip>
-                    </h3>
-                    <div className="space-y-3">
-                        {getServicesList(equipmentHighlight.description).map((service, i) => (
-                            <div key={i} className="flex items-start text-lg text-muted-foreground">
-                                <Check className="w-5 h-5 text-primary mr-3 mt-1 flex-shrink-0" />
-                                <span className="flex-1">{service}</span>
-                            </div>
-                        ))}
-                    </div>
-                    <Link href={equipmentHighlight.link}>
-                      <Button className="mt-8 bg-yellow-500 hover:bg-yellow-600 text-black">
-                        <Tooltip 
-                          frLabel={data.highlights[3].linkText.fr} 
-                          enLabel={data.highlights[3].linkText.en} 
-                          onSave={updateHighlightLinkText(3)}
-                        >
-                          {equipmentHighlight.linkText}
-                        </Tooltip>
-                      </Button>
-                    </Link>
-                </div>
-                
-                {/* Colonne Carrousel */}
-                <div className="lg:col-span-7">
-                  <ImageTooltip imageUrl={carouselImages[carouselIndex]} onSave={updateHighlightImage(3)}>
-                    <div 
-                      className="cursor-pointer"
-                      onClick={() => openImageModal(carouselImages[carouselIndex], equipmentHighlight.title)}
-                    >
-                      <EquipmentCarousel 
-                        images={carouselImages}
-                        currentIndex={carouselIndex}
-                        onIndexChange={setCarouselIndex}
-                      />
-                    </div>
-                  </ImageTooltip>
-                </div>
             </div>
           </div>
         </section>
@@ -840,7 +837,7 @@ const Home = () => {
                 {cta.title}
               </Tooltip>
             </h2>
-            <p className="text-lg text-muted-foreground mb-8">
+            <p className="text-lg text-muted-foreground mb-8 text-justify">
               <Tooltip 
                 frLabel={data.cta.description.fr} 
                 enLabel={data.cta.description.en} 
@@ -862,7 +859,7 @@ const Home = () => {
                 </Button>
               </Link>
               <Link href={cta.secondaryLink}>
-                <Button variant="outline" size="lg" className="w-full sm:w-auto border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black">
+                <Button size="lg" className="w-full sm:w-auto bg-yellow-500 hover:bg-yellow-600 text-black">
                   <Tooltip 
                     frLabel={data.cta.secondaryButton.fr} 
                     enLabel={data.cta.secondaryButton.en} 

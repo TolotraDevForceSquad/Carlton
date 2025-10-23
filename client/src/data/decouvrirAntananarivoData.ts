@@ -8,7 +8,8 @@ export const decouvrirAntananarivoPageData = {
     description: {
       fr: "Situé en plein centre-ville à 20 km de l'aéroport international de Ravinala (45 min à 1h), explorez la capitale malgache et ses trésors cachés. De l'histoire royale aux marchés colorés, laissez-vous guider dans cette métropole aux mille visages.",
       en: "Located in the heart of the city, 20 km from Ravinala International Airport (45 min to 1h), explore the Malagasy capital and its hidden treasures. From royal history to colorful markets, let yourself be guided through this metropolis of a thousand faces."
-    }
+    },
+    image: "/uploads/antananarivo_madagas_66f3920a.jpg"
   },
   attractions: {
     title: {

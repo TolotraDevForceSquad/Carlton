@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Users, Calendar, Clock, MapPin, Star, Utensils, Music, Camera, Heart, GraduationCap, Theater, Martini, Layout } from 'lucide-react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import Footer from '@/components/Footer';
+import ParallaxSection from '@/components/ParallaxSection';
 import eventImage from '@assets/generated_images/Fine_dining_restaurant_1275a5b9.png';
 import { formatAmpersand } from '@/lib/utils/formatAmpersand';
 
@@ -421,10 +422,17 @@ const Evenements = () => {
       </style>
       
       {/* Hero Section */}
-      <section className="pt-20 bg-gradient-to-r from-background to-card/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="text-center">
-            <h1 className="text-5xl md:text-6xl font-serif font-bold text-foreground mb-6">
+      <div className="relative">
+        <ParallaxSection
+          backgroundImage={eventImage}
+          parallaxSpeed={0.3}
+          minHeight="100vh"
+          overlay={true}
+          overlayOpacity={0.5}
+          className="flex items-center pt-20"
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+            <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6 drop-shadow-lg">
               {formatAmpersand('Événements & Réceptions')}
             </h1>
             <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
@@ -432,75 +440,41 @@ const Evenements = () => {
               Créez des moments inoubliables dans le cadre exceptionnel du Carlton Madagascar. 
               Des espaces modulables et une équipe dédiée pour vos événements sur mesure.
             </p>
-          </div>
 
-          {/* Stats Section */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 max-w-4xl mx-auto">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-primary mb-2">
-                <Users className="w-8 h-8 mx-auto mb-2" />
-                500
+            {/* Stats Section */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 max-w-4xl mx-auto">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-primary mb-2">
+                  <Users className="w-8 h-8 mx-auto mb-2" />
+                  500
+                </div>
+                <div className="text-sm text-muted-foreground">Invités maximum</div>
               </div>
-              <div className="text-sm text-muted-foreground">Invités maximum</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-primary mb-2">
-                <Calendar className="w-8 h-8 mx-auto mb-2" />
-                10
+              <div className="text-center">
+                <div className="text-3xl font-bold text-primary mb-2">
+                  <Calendar className="w-8 h-8 mx-auto mb-2" />
+                  10
+                </div>
+                <div className="text-sm text-muted-foreground">Salles d'événements</div>
               </div>
-              <div className="text-sm text-muted-foreground">Salles d'événements</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-primary mb-2">
-                <Star className="w-8 h-8 mx-auto mb-2" />
-                5★
+              <div className="text-center">
+                <div className="text-3xl font-bold text-primary mb-2">
+                  <Star className="w-8 h-8 mx-auto mb-2" />
+                  5★
+                </div>
+                <div className="text-sm text-muted-foreground">Service de luxe</div>
               </div>
-              <div className="text-sm text-muted-foreground">Service de luxe</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-primary mb-2">
-                <Clock className="w-8 h-8 mx-auto mb-2" />
-                24h
+              <div className="text-center">
+                <div className="text-3xl font-bold text-primary mb-2">
+                  <Clock className="w-8 h-8 mx-auto mb-2" />
+                  24h
+                </div>
+                <div className="text-sm text-muted-foreground">Support dédié</div>
               </div>
-              <div className="text-sm text-muted-foreground">Support dédié</div>
             </div>
           </div>
-
-          {/* Navigation Buttons */}
-          <div className="flex flex-wrap justify-center gap-4 mt-12">
-            <button 
-              onClick={() => handleEventNavigation('mariages')}
-              className="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors shadow-lg"
-            >
-              Mariages
-            </button>
-            <button 
-              onClick={() => handleEventNavigation('corporate')}
-              className="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors shadow-lg"
-            >
-              Événements Corporate
-            </button>
-            <button 
-              onClick={() => handleEventNavigation('galas')}
-              className="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors shadow-lg"
-            >
-              Galas & Réceptions
-            </button>
-            <button 
-              onClick={() => handleEventNavigation('celebrations')}
-              className="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors shadow-lg"
-            >
-              Célébrations
-            </button>
-            <button 
-              onClick={() => handleEventNavigation('salles')}
-              className="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors shadow-lg"
-            >
-              Nos Espaces
-            </button>
-          </div>
-        </div>
-      </section>
+        </ParallaxSection>
+      </div>
 
       {/* Event Types */}
       <section className="py-20">

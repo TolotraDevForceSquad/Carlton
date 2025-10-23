@@ -1,3 +1,4 @@
+
 // src/pages/Galerie.tsx
 import { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -34,6 +35,7 @@ const Galerie = () => {
       hero: {
         title: mixedData.hero.title.fr,
         description: mixedData.hero.description.fr,
+        image: mixedData.hero.image,
       },
       galleries: mixedData.galleries.map((gallery) => ({
         title: gallery.title.fr,
@@ -62,6 +64,7 @@ const Galerie = () => {
       hero: {
         title: mixedData.hero.title.en,
         description: mixedData.hero.description.en,
+        image: mixedData.hero.image,
       },
       galleries: mixedData.galleries.map((gallery) => ({
         title: gallery.title.en,
@@ -100,6 +103,7 @@ const Galerie = () => {
       hero: {
         title: { fr: dataFr.hero.title, en: enFallback.hero.title || dataFr.hero.title },
         description: { fr: dataFr.hero.description, en: enFallback.hero.description || dataFr.hero.description },
+        image: dataFr.hero.image || galeriePageData.hero.image,
       },
       galleries: dataFr.galleries.map((galleryFr: any, gIndex: number) => ({
         title: { fr: galleryFr.title, en: enFallback.galleries[gIndex]?.title || galleryFr.title },
@@ -254,6 +258,15 @@ const Galerie = () => {
     };
   };
 
+  const updateHeroImage = async (newImageUrl: string) => {
+    const updatedData = {
+      ...data,
+      hero: { ...data.hero, image: newImageUrl }
+    };
+    setData(updatedData);
+    await updateGalerieSection(updatedData);
+  };
+
   const updateGalleryField = (galleryIndex: number, field: 'title' | 'description') => {
     return async (newFr: string, newEn: string) => {
       const updatedData = {
@@ -375,9 +388,13 @@ const Galerie = () => {
     <div className="min-h-screen bg-background">
       
       {/* Hero Section */}
-      <section className="pt-20 pb-16 bg-gradient-to-b from-background to-card">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-6xl font-serif text-foreground mb-6">
+      <section 
+        className="pt-20 bg-cover bg-center bg-no-repeat relative min-h-[80vh] flex items-center"
+        style={{ backgroundImage: `url(${hero.image})` }}
+      >
+        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <h1 className="text-5xl md:text-7xl font-serif font-bold text-white mb-6">
             <Tooltip
               frLabel={hero.title.fr}
               enLabel={hero.title.en}
@@ -386,7 +403,7 @@ const Galerie = () => {
               <span>{formatAmpersand(t(hero.title))}</span>
             </Tooltip>
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
+          <p className="text-xl text-white/90 max-w-3xl mx-auto mb-8">
             <Tooltip
               frLabel={hero.description.fr}
               enLabel={hero.description.en}
@@ -397,25 +414,30 @@ const Galerie = () => {
           </p>
           
           {/* Filter Tags */}
-          <div className="flex flex-wrap justify-center gap-2">
+          {/* <div className="flex flex-wrap justify-center gap-2">
             {data.categories.map((category, index) => (
-              <Tooltip
+              <ImageTooltip
                 key={index}
-                frLabel={category.fr}
-                enLabel={category.en}
-                onSave={updateCategory(index)}
+                imageUrl={hero.image}
+                onSave={updateHeroImage}
               >
-                <Badge 
-                  variant="secondary" 
-                  className="cursor-pointer hover-elevate"
-                  data-testid={`filter-${t(category).toLowerCase()}`}
+                <Tooltip
+                  frLabel={category.fr}
+                  enLabel={category.en}
+                  onSave={updateCategory(index)}
                 >
-                  <Filter className="w-3 h-3 mr-1" />
-                  <span>{t(category)}</span>
-                </Badge>
-              </Tooltip>
+                  <Badge 
+                    variant="secondary" 
+                    className="cursor-pointer hover-elevate"
+                    data-testid={`filter-${t(category).toLowerCase()}`}
+                  >
+                    <Filter className="w-3 h-3 mr-1" />
+                    <span>{t(category)}</span>
+                  </Badge>
+                </Tooltip>
+              </ImageTooltip>
             ))}
-          </div>
+          </div> */}
         </div>
       </section>
 

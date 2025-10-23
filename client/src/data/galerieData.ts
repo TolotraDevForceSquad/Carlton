@@ -13,7 +13,8 @@ export const galeriePageData = {
     description: {
       fr: "Explorez l'univers visuel du Carlton Madagascar à travers notre collection de photographies mettant en valeur l'élégance et le raffinement de notre établissement.",
       en: "Explore the visual universe of Carlton Madagascar through our collection of photographs highlighting the elegance and refinement of our establishment."
-    }
+    },
+    image: hotelExterior
   },
   galleries: [
     {

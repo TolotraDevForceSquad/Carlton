@@ -35,6 +35,7 @@ const DecouvrirAntananarivo = () => {
       hero: {
         title: mixedData.hero.title.fr,
         description: mixedData.hero.description.fr,
+        image: mixedData.hero.image,
       },
       attractions: {
         title: mixedData.attractions.title.fr,
@@ -63,6 +64,7 @@ const DecouvrirAntananarivo = () => {
       hero: {
         title: mixedData.hero.title.en,
         description: mixedData.hero.description.en,
+        image: mixedData.hero.image,
       },
       attractions: {
         title: mixedData.attractions.title.en,
@@ -101,6 +103,7 @@ const DecouvrirAntananarivo = () => {
       hero: {
         title: { fr: dataFr.hero.title, en: enFallback.hero.title || dataFr.hero.title },
         description: { fr: dataFr.hero.description, en: enFallback.hero.description || dataFr.hero.description },
+        image: dataFr.hero.image || initialPageData.hero.image,
       },
       attractions: {
         title: { fr: dataFr.attractions.title, en: enFallback.attractions.title || dataFr.attractions.title },
@@ -253,6 +256,15 @@ const DecouvrirAntananarivo = () => {
     const updatedData = {
       ...data,
       hero: { ...data.hero, description: { fr: newFr, en: newEn } }
+    };
+    setData(updatedData);
+    await updatePageSection(updatedData);
+  };
+
+  const updateHeroImage = async (newImageUrl: string) => {
+    const updatedData = {
+      ...data,
+      hero: { ...data.hero, image: newImageUrl }
     };
     setData(updatedData);
     await updatePageSection(updatedData);
@@ -469,9 +481,13 @@ const DecouvrirAntananarivo = () => {
     <div className="min-h-screen bg-background">
       
       {/* Hero Section */}
-      <section className="pt-20 pb-16 bg-gradient-to-b from-background to-card">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-6xl font-serif text-foreground mb-6">
+      <section 
+        className="pt-20 bg-cover bg-center bg-no-repeat relative min-h-[80vh] flex items-center"
+        style={{ backgroundImage: `url(${hero.image})` }}
+      >
+        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <h1 className="text-5xl md:text-7xl font-serif font-bold text-white mb-6">
             <Tooltip 
               frLabel={data.hero.title.fr} 
               enLabel={data.hero.title.en} 
@@ -480,7 +496,7 @@ const DecouvrirAntananarivo = () => {
               {getText(hero.title)}
             </Tooltip>
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-xl text-white/90 max-w-3xl mx-auto">
             <Tooltip 
               frLabel={data.hero.description.fr} 
               enLabel={data.hero.description.en} 

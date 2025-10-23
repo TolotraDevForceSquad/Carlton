@@ -1,9 +1,11 @@
+
+
 // src/pages/Offres.tsx
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Star, Calendar, Clock, Sparkles, Users, Gift, Plus, Trash2, Eye, EyeOff, ForkKnife, Martini, HeartPulse, Music, Coffee, Wine, X, Phone } from 'lucide-react';
+import { Star, Calendar, Clock, Sparkles, Users, Gift, Plus, Trash2, Eye, EyeOff, ForkKnife, Martini, HeartPulse, Music, Coffee, Wine, X, Phone, Edit3 } from 'lucide-react';
 import { Tooltip, ImageTooltip } from '@/components/Tooltip';
 import Footer from '@/components/Footer';
 import { offresPageData } from '@/data/offresData';
@@ -44,6 +46,7 @@ const splitOffresData = (mixedData: typeof offresPageData) => {
     hero: {
       title: mixedDataWithExtras.hero.title.fr,
       description: mixedDataWithExtras.hero.description.fr,
+      image: mixedDataWithExtras.hero.image || '/uploads/Offre.png',
     },
     offerFeaturesTitle: mixedDataWithExtras.offerFeaturesTitle.fr,
     offers: mixedDataWithExtras.offers.map((offer) => ({
@@ -85,6 +88,7 @@ const splitOffresData = (mixedData: typeof offresPageData) => {
     hero: {
       title: mixedDataWithExtras.hero.title.en,
       description: mixedDataWithExtras.hero.description.en,
+      image: mixedDataWithExtras.hero.image || '/uploads/Offre.png',
     },
     offerFeaturesTitle: mixedDataWithExtras.offerFeaturesTitle.en,
     offers: mixedDataWithExtras.offers.map((offer) => ({
@@ -146,6 +150,7 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
     hero: {
       title: { fr: dataFr.hero.title, en: enFallback.hero.title },
       description: { fr: dataFr.hero.description, en: enFallback.hero.description },
+      image: dataFr.hero.image || '/uploads/Offre.png',
     },
     offerFeaturesTitle: {
       fr: dataFr.offerFeaturesTitle,
@@ -345,6 +350,18 @@ const Offres = () => {
       setData(updatedData);
       await updateOffresSection(updatedData);
     };
+  };
+
+  const updateHeroImage = async (newUrl: string) => {
+    const updatedData = {
+      ...data,
+      hero: {
+        ...data.hero,
+        image: newUrl,
+      },
+    };
+    setData(updatedData);
+    await updateOffresSection(updatedData);
   };
 
   const updateOfferFeaturesTitle = async (newFr: string, newEn: string) => {
@@ -657,12 +674,11 @@ const Offres = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-background">
-        <section className="pt-20 bg-gradient-to-r from-background to-card/50 py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center animate-pulse">
-              <div className="h-12 w-96 bg-muted mx-auto mb-6" />
-              <div className="h-6 w-80 bg-muted mx-auto mb-6" />
-            </div>
+        <section className="pt-20 bg-gradient-to-r from-background to-card/50 py-20 min-h-[80vh] flex items-center justify-center">
+          <div className="text-center animate-pulse w-full">
+            <div className="h-12 w-96 bg-muted mx-auto mb-6" />
+            <div className="h-6 w-80 bg-muted mx-auto mb-6" />
+            <div className="absolute inset-0 bg-muted/50" />
           </div>
         </section>
         <section className="py-20">
@@ -775,30 +791,54 @@ const Offres = () => {
     <div className="min-h-screen bg-background">
 
       {/* Hero Section */}
-      <section className="pt-20 bg-gradient-to-r from-background to-card/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="text-center">
-            <Tooltip
-              frLabel={hero.title.fr}
-              enLabel={hero.title.en}
-              onSave={updateHeroField('title')}
-            >
-              <h1 className="text-5xl md:text-6xl font-serif font-bold text-foreground mb-6">
-                {getText(hero.title)}
-              </h1>
-            </Tooltip>
-            <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
-            <Tooltip
-              frLabel={hero.description.fr}
-              enLabel={hero.description.en}
-              onSave={updateHeroField('description')}
-            >
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                {getText(hero.description)}
-              </p>
-            </Tooltip>
-          </div>
+      <section 
+        className="pt-20 relative min-h-[80vh] flex items-center justify-center overflow-hidden"
+        style={{ 
+          backgroundImage: `url(${hero.image})`, 
+          backgroundSize: 'cover', 
+          backgroundPosition: 'center' 
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/40" />
+        <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
+          <Tooltip
+            frLabel={hero.title.fr}
+            enLabel={hero.title.en}
+            onSave={updateHeroField('title')}
+          >
+            <h1 className="text-5xl md:text-6xl font-serif font-bold text-foreground mb-6">
+              {getText(hero.title)}
+            </h1>
+          </Tooltip>
+          <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
+          <Tooltip
+            frLabel={hero.description.fr}
+            enLabel={hero.description.en}
+            onSave={updateHeroField('description')}
+          >
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              {getText(hero.description)}
+            </p>
+          </Tooltip>
         </div>
+        {isAdmin && (
+          <ImageTooltip
+            imageUrl={hero.image}
+            onSave={updateHeroImage}
+          >
+            <div 
+              className="absolute top-4 right-4 z-20 bg-white/90 rounded-lg p-2 shadow-lg cursor-pointer group"
+              onClick={() => setSelectedImage(hero.image)}
+            >
+              <img 
+                src={hero.image} 
+                alt="Hero image preview" 
+                className="w-16 h-16 object-cover rounded group-hover:scale-110 transition-transform" 
+              />
+              <Edit3 className="w-4 h-4 absolute -top-1 -right-1 bg-primary text-white rounded-full p-0.5" />
+            </div>
+          </ImageTooltip>
+        )}
       </section>
 
       {/* Main Offers */}

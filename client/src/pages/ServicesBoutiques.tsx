@@ -1,3 +1,4 @@
+
 // src/pages/ServicesBoutiques.tsx
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -876,14 +877,18 @@ const ServicesBoutiques = () => {
     <div className="min-h-screen bg-background">
       
       {/* Hero Section */}
-      <section className="pt-20 pb-16 bg-gradient-to-b from-background to-card">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section 
+        className="pt-20 pb-40 bg-gradient-to-b from-black/20 via-black/10 to-transparent bg-cover bg-center relative overflow-hidden"
+        style={{ backgroundImage: `url(${servicesImage})` }}
+      >
+        <div className="absolute inset-0 bg-black/30"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <Tooltip
             frLabel={hero.title.fr}
             enLabel={hero.title.en}
             onSave={updateHeroField('title')}
           >
-            <h1 className="text-4xl md:text-6xl font-serif text-foreground mb-6">
+            <h1 className="text-6xl md:text-8xl font-serif text-foreground mb-6">
               {formatAmpersand(getText(hero.title))}
             </h1>
           </Tooltip>
@@ -892,7 +897,7 @@ const ServicesBoutiques = () => {
             enLabel={hero.description.en}
             onSave={updateHeroField('description')}
           >
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-3xl text-muted-foreground max-w-3xl mx-auto">
               {getText(hero.description)}
             </p>
           </Tooltip>

@@ -1,3 +1,4 @@
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -816,17 +817,18 @@ const Contact = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="pt-20 bg-gradient-to-r from-background to-card/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <section className="pt-20 bg-[url('/uploads/contact_hero.png')] bg-cover bg-center bg-no-repeat relative min-h-[80vh] flex items-center">
+        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
           <div className="text-center">
             <Tooltip frLabel={data.hero.title.fr} enLabel={data.hero.title.en} onSave={updateHeroTitle}>
-              <h1 className="text-5xl md:text-6xl font-serif font-bold text-foreground mb-6">
+              <h1 className="text-5xl md:text-7xl font-serif font-bold text-white mb-6">
                 {formatAmpersand(data.hero.title[langKey])}
               </h1>
             </Tooltip>
             <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
             <Tooltip frLabel={data.hero.description.fr} enLabel={data.hero.description.en} onSave={updateHeroDescription}>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              <p className="text-xl text-white/90 max-w-3xl mx-auto">
                 {data.hero.description[langKey]}
               </p>
             </Tooltip>

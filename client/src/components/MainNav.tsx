@@ -26,7 +26,7 @@ const MainNav = () => {
   const [navData, setNavData] = useState(mainNavData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({});  
+  const dropdownRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [, setLocation] = useLocation()
 
@@ -165,7 +165,7 @@ const MainNav = () => {
       // First, update local state
       setNavData(prev => ({
         ...prev,
-        menus: prev.menus.map(m => 
+        menus: prev.menus.map(m =>
           m.id === id ? { ...m, translations: { ...m.translations, fr: newFr, en: newEn } } : m
         )
       }));
@@ -418,16 +418,16 @@ const MainNav = () => {
   }
 
   return (
-    <nav 
+    <nav
       className="sticky top-0 z-50 bg-[#0f1115]/90 backdrop-blur shadow-sm border-b border-white/5"
       aria-label="Navigation principale"
     >
       <div className="mx-auto max-w-7xl flex items-center justify-between px-4 py-2">
-        
+
         {/* Logo/Brand */}
         <div className="flex items-center">
-          <Link 
-            href="/" 
+          <Link
+            href="/"
             className="text-xl font-serif font-bold text-white hover:text-[#f2c451] transition-colors"
           >
             Carlton Madagascar
@@ -441,8 +441,8 @@ const MainNav = () => {
             const frLabel = menuItem?.translations.fr || '';
             const enLabel = menuItem?.translations.en || '';
             return (
-              <div 
-                key={item.id} 
+              <div
+                key={item.id}
                 className="relative"
                 data-dropdown={item.label}
               >
@@ -458,10 +458,9 @@ const MainNav = () => {
                       aria-haspopup="true"
                     >
                       {item.label}
-                      <ChevronDown 
-                        className={`w-3 h-3 transition-transform ${
-                          openDropdown === item.label ? 'rotate-180' : ''
-                        }`} 
+                      <ChevronDown
+                        className={`w-3 h-3 transition-transform ${openDropdown === item.label ? 'rotate-180' : ''
+                          }`}
                       />
                     </button>
                   </Tooltip>
@@ -522,16 +521,24 @@ const MainNav = () => {
 
         {/* Right Side Actions */}
         <div className="flex items-center gap-3">
-          
+
           {/* Language Toggle */}
+          {/* Language Toggle with Flags */}
           <button
             onClick={toggleLanguage}
-            className="flex items-center gap-1 px-3 py-1.5 text-sm text-white/80 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-[#0f1115] rounded-lg"
+            className="flex items-center gap-2 px-3 py-1.5 text-sm text-white/80 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-[#0f1115] rounded-lg"
             aria-label={`Changer la langue vers ${currentLang.code === 'FR' ? 'English' : 'Français'}`}
           >
-            🌐
+            <img
+              src={currentLang.code === 'FR'
+                ? '/uploads/fr.png'
+                : '/uploads/en.png'}
+              alt={currentLang.code === 'FR' ? 'Drapeau français' : 'British flag'}
+              className="w-5 h-5 rounded-sm"
+            />
             <span className="font-medium">{currentLang.code}</span>
           </button>
+
 
           {isLoggedIn && (
             <button
@@ -571,16 +578,16 @@ const MainNav = () => {
       {isMobileOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           {/* Overlay */}
-          <div 
+          <div
             className="fixed inset-0 bg-black/50"
             onClick={closeMobileMenu}
             aria-hidden="true"
           />
-          
+
           {/* Drawer */}
           <div className="fixed inset-y-0 right-0 w-full max-w-sm bg-[#0f1115] shadow-xl">
             <div className="flex h-full flex-col">
-              
+
               {/* Header */}
               <div className="flex items-center justify-between p-4 border-b border-white/10">
                 <span className="text-lg font-serif font-bold text-white">{currentMobileMenuTitle}</span>
@@ -613,14 +620,13 @@ const MainNav = () => {
                                 <span className="flex items-center gap-2">
                                   {item.label}
                                 </span>
-                                <ChevronDown 
-                                  className={`w-4 h-4 transition-transform ${
-                                    openMobileAccordion === item.label ? 'rotate-180' : ''
-                                  }`} 
+                                <ChevronDown
+                                  className={`w-4 h-4 transition-transform ${openMobileAccordion === item.label ? 'rotate-180' : ''
+                                    }`}
                                 />
                               </button>
                             </Tooltip>
-                            
+
                             {/* Mobile Accordion Content */}
                             {openMobileAccordion === item.label && (
                               <div className="ml-4 mt-1 space-y-1">
@@ -667,7 +673,7 @@ const MainNav = () => {
 
               {/* Footer Actions */}
               <div className="p-4 border-t border-white/10 space-y-3">
-                
+
                 {/* Language Toggle */}
                 <button
                   onClick={toggleLanguage}
@@ -676,7 +682,6 @@ const MainNav = () => {
                   🌐
                   <span>Langue: {currentLang.code}</span>
                 </button>
-
                 {isLoggedIn && (
                   <button
                     onClick={() => {

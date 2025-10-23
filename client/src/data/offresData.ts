@@ -8,7 +8,8 @@ export const offresPageData = {
     description: {
       fr: "Découvrez nos séjours d'exception conçus pour créer des souvenirs inoubliables au cœur de Madagascar",
       en: "Discover our exceptional stays designed to create unforgettable memories in the heart of Madagascar"
-    }
+    },
+    image: '/uploads/Offre.png'
   },
   offerFeaturesTitle: {
     fr: "Cette offre comprend :",

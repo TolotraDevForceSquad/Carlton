@@ -85,7 +85,7 @@ Nestled in the cultural heart of the city, the hotel immerses you in a magnifice
       image: "/uploads/Luxury_hotel_wedding_reception_d3ca816d.png" // Image existante
     },
     {
-      icon: "Camera", // Nouveaux Équipements & Services - L'endroit idéal pour le carrousel
+      icon: "Camera", // Équipements & Services - L'endroit idéal pour le carrousel
       title: {
         fr: "Équipements & Services",
         en: "Facilities & Services"

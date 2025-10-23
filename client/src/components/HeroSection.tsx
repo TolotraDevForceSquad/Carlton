@@ -1,3 +1,5 @@
+
+
 // src/components/HeroSection.tsx
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'wouter';
@@ -37,6 +39,16 @@ const HeroSection = () => {
   // Configuration du carousel
   const AUTO_PLAY_INTERVAL = 3000; // 5 secondes entre chaque slide
   const TRANSITION_DURATION = 700; // Durée de la transition en ms
+
+  // Pagination dots positioning calculations for scroll indicator
+  const dotWidthRem = 0.75;
+  const spaceRem = 0.5;
+  const numSlides = data.slides.length;
+  const totalWidthRem = numSlides * dotWidthRem + Math.max(0, numSlides - 1) * spaceRem;
+  const centerOffsetRem = totalWidthRem / 2;
+  const activeDotLeftRem = currentSlide * (dotWidthRem + spaceRem);
+  const activeDotCenterRem = activeDotLeftRem + dotWidthRem / 2;
+  const relativeOffsetRem = activeDotCenterRem - centerOffsetRem;
 
   // Helper to split heroSectionData into dataFr and dataEn structures
   const splitHeroData = (mixedData: typeof heroSectionData) => {
@@ -571,15 +583,23 @@ const HeroSection = () => {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-white/70 animate-bounce z-10">
-          <Tooltip
-            frLabel={data.scroll.fr}
-            enLabel={data.scroll.en}
-            onSave={updateScrollText}
-          >
-            <div className="text-xs mb-2 text-center">{currentScroll}</div>
-          </Tooltip>
-          <div className="w-0.5 h-8 bg-white/50 mx-auto"></div>
+        <div 
+          className="absolute bottom-2 text-white/70 z-10"
+          style={{ 
+            left: '50%', 
+            transform: `translateX(calc(-50% + ${relativeOffsetRem}rem))` 
+          }}
+        >
+          <div className="animate-bounce">
+            <Tooltip
+              frLabel={data.scroll.fr}
+              enLabel={data.scroll.en}
+              onSave={updateScrollText}
+            >
+              <div className="text-xs mb-2 text-center">{currentScroll}</div>
+            </Tooltip>
+            <div className="w-0.5 h-8 bg-white/50 mx-auto"></div>
+          </div>
         </div>
       </div>
     </ImageTooltip>
