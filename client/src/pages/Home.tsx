@@ -742,7 +742,7 @@ const Home = () => {
                                 enLabel={data.highlights[index].description.en} 
                                 onSave={updateHighlightDescription(index)}
                               >
-                                {highlight.description}
+                                {formatAmpersand(highlight.description)}
                               </Tooltip>
                             </p>
                           )}
@@ -837,7 +837,7 @@ const Home = () => {
                 {cta.title}
               </Tooltip>
             </h2>
-            <p className="text-lg text-muted-foreground mb-8 text-justify">
+            <p className="text-lg text-muted-foreground mb-8 text-center">
               <Tooltip 
                 frLabel={data.cta.description.fr} 
                 enLabel={data.cta.description.en} 

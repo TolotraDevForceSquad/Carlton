@@ -1,10 +1,10 @@
 // src/data/offresData.ts
 export const offresPageData = {
   hero: {
-    title: { fr: 'Offres Exclusives', en: 'Exclusive Offers' },
+    title: { fr: 'Offres spéciales', en: 'Special Offers' },
     description: {
-      fr: 'Découvrez nos promotions et événements spéciaux pour un séjour inoubliable au Carlton Madagascar',
-      en: 'Discover our promotions and special events for an unforgettable stay at Carlton Madagascar'
+      fr: 'Profitez de nos offres et évènements spéciaux (-) pour une expérience personnalisée.',
+      en: 'Enjoy our special offers and events (-) for a personalized experience.'
     },
     image: '/uploads/Offre.png'
   },
@@ -17,14 +17,14 @@ export const offresPageData = {
   offers: [
     {
       id: 1,
-      title: { fr: 'Déjeuner d\'affaires', en: 'Business Lunch' },
+      title: { fr: 'Business Lunch', en: 'Business Lunch' },
       subtitle: { fr: 'Menu à 2 ou 3 services au choix', en: '2 or 3-course menu to choose from' },
       description: {
         fr: 'Un déjeuner menu en 2 ou 3 plats selon vos envies. Concocté avec soin pour s’adapter à votre emploi du temps, il est servi dans un rythme fluide, sans compromis sur la qualité. Une formule parfaite pour votre pause déjeuner ou une rencontre professionnelle.',
         en: 'A lunch menu in 2 or 3 dishes according to your wishes. Carefully prepared to fit your schedule, it is served at a smooth pace, without compromising on quality. A perfect formula for your lunch break or a professional meeting.'
       },
       duration: { fr: 'Du lundi au vendredi, de 12h à 14h30', en: 'Monday to Friday from 12pm to 2:30pm' },
-      category: { fr: 'Déjeuner d\'affaires', en: 'Business Lunch' },
+      category: { fr: 'Business Lunch', en: 'Business Lunch' },
       features: [
         { fr: 'Menu à 2 services : Entrée + Plat ou Plat + Dessert à 64.000 Ariary', en: '2-course menu: Starter + Main or Main + Dessert at 64,000 Ariary' },
         { fr: 'Menu à 3 services : Entrée + Plat + Dessert à 73.000 Ariary', en: '3-course menu: Starter + Main + Dessert at 73,000 Ariary' }

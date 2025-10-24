@@ -91,8 +91,8 @@ Nestled in the cultural heart of the city, the hotel immerses you in a magnifice
         en: "Facilities & Services"
       },
       description: {
-        fr: "171 Chambres & Suites, 03 Restaurants & Bars – Pâtisserie & Boulangerie, Evènements & Réceptions, Transferts Aéroport, Piscine - Fitness – Tennis – Soins Holistiques, Salon de beauté & coiffure, Boutiques de luxe, Agences de Voyage – Banque & GAB, Casino – Bar & VIP Lounge, Parking sécurisé.",
-        en: "171 Rooms & Suites, 03 Restaurants & Bars – Pastry & Bakery, Events & Receptions, Airport Transfers, Pool - Fitness – Tennis – Holistic Care, Beauty & Hair Salon, Luxury Shops, Travel Agencies – Bank & ATM, Casino – Bar & VIP Lounge, Secure Parking."
+        fr: "171 Chambres & Suites, 3 Restaurants & Bars – 1 Pâtisserie & Boulangerie, Evènements & Réceptions, Transferts Aéroport, Piscine – Fitness – Tennis – Soins Holistiques, Salon de beauté & coiffure, Boutiques de luxe, Agences de Voyage – Banque & GAB, Casino – Bar & VIP Lounge, Parking sécurisé.",
+        en: "171 Rooms & Suites, 3 Restaurants & Bars – 1 Pastry & Bakery, Events & Receptions, Airport Transfers, Pool – Fitness – Tennis – Holistic Care, Beauty & Hair Salon, Luxury Shops, Travel Agencies – Bank & ATM, Casino – Bar & VIP Lounge, Secure Parking."
       },
       link: "/bien-etre-loisirs", // Lien vers les installations/services existantes
       linkText: {

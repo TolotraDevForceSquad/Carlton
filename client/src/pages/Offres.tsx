@@ -9,6 +9,7 @@ import Footer from '@/components/Footer';
 import ParallaxSection from '@/components/ParallaxSection';
 import { offresPageData } from '@/data/offresData';
 import { useLanguage } from '@/components/context/LanguageContext';
+import { formatAmpersand } from '@/lib/utils/formatAmpersand';
 
 const SECTION_KEY = 'offres';
 
@@ -887,8 +888,8 @@ const Offres = () => {
                 enLabel={hero.description.en}
                 onSave={updateHeroField('description')}
               >
-                <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                  {getText(hero.description)}
+                <p className="text-3xl text-muted-foreground max-w-4xl mx-auto">
+                  {formatAmpersand(getText(hero.description))}
                 </p>
               </Tooltip>
             </div>
@@ -1027,8 +1028,8 @@ const Offres = () => {
                             enLabel={offer.category.en}
                             onSave={updateOfferField(index, 'category')}
                           >
-                            <Badge variant="outline" className="text-xl text-primary border-primary px-4 py-2" data-testid={`badge-category-${offer.id}`}>
-                              <CategoryIcon className="w-5 h-5 mr-2" />
+                            <Badge variant="outline" className="text-2sm text-primary border-primary px-4 py-2" data-testid={`badge-category-${offer.id}`}>
+                              <CategoryIcon className="w-4 h-4 mr-2" />
                               {getText(offer.category)}
                             </Badge>
                           </Tooltip>

@@ -204,6 +204,7 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
   };
 };
 
+
 interface TextFormatterProps {
   text: any;
   className?: string;
@@ -906,7 +907,8 @@ const Chambres = () => {
                   enLabel={data.heroSubtitle.en}
                   onSave={updateHeroSubtitle}
                 >
-                  <TextFormatter text={getText(data.heroSubtitle)} className="drop-shadow-lg" />
+                  {/* <TextFormatter text={getText(data.heroSubtitle)} className="drop-shadow-lg" /> */}
+                  {formatAmpersand(getText(data.heroSubtitle))}
                 </Tooltip>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
@@ -1008,7 +1010,7 @@ const Chambres = () => {
 
       {/* Rooms Showcase */}
       <section className="py-20">
-        <div className="max-w-[80%] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[90%] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-16">
             {data.rooms.map((room, index) => {
               if (!isAdmin && room.hidden) return null;
@@ -1060,8 +1062,8 @@ const Chambres = () => {
                         <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center gap-4">
                             {room.size && (
-                              <Badge variant="outline" className="text-primary border-primary text-xl">
-                                <MapPin className="w-3 h-3 mr-1" />
+                              <Badge variant="outline" className="text-primary border-primary text-2sm">
+                                <MapPin className="w-4 h-4 mr-1" />
                                 <Tooltip
                                   frLabel={room.size}
                                   enLabel={room.size}
@@ -1071,8 +1073,8 @@ const Chambres = () => {
                                 </Tooltip>
                               </Badge>
                             )}
-                            <Badge variant="outline" className="text-primary border-primary text-xl">
-                              <Users className="w-3 h-3 mr-1" />
+                            <Badge variant="outline" className="text-primary border-primary text-2sm">
+                              <Users className="w-4 h-4 mr-1" />
                               <Tooltip
                                 frLabel={room.guests.fr}
                                 enLabel={room.guests.en}

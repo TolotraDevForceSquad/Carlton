@@ -5,8 +5,8 @@ export const chambresData = {
     en: "Rooms & Suites"
   },
   heroSubtitle: {
-    fr: "Chambres et suites élégantes avec vue imprenable sur le Palais de la Reine et le lac Anosy",
-    en: "Elegant rooms and suites with breathtaking views of the Queen's Palace and Lake Anosy"
+    fr: "Chambres et suites élégantes avec vue imprenable (-) sur le Palais de la Reine et le lac Anosy",
+    en: "Elegant rooms and suites with breathtaking views (-) of the Queen's Palace and Lake Anosy"
   },
   heroImage: "/uploads/Presidential_suite_bedroom_interior_7adece21.png",
   rooms: [
@@ -17,8 +17,8 @@ export const chambresData = {
         en: "Executive Room"
       },
       subtitle: {
-        fr: "Vue Panoramique ou Vue sur le Palais de la Reine & le lac Anosy",
-        en: "Panoramic View or Queen's Palace & Lake Anosy View"
+        fr: "Vue Panoramique <v>ou</v> Vue sur le Palais de la Reine <e>&</e> le lac Anosy",
+        en: "Panoramic View <v>or</v> Vue Queen's Palace <e>&</e> Lake Anosy View"
       },
       description: {
         fr: "Un lit King Size ou deux lits jumeaux. (-) Nos chambres Executive, allient espace, confort et fonctionnalité pour un séjour des plus agréables. Avec une décoration chaleureuse et un agencement soigné, elles offrent un cadre reposant propice à la détente. Profitez de la vue dégagée sur la ville, qui ajoute une note d’évasion à votre expérience.",
@@ -42,8 +42,8 @@ export const chambresData = {
         en: "Premium Room"
       },
       subtitle: {
-        fr: "Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
-        en: "Panoramic View or Queen's Palace & Lake Anosy View"
+        fr: "Vue Panoramique <v>ou</v> sur le Palais de la Reine <e>&</e> le lac Anosy",
+        en: "Panoramic View <v>or</v> Queen's Palace <e>&</e> Lake Anosy View"
       },
       description: {
         fr: "Un lit King Size ou deux lits jumeaux. (-) Situées aux étages supérieurs, les chambres Premium offrent une atmosphère paisible avec un point de vue imprenable sur le panorama urbain. Dotées d’équipements complets, bénéficiez d’un cadre confortable et intime pour un séjour parfait que ce soit pour le travail ou la détente.",
@@ -67,8 +67,8 @@ export const chambresData = {
         en: "Club Suite"
       },
       subtitle: {
-        fr: "Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
-        en: "Panoramic View or Queen's Palace & Lake Anosy View"
+        fr: "Vue Panoramique <v>ou</v> sur le Palais de la Reine <e>&</e> le lac Anosy",
+        en: "Panoramic View <v>or</v> Queen's Palace <e>&</e> Lake Anosy View"
       },
       description: {
         fr: "Une chambre avec un lit King Size et un salon séparé. (-) Localisées dans les étages élevés, nos Club Suites comprennent une chambre avec un grand lit et un salon séparé. Un espace entièrement équipé, idéal pour un séjour parfait entre détente et travail, dans un confort optimal.",
@@ -92,7 +92,7 @@ export const chambresData = {
         en: "Family Suite"
       },
       subtitle: {
-        fr: "Vue Panoramique ou sur le Palais de la Reine & le lac Anosy",
+        fr: "Vue sur le Palais de la Reine & le lac Anosy",
         en: "Panoramic View or Queen's Palace & Lake Anosy View"
       },
       description: {
@@ -142,8 +142,8 @@ export const chambresData = {
         en: "Presidential Suite"
       },
       subtitle: {
-        fr: "96 m²- Vue sur le Palais de la Reine & le lac Anosy",
-        en: "96 m² – View of the Queen’s Palace & Lake Anosy"
+        fr: "Vue sur le Palais de la Reine & le lac Anosy",
+        en: "View of the Queen’s Palace & Lake Anosy"
       },
       description: {
         fr: "Appartement comprenant une chambre spacieuse avec un lit Super King Size et un salon confortable. Nos Suites Présidentielles sont nichées dans les étages les plus élevés, en surplomb de la ville, vous offrant une perspective unique sur la plaine d’Antananarivo. Elles se composent d’une grande chambre et d’un salon spacieux avec une table à manger et une kitchenette. Inondées de lumière et empreintes de calme, les Suites Présidentielles offrent un cadre exceptionnel pour un séjour tout en confort et en sérénité.",
@@ -156,7 +156,7 @@ export const chambresData = {
         en: "2 people"
       },
       amenities: {
-        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé et café individuel avec eau minérale", "Wifi haut débit", "Dressing séparé", "Fer et table à repasser", "Salles de bain de luxe en marbre (2 ou 3)", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie"],
+        fr: ["Climatisation", "TV câblée", "Téléphone", "Coffre-fort", "Minibar", "Service à thé et café individuel avec eau minérale", "Wifi haut débit", "Dressing séparé", "Fer et table à repasser", "Grand miroir", "Sèche-cheveux", "Peignoir", "Pantoufles", "Articles de courtoisie", "3 Salles de bain de luxe en marbre <v>OU</v> 1 Salle de bain de luxe en marbre + 1 Douche à l'italienne de luxe"],
         en: ["Air Conditioning", "Cable TV", "Telephone", "Safe", "Minibar", "Individual tea and coffee service with mineral water", "High-speed WiFi", "Separate dressing room", "Iron and ironing board", "Luxury marble bathrooms (2 or 3)", "Large mirror", "Hairdryer", "Bathrobe", "Slippers", "Courtesy toiletries"]
       }
     }
