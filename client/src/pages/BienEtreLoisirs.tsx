@@ -297,14 +297,14 @@ const FacilityCard: React.FC<FacilityProps> = ({
         </div>
       )}
       <div className="lg:w-1/2 relative">
-        <div className="relative w-full h-[300px] lg:h-full overflow-hidden rounded-lg">
+        <div className="relative w-full h-[300px] lg:h-full overflow-hidden">
           <img 
             src={facility.images[currentIndex]} 
             alt={`${getText(facility.name)} - Image ${currentIndex + 1}`}
             className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
             data-testid={`image-facility-${facility.id}-${currentIndex}`}
           />
-          <button
+          {/* <button
             onClick={prevSlide}
             className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors z-10"
           >
@@ -315,7 +315,7 @@ const FacilityCard: React.FC<FacilityProps> = ({
             className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors z-10"
           >
             <ChevronRight className="w-5 h-5" />
-          </button>
+          </button> */}
           <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-1 z-10">
             {facility.images.map((_, i) => (
               <button
@@ -355,7 +355,7 @@ const FacilityCard: React.FC<FacilityProps> = ({
                 enLabel={facility.type.en}
                 onSave={updateFacilityField(index, 'type')}
               >
-                <Badge variant="outline" className="text-primary border-primary" data-testid={`badge-type-${facility.id}`}>
+                <Badge variant="outline" className="text-primary border-primary text-2sm" data-testid={`badge-type-${facility.id}`}>
                   {getText(facility.type)}
                 </Badge>
               </Tooltip>
@@ -1260,14 +1260,14 @@ const BienEtreLoisirs = () => {
                   {getText(hero.description)}
                 </p>
               </Tooltip>
-              <div className="mt-8">
+              {/* <div className="mt-8">
                 <button 
                   onClick={() => handleFacilityNavigation('piscine')}
                   className="bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors shadow-lg"
                 >
                   {isFr ? 'Découvrir nos installations' : 'Discover our facilities'}
                 </button>
-              </div>
+              </div> */}
             </div>
           </ParallaxSection>
         </ImageTooltip>
@@ -1508,7 +1508,7 @@ const BienEtreLoisirs = () => {
               onClick={() => navigate('/reservation')}
               data-testid="button-contact-wellness"
             >
-              <Heart className="w-4 h-4 mr-2" />
+              {/* <Heart className="w-4 h-4 mr-2" /> */}
               <Tooltip
                 frLabel={cta.buttonText.fr}
                 enLabel={cta.buttonText.en}

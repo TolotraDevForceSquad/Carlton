@@ -1,5 +1,3 @@
-
-
 // src/components/Chambres.tsx
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
@@ -973,7 +971,7 @@ const Chambres = () => {
                   </div>
                 </div>
               </div>
-              <Button size="lg" className="shadow-lg" data-testid="button-discover-rooms">
+              {/* <Button size="lg" className="shadow-lg" data-testid="button-discover-rooms">
                 <Tooltip
                   frLabel={data.buttonText.fr}
                   enLabel={data.buttonText.en}
@@ -981,7 +979,7 @@ const Chambres = () => {
                 >
                   <TextFormatter text={getText(data.buttonText)} />
                 </Tooltip>
-              </Button>
+              </Button> */}
             </div>
           </div>
         </ParallaxSection>
@@ -1095,7 +1093,7 @@ const Chambres = () => {
                           </Tooltip>
                         </CardTitle>
                         {room.subtitle && (
-                          <p className="text-primary font-luxury italic text-2xl mb-4">
+                          <p className="text-primary font-luxury italic text-2xl mb-4 text-justify">
                             <Tooltip
                               frLabel={room.subtitle.fr}
                               enLabel={room.subtitle.en}
@@ -1108,7 +1106,7 @@ const Chambres = () => {
                       </CardHeader>
 
                       <CardContent className="p-0 space-y-6">
-                        <div className="text-muted-foreground leading-relaxed">
+                        <div className="text-muted-foreground leading-relaxed text-justify">
                           <Tooltip
                             frLabel={room.description.fr}
                             enLabel={room.description.en}

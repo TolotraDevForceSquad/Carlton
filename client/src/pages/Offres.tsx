@@ -168,17 +168,17 @@ const reconstructMixed = (dataFr: any, dataEn: any | null) => {
   return {
     mainSection: dataFr.mainSection
       ? {
-          title: { fr: dataFr.mainSection.title, en: enFallback.mainSection?.title || defaultMain.title.en },
-          description: { fr: dataFr.mainSection.description, en: enFallback.mainSection?.description || defaultMain.description.en },
-          show: dataFr.mainSection.show !== undefined ? dataFr.mainSection.show : true,
-        }
+        title: { fr: dataFr.mainSection.title, en: enFallback.mainSection?.title || defaultMain.title.en },
+        description: { fr: dataFr.mainSection.description, en: enFallback.mainSection?.description || defaultMain.description.en },
+        show: dataFr.mainSection.show !== undefined ? dataFr.mainSection.show : true,
+      }
       : defaultMain,
     seasonalSection: dataFr.seasonalSection
       ? {
-          title: { fr: dataFr.seasonalSection.title, en: enFallback.seasonalSection?.title || defaultSeasonal.title.en },
-          description: { fr: dataFr.seasonalSection.description, en: enFallback.seasonalSection?.description || defaultSeasonal.description.en },
-          show: dataFr.seasonalSection.show !== undefined ? dataFr.seasonalSection.show : true,
-        }
+        title: { fr: dataFr.seasonalSection.title, en: enFallback.seasonalSection?.title || defaultSeasonal.title.en },
+        description: { fr: dataFr.seasonalSection.description, en: enFallback.seasonalSection?.description || defaultSeasonal.description.en },
+        show: dataFr.seasonalSection.show !== undefined ? dataFr.seasonalSection.show : true,
+      }
       : defaultSeasonal,
     hero: {
       title: { fr: dataFr.hero.title, en: enFallback.hero.title },
@@ -443,11 +443,11 @@ const Offres = () => {
         offers: data.offers.map((offer, i) =>
           i === offerIndex
             ? {
-                ...offer,
-                features: offer.features.map((feature, j) =>
-                  j === featureIndex ? { fr: newFr, en: newEn } : feature
-                ),
-              }
+              ...offer,
+              features: offer.features.map((feature, j) =>
+                j === featureIndex ? { fr: newFr, en: newEn } : feature
+              ),
+            }
             : offer
         ),
       };
@@ -462,9 +462,9 @@ const Offres = () => {
       offers: data.offers.map((offer, i) =>
         i === offerIndex
           ? {
-              ...offer,
-              features: [...offer.features, { fr: "Exemple d'offre", en: "Example offer" }],
-            }
+            ...offer,
+            features: [...offer.features, { fr: "Exemple d'offre", en: "Example offer" }],
+          }
           : offer
       ),
     };
@@ -478,9 +478,9 @@ const Offres = () => {
       offers: data.offers.map((offer, i) =>
         i === offerIndex
           ? {
-              ...offer,
-              features: offer.features.filter((_, j) => j !== featureIndex),
-            }
+            ...offer,
+            features: offer.features.filter((_, j) => j !== featureIndex),
+          }
           : offer
       ),
     };
@@ -739,7 +739,7 @@ const Offres = () => {
         <section className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="space-y-16">
-              {[1,2,3].map((i) => (
+              {[1, 2, 3].map((i) => (
                 <div key={i} className="flex flex-col lg:flex animate-pulse">
                   <div className="lg:w-1/2">
                     <div className="w-full h-80 lg:h-full bg-muted rounded-lg" />
@@ -754,7 +754,7 @@ const Offres = () => {
                     <div className="h-20 w-full bg-muted mb-6" />
                     <div className="space-y-2">
                       <div className="h-4 w-24 bg-muted" />
-                      {[1,2,3].map((j) => <div key={j} className="h-3 w-full bg-muted" />)}
+                      {[1, 2, 3].map((j) => <div key={j} className="h-3 w-full bg-muted" />)}
                     </div>
                   </div>
                 </div>
@@ -770,7 +770,7 @@ const Offres = () => {
         <section className="py-20 bg-primary/5">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="space-y-16">
-              {[1,2,3].map((i) => (
+              {[1, 2, 3].map((i) => (
                 <div key={i} className="flex flex-col lg:flex animate-pulse">
                   <div className="lg:w-1/2">
                     <div className="w-full h-80 lg:h-full bg-muted rounded-lg" />
@@ -952,7 +952,7 @@ const Offres = () => {
                   <p className="text-muted-foreground">{getText(hiddenSectionTexts.description)}</p>
                 </CardHeader>
                 <CardContent>
-                  <Button onClick={() => {}} className="w-full">
+                  <Button onClick={() => { }} className="w-full">
                     {getText(hiddenSectionTexts.button)}
                   </Button>
                 </CardContent>
@@ -965,8 +965,8 @@ const Offres = () => {
               const direction = index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse';
               const CategoryIcon = getCategoryIcon(getText(offer.category));
               return (
-                <Card 
-                  key={offer.id} 
+                <Card
+                  key={offer.id}
                   className={`relative overflow-hidden hover-elevate transition-all duration-300 ${direction} flex flex-col lg:flex ${offer.hidden ? 'opacity-50' : ''}`}
                   data-testid={`card-offer-${offer.id}`}
                 >
@@ -994,13 +994,13 @@ const Offres = () => {
                       imageUrl={offer.image}
                       onSave={updateOfferImage(index)}
                     >
-                      <div 
+                      <div
                         onClick={() => offer.image && setSelectedImage(offer.image)}
                         className={`w-full h-[300px] lg:h-full object-cover cursor-pointer ${!offer.image ? 'flex items-center justify-center bg-gradient-to-r from-primary/10 to-accent/10' : ''}`}
                       >
                         {offer.image ? (
-                          <img 
-                            src={offer.image} 
+                          <img
+                            src={offer.image}
                             alt={getText(offer.title)}
                             className="w-full h-full object-cover transition-transform duration-300"
                             data-testid={`image-offer-${offer.id}`}
@@ -1018,7 +1018,7 @@ const Offres = () => {
                       </div>
                     </ImageTooltip>
                   </div>
-                  
+
                   <div className="lg:w-1/2 p-8 flex flex-col justify-center">
                     <div>
                       <CardHeader className="p-0 mb-6">
@@ -1059,12 +1059,12 @@ const Offres = () => {
                           enLabel={offer.subtitle.en}
                           onSave={updateOfferField(index, 'subtitle')}
                         >
-                          <p className="text-primary font-luxury font-semibold text-2xl" data-testid={`subtitle-offer-${offer.id}`}>
+                          <p className="text-primary font-luxury font-semibold text-2xl italic" data-testid={`subtitle-offer-${offer.id}`}>
                             {getText(offer.subtitle)}
                           </p>
                         </Tooltip>
                       </CardHeader>
-                      
+
                       <CardContent className="p-0 space-y-6">
                         <Tooltip
                           frLabel={offer.description.fr}
@@ -1075,7 +1075,7 @@ const Offres = () => {
                             {getText(offer.description)}
                           </p>
                         </Tooltip>
-                        
+
                         <div className="flex items-center gap-4 text-sm text-muted-foreground">
                           <div className="flex items-center gap-1">
                             <Clock className="w-4 h-4" />
@@ -1100,7 +1100,7 @@ const Offres = () => {
                             </div>
                           )}
                         </div>
-                        
+
                         <div>
                           <Tooltip
                             frLabel={offerFeaturesTitle.fr}
@@ -1227,15 +1227,15 @@ const Offres = () => {
                 </p>
               </Tooltip>
             </div>
-            
+
             <div className="space-y-16">
               {seasonalOffers.map((offer, index) => {
                 if (!isAdmin && offer.hidden) return null;
                 const direction = index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse';
                 const SeasonalIcon = getSeasonalIcon(getText(offer.title));
                 return (
-                  <Card 
-                    key={index} 
+                  <Card
+                    key={index}
                     className={`relative overflow-hidden hover-elevate transition-all duration-300 ${direction} flex flex-col lg:flex ${offer.hidden ? 'opacity-50' : ''}`}
                   >
                     {isAdmin && (
@@ -1262,13 +1262,13 @@ const Offres = () => {
                         imageUrl={offer.image}
                         onSave={updateSeasonalImage(index)}
                       >
-                        <div 
+                        <div
                           onClick={() => offer.image && setSelectedImage(offer.image)}
                           className={`w-full h-[300px] lg:h-full object-cover cursor-pointer ${!offer.image ? 'flex items-center justify-center bg-gradient-to-r from-primary/10 to-accent/10' : ''}`}
                         >
                           {offer.image ? (
-                            <img 
-                              src={offer.image} 
+                            <img
+                              src={offer.image}
                               alt={getText(offer.title)}
                               className="w-full h-full object-cover transition-transform duration-300"
                             />
@@ -1285,7 +1285,7 @@ const Offres = () => {
                         </div>
                       </ImageTooltip>
                     </div>
-                    
+
                     <div className="lg:w-1/2 p-8 flex flex-col justify-center">
                       <div>
                         <CardHeader className="p-0 mb-6">
@@ -1305,12 +1305,12 @@ const Offres = () => {
                             enLabel={offer.period.en}
                             onSave={updateSeasonalField(index, 'period')}
                           >
-                            <p className="text-primary font-luxury font-semibold text-2xl">
+                            <p className="text-primary font-luxury font-semibold italic text-2xl">
                               {getText(offer.period)}
                             </p>
                           </Tooltip>
                         </CardHeader>
-                        
+
                         <CardContent className="p-0 space-y-6">
                           <Tooltip
                             frLabel={offer.description.fr}

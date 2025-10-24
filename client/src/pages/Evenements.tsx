@@ -520,7 +520,7 @@ const Evenements = () => {
                     <div>
                       <CardHeader className="p-0 mb-6">
                         <div className="flex items-center justify-between mb-4">
-                          <Badge variant="outline" className="text-primary border-primary" data-testid={`badge-type-${event.id}`}>
+                          <Badge variant="outline" className="text-primary text-2sm border-primary" data-testid={`badge-type-${event.id}`}>
                             {formatAmpersand(event.type)}
                           </Badge>
                           {event.capacity && (

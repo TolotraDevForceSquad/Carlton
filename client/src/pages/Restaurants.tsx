@@ -222,7 +222,7 @@ const RestaurantCarousel: React.FC<RestaurantCarouselProps> = ({ images, onImage
       if (!isHovered) {
         goToNext();
       }
-    }, 3000); // Change image every 5 seconds
+    }, 2000); // Change image every 5 seconds
 
     return () => clearInterval(interval);
   }, [images.length, isHovered]);
@@ -243,7 +243,7 @@ const RestaurantCarousel: React.FC<RestaurantCarouselProps> = ({ images, onImage
       />
       {images.length > 1 && (
         <>
-          <button
+          {/* <button
             onClick={(e) => {
               e.stopPropagation();
               goToPrev();
@@ -251,8 +251,8 @@ const RestaurantCarousel: React.FC<RestaurantCarouselProps> = ({ images, onImage
             className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
           >
             <ChevronLeft className="w-6 h-6" />
-          </button>
-          <button
+          </button> */}
+          {/* <button
             onClick={(e) => {
               e.stopPropagation();
               goToNext();
@@ -260,7 +260,7 @@ const RestaurantCarousel: React.FC<RestaurantCarouselProps> = ({ images, onImage
             className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
           >
             <ChevronRight className="w-6 h-6" />
-          </button>
+          </button> */}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
             {images.map((_, index) => (
               <button
@@ -921,7 +921,7 @@ const Restaurants = () => {
               ))}
             </div>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <button 
+              {/* <button 
                 onClick={() => handleRestaurantNavigation('bistrot')}
                 className="bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors shadow-lg"
               >
@@ -934,8 +934,8 @@ const Restaurants = () => {
                     <TextFormatter text={getText(hero.buttonTexts.primary)} />
                   </span>
                 </Tooltip>
-              </button>
-              <button 
+              </button> */}
+              {/* <button 
                 onClick={() => navigate('/contact')}
                 className="bg-white/10 backdrop-blur-sm border border-white/30 text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/20 transition-colors shadow-lg"
               >
@@ -948,7 +948,7 @@ const Restaurants = () => {
                     <TextFormatter text={getText(hero.buttonTexts.secondary)} />
                   </span>
                 </Tooltip>
-              </button>
+              </button> */}
             </div>
           </div>
         </ParallaxSection>
@@ -994,7 +994,7 @@ const Restaurants = () => {
 
       {/* Restaurants Details */}
       <section className="py-20">
-        <div className="max-w-[80%] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[90%] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-16">
             {restaurants.map((restaurant, index) => {
               if (!isAdmin && restaurant.hidden) return null;

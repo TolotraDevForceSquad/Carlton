@@ -18,7 +18,7 @@ export const chambresData = {
       },
       subtitle: {
         fr: "Vue Panoramique <v>ou</v> Vue sur le Palais de la Reine <e>&</e> le lac Anosy",
-        en: "Panoramic View <v>or</v> Vue Queen's Palace <e>&</e> Lake Anosy View"
+        en: "Panoramic View <v>or</v> View Queen's Palace <e>&</e> Lake Anosy View"
       },
       description: {
         fr: "Un lit King Size ou deux lits jumeaux. (-) Nos chambres Executive, allient espace, confort et fonctionnalité pour un séjour des plus agréables. Avec une décoration chaleureuse et un agencement soigné, elles offrent un cadre reposant propice à la détente. Profitez de la vue dégagée sur la ville, qui ajoute une note d’évasion à votre expérience.",
@@ -42,8 +42,8 @@ export const chambresData = {
         en: "Premium Room"
       },
       subtitle: {
-        fr: "Vue Panoramique <v>ou</v> sur le Palais de la Reine <e>&</e> le lac Anosy",
-        en: "Panoramic View <v>or</v> Queen's Palace <e>&</e> Lake Anosy View"
+        fr: "Vue Panoramique <v>ou</v> Vue sur le Palais de la Reine <e>&</e> le lac Anosy",
+        en: "Panoramic View <v>or</v> View Queen's Palace <e>&</e> Lake Anosy View"
       },
       description: {
         fr: "Un lit King Size ou deux lits jumeaux. (-) Situées aux étages supérieurs, les chambres Premium offrent une atmosphère paisible avec un point de vue imprenable sur le panorama urbain. Dotées d’équipements complets, bénéficiez d’un cadre confortable et intime pour un séjour parfait que ce soit pour le travail ou la détente.",
@@ -67,8 +67,8 @@ export const chambresData = {
         en: "Club Suite"
       },
       subtitle: {
-        fr: "Vue Panoramique <v>ou</v> sur le Palais de la Reine <e>&</e> le lac Anosy",
-        en: "Panoramic View <v>or</v> Queen's Palace <e>&</e> Lake Anosy View"
+        fr: "Vue Panoramique <v>ou</v> Vue sur le Palais de la Reine <e>&</e> le lac Anosy",
+        en: "Panoramic View <v>or</v> View Queen's Palace <e>&</e> Lake Anosy View"
       },
       description: {
         fr: "Une chambre avec un lit King Size et un salon séparé. (-) Localisées dans les étages élevés, nos Club Suites comprennent une chambre avec un grand lit et un salon séparé. Un espace entièrement équipé, idéal pour un séjour parfait entre détente et travail, dans un confort optimal.",
